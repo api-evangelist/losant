@@ -1,0 +1,118 @@
+{
+  "title": "Losant EdgeDeployment",
+  "description": "Schema for a single deployment of an edge workflow to an edge device",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "edgeDeploymentId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "deviceId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "deviceName": {
+      "$ref": "#/$defs/common/name"
+    },
+    "deviceConnectionInfo": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "$ref": "#/$defs/common/date"
+        },
+        "connected": {
+          "enum": [
+            1,
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "flowId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "flowName": {
+      "$ref": "#/$defs/common/name"
+    },
+    "flowClass": {
+      "type": "string",
+      "enum": [
+        "edge",
+        "customNode"
+      ]
+    },
+    "fileName": {
+      "$ref": "#/$defs/common/safeFileName"
+    },
+    "creationDate": {
+      "$ref": "#/$defs/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/$defs/common/date"
+    },
+    "currentVersion": {
+      "$ref": "#/$defs/common/nullableName"
+    },
+    "desiredVersion": {
+      "$ref": "#/$defs/common/nullableName"
+    },
+    "currentEtag": {
+      "$ref": "#/$defs/common/name"
+    },
+    "desiredEtag": {
+      "$ref": "#/$defs/common/name"
+    },
+    "logs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sourceType": {
+            "$ref": "#/$defs/common/sourceType"
+          },
+          "sourceId": {
+            "$ref": "#/$defs/common/objectId"
+          },
+          "date": {
+            "$ref": "#/$defs/common/date"
+          },
+          "changeType": {
+            "type": "string",
+            "enum": [
+              "current",
+              "desired"
+            ]
+          },
+          "newValue": {
+            "$ref": "#/$defs/common/nullableName"
+          },
+          "previousValue": {
+            "$ref": "#/$defs/common/nullableName"
+          },
+          "attemptedValue": {
+            "$ref": "#/$defs/common/nullableName"
+          },
+          "newEtag": {
+            "$ref": "#/$defs/common/name"
+          },
+          "previousEtag": {
+            "$ref": "#/$defs/common/name"
+          },
+          "attemptedEtag": {
+            "$ref": "#/$defs/common/name"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/losant/main/json-schema/losant-edgeDeployment-schema.json"
+}

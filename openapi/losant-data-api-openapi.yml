@@ -1,0 +1,1095 @@
+openapi: 3.0.3
+info:
+  title: Losant Data and Data Tables API
+  version: 1.29.4
+  description: Aggregate, query, and stream time-series device data, and read/write rows in Data Tables for relational data
+    alongside IoT telemetry. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  contact:
+    name: Losant Support
+    url: https://www.losant.com/contact
+    email: hello@losant.com
+  license:
+    name: Proprietary
+    url: https://www.losant.com/legal
+  x-source: https://api.losant.com/
+  x-publisher: Losant IoT, Inc.
+servers:
+- url: https://api.losant.com
+  description: Losant Platform API (US multi-tenant cloud)
+tags:
+- name: Data and Data Tables
+  description: Data and Data Tables resources on the Losant Platform.
+security:
+- BearerAuth: []
+paths:
+  /applications/{applicationId}/data-tables/{dataTableId}/rows/{rowId}:
+    get:
+      summary: Retrieves the Data Table Row
+      tags:
+      - Data and Data Tables
+      parameters:
+      - &id001
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id002
+        name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id003
+        name: rowId
+        in: path
+        description: ID associated with the data table row
+        required: true
+        example: 596f832b128eda5cfe765443
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Data table row information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRow'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table row was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates the Data Table Row
+      tags:
+      - Data and Data Tables
+      parameters:
+      - *id001
+      - *id002
+      - *id003
+      requestBody:
+        description: Object containing updated properties for the data table row
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTableRowInsertUpdate'
+      responses:
+        '200':
+          description: Updated data table row information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRow'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table row was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes a Data Table Row
+      tags:
+      - Data and Data Tables
+      parameters:
+      - *id001
+      - *id002
+      - *id003
+      responses:
+        '200':
+          description: If data table row was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table row was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/data-tables/{dataTableId}/rows:
+    get:
+      summary: Returns the Rows for a Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - &id004
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id005
+        name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortColumn
+        in: query
+        description: Column to sort the rows by
+        required: false
+        example: myColumnName
+        schema:
+          type: string
+      - name: sortDirection
+        in: query
+        description: Direction to sort the rows by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: limit
+        in: query
+        description: How many rows to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 1000
+      - name: offset
+        in: query
+        description: How many rows to skip
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: includeFields
+        in: query
+        description: Comma-separated list of fields to include in resulting rows. When not provided, returns all fields.
+        required: false
+        example: id,createdAt
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection of data table rows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRows'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Delete All Data in the Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - *id004
+      - *id005
+      responses:
+        '200':
+          description: If request successfully deleted **all** rows in the data table, this will **not** send workflow data
+            table deletion triggers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/data-tables/{dataTableId}:
+    get:
+      summary: Retrieves Information on a Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - &id006
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id007
+        name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Data table information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About a Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - *id006
+      - *id007
+      requestBody:
+        description: Object containing updated properties of the data table
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTablePatch'
+      responses:
+        '200':
+          description: Updated data table information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Adds a New Column to This Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - *id006
+      - *id007
+      requestBody:
+        description: Object containing the new column properties
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTableColumn'
+      responses:
+        '200':
+          description: Updated data table information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes a Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - *id006
+      - *id007
+      responses:
+        '200':
+          description: If data table was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/data-tables:
+    get:
+      summary: Returns the Data Tables for an Application
+      tags:
+      - Data and Data Tables
+      parameters:
+      - &id008
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          default: name
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my*table
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection of data tables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTables'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a New Data Table for an Application
+      tags:
+      - Data and Data Tables
+      parameters:
+      - *id008
+      requestBody:
+        description: New data table information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTablePost'
+      responses:
+        '201':
+          description: Successfully created data table
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/data:
+    post:
+      summary: Creates a CSV File from a Query of Devices and Attributes Over a Time Range.
+      tags:
+      - Data and Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: The query parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devicesDataExport'
+      responses:
+        '202':
+          description: If command was successfully sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
+        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+  schemas:
+    advancedDeviceQuery:
+      title: Advanced Device Query
+      description: Schema for advanced device queries
+      type: object
+      properties:
+        $and:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedDeviceQuery'
+          maxItems: 100
+        $or:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedDeviceQuery'
+          maxItems: 100
+        $nor:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedDeviceQuery'
+          maxItems: 100
+        id:
+          $ref: '#/components/schemas/common/advancedIdQuery'
+        creationDate:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        lastUpdated:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        deletedAt:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        name:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        deviceClass:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        gatewayId:
+          $ref: '#/components/schemas/common/advancedIdQuery'
+        parentId:
+          $ref: '#/components/schemas/common/advancedIdQuery'
+        ancestorId:
+          $ref: '#/components/schemas/common/advancedIdQuery'
+        attributeName:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        experienceUserId:
+          $ref: '#/components/schemas/common/advancedIdQuery'
+        experienceGroupId:
+          $ref: '#/components/schemas/common/advancedIdQuery'
+        tags:
+          $ref: '#/components/schemas/common/advancedTagQueryWithOps'
+        disconnectedAt:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        connectedAt:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        connectionStatus:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+      additionalProperties: false
+    advancedQuery:
+      title: Advanced Query
+      description: Schema for advanced filters and queries
+      type: object
+      properties:
+        $and:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedQuery'
+          maxItems: 100
+        $or:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedQuery'
+          maxItems: 100
+        $nor:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedQuery'
+          maxItems: 100
+      patternProperties:
+        ^[0-9a-zA-Z_-]{1,255}$:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+      additionalProperties: false
+    dataTable:
+      title: Data Table
+      description: Schema for a single Data Table
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        dataTableId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataTableColumn'
+          maxItems: 50
+    dataTableColumn:
+      title: Data Table Column
+      description: Schema for a single Data Table Column
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/key'
+        dataType:
+          type: string
+          enum:
+          - string
+          - number
+          - boolean
+        constraint:
+          type: string
+          enum:
+          - unique
+          - required
+          - optional
+        defaultValue:
+          type:
+          - string
+          - number
+          - boolean
+      required:
+      - name
+      - dataType
+      - constraint
+      additionalProperties: false
+    dataTablePatch:
+      title: Data Table Patch
+      description: Schema for the body of a Data Table modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+      additionalProperties: false
+    dataTablePost:
+      title: Data Table Post
+      description: Schema for the body of a Data Table creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        columns:
+          $ref: '#/components/schemas/dataTable/properties/columns'
+      required:
+      - name
+      additionalProperties: false
+    dataTableRow:
+      title: Data Table Row
+      description: Schema for a single Data Table Row
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        createdAt:
+          $ref: '#/components/schemas/common/date'
+        updatedAt:
+          $ref: '#/components/schemas/common/date'
+      patternProperties:
+        ^[0-9a-zA-Z_-]{1,255}$:
+          type:
+          - string
+          - number
+          - boolean
+          - 'null'
+    dataTableRowInMultiple:
+      title: Data Table Row Insert Multiple
+      description: Schema for inserting data table rows
+      type: array
+      items:
+        $ref: '#/components/schemas/dataTableRowInsertUpdate'
+    dataTableRowInsert:
+      title: Data Table Row Insert
+      description: Schema for inserting a data table row or rows
+      oneOf:
+      - $ref: '#/components/schemas/dataTableRowInsertUpdate'
+      - $ref: '#/components/schemas/dataTableRowInMultiple'
+    dataTableRowInsertResult:
+      title: Data Table Row Insert Result
+      description: Schema for a the result of a single or multiple row insert
+      oneOf:
+      - $ref: '#/components/schemas/dataTableRow'
+      - type: object
+        properties:
+          createdAt:
+            $ref: '#/components/schemas/common/date'
+          count:
+            type: number
+          rowIds:
+            $ref: '#/components/schemas/common/objectIds'
+        additionalProperties: false
+    dataTableRowInsertUpdate:
+      title: Data Table Row Insert Update
+      description: Schema for inserting or updating a data table row
+      type: object
+      patternProperties:
+        ^[0-9a-zA-Z_-]{1,255}$:
+          type:
+          - string
+          - number
+          - boolean
+          - 'null'
+      additionalProperties: false
+    dataTableRows:
+      title: Data Table Rows
+      description: Schema for a collection of Data Table Rows
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataTableRow'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        sortColumn:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        dataTableId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        query:
+          type: object
+    dataTableRowsDelete:
+      title: Data Table Rows Delete
+      description: Schema for response to data table rows removal
+      type: object
+      properties:
+        removed:
+          type: number
+    dataTableRowsExport:
+      title: Data Table Rows Export
+      description: Schema for the body of a data table export
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        query:
+          $ref: '#/components/schemas/advancedQuery'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+        queryOptions:
+          type: object
+          properties:
+            sortDirection:
+              $ref: '#/components/schemas/common/sortDirection'
+            limit:
+              type: number
+            sortColumn:
+              type: string
+            offset:
+              type: number
+      additionalProperties: false
+    dataTables:
+      title: Data Tables
+      description: Schema for a collection of Data Tables
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataTable'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    devicesDataExport:
+      title: Devices Data Export
+      description: Schema for exporting the data for multiple devices
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        deviceQuery:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+        attributes:
+          type: array
+          maxItems: 256
+          items:
+            $ref: '#/components/schemas/common/key'
+        start:
+          type: number
+        end:
+          type: number
+        options:
+          type: object
+          properties:
+            includeDate:
+              type: boolean
+              default: true
+            includeID:
+              type: boolean
+              default: true
+            includeBlobData:
+              type: boolean
+              default: false
+            filePerDevice:
+              type: boolean
+              default: false
+      additionalProperties: false
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
+        success:
+          type: boolean
+          enum:
+          - true
+    lastValueData:
+      title: Last Value Data
+      description: Schema for the result of a last value query
+      type: object
+      patternProperties:
+        ^[A-Fa-f\d]{24}$:
+          type: object
+          properties:
+            time:
+              $ref: '#/components/schemas/common/date'
+            data:
+              type: object
+              patternProperties:
+                ^[0-9a-zA-Z_-]{1,255}$:
+                  type:
+                  - number
+                  - string
+                  - boolean
+              additionalProperties: false
+          additionalProperties: false
+          required:
+          - data
+          - time
+      additionalProperties: false
+    lastValueQuery:
+      title: Last Value Query
+      description: Schema for the body of a last value query request
+      type: object
+      properties:
+        attribute:
+          $ref: '#/components/schemas/common/key'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        deviceQuery:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+        end:
+          type: number
+      additionalProperties: false
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    timeSeriesData:
+      title: Time Series Data
+      description: Schema for the result of a time series query
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        resolution:
+          type:
+          - number
+          - 'null'
+        aggregation:
+          $ref: '#/components/schemas/common/aggregation'
+        limit:
+          type:
+          - number
+          - 'null'
+        order:
+          type: string
+          enum:
+          - asc
+          - desc
+        devices:
+          type: object
+          patternProperties:
+            ^[A-Fa-f\d]{24}$:
+              type: object
+              properties:
+                name:
+                  $ref: '#/components/schemas/common/name'
+                tags:
+                  type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}$:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/common/name'
+                  additionalProperties: false
+                points:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      time:
+                        $ref: '#/components/schemas/common/date'
+                      data:
+                        type: object
+                        patternProperties:
+                          ^[0-9a-zA-Z_-]{1,255}$:
+                            type:
+                            - number
+                            - string
+                            - boolean
+                        additionalProperties: false
+                    additionalProperties: false
+                    required:
+                    - data
+                    - time
+              additionalProperties: false
+              required:
+              - name
+              - points
+              - tags
+          additionalProperties: false
+      additionalProperties: false
+      required:
+      - start
+      - end
+      - resolution
+      - aggregation
+      - limit
+      - order
+      - devices
+    timeSeriesQuery:
+      title: Time Series Query
+      description: Schema for the body of a time series query request
+      type: object
+      properties:
+        start:
+          type: number
+        end:
+          type: number
+        duration:
+          type: number
+        resolution:
+          type: number
+        aggregation:
+          $ref: '#/components/schemas/common/aggregation'
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/common/key'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        deviceQuery:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+        limit:
+          type: number
+        order:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      additionalProperties: false

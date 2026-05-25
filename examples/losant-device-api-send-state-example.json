@@ -1,0 +1,30 @@
+{
+  "name": "Send State Example",
+  "description": "Send the current state of the device",
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/applications/575ec8687ae143cd83dc4a97/devices/575ec7417ae143cd83dc4a95",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "data": {
+        "temperature": 22.5,
+        "humidity": 47,
+        "occupancy": true
+      },
+      "time": "2026-05-25T16:30:00.000Z"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "success": true
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "losant": "https://raw.githubusercontent.com/api-evangelist/losant/main/vocabulary/",
+    "Application": "losant:Application",
+    "Device": "losant:Device",
+    "DeviceRecipe": "losant:DeviceRecipe",
+    "Event": "losant:Event",
+    "Flow": "losant:Flow",
+    "FlowVersion": "losant:FlowVersion",
+    "Dashboard": "losant:Dashboard",
+    "DataTable": "losant:DataTable",
+    "Experience": "losant:Experience",
+    "ExperienceUser": "losant:ExperienceUser",
+    "Webhook": "losant:Webhook",
+    "Integration": "losant:Integration",
+    "Notebook": "losant:Notebook",
+    "EdgeDeployment": "losant:EdgeDeployment",
+    "EmbeddedDeployment": "losant:EmbeddedDeployment",
+    "Instance": "losant:Instance",
+    "Organization": "Organization",
+    "id": "@id",
+    "name": "name",
+    "description": "description",
+    "tags": {
+      "@id": "losant:tag",
+      "@container": "@set"
+    },
+    "creationDate": {
+      "@id": "dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "lastUpdated": {
+      "@id": "dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "applicationId": {
+      "@id": "losant:application",
+      "@type": "@id"
+    },
+    "deviceId": {
+      "@id": "losant:device",
+      "@type": "@id"
+    },
+    "flowId": {
+      "@id": "losant:flow",
+      "@type": "@id"
+    },
+    "attributes": {
+      "@id": "losant:attribute",
+      "@container": "@set"
+    },
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  }
+}

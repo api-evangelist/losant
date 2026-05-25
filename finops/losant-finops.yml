@@ -1,0 +1,63 @@
+specification: https://focus.finops.org/
+specVersion: '0.1'
+provider: losant
+providerName: Losant
+sourceURL: https://www.losant.com/pricing
+asOf: '2026-05-25'
+notes: |
+  Losant pricing is custom and committed under annual contracts. Losant exposes per-application and
+  per-instance usage telemetry that can be mapped to the FinOps Framework's FOCUS columns for chargeback
+  inside customer organizations. Public FOCUS-aligned billing exports are not offered.
+service:
+  ServiceName: Losant Enterprise IoT Platform
+  ServiceCategory: IoT Platform
+  Provider: Losant IoT, Inc.
+  PublisherURL: https://www.losant.com
+  PricingCategory: Commitment-based (custom annual contract)
+billingModel:
+  defaultCharge: Annual committed contract
+  meterableSurfaces:
+  - id: devices
+    description: Connected device count per application/organization.
+    unit: device
+  - id: messages
+    description: Device messages (MQTT publish, REST state submissions, webhook posts) per month.
+    unit: message
+  - id: payload
+    description: Payload bytes ingested into device state, events, and data tables.
+    unit: byte
+  - id: workflow-runs
+    description: Workflow executions per month across cloud, edge, embedded, experience, and custom-node classes.
+    unit: run
+  - id: notebook-minutes
+    description: Notebook compute minutes consumed by Notebook executions.
+    unit: minute
+  - id: data-table-rows
+    description: Data Table row storage and read/write operations.
+    unit: row
+  - id: experience-users
+    description: Active end-user accounts inside white-labeled Losant Experiences.
+    unit: user
+  - id: edge-fleet-size
+    description: Count of devices receiving Edge / Embedded deployments.
+    unit: device
+focusMapping:
+  BilledCost: Not publicly itemized; provided in commercial invoices.
+  EffectiveCost: Annual contract amortized monthly.
+  ServiceCategory: IoT Platform
+  ServiceName: Losant Enterprise IoT Platform
+  ChargeCategory: Usage (committed)
+  ChargeFrequency: Annual
+  CommitmentDiscountCategory: Committed Use (annual)
+  CommitmentDiscountStatus: Used
+  ProviderName: Losant
+  PublisherName: Losant
+  InvoiceIssuerName: Losant IoT, Inc.
+  RegionId: customer-instance-region (dedicated/self-hosted)
+governance:
+- url: https://docs.losant.com/applications/audit-logs/
+  type: AuditLogs
+- url: https://docs.losant.com/applications/api-tokens/
+  type: ApiTokenManagement
+- url: https://www.losant.com/contact
+  type: BillingContact

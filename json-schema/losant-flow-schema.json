@@ -1,0 +1,796 @@
+{
+  "title": "Losant Flow",
+  "description": "Schema for a single Workflow",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "flowId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "creationDate": {
+      "$ref": "#/$defs/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/$defs/common/date"
+    },
+    "createdById": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "createdByType": {
+      "$ref": "#/$defs/common/expSourceType"
+    },
+    "lastUpdatedById": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "lastUpdatedByType": {
+      "$ref": "#/$defs/common/expSourceType"
+    },
+    "name": {
+      "$ref": "#/$defs/common/name"
+    },
+    "description": {
+      "$ref": "#/$defs/common/description"
+    },
+    "shortDescription": {
+      "$ref": "#/$defs/common/shortString"
+    },
+    "iconData": {
+      "$ref": "#/$defs/common/imageDataUri"
+    },
+    "docsUrl": {
+      "$ref": "#/$defs/common/shortString"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "data",
+        "experience",
+        "logic",
+        "output",
+        "debug"
+      ]
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "defaultVersionId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "minimumAgentVersion": {
+      "$ref": "#/$defs/common/version"
+    },
+    "flowClass": {
+      "type": "string",
+      "enum": [
+        "cloud",
+        "edge",
+        "embedded",
+        "experience",
+        "customNode"
+      ]
+    },
+    "triggers": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/common/triggers/appFile"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/basic"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/beckhoff"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/dataTable"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/integration"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/deviceIdsTags"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/deviceIdsTagsInactivity"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/direct"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/endpoint"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/event"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/fileTail"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/fileWatch"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/flowError"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/mqttTopic"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/onSync"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/opcua"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/redis"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/request"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/serial"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/snmpTrap"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/timer"
+          },
+          {
+            "$ref": "#/$defs/common/triggers/virtualButton"
+          }
+        ]
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/common/optMedStr"
+          },
+          "type": {
+            "$ref": "#/$defs/common/reqMedStr"
+          },
+          "config": {
+            "type": "object"
+          },
+          "meta": {
+            "type": "object"
+          },
+          "outputIds": {
+            "$ref": "#/$defs/common/outputIds"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "type"
+        ]
+      }
+    },
+    "customNodeConfig": {
+      "type": "object",
+      "properties": {
+        "outputCount": {
+          "type": "number",
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "resultMode": {
+          "type": "string",
+          "enum": [
+            "optional",
+            "required",
+            "none"
+          ]
+        },
+        "resultDescription": {
+          "$ref": "#/$defs/common/description"
+        },
+        "fields": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/common/customNodeFieldConfig"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "outputCount",
+        "resultMode",
+        "fields"
+      ]
+    },
+    "customNodeSupports": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "cloud",
+          "edge"
+        ]
+      }
+    },
+    "customNodeUseCount": {
+      "type": "number"
+    },
+    "globals": {
+      "$ref": "#/$defs/common/globals"
+    },
+    "deletedInDevelop": {
+      "type": "boolean"
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "runCount": {
+          "type": "number"
+        },
+        "errorCount": {
+          "type": "number"
+        },
+        "byVersion": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "object",
+              "properties": {
+                "runCount": {
+                  "type": "number"
+                },
+                "errorCount": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/losant/main/json-schema/losant-flow-schema.json",
+  "$defs": {
+    "event": {
+      "title": "Event",
+      "description": "Schema for a single Event",
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "eventId": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "applicationId": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "creationDate": {
+          "$ref": "#/$defs/common/date"
+        },
+        "lastUpdated": {
+          "$ref": "#/$defs/common/date"
+        },
+        "sourceType": {
+          "$ref": "#/$defs/common/eventSourceType"
+        },
+        "sourceId": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "sourceName": {
+          "$ref": "#/$defs/common/name"
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "info",
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "state": {
+          "$ref": "#/$defs/common/eventState"
+        },
+        "subject": {
+          "$ref": "#/$defs/common/name"
+        },
+        "message": {
+          "$ref": "#/$defs/common/description"
+        },
+        "data": {},
+        "deviceId": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "deviceName": {
+          "$ref": "#/$defs/common/name"
+        },
+        "disableTagChangeTracking": {
+          "type": "boolean"
+        },
+        "eventTags": {
+          "$ref": "#/$defs/common/objectTags"
+        },
+        "updates": {
+          "maxItems": 100,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sourceType": {
+                "$ref": "#/$defs/common/eventSourceType"
+              },
+              "sourceId": {
+                "$ref": "#/$defs/common/objectId"
+              },
+              "sourceName": {
+                "$ref": "#/$defs/common/name"
+              },
+              "creationDate": {
+                "$ref": "#/$defs/common/date"
+              },
+              "comment": {
+                "$ref": "#/$defs/common/description"
+              },
+              "data": {},
+              "state": {
+                "$ref": "#/$defs/common/eventState"
+              },
+              "stateChange": {
+                "type": "object",
+                "properties": {
+                  "old": {
+                    "$ref": "#/$defs/common/eventState"
+                  },
+                  "new": {
+                    "$ref": "#/$defs/common/eventState"
+                  }
+                }
+              },
+              "levelChange": {
+                "type": "object",
+                "properties": {
+                  "old": {
+                    "$ref": "#/$defs/event/properties/level"
+                  },
+                  "new": {
+                    "$ref": "#/$defs/event/properties/level"
+                  }
+                }
+              },
+              "subjectChange": {
+                "type": "object",
+                "properties": {
+                  "old": {
+                    "$ref": "#/$defs/event/properties/subject"
+                  },
+                  "new": {
+                    "$ref": "#/$defs/event/properties/subject"
+                  }
+                }
+              },
+              "deviceIdChange": {
+                "type": "object",
+                "properties": {
+                  "old": {
+                    "$ref": "#/$defs/event/properties/deviceId"
+                  },
+                  "oldDeviceName": {
+                    "$ref": "#/$defs/common/name"
+                  },
+                  "new": {
+                    "$ref": "#/$defs/event/properties/deviceId"
+                  },
+                  "newDeviceName": {
+                    "$ref": "#/$defs/common/name"
+                  }
+                }
+              },
+              "tagsChange": {
+                "type": "object",
+                "patternProperties": {
+                  "^[0-9a-zA-Z_-]{1,255}$": {
+                    "type": "object",
+                    "properties": {
+                      "old": {
+                        "$ref": "#/$defs/common/name"
+                      },
+                      "new": {
+                        "$ref": "#/$defs/common/name"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "dataTable": {
+      "title": "Data Table",
+      "description": "Schema for a single Data Table",
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "dataTableId": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "applicationId": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "creationDate": {
+          "$ref": "#/$defs/common/date"
+        },
+        "lastUpdated": {
+          "$ref": "#/$defs/common/date"
+        },
+        "name": {
+          "$ref": "#/$defs/common/name"
+        },
+        "description": {
+          "$ref": "#/$defs/common/description"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dataTableColumn"
+          },
+          "maxItems": 50
+        }
+      }
+    },
+    "integration": {
+      "title": "Integration",
+      "description": "Schema for a single Integration",
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "integrationId": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "applicationId": {
+          "$ref": "#/$defs/common/objectId"
+        },
+        "creationDate": {
+          "$ref": "#/$defs/common/date"
+        },
+        "lastUpdated": {
+          "$ref": "#/$defs/common/date"
+        },
+        "name": {
+          "$ref": "#/$defs/common/name"
+        },
+        "credentialName": {
+          "$ref": "#/$defs/common/name"
+        },
+        "integrationType": {
+          "type": "string",
+          "enum": [
+            "azureEventHub",
+            "googlePubSub",
+            "mqtt",
+            "particle",
+            "sqs",
+            "websocket"
+          ]
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/common/reqMedStr"
+          },
+          "uniqueItems": true
+        },
+        "azureEventHubConfig": {
+          "type": "object",
+          "properties": {
+            "hubName": {
+              "type": "string",
+              "maxLength": 256,
+              "minLength": 1
+            },
+            "hostName": {
+              "type": "string",
+              "maxLength": 256,
+              "minLength": 1
+            },
+            "consumerGroup": {
+              "type": "string",
+              "maxLength": 256,
+              "minLength": 1
+            },
+            "connectionString": {
+              "$ref": "#/$defs/common/reqMedStr"
+            }
+          },
+          "additionalProperties": false,
+          "oneOf": [
+            {
+              "required": [
+                "hubName",
+                "consumerGroup",
+                "connectionString"
+              ]
+            },
+            {
+              "required": [
+                "hubName",
+                "consumerGroup",
+                "hostName"
+              ]
+            }
+          ]
+        },
+        "googlePubSubConfig": {
+          "type": "object",
+          "properties": {
+            "projectId": {
+              "type": "string",
+              "maxLength": 255,
+              "minLength": 1
+            },
+            "keyJson": {
+              "type": "string",
+              "maxLength": 32767,
+              "minLength": 4
+            }
+          },
+          "additionalProperties": false
+        },
+        "mqttConfig": {
+          "type": "object",
+          "properties": {
+            "clientId": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "username": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "password": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "clean": {
+              "type": "boolean"
+            },
+            "port": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "protocol": {
+              "type": "string",
+              "enum": [
+                "mqtt",
+                "mqtts",
+                "ws",
+                "wss"
+              ]
+            },
+            "host": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "privateKey": {
+              "$ref": "#/$defs/common/certificate"
+            },
+            "certificate": {
+              "$ref": "#/$defs/common/certificate"
+            },
+            "caCertificate": {
+              "$ref": "#/$defs/common/certificate"
+            },
+            "disableSSLVerification": {
+              "type": "boolean"
+            },
+            "protocolVersion": {
+              "type": "string",
+              "enum": [
+                "3.1.1",
+                "5"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "port",
+            "protocol",
+            "host"
+          ]
+        },
+        "particleConfig": {
+          "type": "object",
+          "properties": {
+            "accessToken": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "productSlugOrId": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "orgSlugOrId": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "deviceNameOrId": {
+              "$ref": "#/$defs/common/reqMedStr"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "accessToken"
+          ]
+        },
+        "sqsConfig": {
+          "type": "object",
+          "properties": {
+            "accessKeyId": {
+              "type": "string",
+              "min": 4,
+              "max": 128
+            },
+            "secretAccessKey": {
+              "type": "string",
+              "min": 4,
+              "max": 128
+            },
+            "region": {
+              "type": "string",
+              "min": 4,
+              "max": 128
+            },
+            "queueUrl": {
+              "type": "string",
+              "min": 1,
+              "max": 256
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "queueUrl"
+          ]
+        },
+        "websocketConfig": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "disableSSLVerification": {
+              "type": "boolean"
+            },
+            "username": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "password": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "privateKey": {
+              "$ref": "#/$defs/common/certificate"
+            },
+            "certificate": {
+              "$ref": "#/$defs/common/certificate"
+            },
+            "caCertificate": {
+              "$ref": "#/$defs/common/certificate"
+            },
+            "headers": {
+              "type": "array",
+              "maxItems": 50,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "headerKey": {
+                    "$ref": "#/$defs/common/reqMedStr"
+                  },
+                  "headerValue": {
+                    "$ref": "#/$defs/common/reqMedStr"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "headerKey",
+                  "headerValue"
+                ]
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "url"
+          ]
+        },
+        "status": {
+          "lastKeepAlive": {
+            "type": [
+              "number"
+            ]
+          },
+          "nextAttempt": {
+            "type": [
+              "number"
+            ]
+          },
+          "connectInfo": {
+            "type": "object",
+            "properties": {
+              "ts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          },
+          "disconnectInfo": {
+            "type": "object",
+            "properties": {
+              "ts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "error": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "dataTableColumn": {
+      "title": "Data Table Column",
+      "description": "Schema for a single Data Table Column",
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/common/key"
+        },
+        "dataType": {
+          "type": "string",
+          "enum": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        },
+        "constraint": {
+          "type": "string",
+          "enum": [
+            "unique",
+            "required",
+            "optional"
+          ]
+        },
+        "defaultValue": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "dataType",
+        "constraint"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

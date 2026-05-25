@@ -1,0 +1,27 @@
+{
+  "name": "Create Experience User Example",
+  "description": "Create a new experience user for an application",
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/applications/575ec8687ae143cd83dc4a97/experience/users",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "email": "building-manager@example.com",
+      "firstName": "Sam",
+      "lastName": "Cole",
+      "password": "replace-me",
+      "experienceGroups": []
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": null
+  }
+}

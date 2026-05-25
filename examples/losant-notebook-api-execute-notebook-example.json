@@ -1,0 +1,28 @@
+{
+  "name": "Execute Notebook Example",
+  "description": "Triggers the execution of a notebook",
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/applications/575ec8687ae143cd83dc4a97/notebooks/575ec7417ae143cd83dc4a98",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "parameters": {
+        "reportDate": "2026-05-25"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "success": true,
+      "executionId": null
+    }
+  }
+}

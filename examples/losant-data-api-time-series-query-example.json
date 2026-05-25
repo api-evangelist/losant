@@ -1,0 +1,40 @@
+{
+  "name": "Time Series Query Example",
+  "description": "Returns the data for the given query",
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/applications/575ec8687ae143cd83dc4a97/data",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "deviceIds": [
+        "575ec7417ae143cd83dc4a95"
+      ],
+      "attributes": [
+        "temperature"
+      ],
+      "aggregation": "MEAN",
+      "resolution": 60000,
+      "start": "2026-05-25T00:00:00Z",
+      "end": "2026-05-25T23:59:59Z"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "start": null,
+      "end": null,
+      "resolution": null,
+      "aggregation": null,
+      "limit": null,
+      "order": "asc",
+      "devices": {}
+    }
+  }
+}

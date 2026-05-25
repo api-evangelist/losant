@@ -1,0 +1,78 @@
+{
+  "title": "Losant DataTable",
+  "description": "Schema for a single Data Table",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "dataTableId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "creationDate": {
+      "$ref": "#/$defs/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/$defs/common/date"
+    },
+    "name": {
+      "$ref": "#/$defs/common/name"
+    },
+    "description": {
+      "$ref": "#/$defs/common/description"
+    },
+    "columns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/dataTableColumn"
+      },
+      "maxItems": 50
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/losant/main/json-schema/losant-dataTable-schema.json",
+  "$defs": {
+    "dataTableColumn": {
+      "title": "Data Table Column",
+      "description": "Schema for a single Data Table Column",
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/common/key"
+        },
+        "dataType": {
+          "type": "string",
+          "enum": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        },
+        "constraint": {
+          "type": "string",
+          "enum": [
+            "unique",
+            "required",
+            "optional"
+          ]
+        },
+        "defaultValue": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "dataType",
+        "constraint"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,24 @@
+name: Manage Enterprise Instance Organizations
+description: Create, update, and manage organizations within a dedicated or self-hosted
+  Losant Enterprise Instance.
+provider: losant
+api: instance
+operations:
+- path: /instances/{instanceId}/orgs
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /instances/{instanceId}/orgs/{orgId}
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

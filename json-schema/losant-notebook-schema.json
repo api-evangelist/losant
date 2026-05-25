@@ -1,0 +1,442 @@
+{
+  "title": "Losant Notebook",
+  "description": "Schema for a single Notebook",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "notebookId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "creationDate": {
+      "$ref": "#/$defs/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/$defs/common/date"
+    },
+    "name": {
+      "$ref": "#/$defs/common/reqMedStr"
+    },
+    "description": {
+      "$ref": "#/$defs/common/description"
+    },
+    "jupyterFileName": {
+      "$ref": "#/$defs/common/reqMedStr"
+    },
+    "jupyterFileUrl": {
+      "type": "string"
+    },
+    "imageVersion": {
+      "$ref": "#/$defs/common/notebookImageVersion"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "maxItems": 100,
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "inputType": {
+                "type": "string",
+                "enum": [
+                  "deviceData"
+                ]
+              },
+              "fileName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              },
+              "deviceTags": {
+                "$ref": "#/$defs/common/templateTags"
+              },
+              "deviceIds": {
+                "$ref": "#/$defs/common/templatesOrObjectIds"
+              },
+              "queryJson": {
+                "$ref": "#/$defs/common/queryJson"
+              },
+              "attributes": {
+                "type": "array",
+                "maxItems": 100,
+                "items": {
+                  "$ref": "#/$defs/common/key"
+                }
+              },
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "inputType",
+              "fileName",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "inputType": {
+                "type": "string",
+                "enum": [
+                  "deviceConnectionHistory"
+                ]
+              },
+              "fileName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              },
+              "deviceTags": {
+                "$ref": "#/$defs/common/templateTags"
+              },
+              "deviceIds": {
+                "$ref": "#/$defs/common/templatesOrObjectIds"
+              },
+              "queryJson": {
+                "$ref": "#/$defs/common/queryJson"
+              },
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "inputType",
+              "fileName",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "inputType": {
+                "type": "string",
+                "enum": [
+                  "deviceMetadata"
+                ]
+              },
+              "fileName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              },
+              "deviceTags": {
+                "$ref": "#/$defs/common/templateTags"
+              },
+              "deviceIds": {
+                "$ref": "#/$defs/common/templatesOrObjectIds"
+              },
+              "queryJson": {
+                "$ref": "#/$defs/common/queryJson"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "csv",
+                  "json"
+                ],
+                "default": "csv"
+              }
+            },
+            "required": [
+              "inputType",
+              "fileName"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "inputType": {
+                "type": "string",
+                "enum": [
+                  "dataTable"
+                ]
+              },
+              "fileName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              },
+              "dataTableId": {
+                "$ref": "#/$defs/common/templateOrObjectId"
+              },
+              "queryJson": {
+                "$ref": "#/$defs/common/queryJson"
+              }
+            },
+            "required": [
+              "inputType",
+              "fileName",
+              "dataTableId"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "inputType": {
+                "type": "string",
+                "enum": [
+                  "eventData"
+                ]
+              },
+              "fileName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              },
+              "queryJson": {
+                "$ref": "#/$defs/common/queryJson"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "csv",
+                  "json"
+                ],
+                "default": "csv"
+              }
+            },
+            "required": [
+              "inputType",
+              "fileName"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "inputType": {
+                "type": "string",
+                "enum": [
+                  "externalUrl"
+                ]
+              },
+              "fileName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              },
+              "sourceUrl": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024
+              }
+            },
+            "required": [
+              "inputType",
+              "fileName",
+              "sourceUrl"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "inputType": {
+                "type": "string",
+                "enum": [
+                  "applicationFile"
+                ]
+              },
+              "fileName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              },
+              "filePath": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "private": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "inputType",
+              "fileName",
+              "filePath"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "maxItems": 100,
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "outputType": {
+                "type": "string",
+                "enum": [
+                  "dataTable"
+                ]
+              },
+              "fileName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              },
+              "dataTableId": {
+                "$ref": "#/$defs/common/templateOrObjectId"
+              },
+              "createMissingColumns": {
+                "type": "boolean"
+              },
+              "truncateExistingTable": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "fileName",
+              "outputType",
+              "dataTableId"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "outputType": {
+                "type": "string",
+                "enum": [
+                  "file"
+                ]
+              },
+              "fileName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              },
+              "destinationDirectoryTemplate": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "destinationFileNameTemplate": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "destinationPrivate": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "fileName",
+              "outputType",
+              "destinationFileNameTemplate"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "outputType": {
+                "type": "string",
+                "enum": [
+                  "directory"
+                ]
+              },
+              "directoryName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              },
+              "destinationDirectoryTemplate": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "destinationPrivate": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "directoryName",
+              "outputType",
+              "destinationDirectoryTemplate"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "outputType": {
+                "type": "string",
+                "enum": [
+                  "executionResult"
+                ]
+              },
+              "fileName": {
+                "type": "string",
+                "enum": [
+                  "result.html",
+                  "result.pdf",
+                  "result.ipynb",
+                  "result.error.log",
+                  "result.log"
+                ]
+              },
+              "destinationDirectoryTemplate": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "destinationFileNameTemplate": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "destinationPrivate": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "fileName",
+              "outputType"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "outputType": {
+                "type": "string",
+                "enum": [
+                  "temporaryUrl"
+                ]
+              },
+              "fileName": {
+                "$ref": "#/$defs/common/templateOrSafeFileName"
+              }
+            },
+            "required": [
+              "fileName",
+              "outputType"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "minutesThisPeriod": {
+          "type": "number"
+        },
+        "runsThisPeriod": {
+          "type": "number"
+        },
+        "errorsThisPeriod": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/losant/main/json-schema/losant-notebook-schema.json"
+}

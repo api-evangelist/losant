@@ -1,0 +1,34 @@
+{
+  "name": "Authenticate Device Example",
+  "description": null,
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/auth",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "deviceId": "575ec7417ae143cd83dc4a95",
+      "key": "0123456789abcdef0123456789abcdef",
+      "secret": "replace-with-device-secret"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "applicationId": null,
+      "deviceId": null,
+      "deviceClass": null,
+      "token": null,
+      "ownerType": null,
+      "filterType": null,
+      "pubTopics": null,
+      "subTopics": null
+    }
+  }
+}

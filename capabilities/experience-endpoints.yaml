@@ -1,0 +1,18 @@
+name: Manage Experience Endpoints
+description: Configure HTTP endpoints that route traffic into Losant workflows for
+  the Experience web layer.
+provider: losant
+api: experience
+operations:
+- path: /applications/{applicationId}/experience/endpoints
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

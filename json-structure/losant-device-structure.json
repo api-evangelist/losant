@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-structure.org/draft/2025-01/structure",
+  "name": "LosantDevice",
+  "description": "Represents a physical or virtual device. Has tags, attributes, connection state, and may be a standalone device, gateway, edge-compute device, embedded device, virtual device, or system device.",
+  "source": "#/definitions/device in https://api.losant.com/",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "deviceId": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "creationDate": {
+      "$ref": "#/definitions/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/definitions/common/date"
+    },
+    "deletedAt": {
+      "$ref": "#/definitions/common/date"
+    },
+    "name": {
+      "$ref": "#/definitions/common/name"
+    },
+    "description": {
+      "$ref": "#/definitions/common/description"
+    },
+    "tags": {
+      "$ref": "#/definitions/common/tagsRequired"
+    },
+    "attributes": {
+      "$ref": "#/definitions/common/deviceAttributesInternal"
+    },
+    "deviceClass": {
+      "$ref": "#/definitions/common/deviceClass"
+    },
+    "gatewayId": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "edgeAgentVersion": {
+      "$ref": "#/definitions/common/version"
+    },
+    "connectionInfo": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "$ref": "#/definitions/common/date"
+        },
+        "connected": {
+          "enum": [
+            1,
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "parentId": {
+      "$ref": "#/definitions/common/objectIdOrNull"
+    },
+    "ancestorIds": {
+      "$ref": "#/definitions/common/objectIds"
+    },
+    "systemInterval": {
+      "$ref": "#/definitions/common/systemInterval"
+    },
+    "keepDuplicates": {
+      "type": "boolean"
+    }
+  },
+  "required": []
+}

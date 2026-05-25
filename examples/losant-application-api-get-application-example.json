@@ -1,0 +1,109 @@
+{
+  "name": "Get Application Example",
+  "description": "Retrieves information on an application",
+  "request": {
+    "method": "GET",
+    "url": "https://api.losant.com/applications/575ec8687ae143cd83dc4a97",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "id": null,
+      "applicationId": null,
+      "creationDate": null,
+      "lastUpdated": null,
+      "appliedTemplateIds": null,
+      "ownerId": null,
+      "ownerType": null,
+      "organizationName": null,
+      "organizationIconColor": null,
+      "name": null,
+      "description": null,
+      "endpointSlug": null,
+      "expUserTokenCutoff": null,
+      "endpointDefaultCors": true,
+      "globals": null,
+      "blobUrlTTL": 1.0,
+      "summary": {
+        "apiTokenCount": 1,
+        "certificateCount": 1,
+        "certificateAuthorityCount": 1,
+        "credentialCount": 1,
+        "dashCount": 1,
+        "dataTableCount": 1,
+        "deviceCount": 1,
+        "deviceRecipeCount": 1,
+        "eventCount": 1,
+        "experienceDomainCount": 1,
+        "experienceEndpointCount": 1,
+        "experienceGroupCount": 1,
+        "experienceSlugCount": 1,
+        "experienceUserCount": 1,
+        "experienceVersionCount": 1,
+        "experienceViewCount": 1,
+        "fileCount": 1,
+        "flowCount": 1,
+        "integrationCount": 1,
+        "keyCount": 1
+      },
+      "ftueTracking": [
+        {
+          "name": null,
+          "version": 1.0,
+          "status": "skipped"
+        }
+      ],
+      "archiveConfig": {
+        "directory": "example",
+        "mode": null,
+        "deviceIds": null,
+        "deviceTags": null,
+        "includeDevices": true,
+        "includeEvents": false,
+        "includeDataTables": false,
+        "dataTablesMode": null,
+        "dataTableIds": null,
+        "includeApplicationExport": false,
+        "applicationExportOptions": {
+          "includeFiles": false,
+          "includePrivateFiles": false,
+          "includeDataTableRows": false,
+          "includeDevices": false,
+          "exportType": "repo",
+          "credentialName": null,
+          "repo": {
+            "branch": null,
+            "directory": null,
+            "commitMessage": null
+          }
+        },
+        "delayDays": 1,
+        "s3": {
+          "bucket": "example",
+          "accessKeyId": "example",
+          "secretAccessKey": "example",
+          "region": "example"
+        },
+        "credentialName": null,
+        "gcs": {
+          "projectId": null,
+          "keyJson": "example",
+          "bucket": "example"
+        },
+        "azure": {
+          "account": "example",
+          "accountKey": "example",
+          "bucket": "example"
+        }
+      }
+    }
+  }
+}

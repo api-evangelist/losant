@@ -1,0 +1,29 @@
+{
+  "name": "Authenticate User Example",
+  "description": null,
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/auth",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "email": "user@example.com",
+      "password": "replace-me"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "userId": null,
+      "token": null,
+      "needsToVerifyEmail": true,
+      "orgId": null
+    }
+  }
+}

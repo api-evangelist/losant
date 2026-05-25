@@ -1,0 +1,41 @@
+extends:
+- - spectral:oas
+  - recommended
+rules:
+  losant-id-pattern:
+    description: Losant resource IDs MUST match the 24-hex-char MongoDB ObjectId pattern.
+    severity: error
+    given: $.paths.*..parameters[?(@.name && @.name =~ /Id$/)].schema
+    then:
+      field: pattern
+      function: pattern
+      functionOptions:
+        match: ^\^\[A-Fa-f\\d\]\{24\}\$$
+  losant-application-scope:
+    description: Application-scoped paths MUST include {applicationId} path parameter.
+    severity: warn
+    given: $.paths[?(@property =~ /^\/applications\//)]
+    then:
+      function: truthy
+  losant-title-case-summary:
+    description: OpenAPI operation summaries SHOULD use Title Case.
+    severity: warn
+    given: $.paths.*.*.summary
+    then:
+      function: pattern
+      functionOptions:
+        match: ^([A-Z][\w\-/]*)( [A-Z][\w\-/]*| [a-z]{1,3}| [A-Z]+)*$
+  losant-bearer-auth-required:
+    description: All Losant Platform operations MUST require BearerAuth.
+    severity: error
+    given: $.paths.*.*.security[*]
+    then:
+      field: BearerAuth
+      function: truthy
+  losant-error-schema:
+    description: Error responses SHOULD reference the shared error schema.
+    severity: warn
+    given: $.paths.*.*.responses[?(@property =~ /^4/ || @property =~ /^5/)].content.application/json.schema
+    then:
+      field: $ref
+      function: truthy

@@ -1,0 +1,65 @@
+{
+  "title": "Losant ExperienceUser",
+  "description": "Schema for a single Experience User",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "experienceUserId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "creationDate": {
+      "$ref": "#/$defs/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/$defs/common/date"
+    },
+    "passwordLastUpdated": {
+      "$ref": "#/$defs/common/date"
+    },
+    "lastLogin": {
+      "$ref": "#/$defs/common/date"
+    },
+    "email": {
+      "$ref": "#/$defs/common/email"
+    },
+    "firstName": {
+      "$ref": "#/$defs/common/optMedStr"
+    },
+    "lastName": {
+      "$ref": "#/$defs/common/optMedStr"
+    },
+    "avatarUrl": {
+      "$ref": "#/$defs/common/url"
+    },
+    "tokenCutoff": {
+      "$ref": "#/$defs/common/date"
+    },
+    "userTags": {
+      "$ref": "#/$defs/common/objectTags"
+    },
+    "experienceGroups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/$defs/common/name"
+          },
+          "id": {
+            "$ref": "#/$defs/common/objectId"
+          },
+          "parentId": {
+            "$ref": "#/$defs/common/objectIdOrNull"
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/losant/main/json-schema/losant-experienceUser-schema.json"
+}

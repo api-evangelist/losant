@@ -1,0 +1,24 @@
+name: Manage Edge and Embedded Deployments
+description: Distribute workflow versions to Edge Compute gateways and Embedded Edge
+  Agent (EEA) microcontroller fleets and track deployment state.
+provider: losant
+api: edge
+operations:
+- path: /applications/{applicationId}/edge-deployments
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /applications/{applicationId}/embedded-deployments
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

@@ -1,0 +1,505 @@
+{
+  "title": "Losant Application",
+  "description": "Schema for a single Application",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "creationDate": {
+      "$ref": "#/$defs/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/$defs/common/date"
+    },
+    "appliedTemplateIds": {
+      "$ref": "#/$defs/common/objectIds"
+    },
+    "ownerId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "ownerType": {
+      "$ref": "#/$defs/common/ownerType"
+    },
+    "organizationName": {
+      "$ref": "#/$defs/common/name"
+    },
+    "organizationIconColor": {
+      "$ref": "#/$defs/common/color"
+    },
+    "name": {
+      "$ref": "#/$defs/common/name"
+    },
+    "description": {
+      "$ref": "#/$defs/common/shortString"
+    },
+    "endpointSlug": {
+      "$ref": "#/$defs/common/slug"
+    },
+    "expUserTokenCutoff": {
+      "$ref": "#/$defs/common/date"
+    },
+    "endpointDefaultCors": {
+      "type": "boolean"
+    },
+    "globals": {
+      "$ref": "#/$defs/common/applicationGlobals"
+    },
+    "blobUrlTTL": {
+      "type": "number",
+      "minimum": 3600,
+      "maximum": 604800
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "apiTokenCount": {
+          "type": "integer"
+        },
+        "certificateCount": {
+          "type": "integer"
+        },
+        "certificateAuthorityCount": {
+          "type": "integer"
+        },
+        "credentialCount": {
+          "type": "integer"
+        },
+        "dashCount": {
+          "type": "integer"
+        },
+        "dataTableCount": {
+          "type": "integer"
+        },
+        "deviceCount": {
+          "type": "integer"
+        },
+        "deviceRecipeCount": {
+          "type": "integer"
+        },
+        "eventCount": {
+          "type": "integer"
+        },
+        "experienceDomainCount": {
+          "type": "integer"
+        },
+        "experienceEndpointCount": {
+          "type": "integer"
+        },
+        "experienceGroupCount": {
+          "type": "integer"
+        },
+        "experienceSlugCount": {
+          "type": "integer"
+        },
+        "experienceUserCount": {
+          "type": "integer"
+        },
+        "experienceVersionCount": {
+          "type": "integer"
+        },
+        "experienceViewCount": {
+          "type": "integer"
+        },
+        "fileCount": {
+          "type": "integer"
+        },
+        "flowCount": {
+          "type": "integer"
+        },
+        "integrationCount": {
+          "type": "integer"
+        },
+        "keyCount": {
+          "type": "integer"
+        },
+        "notebookCount": {
+          "type": "integer"
+        },
+        "privateFileCount": {
+          "type": "integer"
+        },
+        "resourceJobCount": {
+          "type": "integer"
+        },
+        "webhookCount": {
+          "type": "integer"
+        },
+        "payloadCount": {
+          "$ref": "#/$defs/payloadStats"
+        },
+        "storageStats": {
+          "$ref": "#/$defs/common/storageStats"
+        },
+        "notebookStats": {
+          "$ref": "#/$defs/common/notebookStats"
+        }
+      }
+    },
+    "ftueTracking": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/$defs/common/key"
+          },
+          "version": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "skipped",
+              "completed"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "version",
+          "status"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 100
+    },
+    "archiveConfig": {
+      "type": "object",
+      "properties": {
+        "directory": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "mode": {
+          "$ref": "#/$defs/common/filterType"
+        },
+        "deviceIds": {
+          "$ref": "#/$defs/common/objectIds"
+        },
+        "deviceTags": {
+          "$ref": "#/$defs/common/tagsOptional"
+        },
+        "includeDevices": {
+          "type": "boolean",
+          "default": true
+        },
+        "includeEvents": {
+          "type": "boolean",
+          "default": false
+        },
+        "includeDataTables": {
+          "type": "boolean",
+          "default": false
+        },
+        "dataTablesMode": {
+          "$ref": "#/$defs/common/filterType"
+        },
+        "dataTableIds": {
+          "$ref": "#/$defs/common/objectIds"
+        },
+        "includeApplicationExport": {
+          "type": "boolean",
+          "default": false
+        },
+        "applicationExportOptions": {
+          "type": "object",
+          "properties": {
+            "includeFiles": {
+              "type": "boolean",
+              "default": false
+            },
+            "includePrivateFiles": {
+              "type": "boolean",
+              "default": false
+            },
+            "includeDataTableRows": {
+              "type": "boolean",
+              "default": false
+            },
+            "includeDevices": {
+              "type": "boolean",
+              "default": false
+            },
+            "exportType": {
+              "type": "string",
+              "enum": [
+                "repo"
+              ],
+              "default": "repo"
+            },
+            "credentialName": {
+              "$ref": "#/$defs/common/name"
+            },
+            "repo": {
+              "type": "object",
+              "properties": {
+                "branch": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "directory": {
+                  "type": "string",
+                  "maxLength": 1024
+                },
+                "commitMessage": {
+                  "type": "string",
+                  "maxLength": 1024
+                }
+              }
+            }
+          },
+          "required": [
+            "credentialName"
+          ],
+          "additionalProperties": false
+        },
+        "delayDays": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "s3": {
+          "type": "object",
+          "properties": {
+            "bucket": {
+              "type": "string",
+              "maxLength": 255
+            },
+            "accessKeyId": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 128
+            },
+            "secretAccessKey": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 128
+            },
+            "region": {
+              "type": "string",
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "bucket"
+          ],
+          "additionalProperties": false
+        },
+        "credentialName": {
+          "$ref": "#/$defs/common/name"
+        },
+        "gcs": {
+          "type": "object",
+          "properties": {
+            "projectId": {
+              "$ref": "#/$defs/common/reqMedStr"
+            },
+            "keyJson": {
+              "type": "string",
+              "maxLength": 32767,
+              "minLength": 4
+            },
+            "bucket": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          "required": [
+            "bucket"
+          ],
+          "additionalProperties": false
+        },
+        "azure": {
+          "type": "object",
+          "properties": {
+            "account": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 24
+            },
+            "accountKey": {
+              "type": "string",
+              "maxLength": 255
+            },
+            "bucket": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 63
+            }
+          },
+          "required": [
+            "bucket"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/losant/main/json-schema/losant-application-schema.json",
+  "$defs": {
+    "payloadStats": {
+      "title": "Payload Stats",
+      "description": "Schema for the result of a payload stats request",
+      "type": "object",
+      "properties": {
+        "appFile": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "dataTable": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "deviceCreate": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "deviceCommand": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "deviceConnect": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "deviceDisconnect": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "deviceState": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "endpoint": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "event": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "flowError": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "inboundEmail": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "integration": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "mqttIn": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "mqttOut": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "notebook": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "resourceJob": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "timer": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "virtualButton": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        },
+        "webhook": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  }
+}

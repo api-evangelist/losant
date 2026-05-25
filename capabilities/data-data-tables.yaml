@@ -1,0 +1,24 @@
+name: Manage Data Tables
+description: Create Data Tables, define columns, and CRUD rows that augment time-series
+  IoT data with relational context.
+provider: losant
+api: data
+operations:
+- path: /applications/{applicationId}/data-tables
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /applications/{applicationId}/data-tables/{dataTableId}/rows
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

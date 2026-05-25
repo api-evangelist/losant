@@ -1,0 +1,158 @@
+{
+  "title": "Losant Event",
+  "description": "Schema for a single Event",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "eventId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "creationDate": {
+      "$ref": "#/$defs/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/$defs/common/date"
+    },
+    "sourceType": {
+      "$ref": "#/$defs/common/eventSourceType"
+    },
+    "sourceId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "sourceName": {
+      "$ref": "#/$defs/common/name"
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "error",
+        "critical"
+      ]
+    },
+    "state": {
+      "$ref": "#/$defs/common/eventState"
+    },
+    "subject": {
+      "$ref": "#/$defs/common/name"
+    },
+    "message": {
+      "$ref": "#/$defs/common/description"
+    },
+    "data": {},
+    "deviceId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "deviceName": {
+      "$ref": "#/$defs/common/name"
+    },
+    "disableTagChangeTracking": {
+      "type": "boolean"
+    },
+    "eventTags": {
+      "$ref": "#/$defs/common/objectTags"
+    },
+    "updates": {
+      "maxItems": 100,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sourceType": {
+            "$ref": "#/$defs/common/eventSourceType"
+          },
+          "sourceId": {
+            "$ref": "#/$defs/common/objectId"
+          },
+          "sourceName": {
+            "$ref": "#/$defs/common/name"
+          },
+          "creationDate": {
+            "$ref": "#/$defs/common/date"
+          },
+          "comment": {
+            "$ref": "#/$defs/common/description"
+          },
+          "data": {},
+          "state": {
+            "$ref": "#/$defs/common/eventState"
+          },
+          "stateChange": {
+            "type": "object",
+            "properties": {
+              "old": {
+                "$ref": "#/$defs/common/eventState"
+              },
+              "new": {
+                "$ref": "#/$defs/common/eventState"
+              }
+            }
+          },
+          "levelChange": {
+            "type": "object",
+            "properties": {
+              "old": {
+                "$ref": "#/$defs/event/properties/level"
+              },
+              "new": {
+                "$ref": "#/$defs/event/properties/level"
+              }
+            }
+          },
+          "subjectChange": {
+            "type": "object",
+            "properties": {
+              "old": {
+                "$ref": "#/$defs/event/properties/subject"
+              },
+              "new": {
+                "$ref": "#/$defs/event/properties/subject"
+              }
+            }
+          },
+          "deviceIdChange": {
+            "type": "object",
+            "properties": {
+              "old": {
+                "$ref": "#/$defs/event/properties/deviceId"
+              },
+              "oldDeviceName": {
+                "$ref": "#/$defs/common/name"
+              },
+              "new": {
+                "$ref": "#/$defs/event/properties/deviceId"
+              },
+              "newDeviceName": {
+                "$ref": "#/$defs/common/name"
+              }
+            }
+          },
+          "tagsChange": {
+            "type": "object",
+            "patternProperties": {
+              "^[0-9a-zA-Z_-]{1,255}$": {
+                "type": "object",
+                "properties": {
+                  "old": {
+                    "$ref": "#/$defs/common/name"
+                  },
+                  "new": {
+                    "$ref": "#/$defs/common/name"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/losant/main/json-schema/losant-event-schema.json"
+}

@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-structure.org/draft/2025-01/structure",
+  "name": "LosantFlow",
+  "description": "A Visual Workflow Engine workflow. Has a flowClass (cloud, edge, experience, embedded, customNode), versions, triggers, and node graph.",
+  "source": "#/definitions/flow in https://api.losant.com/",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "flowId": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "creationDate": {
+      "$ref": "#/definitions/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/definitions/common/date"
+    },
+    "createdById": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "createdByType": {
+      "$ref": "#/definitions/common/expSourceType"
+    },
+    "lastUpdatedById": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "lastUpdatedByType": {
+      "$ref": "#/definitions/common/expSourceType"
+    },
+    "name": {
+      "$ref": "#/definitions/common/name"
+    },
+    "description": {
+      "$ref": "#/definitions/common/description"
+    },
+    "shortDescription": {
+      "$ref": "#/definitions/common/shortString"
+    },
+    "iconData": {
+      "$ref": "#/definitions/common/imageDataUri"
+    },
+    "docsUrl": {
+      "$ref": "#/definitions/common/shortString"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "data",
+        "experience",
+        "logic",
+        "output",
+        "debug"
+      ]
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "defaultVersionId": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "minimumAgentVersion": {
+      "$ref": "#/definitions/common/version"
+    },
+    "flowClass": {
+      "type": "string",
+      "enum": [
+        "cloud",
+        "edge",
+        "embedded",
+        "experience",
+        "customNode"
+      ]
+    },
+    "triggers": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/common/triggers/appFile"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/basic"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/beckhoff"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/dataTable"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/integration"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/deviceIdsTags"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/deviceIdsTagsInactivity"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/direct"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/endpoint"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/event"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/fileTail"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/fileWatch"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/flowError"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/mqttTopic"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/onSync"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/opcua"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/redis"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/request"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/serial"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/snmpTrap"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/timer"
+          },
+          {
+            "$ref": "#/definitions/common/triggers/virtualButton"
+          }
+        ]
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/definitions/common/optMedStr"
+          },
+          "type": {
+            "$ref": "#/definitions/common/reqMedStr"
+          },
+          "config": {
+            "type": "object"
+          },
+          "meta": {
+            "type": "object"
+          },
+          "outputIds": {
+            "$ref": "#/definitions/common/outputIds"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "type"
+        ]
+      }
+    },
+    "customNodeConfig": {
+      "type": "object",
+      "properties": {
+        "outputCount": {
+          "type": "number",
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "resultMode": {
+          "type": "string",
+          "enum": [
+            "optional",
+            "required",
+            "none"
+          ]
+        },
+        "resultDescription": {
+          "$ref": "#/definitions/common/description"
+        },
+        "fields": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/definitions/common/customNodeFieldConfig"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "outputCount",
+        "resultMode",
+        "fields"
+      ]
+    },
+    "customNodeSupports": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "cloud",
+          "edge"
+        ]
+      }
+    },
+    "customNodeUseCount": {
+      "type": "number"
+    },
+    "globals": {
+      "$ref": "#/definitions/common/globals"
+    },
+    "deletedInDevelop": {
+      "type": "boolean"
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "runCount": {
+          "type": "number"
+        },
+        "errorCount": {
+          "type": "number"
+        },
+        "byVersion": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "object",
+              "properties": {
+                "runCount": {
+                  "type": "number"
+                },
+                "errorCount": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": []
+}

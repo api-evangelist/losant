@@ -1,0 +1,30 @@
+{
+  "name": "Last Value Query Example",
+  "description": "Returns the last known data for the given attribute",
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/applications/575ec8687ae143cd83dc4a97/data",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "applicationId": "575ec8687ae143cd83dc4a97",
+      "deviceIds": [
+        "575ec7417ae143cd83dc4a95"
+      ],
+      "attributes": [
+        "temperature",
+        "humidity"
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {}
+  }
+}

@@ -1,0 +1,29 @@
+name: Manage Losant Organizations
+description: Manage organizations, organization invites, and organization member roles.
+provider: losant
+api: auth
+operations:
+- path: /orgs
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /org/{orgId}
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /orgs/invites
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

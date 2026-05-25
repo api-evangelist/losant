@@ -1,0 +1,75 @@
+{
+  "title": "Losant Device",
+  "description": "Schema for a single Device",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "deviceId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "creationDate": {
+      "$ref": "#/$defs/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/$defs/common/date"
+    },
+    "deletedAt": {
+      "$ref": "#/$defs/common/date"
+    },
+    "name": {
+      "$ref": "#/$defs/common/name"
+    },
+    "description": {
+      "$ref": "#/$defs/common/description"
+    },
+    "tags": {
+      "$ref": "#/$defs/common/tagsRequired"
+    },
+    "attributes": {
+      "$ref": "#/$defs/common/deviceAttributesInternal"
+    },
+    "deviceClass": {
+      "$ref": "#/$defs/common/deviceClass"
+    },
+    "gatewayId": {
+      "$ref": "#/$defs/common/objectId"
+    },
+    "edgeAgentVersion": {
+      "$ref": "#/$defs/common/version"
+    },
+    "connectionInfo": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "$ref": "#/$defs/common/date"
+        },
+        "connected": {
+          "enum": [
+            1,
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "parentId": {
+      "$ref": "#/$defs/common/objectIdOrNull"
+    },
+    "ancestorIds": {
+      "$ref": "#/$defs/common/objectIds"
+    },
+    "systemInterval": {
+      "$ref": "#/$defs/common/systemInterval"
+    },
+    "keepDuplicates": {
+      "type": "boolean"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/losant/main/json-schema/losant-device-schema.json"
+}

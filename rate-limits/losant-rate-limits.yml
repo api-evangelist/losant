@@ -1,0 +1,55 @@
+specification: https://github.com/api-commons/rate-limits
+specVersion: '0.1'
+provider: losant
+providerName: Losant
+sourceURL: https://docs.losant.com/rest-api/overview/
+asOf: '2026-05-25'
+notes: |
+  Losant does not publish a single canonical numeric per-second rate limit for the Platform API. The
+  following entries describe the rate-limiting surfaces that the platform exposes and that operators tune
+  per commercial agreement and per Enterprise Instance.
+limits:
+- id: platform-api-default
+  scope: account
+  surface: https://api.losant.com
+  description: |
+    Multi-tenant cloud Platform API enforces fair-use throttling per account and per IP. Specific limits
+    are not publicly documented and are tuned by Losant for paying accounts.
+  policy: fair-use
+  enforcement: 429 Too Many Requests
+- id: mqtt-broker
+  scope: device
+  surface: broker.losant.com
+  description: |
+    Device MQTT broker enforces per-device connection, message-rate, and payload-size limits. Devices
+    exceeding the limit will be disconnected.
+  policy: per-device fair-use
+  enforcement: MQTT disconnect
+- id: webhooks
+  scope: application
+  surface: https://triggers.losant.com
+  description: |
+    Inbound webhook endpoints (and Experience endpoints) accept HTTP traffic into application workflows.
+    Sustained throughput is bounded by the workflow execution budget on the account/instance.
+  policy: workflow-run-budget bounded
+  enforcement: 429 / workflow drop
+- id: notebooks
+  scope: account
+  surface: notebooks
+  description: |
+    Notebook executions consume notebook minutes; concurrency and monthly notebook minutes are bounded by
+    plan/commercial agreement. Notebook errors and minute overage are surfaced via the Notebook API and
+    audit logs.
+  policy: minute-quota
+  enforcement: notebook execution refused or queued
+- id: enterprise-instance-tunable
+  scope: instance
+  surface: dedicated / self-hosted
+  description: |
+    On dedicated and self-hosted Enterprise Instances, rate-limit policies are configurable by the
+    customer/Losant operator at the instance level.
+  policy: operator-configurable
+  enforcement: per-instance configuration
+documentation:
+- https://docs.losant.com/rest-api/overview/
+- https://docs.losant.com/mqtt/overview/

@@ -1,0 +1,36 @@
+name: Authenticate to Losant
+description: Authenticate users, devices, and SSO sessions; obtain a JWT for use with
+  the Losant Platform API.
+provider: losant
+api: auth
+operations:
+- path: /auth/user
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /auth/device
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /auth/user/sso
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /auth/user/verify
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

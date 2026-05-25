@@ -1,0 +1,72 @@
+name: Losant IoT Platform Vocabulary
+description: 'Domain vocabulary spanning Losant''s IoT product surface: applications,
+  devices, data, workflows, edge/embedded compute, experiences, notebooks, and enterprise
+  instances.'
+concepts:
+  Application: Top-level multi-tenant container for an IoT solution; owns all child
+    resources.
+  Device: Physical or virtual endpoint connected to the Losant platform; may be standalone,
+    gateway, edge-compute, embedded, virtual, or system.
+  DeviceRecipe: Template defining tags, attributes, and metadata applied when provisioning
+    devices in bulk.
+  Attribute: A named time-series measurement (string, number, boolean, gps, blob)
+    reported by a device.
+  Tag: Key/value pair attached to a device for grouping and querying.
+  Event: Persistent alert/incident raised by a workflow or device; can be acknowledged,
+    commented on, and resolved.
+  Flow: Visual Workflow Engine workflow; flowClass enumerates cloud, edge, experience,
+    embedded, customNode.
+  FlowVersion: Immutable snapshot of a Flow used for deployments and rollback.
+  EdgeDeployment: Distribution of a flow version to a fleet of Linux gateways running
+    the Gateway Edge Agent.
+  EmbeddedDeployment: Distribution of a flow version to microcontrollers running the
+    Embedded Edge Agent (EEA).
+  Dashboard: Visualization surface composed of blocks (charts, gauges, tables, maps)
+    bound to device or data-table data.
+  DataTable: Schemaful relational table that augments time-series IoT data with structured
+    context rows.
+  Experience: White-labeled end-user web layer built on top of an Application.
+  ExperienceUser: End-user account that authenticates into a Losant Experience.
+  ExperienceEndpoint: HTTP route in an Experience that triggers a workflow or returns
+    a view.
+  ExperienceView: Handlebars-templated server-rendered HTML view served from an Experience.
+  Webhook: Inbound HTTP endpoint exposed by an Application for receiving traffic into
+    a workflow.
+  Integration: Outbound connection to an MQTT broker, AWS, Azure, GCP, or third-party
+    system used by workflows.
+  Notebook: Jupyter-style batch compute job that processes historical device data,
+    data tables, and other application state.
+  Instance: Dedicated or self-hosted Losant Enterprise environment; owns its own organizations,
+    custom nodes, and audit logs.
+  Organization: Billing and access-control boundary; contains applications and members.
+  ApiToken: Application-scoped or user-scoped Losant JWT used as Bearer authentication.
+  GatewayEdgeAgent: Losant's Linux-based edge runtime that executes edge-class flows
+    on customer gateways.
+  EmbeddedEdgeAgent: Losant's C-based microcontroller runtime (EEA) that executes
+    embedded-class flows.
+operations:
+  Provision: Create new resources (applications, devices, recipes, flows).
+  Configure: Update tags, attributes, dashboards, integrations, and credentials.
+  Ingest: Receive device state and webhook traffic.
+  Query: Read historical state, run aggregation and time-series queries, and read
+    data table rows.
+  Command: Send commands to one or many devices.
+  Deploy: Distribute flow versions to edge and embedded fleets.
+  Visualize: Render dashboards and experience views.
+  Analyze: Run notebook executions for batch analytics.
+  Govern: Manage organizations, members, audit logs, certificates, and API tokens.
+tags:
+- IoT
+- Internet Of Things
+- Devices
+- Edge Compute
+- Embedded
+- MQTT
+- Industrial IoT
+- Telemetry
+- Workflow Automation
+- Visual Workflow Engine
+- Dashboards
+- Time Series
+- Connected Products
+- Enterprise

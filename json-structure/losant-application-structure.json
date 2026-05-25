@@ -1,0 +1,344 @@
+{
+  "$schema": "https://json-structure.org/draft/2025-01/structure",
+  "name": "LosantApplication",
+  "description": "Top-level container for an IoT solution. Owns devices, dashboards, events, workflows, data tables, files, integrations, webhooks, experiences, and notebooks.",
+  "source": "#/definitions/application in https://api.losant.com/",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "applicationId": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "creationDate": {
+      "$ref": "#/definitions/common/date"
+    },
+    "lastUpdated": {
+      "$ref": "#/definitions/common/date"
+    },
+    "appliedTemplateIds": {
+      "$ref": "#/definitions/common/objectIds"
+    },
+    "ownerId": {
+      "$ref": "#/definitions/common/objectId"
+    },
+    "ownerType": {
+      "$ref": "#/definitions/common/ownerType"
+    },
+    "organizationName": {
+      "$ref": "#/definitions/common/name"
+    },
+    "organizationIconColor": {
+      "$ref": "#/definitions/common/color"
+    },
+    "name": {
+      "$ref": "#/definitions/common/name"
+    },
+    "description": {
+      "$ref": "#/definitions/common/shortString"
+    },
+    "endpointSlug": {
+      "$ref": "#/definitions/common/slug"
+    },
+    "expUserTokenCutoff": {
+      "$ref": "#/definitions/common/date"
+    },
+    "endpointDefaultCors": {
+      "type": "boolean"
+    },
+    "globals": {
+      "$ref": "#/definitions/common/applicationGlobals"
+    },
+    "blobUrlTTL": {
+      "type": "number",
+      "minimum": 3600,
+      "maximum": 604800
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "apiTokenCount": {
+          "type": "integer"
+        },
+        "certificateCount": {
+          "type": "integer"
+        },
+        "certificateAuthorityCount": {
+          "type": "integer"
+        },
+        "credentialCount": {
+          "type": "integer"
+        },
+        "dashCount": {
+          "type": "integer"
+        },
+        "dataTableCount": {
+          "type": "integer"
+        },
+        "deviceCount": {
+          "type": "integer"
+        },
+        "deviceRecipeCount": {
+          "type": "integer"
+        },
+        "eventCount": {
+          "type": "integer"
+        },
+        "experienceDomainCount": {
+          "type": "integer"
+        },
+        "experienceEndpointCount": {
+          "type": "integer"
+        },
+        "experienceGroupCount": {
+          "type": "integer"
+        },
+        "experienceSlugCount": {
+          "type": "integer"
+        },
+        "experienceUserCount": {
+          "type": "integer"
+        },
+        "experienceVersionCount": {
+          "type": "integer"
+        },
+        "experienceViewCount": {
+          "type": "integer"
+        },
+        "fileCount": {
+          "type": "integer"
+        },
+        "flowCount": {
+          "type": "integer"
+        },
+        "integrationCount": {
+          "type": "integer"
+        },
+        "keyCount": {
+          "type": "integer"
+        },
+        "notebookCount": {
+          "type": "integer"
+        },
+        "privateFileCount": {
+          "type": "integer"
+        },
+        "resourceJobCount": {
+          "type": "integer"
+        },
+        "webhookCount": {
+          "type": "integer"
+        },
+        "payloadCount": {
+          "$ref": "#/definitions/payloadStats"
+        },
+        "storageStats": {
+          "$ref": "#/definitions/common/storageStats"
+        },
+        "notebookStats": {
+          "$ref": "#/definitions/common/notebookStats"
+        }
+      }
+    },
+    "ftueTracking": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/definitions/common/key"
+          },
+          "version": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "skipped",
+              "completed"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "version",
+          "status"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 100
+    },
+    "archiveConfig": {
+      "type": "object",
+      "properties": {
+        "directory": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "mode": {
+          "$ref": "#/definitions/common/filterType"
+        },
+        "deviceIds": {
+          "$ref": "#/definitions/common/objectIds"
+        },
+        "deviceTags": {
+          "$ref": "#/definitions/common/tagsOptional"
+        },
+        "includeDevices": {
+          "type": "boolean",
+          "default": true
+        },
+        "includeEvents": {
+          "type": "boolean",
+          "default": false
+        },
+        "includeDataTables": {
+          "type": "boolean",
+          "default": false
+        },
+        "dataTablesMode": {
+          "$ref": "#/definitions/common/filterType"
+        },
+        "dataTableIds": {
+          "$ref": "#/definitions/common/objectIds"
+        },
+        "includeApplicationExport": {
+          "type": "boolean",
+          "default": false
+        },
+        "applicationExportOptions": {
+          "type": "object",
+          "properties": {
+            "includeFiles": {
+              "type": "boolean",
+              "default": false
+            },
+            "includePrivateFiles": {
+              "type": "boolean",
+              "default": false
+            },
+            "includeDataTableRows": {
+              "type": "boolean",
+              "default": false
+            },
+            "includeDevices": {
+              "type": "boolean",
+              "default": false
+            },
+            "exportType": {
+              "type": "string",
+              "enum": [
+                "repo"
+              ],
+              "default": "repo"
+            },
+            "credentialName": {
+              "$ref": "#/definitions/common/name"
+            },
+            "repo": {
+              "type": "object",
+              "properties": {
+                "branch": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "directory": {
+                  "type": "string",
+                  "maxLength": 1024
+                },
+                "commitMessage": {
+                  "type": "string",
+                  "maxLength": 1024
+                }
+              }
+            }
+          },
+          "required": [
+            "credentialName"
+          ],
+          "additionalProperties": false
+        },
+        "delayDays": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "s3": {
+          "type": "object",
+          "properties": {
+            "bucket": {
+              "type": "string",
+              "maxLength": 255
+            },
+            "accessKeyId": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 128
+            },
+            "secretAccessKey": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 128
+            },
+            "region": {
+              "type": "string",
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "bucket"
+          ],
+          "additionalProperties": false
+        },
+        "credentialName": {
+          "$ref": "#/definitions/common/name"
+        },
+        "gcs": {
+          "type": "object",
+          "properties": {
+            "projectId": {
+              "$ref": "#/definitions/common/reqMedStr"
+            },
+            "keyJson": {
+              "type": "string",
+              "maxLength": 32767,
+              "minLength": 4
+            },
+            "bucket": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          "required": [
+            "bucket"
+          ],
+          "additionalProperties": false
+        },
+        "azure": {
+          "type": "object",
+          "properties": {
+            "account": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 24
+            },
+            "accountKey": {
+              "type": "string",
+              "maxLength": 255
+            },
+            "bucket": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 63
+            }
+          },
+          "required": [
+            "bucket"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": []
+}

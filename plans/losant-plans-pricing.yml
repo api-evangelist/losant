@@ -1,0 +1,93 @@
+specification: https://github.com/api-commons/plans
+specVersion: '0.1'
+provider: losant
+providerName: Losant
+sourceURL: https://www.losant.com/pricing
+asOf: '2026-05-25'
+notes: |
+  Losant does not publish public per-tier pricing on its website. The pricing page is a contact-sales surface
+  ("Pricing Customized to Your Business Needs"). The product is sold as an Enterprise IoT Platform with three
+  documented offering shapes - the multi-tenant cloud, dedicated single-tenant Enterprise Instances, and
+  self-hosted Enterprise Instances - all sold via custom commercial agreements. The plans below capture the
+  packaging shape and what each offering includes, not retail pricing.
+plans:
+- id: developer-sandbox
+  name: Developer Sandbox
+  description: |
+    Free developer account on the multi-tenant Losant cloud (api.losant.com). Lets individuals build IoT
+    prototypes against the full Platform API and MQTT broker. Includes Losant University, application
+    templates, and community workflow nodes.
+  entries:
+  - geo: GLOBAL
+    label: Developer Account
+    unit: 1
+    price: 0
+    metric: account
+    timeFrame: month
+    description: Free for individual prototyping; not for production use.
+  elements:
+  - Multi-tenant cloud (api.losant.com)
+  - Full Platform API and MQTT broker access
+  - Workflow Engine (cloud, edge, experience, embedded, custom nodes)
+  - Application templates and community workflow nodes
+  - Losant University training
+- id: enterprise-cloud
+  name: Enterprise Cloud (Custom)
+  description: |
+    Production multi-tenant cloud usage. Pricing is custom and based on solution scope. Sold via direct
+    contact with Losant sales.
+  entries:
+  - geo: GLOBAL
+    label: Annual Contract
+    unit: 1
+    price: Contact
+    metric: contract
+    timeFrame: year
+    description: Custom pricing.
+  elements:
+  - All Developer Sandbox capabilities
+  - Production SLA
+  - Customer success and solution architect support
+  - Increased payload, device, dashboard, data table, notebook, and workflow limits per commercial agreement
+- id: dedicated-enterprise-instance
+  name: Dedicated Enterprise Instance
+  description: |
+    Single-tenant managed Losant deployment hosted by Losant. Adds the Instance API surface for managing
+    instance-level organizations, members, custom workflow nodes, sandboxes, and audit logs.
+  entries:
+  - geo: GLOBAL
+    label: Annual Contract
+    unit: 1
+    price: Contact
+    metric: contract
+    timeFrame: year
+    description: Custom pricing.
+  elements:
+  - All Enterprise Cloud capabilities
+  - Single-tenant dedicated infrastructure managed by Losant
+  - Instance API for instance-level administration
+  - Custom workflow nodes published instance-wide
+  - Dedicated sandboxes and notification rules
+  - Instance-level audit logs
+- id: self-hosted-enterprise-instance
+  name: Self-Hosted Enterprise Instance
+  description: |
+    Customer-hosted Losant Enterprise deployment running on customer-owned infrastructure (on-prem or
+    private cloud). Covers data-sovereignty and air-gapped requirements.
+  entries:
+  - geo: GLOBAL
+    label: Annual Contract
+    unit: 1
+    price: Contact
+    metric: contract
+    timeFrame: year
+    description: Custom pricing.
+  elements:
+  - All Dedicated Enterprise Instance capabilities
+  - Customer-controlled infrastructure
+  - Suitable for air-gapped and data-sovereignty regulated deployments
+contact:
+- url: https://www.losant.com/contact
+  type: Sales
+- url: mailto:hello@losant.com
+  type: Email

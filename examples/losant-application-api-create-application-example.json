@@ -1,0 +1,24 @@
+{
+  "name": "Create Application Example",
+  "description": "Create a new application",
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/applications",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "Smart Building Demo",
+      "description": "Demo IoT application monitoring HVAC and occupancy across a smart office."
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": null
+  }
+}

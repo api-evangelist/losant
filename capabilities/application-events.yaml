@@ -1,0 +1,24 @@
+name: Manage Application Events
+description: Create, query, update, and resolve Losant Events - alerts and incidents
+  emitted by workflows and devices.
+provider: losant
+api: application
+operations:
+- path: /applications/{applicationId}/events
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /applications/{applicationId}/events/{eventId}
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

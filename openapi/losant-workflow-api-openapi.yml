@@ -1,0 +1,1518 @@
+openapi: 3.0.3
+info:
+  title: Losant Workflow Engine API
+  version: 1.29.4
+  description: Create, version, deploy, debug, and execute Losant Visual Workflow Engine flows including Application, Experience,
+    Edge, and Embedded workflows. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  contact:
+    name: Losant Support
+    url: https://www.losant.com/contact
+    email: hello@losant.com
+  license:
+    name: Proprietary
+    url: https://www.losant.com/legal
+  x-source: https://api.losant.com/
+  x-publisher: Losant IoT, Inc.
+servers:
+- url: https://api.losant.com
+  description: Losant Platform API (US multi-tenant cloud)
+tags:
+- name: Workflow Engine
+  description: Workflow Engine resources on the Losant Platform.
+security:
+- BearerAuth: []
+paths:
+  /applications/{applicationId}/flows/{flowId}/versions/{flowVersionId}:
+    get:
+      summary: Get Information About Errors That Occurred During Runs of This Workflow Version
+      tags:
+      - Workflow Engine
+      parameters:
+      - &id001
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id002
+        name: flowId
+        in: path
+        description: ID associated with the flow
+        required: true
+        example: 575ed18f7ae143cd83dc4aa6
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id003
+        name: flowVersionId
+        in: path
+        description: Version ID or version name associated with the flow version
+        required: true
+        example: 675ed18f7ae143cd83dc4bb7
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - name: duration
+        in: query
+        description: Duration of time range in milliseconds
+        required: false
+        example: 86400000
+        schema:
+          type: string
+          default: 86400000
+      - name: end
+        in: query
+        description: End of time range in milliseconds since epoch
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of errors to return
+        required: false
+        example: 25
+        schema:
+          type: string
+          default: 25
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: desc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: deviceId
+        in: query
+        description: For edge workflows, the Device ID to return workflow errors for. When not included, will be errors for
+          all device IDs.
+        required: false
+        example: 575ed18f7ae143cd83dc4bb6
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Workflow error information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowErrors'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow version was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About a Flow Version
+      tags:
+      - Workflow Engine
+      parameters:
+      - *id001
+      - *id002
+      - *id003
+      - name: includeCustomNodes
+        in: query
+        description: If the result of the request should also include the details of any custom nodes referenced by the returned
+          workflows
+        required: false
+        example: true
+        schema:
+          type: string
+          default: false
+      requestBody:
+        description: Object containing new properties of the flow version
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/flowVersionPatch'
+      responses:
+        '200':
+          description: Updated flow version information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowVersion'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow version was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes a Flow Version
+      tags:
+      - Workflow Engine
+      parameters:
+      - *id001
+      - *id002
+      - *id003
+      responses:
+        '200':
+          description: If flow version was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow version was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/flows/{flowId}/versions:
+    get:
+      summary: Returns the Flow Versions for a Flow
+      tags:
+      - Workflow Engine
+      parameters:
+      - &id004
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id005
+        name: flowId
+        in: path
+        description: ID associated with the flow
+        required: true
+        example: 575ed18f7ae143cd83dc4aa6
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: version
+        schema:
+          type: string
+          enum:
+          - version
+          - id
+          - creationDate
+          - lastUpdated
+          default: version
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: version
+        schema:
+          type: string
+          enum:
+          - version
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my*version
+        schema:
+          type: string
+      - name: includeCustomNodes
+        in: query
+        description: If the result of the request should also include the details of any custom nodes referenced by the returned
+          workflows
+        required: false
+        example: true
+        schema:
+          type: string
+          default: false
+      - name: query
+        in: query
+        description: Workflow filter JSON object which overrides the filterField and filter parameters.
+        required: false
+        schema:
+          type: object
+      responses:
+        '200':
+          description: Collection of flow versions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowVersions'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Delete Flow Versions
+      tags:
+      - Workflow Engine
+      parameters:
+      - *id004
+      - *id005
+      requestBody:
+        description: Object containing flow version deletion options
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/flowVersionsDeletePost'
+      responses:
+        '200':
+          description: Object indicating number of flow versions deleted or failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bulkDeleteResponse'
+        '202':
+          description: If a job was enqueued for the flow versions to be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/flows/{flowId}:
+    get:
+      summary: Get Information About Errors That Occurred During Runs of This Workflow
+      tags:
+      - Workflow Engine
+      parameters:
+      - &id006
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id007
+        name: flowId
+        in: path
+        description: ID associated with the flow
+        required: true
+        example: 575ed18f7ae143cd83dc4aa6
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: duration
+        in: query
+        description: Duration of time range in milliseconds
+        required: false
+        example: 86400000
+        schema:
+          type: string
+          default: 86400000
+      - name: end
+        in: query
+        description: End of time range in milliseconds since epoch
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of errors to return
+        required: false
+        example: 25
+        schema:
+          type: string
+          default: 25
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: desc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: flowVersion
+        in: query
+        description: Flow version name or ID. When not included, will be errors for all versions. Pass develop for just the
+          develop version.
+        required: false
+        example: develop
+        schema:
+          type: string
+      - name: deviceId
+        in: query
+        description: For edge or embedded workflows, the Device ID for which to return workflow errors. When not included,
+          will be errors for all device IDs.
+        required: false
+        example: 575ed18f7ae143cd83dc4bb6
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Workflow error information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowErrors'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Sets a Storage Value
+      tags:
+      - Workflow Engine
+      parameters:
+      - *id006
+      - *id007
+      requestBody:
+        description: Object containing storage entry
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/flowStorageEntry'
+      responses:
+        '200':
+          description: Value was successfully stored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Clear All Storage Entries
+      tags:
+      - Workflow Engine
+      parameters:
+      - *id006
+      - *id007
+      responses:
+        '200':
+          description: The current storage entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowStorageEntries'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Presses the Specified Virtual Button on the Flow
+      tags:
+      - Workflow Engine
+      parameters:
+      - *id006
+      - *id007
+      requestBody:
+        description: Object containing button key and payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/virtualButtonPress'
+      responses:
+        '200':
+          description: Virtual button was pressed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/flows:
+    get:
+      summary: Gets Additional Nodes That Should Be Available in the Palette
+      tags:
+      - Workflow Engine
+      parameters:
+      - &id008
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: The additional nodes available in the palette
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paletteResponse'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Import a Set of Flows and Flow Versions
+      tags:
+      - Workflow Engine
+      parameters:
+      - *id008
+      requestBody:
+        description: New flow and flow version information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/flowsImportPost'
+      responses:
+        '201':
+          description: Successfully imported workflows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowsImportResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
+        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+  schemas:
+    advancedFlowVersionQuery:
+      title: Advanced Workflow Version Query
+      description: Schema for advanced workflow queries
+      type: object
+      properties:
+        $and:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedFlowVersionQuery'
+          maxItems: 100
+        $or:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedFlowVersionQuery'
+          maxItems: 100
+        $nor:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedFlowVersionQuery'
+          maxItems: 100
+        name:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        id:
+          $ref: '#/components/schemas/common/advancedIdQuery'
+        creationDate:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        lastUpdated:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        flowClass:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        enabled:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        version:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        triggers:
+          $ref: '#/components/schemas/common/advancedTriggerQueryWithOps'
+        nodes:
+          $ref: '#/components/schemas/common/advancedNodeQueryWithOps'
+        customNodeSupports:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+      additionalProperties: false
+    bulkDeleteResponse:
+      title: Bulk Deletion Response
+      description: Schema for the response to a bulk deletion
+      type: object
+      properties:
+        removed:
+          type: number
+        failed:
+          type: number
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    flow:
+      title: Workflow
+      description: Schema for a single Workflow
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        shortDescription:
+          $ref: '#/components/schemas/common/shortString'
+        iconData:
+          $ref: '#/components/schemas/common/imageDataUri'
+        docsUrl:
+          $ref: '#/components/schemas/common/shortString'
+        category:
+          type: string
+          enum:
+          - data
+          - experience
+          - logic
+          - output
+          - debug
+        enabled:
+          type: boolean
+        defaultVersionId:
+          $ref: '#/components/schemas/common/objectId'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        flowClass:
+          type: string
+          enum:
+          - cloud
+          - edge
+          - embedded
+          - experience
+          - customNode
+        triggers:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/common/triggers/appFile'
+            - $ref: '#/components/schemas/common/triggers/basic'
+            - $ref: '#/components/schemas/common/triggers/beckhoff'
+            - $ref: '#/components/schemas/common/triggers/dataTable'
+            - $ref: '#/components/schemas/common/triggers/integration'
+            - $ref: '#/components/schemas/common/triggers/deviceIdsTags'
+            - $ref: '#/components/schemas/common/triggers/deviceIdsTagsInactivity'
+            - $ref: '#/components/schemas/common/triggers/direct'
+            - $ref: '#/components/schemas/common/triggers/endpoint'
+            - $ref: '#/components/schemas/common/triggers/event'
+            - $ref: '#/components/schemas/common/triggers/fileTail'
+            - $ref: '#/components/schemas/common/triggers/fileWatch'
+            - $ref: '#/components/schemas/common/triggers/flowError'
+            - $ref: '#/components/schemas/common/triggers/mqttTopic'
+            - $ref: '#/components/schemas/common/triggers/onSync'
+            - $ref: '#/components/schemas/common/triggers/opcua'
+            - $ref: '#/components/schemas/common/triggers/redis'
+            - $ref: '#/components/schemas/common/triggers/request'
+            - $ref: '#/components/schemas/common/triggers/serial'
+            - $ref: '#/components/schemas/common/triggers/snmpTrap'
+            - $ref: '#/components/schemas/common/triggers/timer'
+            - $ref: '#/components/schemas/common/triggers/virtualButton'
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/common/optMedStr'
+              type:
+                $ref: '#/components/schemas/common/reqMedStr'
+              config:
+                type: object
+              meta:
+                type: object
+              outputIds:
+                $ref: '#/components/schemas/common/outputIds'
+            additionalProperties: false
+            required:
+            - type
+        customNodeConfig:
+          type: object
+          properties:
+            outputCount:
+              type: number
+              enum:
+              - 1
+              - 2
+            resultMode:
+              type: string
+              enum:
+              - optional
+              - required
+              - none
+            resultDescription:
+              $ref: '#/components/schemas/common/description'
+            fields:
+              type: array
+              maxItems: 100
+              items:
+                $ref: '#/components/schemas/common/customNodeFieldConfig'
+          additionalProperties: false
+          required:
+          - outputCount
+          - resultMode
+          - fields
+        customNodeSupports:
+          type: array
+          maxItems: 1
+          items:
+            type: string
+            enum:
+            - cloud
+            - edge
+        customNodeUseCount:
+          type: number
+        globals:
+          $ref: '#/components/schemas/common/globals'
+        deletedInDevelop:
+          type: boolean
+        stats:
+          type: object
+          properties:
+            runCount:
+              type: number
+            errorCount:
+              type: number
+            byVersion:
+              type: object
+              patternProperties:
+                .*:
+                  type: object
+                  properties:
+                    runCount:
+                      type: number
+                    errorCount:
+                      type: number
+    flowErrors:
+      title: Workflow Errors
+      description: Workflow run error information
+      type: object
+      properties:
+        flowVersion:
+          $ref: '#/components/schemas/common/name'
+        flowVersionId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        limit:
+          type: number
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              time:
+                $ref: '#/components/schemas/common/date'
+              deviceId:
+                $ref: '#/components/schemas/common/objectId'
+              deviceName:
+                $ref: '#/components/schemas/common/name'
+              flowVersion:
+                $ref: '#/components/schemas/common/name'
+              flowVersionId:
+                $ref: '#/components/schemas/common/objectId'
+              nodeId:
+                type: string
+              nodeLabel:
+                type: string
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    flowLog:
+      title: Workflow Log
+      description: Log of aggregated workflow run information
+      type: array
+      items:
+        type: object
+        properties:
+          flowVersionId:
+            type: string
+          time:
+            $ref: '#/components/schemas/common/date'
+          pathsFailed:
+            type: number
+          pathsCompleted:
+            type: number
+          runCount:
+            type: number
+          wallTime:
+            type: number
+          errors:
+            type: array
+            items: {}
+    flowPatch:
+      title: Workflow Patch
+      description: Schema for the body of a Workflow modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        shortDescription:
+          $ref: '#/components/schemas/common/shortString'
+        iconData:
+          $ref: '#/components/schemas/flowPost/properties/iconData'
+        docsUrl:
+          $ref: '#/components/schemas/common/shortString'
+        category:
+          $ref: '#/components/schemas/flowPost/properties/category'
+        enabled:
+          type: boolean
+        defaultVersionId:
+          $ref: '#/components/schemas/common/objectIdOrNull'
+        triggers:
+          $ref: '#/components/schemas/flow/properties/triggers'
+        nodes:
+          $ref: '#/components/schemas/flow/properties/nodes'
+        globals:
+          $ref: '#/components/schemas/common/globals'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        customNodeConfig:
+          $ref: '#/components/schemas/flow/properties/customNodeConfig'
+      additionalProperties: false
+    flowPost:
+      title: Workflow Post
+      description: Schema for the body of a Workflow creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        shortDescription:
+          $ref: '#/components/schemas/common/shortString'
+        iconData:
+          oneOf:
+          - $ref: '#/components/schemas/common/imageDataUri'
+          - type: 'null'
+        docsUrl:
+          $ref: '#/components/schemas/common/shortString'
+        category:
+          type: string
+          enum:
+          - data
+          - experience
+          - logic
+          - output
+          - debug
+          - ''
+        enabled:
+          type: boolean
+        triggers:
+          $ref: '#/components/schemas/flow/properties/triggers'
+        nodes:
+          $ref: '#/components/schemas/flow/properties/nodes'
+        globals:
+          $ref: '#/components/schemas/common/globals'
+        flowClass:
+          $ref: '#/components/schemas/flow/properties/flowClass'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        customNodeConfig:
+          $ref: '#/components/schemas/flow/properties/customNodeConfig'
+        customNodeSupports:
+          $ref: '#/components/schemas/flow/properties/customNodeSupports'
+      additionalProperties: false
+      required:
+      - name
+    flowStats:
+      title: Workflow Statistics
+      description: Statistics about the runs for a given workflow
+      type: object
+      properties:
+        flowVersion:
+          $ref: '#/components/schemas/common/name'
+        flowVersionId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        resolution:
+          type: number
+        metrics:
+          type: array
+          items:
+            type: object
+            properties:
+              time:
+                $ref: '#/components/schemas/common/date'
+              pathsFailed:
+                type: number
+              pathsCompleted:
+                type: number
+              runCount:
+                type: number
+              wallTime:
+                type: number
+    flowStorageEntries:
+      title: Workflow Storage Entries
+      description: Set of persistent workflow storage values
+      type: object
+      patternProperties:
+        ^.{1,255}$: {}
+    flowStorageEntry:
+      title: Workflow Storage Entry
+      description: Schema for the body of a request to set a Workflow storage entry
+      type: object
+      properties:
+        key:
+          type: string
+          minLength: 1
+          maxLength: 255
+        value: {}
+      additionalProperties: false
+      required:
+      - key
+    flowStorageMetadata:
+      title: Get Workflow Storage Entries Metadata
+      description: Schema for the result of get storage metadata request
+      type: object
+      properties:
+        memoryUsed:
+          type: number
+        keysCount:
+          type: number
+      additionalProperties: false
+    flowVersion:
+      title: Workflow Version
+      description: Schema for a single Workflow Version
+      oneOf:
+      - description: Schema for a single Cloud/Edge/Embedded/Custom Node Workflow Version
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          flowVersionId:
+            $ref: '#/components/schemas/common/objectId'
+          flowId:
+            $ref: '#/components/schemas/common/objectId'
+          applicationId:
+            $ref: '#/components/schemas/common/objectId'
+          creationDate:
+            $ref: '#/components/schemas/common/date'
+          lastUpdated:
+            $ref: '#/components/schemas/common/date'
+          createdById:
+            $ref: '#/components/schemas/common/objectId'
+          createdByType:
+            $ref: '#/components/schemas/common/expSourceType'
+          lastUpdatedById:
+            $ref: '#/components/schemas/common/objectId'
+          lastUpdatedByType:
+            $ref: '#/components/schemas/common/expSourceType'
+          version:
+            $ref: '#/components/schemas/common/name'
+          flowClass:
+            type: string
+            enum:
+            - cloud
+            - edge
+            - embedded
+            - customNode
+          notes:
+            $ref: '#/components/schemas/common/description'
+          enabled:
+            type: boolean
+          triggers:
+            $ref: '#/components/schemas/flow/properties/triggers'
+          nodes:
+            $ref: '#/components/schemas/flow/properties/nodes'
+          globals:
+            $ref: '#/components/schemas/common/globals'
+          minimumAgentVersion:
+            $ref: '#/components/schemas/common/version'
+          customNodeConfig:
+            $ref: '#/components/schemas/flow/properties/customNodeConfig'
+          stats:
+            type: object
+            properties:
+              runCount:
+                type: number
+              errorCount:
+                type: number
+              byVersion:
+                type: object
+                patternProperties:
+                  .*:
+                    type: object
+                    properties:
+                      runCount:
+                        type: number
+                      errorCount:
+                        type: number
+      - description: Schema for a single Experience Workflow Version
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          flowVersionId:
+            $ref: '#/components/schemas/common/objectId'
+          flowId:
+            $ref: '#/components/schemas/common/objectId'
+          applicationId:
+            $ref: '#/components/schemas/common/objectId'
+          creationDate:
+            $ref: '#/components/schemas/common/date'
+          lastUpdated:
+            $ref: '#/components/schemas/common/date'
+          name:
+            $ref: '#/components/schemas/common/name'
+          description:
+            $ref: '#/components/schemas/common/description'
+          flowClass:
+            type: string
+            enum:
+            - experience
+          versions:
+            type: array
+            items:
+              $ref: '#/components/schemas/common/name'
+          enabled:
+            type: boolean
+          triggers:
+            $ref: '#/components/schemas/flow/properties/triggers'
+          nodes:
+            $ref: '#/components/schemas/flow/properties/nodes'
+          globals:
+            $ref: '#/components/schemas/common/globals'
+          stats:
+            type: object
+            properties:
+              runCount:
+                type: number
+              errorCount:
+                type: number
+              byVersion:
+                type: object
+                patternProperties:
+                  .*:
+                    type: object
+                    properties:
+                      runCount:
+                        type: number
+                      errorCount:
+                        type: number
+    flowVersionPatch:
+      title: Workflow Version Patch
+      description: Schema for the body of a Workflow Version modification request
+      type: object
+      properties:
+        notes:
+          $ref: '#/components/schemas/common/description'
+        enabled:
+          type: boolean
+      additionalProperties: false
+    flowVersionPost:
+      title: Workflow Version Post
+      description: Schema for the body of a Workflow Version creation request
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/common/name'
+        notes:
+          $ref: '#/components/schemas/common/description'
+        enabled:
+          type: boolean
+        triggers:
+          $ref: '#/components/schemas/flow/properties/triggers'
+        nodes:
+          $ref: '#/components/schemas/flow/properties/nodes'
+        globals:
+          $ref: '#/components/schemas/common/globals'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        customNodeConfig:
+          $ref: '#/components/schemas/flow/properties/customNodeConfig'
+      additionalProperties: false
+      required:
+      - version
+    flowVersions:
+      title: Workflow Versions
+      description: Schema for a collection of Workflow Versions
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/flowVersion'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+    flowVersionsDeletePost:
+      title: Flow Versions Delete Post
+      description: Schema for the body of a bulk flow versions delete request
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        query:
+          $ref: '#/components/schemas/advancedFlowVersionQuery'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+      additionalProperties: false
+      required:
+      - query
+    flows:
+      title: Workflows
+      description: Schema for a collection of Workflows
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/flow'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        flowClass:
+          type: string
+          enum:
+          - cloud
+          - edge
+          - embedded
+          - experience
+          - customNode
+    flowsImportPost:
+      title: Workflows Import Post
+      description: Schema for the body of a workflow import request
+      type: object
+      properties:
+        flows:
+          maxItems: 1000
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/common/objectId'
+              applicationId:
+                $ref: '#/components/schemas/common/objectId'
+              name:
+                $ref: '#/components/schemas/common/name'
+              description:
+                $ref: '#/components/schemas/common/description'
+              shortDescription:
+                $ref: '#/components/schemas/common/shortString'
+              iconData:
+                $ref: '#/components/schemas/flowPost/properties/iconData'
+              docsUrl:
+                $ref: '#/components/schemas/common/shortString'
+              category:
+                $ref: '#/components/schemas/flowPost/properties/category'
+              enabled:
+                type: boolean
+              triggers:
+                $ref: '#/components/schemas/flow/properties/triggers'
+              nodes:
+                $ref: '#/components/schemas/flow/properties/nodes'
+              globals:
+                $ref: '#/components/schemas/common/globals'
+              flowClass:
+                $ref: '#/components/schemas/flow/properties/flowClass'
+              defaultVersionId:
+                $ref: '#/components/schemas/common/objectIdOrNull'
+              minimumAgentVersion:
+                $ref: '#/components/schemas/common/version'
+              customNodeConfig:
+                $ref: '#/components/schemas/flow/properties/customNodeConfig'
+              customNodeSupports:
+                $ref: '#/components/schemas/flow/properties/customNodeSupports'
+            additionalProperties:
+              type: string
+              maxLength: 1024
+            required:
+            - name
+        flowVersions:
+          maxItems: 1000
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/common/objectId'
+              flowId:
+                $ref: '#/components/schemas/common/objectId'
+              applicationId:
+                $ref: '#/components/schemas/common/objectId'
+              version:
+                $ref: '#/components/schemas/common/name'
+              notes:
+                $ref: '#/components/schemas/common/description'
+              enabled:
+                type: boolean
+              triggers:
+                $ref: '#/components/schemas/flow/properties/triggers'
+              nodes:
+                $ref: '#/components/schemas/flow/properties/nodes'
+              globals:
+                $ref: '#/components/schemas/common/globals'
+              minimumAgentVersion:
+                $ref: '#/components/schemas/common/version'
+              customNodeConfig:
+                $ref: '#/components/schemas/flow/properties/customNodeConfig'
+            additionalProperties:
+              type: string
+              maxLength: 1024
+            required:
+            - version
+      additionalProperties: false
+    flowsImportResult:
+      title: Workflow Import Result
+      description: Schema for the result of a workflow import request
+      type: object
+      properties:
+        flows:
+          maxItems: 1000
+          type: array
+          items:
+            $ref: '#/components/schemas/flow'
+        flowVersions:
+          maxItems: 1000
+          type: array
+          items:
+            $ref: '#/components/schemas/flowVersion'
+        importedFlowIdMap:
+          type: object
+          patternProperties:
+            ^[A-Fa-f\d]{24}$:
+              $ref: '#/components/schemas/common/objectId'
+        importedVersionIdMap:
+          type: object
+          patternProperties:
+            ^[A-Fa-f\d]{24}$:
+              $ref: '#/components/schemas/common/objectId'
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
+        success:
+          type: boolean
+          enum:
+          - true
+    paletteResponse:
+      title: Palette Response
+      description: Schema for the set of additional nodes for the workflow palette
+      type: object
+      properties:
+        customNodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/common/objectId'
+              name:
+                $ref: '#/components/schemas/common/name'
+              description:
+                $ref: '#/components/schemas/common/description'
+              shortDescription:
+                $ref: '#/components/schemas/common/shortString'
+              iconData:
+                $ref: '#/components/schemas/common/imageDataUri'
+              docsUrl:
+                $ref: '#/components/schemas/common/shortString'
+              category:
+                $ref: '#/components/schemas/flow/properties/category'
+              customNodeConfig:
+                $ref: '#/components/schemas/flow/properties/customNodeConfig'
+              flowVersionId:
+                $ref: '#/components/schemas/common/objectId'
+              version:
+                $ref: '#/components/schemas/common/name'
+              compatibleFlowClasses:
+                type: object
+                properties:
+                  cloud:
+                    type: boolean
+                  experience:
+                    type: boolean
+                  customNode:
+                    type: boolean
+                  edge:
+                    type:
+                    - boolean
+                    - string
+                  embedded:
+                    type:
+                    - boolean
+                    - string
+          instanceNodes:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  $ref: '#/definitions/common/objectId'
+                name:
+                  $ref: '#/definitions/common/name'
+                description:
+                  $ref: '#/definitions/common/description'
+                shortDescription:
+                  $ref: '#/definitions/common/shortString'
+                iconData:
+                  $ref: '#/definitions/common/imageDataUri'
+                docsUrl:
+                  $ref: '#/definitions/common/shortString'
+                category:
+                  $ref: '#/definitions/flow/properties/category'
+                customNodeConfig:
+                  $ref: '#/definitions/flow/properties/customNodeConfig'
+                compatibleFlowClasses:
+                  type: object
+                  properties:
+                    cloud:
+                      type: boolean
+                    experience:
+                      type: boolean
+                    customNode:
+                      type: boolean
+                    edge:
+                      type:
+                      - boolean
+                      - string
+                    embedded:
+                      type:
+                      - boolean
+                      - string
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    virtualButtonPress:
+      title: Virtual Button Press
+      description: Schema for the body of a request to press a Workflow virtual button
+      type: object
+      properties:
+        key:
+          type: string
+        payload: {}
+        meta: {}
+        flowVersion:
+          $ref: '#/components/schemas/common/name'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        deploymentId:
+          $ref: '#/components/schemas/common/objectId'
+      required:
+      - key
+      additionalProperties: false

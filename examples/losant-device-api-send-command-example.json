@@ -1,0 +1,29 @@
+{
+  "name": "Send Command Example",
+  "description": "Send a command to a device",
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/applications/575ec8687ae143cd83dc4a97/devices/575ec7417ae143cd83dc4a95",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "restartDevice",
+      "payload": {
+        "reason": "firmware-upgrade"
+      },
+      "time": "2026-05-25T16:30:00.000Z"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "success": true
+    }
+  }
+}

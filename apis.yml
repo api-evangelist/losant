@@ -1,0 +1,426 @@
+aid: losant
+name: Losant
+url: https://raw.githubusercontent.com/api-evangelist/losant/refs/heads/main/apis.yml
+description: |
+  Losant is an Enterprise IoT Platform that lets product teams build connected experiences, manage fleets of
+  devices, orchestrate edge and embedded compute, and visualize and act on IoT data. The platform exposes a
+  comprehensive REST API (the Platform API) covering applications, devices, data tables, time-series data,
+  events, workflows (visual workflow engine), edge and embedded deployments, end-user experiences,
+  notebooks, files, integrations, webhooks, dashboards, organizations, audit logs, and self-hosted
+  enterprise instance administration. Devices may also connect via MQTT. Customers include industrial,
+  smart-building, agriculture, and connected-product companies; Losant emphasizes white-labeled end-user
+  experiences ("Experiences") and edge compute on Linux gateways plus microcontrollers via the Embedded
+  Edge Agent (EEA).
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+humanURL: https://www.losant.com/
+baseURL: https://api.losant.com
+tags:
+- IoT
+- Internet Of Things
+- Devices
+- Edge Compute
+- Embedded
+- MQTT
+- Industrial IoT
+- Telemetry
+- Workflow Automation
+- Visual Workflow Engine
+- Dashboards
+- Time Series
+- Connected Products
+- Enterprise
+kind: contract
+access: 3rd-Party
+x-type: company
+apis:
+- aid: losant:losant-auth-api
+  name: Losant Authentication And Account API
+  tags:
+  - Authentication
+  - Account
+  - Users
+  - Organizations
+  - JWT
+  humanURL: https://docs.losant.com/rest-api/auth/
+  baseURL: https://api.losant.com
+  description: |
+    Authenticate users, devices, and SSO sessions; manage the currently signed-in user, personal access
+    tokens, organizations, and organization invites. Returns JWTs used as Bearer tokens for the rest of the
+    Losant Platform API.
+  properties:
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/auth/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/me/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/org/
+  - type: OpenAPI
+    url: openapi/losant-auth-api-openapi.yml
+  - type: NaftikoCapability
+    url: capabilities/auth-authentication.yaml
+  - type: NaftikoCapability
+    url: capabilities/auth-account.yaml
+  - type: NaftikoCapability
+    url: capabilities/auth-organizations.yaml
+- aid: losant:losant-application-api
+  name: Losant Application API
+  tags:
+  - Applications
+  - Dashboards
+  - Events
+  - Webhooks
+  - Integrations
+  - Files
+  - Audit Logs
+  - Credentials
+  - Certificates
+  - API Tokens
+  - Resource Jobs
+  humanURL: https://docs.losant.com/rest-api/application/
+  baseURL: https://api.losant.com
+  description: |
+    Manage Losant Applications - the top-level multi-tenant container for IoT solutions - plus all
+    application-scoped resources: dashboards, events, webhooks, integrations, files, application keys, API
+    tokens, certificate authorities and certificates for X.509-authenticated devices, application templates,
+    audit logs, credentials, and long-running resource jobs.
+  properties:
+  - type: Documentation
+    url: https://docs.losant.com/applications/overview/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/application/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/applications/
+  - type: OpenAPI
+    url: openapi/losant-application-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/losant-application-schema.json
+  - type: JSONSchema
+    url: json-schema/losant-event-schema.json
+  - type: JSONStructure
+    url: json-structure/losant-application-structure.json
+  - type: NaftikoCapability
+    url: capabilities/application-applications.yaml
+  - type: NaftikoCapability
+    url: capabilities/application-events.yaml
+  - type: NaftikoCapability
+    url: capabilities/application-webhooks.yaml
+  - type: NaftikoCapability
+    url: capabilities/application-integrations.yaml
+- aid: losant:losant-device-api
+  name: Losant Device API
+  tags:
+  - Devices
+  - Device Recipes
+  - Telemetry
+  - State
+  - Commands
+  - IoT
+  humanURL: https://docs.losant.com/rest-api/device/
+  baseURL: https://api.losant.com
+  description: |
+    Provision and manage IoT devices and device recipes, query device tags and attributes, read connection
+    state and logs, and publish state or send commands to devices. Devices may also publish state and
+    receive commands via MQTT (`broker.losant.com`).
+  properties:
+  - type: Documentation
+    url: https://docs.losant.com/devices/overview/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/device/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/devices/
+  - type: Documentation
+    url: https://docs.losant.com/mqtt/overview/
+  - type: OpenAPI
+    url: openapi/losant-device-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/losant-device-schema.json
+  - type: JSONStructure
+    url: json-structure/losant-device-structure.json
+  - type: NaftikoCapability
+    url: capabilities/device-devices.yaml
+  - type: NaftikoCapability
+    url: capabilities/device-state.yaml
+  - type: NaftikoCapability
+    url: capabilities/device-commands.yaml
+- aid: losant:losant-data-api
+  name: Losant Data And Data Tables API
+  tags:
+  - Data
+  - Data Tables
+  - Time Series
+  - Telemetry
+  - Aggregation
+  - Export
+  humanURL: https://docs.losant.com/rest-api/data/
+  baseURL: https://api.losant.com
+  description: |
+    Aggregate, query, and export time-series device data, and read/write rows in Data Tables - Losant's
+    schemaful relational store for context data that lives alongside IoT telemetry.
+  properties:
+  - type: Documentation
+    url: https://docs.losant.com/data-tables/overview/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/data/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/data-table/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/data-table-rows/
+  - type: OpenAPI
+    url: openapi/losant-data-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/losant-data-table-schema.json
+  - type: JSONStructure
+    url: json-structure/losant-data-structure.json
+  - type: NaftikoCapability
+    url: capabilities/data-data-tables.yaml
+  - type: NaftikoCapability
+    url: capabilities/data-telemetry.yaml
+- aid: losant:losant-workflow-api
+  name: Losant Workflow Engine API
+  tags:
+  - Workflows
+  - Visual Workflow Engine
+  - Automation
+  - Orchestration
+  - Versioning
+  humanURL: https://docs.losant.com/rest-api/flow/
+  baseURL: https://api.losant.com
+  description: |
+    Create, version, deploy, debug, and execute flows in the Losant Visual Workflow Engine. Supports
+    Application, Experience, Edge, Embedded, and Custom Node workflow types with full version history and
+    rollback.
+  properties:
+  - type: Documentation
+    url: https://docs.losant.com/workflows/overview/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/flow/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/flows/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/flow-version/
+  - type: OpenAPI
+    url: openapi/losant-workflow-api-openapi.yml
+  - type: NaftikoCapability
+    url: capabilities/workflow-flows.yaml
+  - type: NaftikoCapability
+    url: capabilities/workflow-versions.yaml
+- aid: losant:losant-edge-api
+  name: Losant Edge And Embedded Compute API
+  tags:
+  - Edge Compute
+  - Embedded
+  - EEA
+  - Deployments
+  - Gateways
+  - Microcontrollers
+  humanURL: https://docs.losant.com/rest-api/edge-deployment/
+  baseURL: https://api.losant.com
+  description: |
+    Manage Losant Edge Compute deployments to Linux gateways (Gateway Edge Agent) and Embedded Edge Agent
+    (EEA) deployments to microcontrollers. Distribute workflow versions to fleets, track deployment state,
+    and roll back releases.
+  properties:
+  - type: Documentation
+    url: https://docs.losant.com/edge-compute/overview/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/edge-deployment/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/embedded-deployment/
+  - type: OpenAPI
+    url: openapi/losant-edge-api-openapi.yml
+  - type: NaftikoCapability
+    url: capabilities/edge-deployments.yaml
+- aid: losant:losant-experience-api
+  name: Losant Experience API
+  tags:
+  - Experiences
+  - End User
+  - White Label
+  - Web
+  - Users
+  - Groups
+  - Endpoints
+  - Views
+  humanURL: https://docs.losant.com/rest-api/experience/
+  baseURL: https://api.losant.com
+  description: |
+    Build white-labeled end-user web Experiences on top of a Losant Application: experience users, groups,
+    HTTP endpoints, server-rendered views, slugs, custom domains, versions, and the Experience publishing
+    pipeline.
+  properties:
+  - type: Documentation
+    url: https://docs.losant.com/experiences/overview/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/experience/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/experience-users/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/experience-endpoint/
+  - type: OpenAPI
+    url: openapi/losant-experience-api-openapi.yml
+  - type: NaftikoCapability
+    url: capabilities/experience-users.yaml
+  - type: NaftikoCapability
+    url: capabilities/experience-endpoints.yaml
+  - type: NaftikoCapability
+    url: capabilities/experience-views.yaml
+- aid: losant:losant-notebook-api
+  name: Losant Notebooks API
+  tags:
+  - Notebooks
+  - Jupyter
+  - Batch
+  - Analytics
+  - Reporting
+  - Data Science
+  humanURL: https://docs.losant.com/rest-api/notebook/
+  baseURL: https://api.losant.com
+  description: |
+    Trigger and manage Losant Notebook executions - Jupyter-style batch workloads that operate on historical
+    device data, data table contents, and other application state for analytics, ML, and reporting.
+  properties:
+  - type: Documentation
+    url: https://docs.losant.com/notebooks/overview/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/notebook/
+  - type: OpenAPI
+    url: openapi/losant-notebook-api-openapi.yml
+  - type: NaftikoCapability
+    url: capabilities/notebook-executions.yaml
+- aid: losant:losant-instance-api
+  name: Losant Enterprise Instance API
+  tags:
+  - Enterprise
+  - Instance
+  - Self Hosted
+  - Administration
+  - Custom Nodes
+  - Sandboxes
+  - Notification Rules
+  humanURL: https://docs.losant.com/rest-api/instance/
+  baseURL: https://api.losant.com
+  description: |
+    Administer dedicated or self-hosted Losant Enterprise Instances: instance members, organizations within
+    the instance, organization members and invites, instance-level custom workflow nodes, sandboxes,
+    notification rules, instance-level API tokens, and audit logs.
+  properties:
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/instance/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/instance-org/
+  - type: Documentation
+    url: https://docs.losant.com/rest-api/instance-custom-node/
+  - type: OpenAPI
+    url: openapi/losant-instance-api-openapi.yml
+  - type: NaftikoCapability
+    url: capabilities/instance-organizations.yaml
+  - type: NaftikoCapability
+    url: capabilities/instance-members.yaml
+  - type: NaftikoCapability
+    url: capabilities/instance-custom-nodes.yaml
+common:
+- url: https://www.losant.com/
+  type: Portal
+- url: https://docs.losant.com/
+  type: Documentation
+  name: Losant Documentation
+- url: https://docs.losant.com/getting-started/walkthrough/
+  type: GettingStarted
+  name: Getting Started Walkthrough
+- url: https://docs.losant.com/rest-api/overview/
+  type: Documentation
+  name: REST API Overview
+- url: https://docs.losant.com/mqtt/overview/
+  type: Documentation
+  name: MQTT Specification
+- url: https://docs.losant.com/cli/overview/
+  type: Documentation
+  name: Losant CLI
+- url: https://docs.losant.com/university/overview/
+  type: Education
+  name: Losant University
+- url: https://docs.losant.com/template-library/overview/
+  type: Templates
+  name: Application Template Library
+- url: https://docs.losant.com/workflow-lab/overview/
+  type: Documentation
+  name: Workflow Lab
+- url: https://docs.losant.com/guides/overview/
+  type: Guides
+  name: Solution Guides
+- url: https://github.com/Losant
+  type: SourceCode
+  name: Losant on GitHub
+- url: https://github.com/Losant/losant-rest-js
+  type: SDK
+  name: Node.js / JavaScript REST Client
+- url: https://github.com/Losant/losant-rest-python
+  type: SDK
+  name: Python REST Client
+- url: https://github.com/Losant/losant-rest-ruby
+  type: SDK
+  name: Ruby REST Client
+- url: https://github.com/Losant/losant-mqtt-js
+  type: SDK
+  name: Node.js MQTT Client
+- url: https://github.com/Losant/losant-mqtt-python
+  type: SDK
+  name: Python MQTT Client
+- url: https://github.com/Losant/losant-mqtt-ruby
+  type: SDK
+  name: Ruby MQTT Client
+- url: https://github.com/Losant/losant-mqtt-arduino
+  type: SDK
+  name: Arduino MQTT Client
+- url: https://github.com/Losant/losant-esp-idf-esp32
+  type: SDK
+  name: ESP-IDF (ESP32) MQTT Client
+- url: https://github.com/Losant/losant-cli
+  type: CLI
+  name: Losant CLI Source
+- url: https://github.com/Losant/eea-examples
+  type: SourceCode
+  name: Embedded Edge Agent (EEA) Examples
+- url: https://github.com/Losant/notebook-examples
+  type: SourceCode
+  name: Notebook Examples
+- url: https://github.com/Losant/application-templates
+  type: SourceCode
+  name: Application Templates
+- url: https://github.com/Losant/workflow-node-catalog
+  type: SourceCode
+  name: Community Workflow Node Catalog
+- url: https://www.losant.com/blog
+  type: Blog
+  name: Losant Blog
+- url: https://status.losant.com/
+  type: StatusPage
+  name: Losant Status
+- url: https://www.losant.com/pricing
+  type: Pricing
+  name: Pricing (Custom / Contact Sales)
+- url: https://www.losant.com/contact
+  type: Support
+  name: Contact Losant
+- url: https://www.linkedin.com/company/losant/
+  type: LinkedIn
+  name: Losant on LinkedIn
+- url: https://x.com/losantiot
+  type: Twitter
+  name: Losant on X
+- url: plans/losant-plans-pricing.yml
+  type: Plans
+- url: rate-limits/losant-rate-limits.yml
+  type: RateLimits
+- url: finops/losant-finops.yml
+  type: FinOps
+- url: vocabulary/losant-vocabulary.yml
+  type: Vocabulary
+- url: rules/losant-rules.yml
+  type: SpectralRules
+- url: json-ld/losant-context.jsonld
+  type: JSONLD
+maintainers:
+- FN: Kin Lane
+  email: info@apievangelist.com
+specificationVersion: '0.20'

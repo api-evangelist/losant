@@ -1,0 +1,24 @@
+name: Query Time-Series Telemetry
+description: Run last-value, time-series, attribute, and historical-summary queries
+  across device fleets.
+provider: losant
+api: data
+operations:
+- path: /applications/{applicationId}/data/last-value-query
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /applications/{applicationId}/data/time-series-query
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

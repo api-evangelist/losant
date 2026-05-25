@@ -1,0 +1,32 @@
+{
+  "name": "Create Flow Example",
+  "description": "Create a new flow for an application",
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/applications/575ec8687ae143cd83dc4a97/flows",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "High-Temperature Alert",
+      "flowClass": "cloud",
+      "triggers": [
+        {
+          "type": "deviceCommand",
+          "config": {
+            "commandName": "restartDevice"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": null
+  }
+}

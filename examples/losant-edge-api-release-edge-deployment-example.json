@@ -1,0 +1,27 @@
+{
+  "name": "Release Edge Deployment Example",
+  "description": "Deploy an edge workflow version to one or more edge devices. Version can be blank, if removal is desired.",
+  "request": {
+    "method": "POST",
+    "url": "https://api.losant.com/applications/575ec8687ae143cd83dc4a97/edge/deployments",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOi... (Losant JWT)",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "deviceIds": [
+        "575ec7417ae143cd83dc4a95"
+      ],
+      "flowId": "575ec7417ae143cd83dc4a99",
+      "version": "v2"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": null
+  }
+}

@@ -1,0 +1,17 @@
+name: Manage Workflow Versions
+description: Publish, tag, list, and roll back workflow versions and inspect run history.
+provider: losant
+api: workflow
+operations:
+- path: /applications/{applicationId}/flows/{flowId}/versions
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

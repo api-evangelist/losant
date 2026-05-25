@@ -1,0 +1,43 @@
+aid: losant
+name: Losant
+url: https://www.losant.com/
+reviewedOn: '2026-05-25'
+reviewer: API Evangelist
+tier: 1
+summary: |
+  Losant is a Tier-1 API provider: it operates as a public REST API at https://api.losant.com/ that returns
+  a complete machine-readable spec describing 97 resources (Bravado / Swagger 2 dialect, version 1.29.4) -
+  including paths, parameters, security scopes, response schemas, and 316 definitions. Devices may also
+  connect via MQTT. SDKs are maintained for JavaScript (Node), Python, Ruby, Arduino, and ESP-IDF (ESP32),
+  plus a CLI and the Embedded Edge Agent (EEA) for microcontrollers. Documentation at docs.losant.com is
+  comprehensive, the GitHub org (github.com/Losant) hosts the SDKs, CLI, application templates, EEA
+  examples, and notebook examples, and Losant operates a public status page at status.losant.com. Pricing
+  is custom (contact-sales) rather than self-serve published tiers.
+strengths:
+- Complete machine-readable API spec served at the API root - rare and high quality
+- 97 resources cover the full product surface (applications, devices, data, workflows, edge/embedded, experiences, notebooks, enterprise instance administration)
+- First-party SDKs in JavaScript, Python, Ruby, Arduino, and ESP-IDF
+- Mature CLI (losant-cli) and template/workflow-node catalog
+- Public status page and active GitHub presence
+- Three deployment models (multi-tenant cloud, dedicated instance, self-hosted instance) covered by the same API
+weaknesses:
+- No public pricing - all commercial terms via contact sales
+- Spec is Bravado/Swagger 2 dialect, not OpenAPI 3.x (this repo includes a 3.0 conversion)
+- No public release-notes/changelog URL
+- Rate-limit numbers are not publicly documented (fair-use)
+classification:
+  hasPublicAPI: true
+  hasMachineReadableSpec: true
+  specFormat: Bravado (Swagger 2 dialect)
+  hasOpenAPI3: derived (this repo)
+  hasSDKs: true
+  sdkLanguages: [JavaScript, Python, Ruby, Arduino, C/ESP-IDF]
+  hasCLI: true
+  hasMQTT: true
+  hasWebhooks: true
+  hasOAuth: false
+  hasJWT: true
+  hasPublicPricing: false
+  hasStatusPage: true
+  hasChangelog: false
+  hasGitHubOrg: true

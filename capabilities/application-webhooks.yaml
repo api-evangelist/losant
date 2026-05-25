@@ -1,0 +1,24 @@
+name: Manage Application Webhooks
+description: Create and manage inbound webhook endpoints that accept HTTP traffic
+  into Losant workflows.
+provider: losant
+api: application
+operations:
+- path: /applications/{applicationId}/webhooks
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /applications/{applicationId}/webhooks/{webhookId}
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

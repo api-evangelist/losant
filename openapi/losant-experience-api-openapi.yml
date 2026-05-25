@@ -1,0 +1,2991 @@
+openapi: 3.0.3
+info:
+  title: Losant Experience API
+  version: 1.29.4
+  description: 'Build end-user web Experiences on top of Losant Applications: users, groups, endpoints, views, slugs, domains,
+    versions, and the Experience Engine. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.'
+  contact:
+    name: Losant Support
+    url: https://www.losant.com/contact
+    email: hello@losant.com
+  license:
+    name: Proprietary
+    url: https://www.losant.com/legal
+  x-source: https://api.losant.com/
+  x-publisher: Losant IoT, Inc.
+servers:
+- url: https://api.losant.com
+  description: Losant Platform API (US multi-tenant cloud)
+tags:
+- name: Experience
+  description: Experience resources on the Losant Platform.
+security:
+- BearerAuth: []
+paths:
+  /applications/{applicationId}/experience/domains/{experienceDomainId}:
+    get:
+      summary: Retrieves Information on an Experience Domain
+      tags:
+      - Experience
+      parameters:
+      - &id001
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id002
+        name: experienceDomainId
+        in: path
+        description: ID associated with the experience domain
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Experience domain information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceDomain'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience domain was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About an Experience Domain
+      tags:
+      - Experience
+      parameters:
+      - *id001
+      - *id002
+      requestBody:
+        description: Object containing new properties of the experience domain
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceDomainPatch'
+      responses:
+        '200':
+          description: Updated experience domain information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceDomain'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience domain was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes an Experience Domain
+      tags:
+      - Experience
+      parameters:
+      - *id001
+      - *id002
+      responses:
+        '200':
+          description: If experience domain was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience domain was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/domains:
+    get:
+      summary: Returns the Experience Domains for an Application
+      tags:
+      - Experience
+      parameters:
+      - &id003
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Collection of experience domains
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceDomains'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a New Experience Domain for an Application
+      tags:
+      - Experience
+      parameters:
+      - *id003
+      requestBody:
+        description: New experience domain information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceDomainPost'
+      responses:
+        '201':
+          description: Successfully created experience domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceDomain'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/endpoints/{experienceEndpointId}:
+    get:
+      summary: Retrieves Information on Resources Linked to an Experience Endpoint
+      tags:
+      - Experience
+      parameters:
+      - &id004
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id005
+        name: experienceEndpointId
+        in: path
+        description: ID associated with the experience endpoint
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: version
+        in: query
+        description: Version of this experience endpoint to query
+        required: false
+        example: develop
+        schema:
+          type: string
+          default: develop
+      - name: includeCustomNodes
+        in: query
+        description: If the result of the request should also include the details of any custom nodes referenced by returned
+          workflows
+        required: false
+        example: true
+        schema:
+          type: string
+          default: false
+      responses:
+        '200':
+          description: Linked resource information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceLinkedResources'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience endpoint was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About an Experience Endpoint
+      tags:
+      - Experience
+      parameters:
+      - *id004
+      - *id005
+      requestBody:
+        description: Object containing new properties of the experience endpoint
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceEndpointPatch'
+      responses:
+        '200':
+          description: Updated experience endpoint information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceEndpoint'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience endpoint was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes an Experience Endpoint
+      tags:
+      - Experience
+      parameters:
+      - *id004
+      - *id005
+      - name: includeWorkflows
+        in: query
+        description: If the workflows that utilize this experience endpoint should also be deleted.
+        required: false
+        example: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: If experience endpoint was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience endpoint was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/endpoints:
+    get:
+      summary: Get Statistics About Endpoint Requests
+      tags:
+      - Experience
+      parameters:
+      - &id006
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: statGrouping
+        in: query
+        description: Field to group the statistics by
+        required: false
+        example: statusCode
+        schema:
+          type: string
+          enum:
+          - statusCode
+          - endpointId
+          - version
+          - domain
+          default: statusCode
+      - name: duration
+        in: query
+        description: Duration in milliseconds
+        required: false
+        example: 86400000
+        schema:
+          type: string
+          default: 86400000
+      - name: end
+        in: query
+        description: End of time range in milliseconds since epoch
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: resolution
+        in: query
+        description: Resolution in milliseconds
+        required: false
+        example: 3600000
+        schema:
+          type: string
+          default: 3600000
+      - name: versionFilter
+        in: query
+        description: Filters the stats to a particular experience version
+        required: false
+        example: myVersion
+        schema:
+          type: string
+      - name: domainFilter
+        in: query
+        description: Filters the stats to a particular experience domain or slug
+        required: false
+        example: example.com
+        schema:
+          type: string
+      - name: statusCodeFilter
+        in: query
+        description: Filters the stats to a particular status code
+        required: false
+        example: 200
+        schema:
+          type: string
+      - name: endpointIdFilter
+        in: query
+        description: Filters the stats to a particular endpoint
+        required: false
+        example: 575ec8687ae143cd83dc4a98
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Statistics for endpoint requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceEndpointStats'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a New Experience Endpoint for an Application
+      tags:
+      - Experience
+      parameters:
+      - *id006
+      requestBody:
+        description: New experience endpoint information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceEndpointPost'
+      responses:
+        '201':
+          description: Successfully created experience endpoint
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceEndpoint'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/groups/{experienceGroupId}:
+    get:
+      summary: Retrieves Information on an Experience Group
+      tags:
+      - Experience
+      parameters:
+      - &id007
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id008
+        name: experienceGroupId
+        in: path
+        description: ID associated with the experience group
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: includeDirectDeviceCount
+        in: query
+        description: Whether or not to return count of devices associated directly with this group
+        required: false
+        example: 'true'
+        schema:
+          type: string
+          default: 'false'
+      - name: includeTotalDeviceCount
+        in: query
+        description: Whether or not to return count of devices associated with this group or any of its descendants
+        required: false
+        example: 'true'
+        schema:
+          type: string
+          default: 'false'
+      responses:
+        '200':
+          description: Experience group information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceGroup'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience group was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About an Experience Group
+      tags:
+      - Experience
+      parameters:
+      - *id007
+      - *id008
+      requestBody:
+        description: Object containing new properties of the experience group
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceGroupPatch'
+      responses:
+        '200':
+          description: Updated experience group information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceGroup'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience group was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes an Experience Group
+      tags:
+      - Experience
+      parameters:
+      - *id007
+      - *id008
+      responses:
+        '200':
+          description: If experience group was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience group was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/groups:
+    get:
+      summary: Returns the Experience Groups for an Application
+      tags:
+      - Experience
+      parameters:
+      - &id009
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          default: name
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my*group
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: Experience group filter JSON object which overrides the filter and filterField fields.
+        required: false
+        schema:
+          type: object
+      responses:
+        '200':
+          description: Collection of experience groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceGroups'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a New Experience Group for an Application
+      tags:
+      - Experience
+      parameters:
+      - *id009
+      requestBody:
+        description: New experience group information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceGroupPost'
+      responses:
+        '201':
+          description: Successfully created experience group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceGroup'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/slugs/{experienceSlugId}:
+    get:
+      summary: Retrieves Information on an Experience Slug
+      tags:
+      - Experience
+      parameters:
+      - &id010
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id011
+        name: experienceSlugId
+        in: path
+        description: ID associated with the experience slug
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Experience slug information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceSlug'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience slug was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About an Experience Slug
+      tags:
+      - Experience
+      parameters:
+      - *id010
+      - *id011
+      requestBody:
+        description: Object containing new properties of the experience slug
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceSlugPatch'
+      responses:
+        '200':
+          description: Updated experience slug information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceSlug'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience slug was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes an Experience Slug
+      tags:
+      - Experience
+      parameters:
+      - *id010
+      - *id011
+      responses:
+        '200':
+          description: If experience slug was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience slug was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/slugs:
+    get:
+      summary: Returns the Experience Slugs for an Application
+      tags:
+      - Experience
+      parameters:
+      - &id012
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Collection of experience slugs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceSlugs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a New Experience Slug for an Application
+      tags:
+      - Experience
+      parameters:
+      - *id012
+      requestBody:
+        description: New experience slug information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceSlugPost'
+      responses:
+        '201':
+          description: Successfully created experience slug
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceSlug'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/users/{experienceUserId}:
+    get:
+      summary: Retrieves Information on an Experience User
+      tags:
+      - Experience
+      parameters:
+      - &id013
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id014
+        name: experienceUserId
+        in: path
+        description: ID associated with the experience user
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Experience user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience user was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About an Experience User
+      tags:
+      - Experience
+      parameters:
+      - *id013
+      - *id014
+      requestBody:
+        description: Object containing new properties of the experience user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceUserPatch'
+      responses:
+        '200':
+          description: Updated experience user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience user was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes an Experience User
+      tags:
+      - Experience
+      parameters:
+      - *id013
+      - *id014
+      responses:
+        '200':
+          description: If experience user was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience user was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/users:
+    get:
+      summary: Returns the Experience Users for an Application
+      tags:
+      - Experience
+      parameters:
+      - &id015
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: email
+        schema:
+          type: string
+          enum:
+          - firstName
+          - lastName
+          - email
+          - id
+          - creationDate
+          - lastLogin
+          - lastUpdated
+          default: email
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: email
+        schema:
+          type: string
+          enum:
+          - firstName
+          - lastName
+          - email
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my*user
+        schema:
+          type: string
+      - name: experienceGroupId
+        in: query
+        description: Filter users to those only in the specified group, special experienceGroupIds of 'any' which will give
+          users who are in at least one group and 'none' will give you users who are not in any groups.
+        required: false
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+      - name: includeAncestorGroups
+        in: query
+        description: If set will include members from ancestors of the specified experienceGroupId
+        required: false
+        example: 'true'
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: Experience user filter JSON object which overrides all other filter params.
+        required: false
+        schema:
+          type: object
+      responses:
+        '200':
+          description: Collection of experience users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceUsers'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a New Experience User for an Application
+      tags:
+      - Experience
+      parameters:
+      - *id015
+      requestBody:
+        description: New experience user information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceUserPost'
+      responses:
+        '201':
+          description: Successfully created experience user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/versions/{experienceVersionIdOrName}:
+    get:
+      summary: Retrieves Information on an Experience Version
+      tags:
+      - Experience
+      parameters:
+      - &id016
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id017
+        name: experienceVersionIdOrName
+        in: path
+        description: Version ID or version name associated with the experience version
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      responses:
+        '200':
+          description: Experience version information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceVersion'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience version was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About an Experience Version
+      tags:
+      - Experience
+      parameters:
+      - *id016
+      - *id017
+      requestBody:
+        description: Object containing new properties of the experience version
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceVersionPatch'
+      responses:
+        '200':
+          description: Updated experience version information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceVersion'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience version was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes an Experience Version
+      tags:
+      - Experience
+      parameters:
+      - *id016
+      - *id017
+      responses:
+        '200':
+          description: If experience version was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience version was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/versions:
+    get:
+      summary: Returns the Experience Versions for an Application
+      tags:
+      - Experience
+      parameters:
+      - &id018
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: version
+        schema:
+          type: string
+          enum:
+          - version
+          - id
+          - creationDate
+          - lastUpdated
+          default: version
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: email
+        schema:
+          type: string
+          enum:
+          - version
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my*version
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection of experience versions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceVersions'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a New Experience Version for an Application
+      tags:
+      - Experience
+      parameters:
+      - *id018
+      requestBody:
+        description: New experience version information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceVersionPost'
+      responses:
+        '201':
+          description: Successfully created experience version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceVersion'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/views/{experienceViewId}:
+    get:
+      summary: Retrieves Information on Resources Linked to an Experience View
+      tags:
+      - Experience
+      parameters:
+      - &id019
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id020
+        name: experienceViewId
+        in: path
+        description: ID associated with the experience view
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: version
+        in: query
+        description: Version of this experience view to query
+        required: false
+        example: develop
+        schema:
+          type: string
+          default: develop
+      - name: includeCustomNodes
+        in: query
+        description: If the result of the request should also include the details of any custom nodes referenced by returned
+          workflows
+        required: false
+        example: true
+        schema:
+          type: string
+          default: false
+      responses:
+        '200':
+          description: Linked resource information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceLinkedResources'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience view was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About an Experience View
+      tags:
+      - Experience
+      parameters:
+      - *id019
+      - *id020
+      requestBody:
+        description: Object containing new properties of the experience view
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceViewPatch'
+      responses:
+        '200':
+          description: Updated experience view information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceView'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience view was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes an Experience View
+      tags:
+      - Experience
+      parameters:
+      - *id019
+      - *id020
+      responses:
+        '200':
+          description: If experience view was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience view was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience/views:
+    get:
+      summary: Returns the Experience Views for an Application
+      tags:
+      - Experience
+      parameters:
+      - &id021
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - id
+          - creationDate
+          - name
+          - lastUpdated
+          default: name
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my*view
+        schema:
+          type: string
+      - name: viewType
+        in: query
+        description: Filter views to those only of the given type
+        required: false
+        example: page
+        schema:
+          type: string
+          enum:
+          - page
+          - layout
+          - component
+      - name: version
+        in: query
+        description: Return the experience views belonging to this version
+        required: false
+        example: develop
+        schema:
+          type: string
+          default: develop
+      responses:
+        '200':
+          description: Collection of experience views
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceViews'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a New Experience View for an Application
+      tags:
+      - Experience
+      parameters:
+      - *id021
+      requestBody:
+        description: New experience view information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceViewPost'
+      responses:
+        '201':
+          description: Successfully created experience view
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceView'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/experience:
+    patch:
+      summary: Bootstraps the Experience for This Application with Standard Endpoints and Views
+      tags:
+      - Experience
+      parameters:
+      - &id022
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Bootstrap options
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceBootstrapOptions'
+      responses:
+        '200':
+          description: If bootstrap was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceBootstrapResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes Multiple Parts of an Experience Including Users, Groups, Slugs, Domains, Versions, Endpoints, Views,
+        and Workflows
+      tags:
+      - Experience
+      parameters:
+      - *id022
+      - name: keepUsers
+        in: query
+        description: If this is set, Experience Users will not be removed.
+        required: false
+        example: 'true'
+        schema:
+          type: string
+      - name: keepGroups
+        in: query
+        description: If this is set, Experience Groups will not be removed.
+        required: false
+        example: 'true'
+        schema:
+          type: string
+      - name: keepSlugs
+        in: query
+        description: If this is set, Experience Slugs will not be removed.
+        required: false
+        example: 'true'
+        schema:
+          type: string
+      - name: keepDomains
+        in: query
+        description: If this is set, Experience Domains will not be removed.
+        required: false
+        example: 'true'
+        schema:
+          type: string
+      - name: removeVersions
+        in: query
+        description: If this is set, all Experience Versions and their contents will be removed (except for develop).
+        required: false
+        example: 'true'
+        schema:
+          type: string
+      - name: keepViews
+        in: query
+        description: If this is set, Experience Views (in the develop version) will not be removed.
+        required: false
+        example: 'true'
+        schema:
+          type: string
+      - name: keepEndpoints
+        in: query
+        description: If this is set, Experience Endpoints (in the develop version) will not be removed.
+        required: false
+        example: 'true'
+        schema:
+          type: string
+      - name: removeWorkflows
+        in: query
+        description: If this is set, all Experience Workflows (in the develop version) will ve removed.
+        required: false
+        example: 'true'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: If deletion was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
+        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    experienceBootstrapOptions:
+      title: Experience Bootstrap Options
+      description: The body of an experience bootstrap request
+      type: object
+      properties:
+        replaceExisting:
+          type: boolean
+          default: false
+        createUsers:
+          type: boolean
+          default: true
+        createGroups:
+          type: boolean
+          default: true
+        slug:
+          $ref: '#/components/schemas/common/slug'
+      additionalProperties: false
+    experienceBootstrapResult:
+      title: Experience Bootstrap Result
+      description: The result of an experience bootstrap request
+      type: object
+      properties:
+        resourceSuffix:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+      additionalProperties: false
+    experienceDomain:
+      title: Experience Domain
+      description: Schema for a single Experience Domain
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        experienceDomainId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        sslCert:
+          $ref: '#/components/schemas/common/certificateString'
+        sslBundle:
+          $ref: '#/components/schemas/common/certificateString'
+        domainName:
+          $ref: '#/components/schemas/common/domainName'
+        version:
+          $ref: '#/components/schemas/common/name'
+    experienceDomainPatch:
+      title: Experience Domain Patch
+      description: Schema for the body of an Experience Domain modification request
+      type: object
+      properties:
+        sslKey:
+          oneOf:
+          - $ref: '#/components/schemas/experienceDomainPost/properties/sslKey'
+          - type: 'null'
+        sslCert:
+          oneOf:
+          - $ref: '#/components/schemas/experienceDomain/properties/sslCert'
+          - type: 'null'
+        sslBundle:
+          oneOf:
+          - $ref: '#/components/schemas/experienceDomain/properties/sslBundle'
+          - type: 'null'
+        version:
+          oneOf:
+          - $ref: '#/components/schemas/common/name'
+          - type: 'null'
+        domainName:
+          $ref: '#/components/schemas/experienceDomain/properties/domainName'
+      additionalProperties: false
+    experienceDomainPost:
+      title: Experience Domain Post
+      description: Schema for the body of an Experience Domain creation request
+      type: object
+      properties:
+        sslKey:
+          type: string
+          maxLength: 32767
+          minLength: 50
+        sslCert:
+          $ref: '#/components/schemas/experienceDomain/properties/sslCert'
+        sslBundle:
+          $ref: '#/components/schemas/experienceDomain/properties/sslBundle'
+        domainName:
+          $ref: '#/components/schemas/experienceDomain/properties/domainName'
+        version:
+          oneOf:
+          - $ref: '#/components/schemas/common/name'
+          - type: 'null'
+      additionalProperties: false
+      required:
+      - domainName
+    experienceDomains:
+      title: Experience Domains
+      description: Schema for a collection of Experience Domains
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/experienceDomain'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    experienceEndpoint:
+      title: Experience Endpoint
+      description: Schema for a single Experience Endpoint
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        experienceEndpointId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        description:
+          $ref: '#/components/schemas/common/description'
+        route:
+          $ref: '#/components/schemas/common/reqMedStr'
+        enabled:
+          type: boolean
+        method:
+          type: string
+          enum:
+          - delete
+          - get
+          - options
+          - patch
+          - post
+          - put
+        access:
+          type: string
+          enum:
+          - public
+          - authenticated
+          - group
+          - device
+        deviceIdTemplate:
+          type: string
+          maxLength: 255
+        endpointTags:
+          $ref: '#/components/schemas/common/objectTags'
+        staticReply:
+          $ref: '#/components/schemas/common/staticReply'
+        unauthorizedReply:
+          $ref: '#/components/schemas/common/staticReply'
+        experienceGroups:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                $ref: '#/components/schemas/common/name'
+              id:
+                $ref: '#/components/schemas/common/objectId'
+    experienceEndpointPatch:
+      title: Experience Endpoint Patch
+      description: Schema for the body of an Experience Endpoint modification request
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/common/description'
+        route:
+          $ref: '#/components/schemas/common/reqMedStr'
+        enabled:
+          type: boolean
+        method:
+          $ref: '#/components/schemas/experienceEndpoint/properties/method'
+        access:
+          $ref: '#/components/schemas/experienceEndpoint/properties/access'
+        deviceIdTemplate:
+          $ref: '#/components/schemas/experienceEndpoint/properties/deviceIdTemplate'
+        endpointTags:
+          $ref: '#/components/schemas/experienceEndpoint/properties/endpointTags'
+        experienceGroupIds:
+          $ref: '#/components/schemas/common/objectIds'
+        staticReply:
+          $ref: '#/components/schemas/common/staticReply'
+        unauthorizedReply:
+          $ref: '#/components/schemas/common/staticReply'
+      additionalProperties: false
+    experienceEndpointPost:
+      title: Experience Endpoint Post
+      description: Schema for the body of an Experience Endpoint creation request
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/common/description'
+        route:
+          $ref: '#/components/schemas/common/reqMedStr'
+        enabled:
+          type: boolean
+        method:
+          $ref: '#/components/schemas/experienceEndpoint/properties/method'
+        access:
+          $ref: '#/components/schemas/experienceEndpoint/properties/access'
+        deviceIdTemplate:
+          $ref: '#/components/schemas/experienceEndpoint/properties/deviceIdTemplate'
+        endpointTags:
+          $ref: '#/components/schemas/experienceEndpoint/properties/endpointTags'
+        experienceGroupIds:
+          $ref: '#/components/schemas/common/objectIds'
+        staticReply:
+          $ref: '#/components/schemas/common/staticReply'
+        unauthorizedReply:
+          $ref: '#/components/schemas/common/staticReply'
+      additionalProperties: false
+      required:
+      - route
+      - method
+    experienceEndpointStats:
+      title: Experience Endpoint Stats
+      description: Schema for stats for an experience's endpoints
+      type: object
+      patternProperties:
+        .*:
+          type: array
+          items:
+            type: object
+            properties:
+              time:
+                $ref: '#/components/schemas/common/date'
+              count:
+                type: number
+    experienceEndpoints:
+      title: Experience Endpoints
+      description: Schema for a collection of Experience Endpoints
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/experienceEndpoint'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        experienceGroupId:
+          $ref: '#/components/schemas/common/objectId'
+        notFoundRequestCount:
+          type: number
+    experienceGroup:
+      title: Experience Group
+      description: Schema for a single Experience Group
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        experienceGroupId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        experienceUserIds:
+          $ref: '#/components/schemas/common/objectIds'
+        experienceEndpointIds:
+          $ref: '#/components/schemas/common/objectIds'
+        groupTags:
+          $ref: '#/components/schemas/common/objectTags'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        deviceQueryJson:
+          $ref: '#/components/schemas/common/queryJsonOrNull'
+        parentId:
+          $ref: '#/components/schemas/common/objectIdOrNull'
+        ancestorIds:
+          $ref: '#/components/schemas/common/objectIds'
+        directDeviceCount:
+          type: number
+        totalDeviceCount:
+          type: number
+    experienceGroupPatch:
+      title: Experience Group Patch
+      description: Schema for the body of an Experience Group modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        experienceUserIds:
+          $ref: '#/components/schemas/common/objectIds'
+        experienceEndpointIds:
+          $ref: '#/components/schemas/common/objectIds'
+        groupTags:
+          $ref: '#/components/schemas/experienceGroup/properties/groupTags'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        deviceQueryJson:
+          $ref: '#/components/schemas/common/queryJsonOrNull'
+        parentId:
+          $ref: '#/components/schemas/common/objectIdOrNull'
+      additionalProperties: false
+    experienceGroupPost:
+      title: Experience Group Post
+      description: Schema for the body of an Experience Group creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        experienceUserIds:
+          $ref: '#/components/schemas/common/objectIds'
+        experienceEndpointIds:
+          $ref: '#/components/schemas/common/objectIds'
+        groupTags:
+          $ref: '#/components/schemas/experienceGroup/properties/groupTags'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        deviceQueryJson:
+          $ref: '#/components/schemas/common/queryJsonOrNull'
+        parentId:
+          $ref: '#/components/schemas/common/objectIdOrNull'
+      additionalProperties: false
+      required:
+      - name
+    experienceGroups:
+      title: Experience Groups
+      description: Schema for a collection of Experience Groups
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/experienceGroup'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    experienceLinkedResources:
+      title: Experience Linked Resources
+      description: The body of an experience linked resources response
+      type: object
+      properties:
+        experienceViews:
+          $ref: '#/components/schemas/experienceViews'
+        experienceEndpoints:
+          $ref: '#/components/schemas/experienceEndpoints'
+        flows:
+          $ref: '#/components/schemas/flows'
+        flowVersions:
+          $ref: '#/components/schemas/flowVersions'
+      additionalProperties: false
+    experienceSlug:
+      title: Experience Slug
+      description: Schema for a single Experience Slug
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        experienceSlugId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        slug:
+          $ref: '#/components/schemas/common/slug'
+        version:
+          $ref: '#/components/schemas/common/name'
+    experienceSlugPatch:
+      title: Experience Slug Patch
+      description: Schema for the body of an Experience Slug modification request
+      type: object
+      properties:
+        version:
+          oneOf:
+          - $ref: '#/components/schemas/common/name'
+          - type: 'null'
+        slug:
+          $ref: '#/components/schemas/common/slug'
+      additionalProperties: false
+    experienceSlugPost:
+      title: Experience Slug Post
+      description: Schema for the body of an Experience Slug creation request
+      type: object
+      properties:
+        version:
+          oneOf:
+          - $ref: '#/components/schemas/common/name'
+          - type: 'null'
+        slug:
+          $ref: '#/components/schemas/common/slug'
+      additionalProperties: false
+      required:
+      - slug
+    experienceSlugs:
+      title: Experience Slugs
+      description: Schema for a collection of Experience Slugs
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/experienceSlug'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    experienceUser:
+      title: Experience User
+      description: Schema for a single Experience User
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        experienceUserId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        passwordLastUpdated:
+          $ref: '#/components/schemas/common/date'
+        lastLogin:
+          $ref: '#/components/schemas/common/date'
+        email:
+          $ref: '#/components/schemas/common/email'
+        firstName:
+          $ref: '#/components/schemas/common/optMedStr'
+        lastName:
+          $ref: '#/components/schemas/common/optMedStr'
+        avatarUrl:
+          $ref: '#/components/schemas/common/url'
+        tokenCutoff:
+          $ref: '#/components/schemas/common/date'
+        userTags:
+          $ref: '#/components/schemas/common/objectTags'
+        experienceGroups:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                $ref: '#/components/schemas/common/name'
+              id:
+                $ref: '#/components/schemas/common/objectId'
+              parentId:
+                $ref: '#/components/schemas/common/objectIdOrNull'
+    experienceUserPatch:
+      title: Experience User Patch
+      description: Schema for the body of an Experience User modification request
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        firstName:
+          $ref: '#/components/schemas/common/optMedStr'
+        lastName:
+          $ref: '#/components/schemas/common/optMedStr'
+        password:
+          $ref: '#/components/schemas/common/password'
+        tokenCutoff:
+          $ref: '#/components/schemas/common/date'
+        userTags:
+          $ref: '#/components/schemas/experienceUser/properties/userTags'
+        experienceGroupIds:
+          $ref: '#/components/schemas/common/objectIds'
+      additionalProperties: false
+    experienceUserPost:
+      title: Experience User Post
+      description: Schema for the body of an Experience User creation request
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        firstName:
+          $ref: '#/components/schemas/common/optMedStr'
+        lastName:
+          $ref: '#/components/schemas/common/optMedStr'
+        password:
+          $ref: '#/components/schemas/common/password'
+        tokenCutoff:
+          $ref: '#/components/schemas/common/date'
+        userTags:
+          $ref: '#/components/schemas/experienceUser/properties/userTags'
+        experienceGroupIds:
+          $ref: '#/components/schemas/common/objectIds'
+      additionalProperties: false
+      required:
+      - email
+      - password
+    experienceUsers:
+      title: Experience Users
+      description: Schema for a collection of Experience Users
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/experienceUser'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        experienceGroupId:
+          $ref: '#/components/schemas/common/objectId'
+    experienceVersion:
+      title: Experience Version
+      description: Schema for a single Experience Version
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        experienceVersionId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        endpointDefaultCors:
+          type: boolean
+        allowedCorsOrigins:
+          type: array
+          items:
+            $ref: '#/components/schemas/common/origin'
+          maxItems: 100
+        version:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        globals:
+          $ref: '#/components/schemas/common/versionGlobals'
+        notFoundReply:
+          $ref: '#/components/schemas/common/staticReply'
+        unauthorizedReply:
+          $ref: '#/components/schemas/common/staticReply'
+        responseHeaders:
+          type: object
+          patternProperties:
+            ^.{1,255}$:
+              type: string
+              minLength: 1
+              maxLength: 1024
+          maxProperties: 10
+          additionalProperties: false
+        attachedDomains:
+          type: array
+          items:
+            type: object
+            properties:
+              domainName:
+                $ref: '#/components/schemas/common/domainName'
+              id:
+                $ref: '#/components/schemas/common/objectId'
+        attachedSlugs:
+          type: array
+          items:
+            type: object
+            properties:
+              slug:
+                type: string
+              id:
+                $ref: '#/components/schemas/common/objectId'
+    experienceVersionPatch:
+      title: Experience Version Patch
+      description: Schema for the body of an Experience Version modification request
+      type: object
+      properties:
+        endpointDefaultCors:
+          type: boolean
+        allowedCorsOrigins:
+          $ref: '#/components/schemas/experienceVersion/properties/allowedCorsOrigins'
+        globals:
+          $ref: '#/components/schemas/common/versionGlobals'
+        notFoundReply:
+          $ref: '#/components/schemas/common/staticReply'
+        unauthorizedReply:
+          $ref: '#/components/schemas/common/staticReply'
+        description:
+          $ref: '#/components/schemas/common/description'
+        sourceVersionIdOrName:
+          $ref: '#/components/schemas/common/name'
+        responseHeaders:
+          $ref: '#/components/schemas/experienceVersion/properties/responseHeaders'
+      additionalProperties: false
+    experienceVersionPost:
+      title: Experience Version Post
+      description: Schema for the body of an Experience Version creation request
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        domainIds:
+          $ref: '#/components/schemas/common/objectIds'
+        slugIds:
+          $ref: '#/components/schemas/common/objectIds'
+        endpointDefaultCors:
+          type: boolean
+        globals:
+          $ref: '#/components/schemas/common/versionGlobals'
+        notFoundReply:
+          $ref: '#/components/schemas/common/staticReply'
+        unauthorizedReply:
+          $ref: '#/components/schemas/common/staticReply'
+        allowedCorsOrigins:
+          $ref: '#/components/schemas/experienceVersion/properties/allowedCorsOrigins'
+        responseHeaders:
+          $ref: '#/components/schemas/experienceVersion/properties/responseHeaders'
+      additionalProperties: false
+      required:
+      - version
+    experienceVersions:
+      title: Experience Versions
+      description: Schema for a collection of Experience Versions
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/experienceVersion'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    experienceView:
+      title: Experience View
+      description: Schema for a single Experience View
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        experienceViewId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        viewType:
+          type: string
+          enum:
+          - layout
+          - page
+          - component
+        layoutId:
+          $ref: '#/components/schemas/common/nullableObjectId'
+        layoutName:
+          $ref: '#/components/schemas/common/name'
+        body:
+          type: string
+          maxLength: 131072
+        viewTags:
+          $ref: '#/components/schemas/common/objectTags'
+        headers:
+          type: object
+          properties:
+            content-type:
+              $ref: '#/components/schemas/common/name'
+          additionalProperties: false
+    experienceViewPatch:
+      title: Experience View Patch
+      description: Schema for the body of an Experience View modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        layoutId:
+          $ref: '#/components/schemas/common/nullableObjectId'
+        body:
+          $ref: '#/components/schemas/experienceView/properties/body'
+        viewTags:
+          $ref: '#/components/schemas/experienceView/properties/viewTags'
+        headers:
+          $ref: '#/components/schemas/experienceView/properties/headers'
+      additionalProperties: false
+    experienceViewPost:
+      title: Experience View Post
+      description: Schema for the body of an Experience View creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        viewType:
+          $ref: '#/components/schemas/experienceView/properties/viewType'
+        layoutId:
+          $ref: '#/components/schemas/common/nullableObjectId'
+        body:
+          $ref: '#/components/schemas/experienceView/properties/body'
+        viewTags:
+          $ref: '#/components/schemas/experienceView/properties/viewTags'
+        headers:
+          $ref: '#/components/schemas/experienceView/properties/headers'
+      additionalProperties: false
+      required:
+      - name
+      - viewType
+    experienceViews:
+      title: Experience Views
+      description: Schema for a collection of Experience Views
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/experienceView'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        viewType:
+          type: string
+          enum:
+          - layout
+          - page
+          - component
+    flow:
+      title: Workflow
+      description: Schema for a single Workflow
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        shortDescription:
+          $ref: '#/components/schemas/common/shortString'
+        iconData:
+          $ref: '#/components/schemas/common/imageDataUri'
+        docsUrl:
+          $ref: '#/components/schemas/common/shortString'
+        category:
+          type: string
+          enum:
+          - data
+          - experience
+          - logic
+          - output
+          - debug
+        enabled:
+          type: boolean
+        defaultVersionId:
+          $ref: '#/components/schemas/common/objectId'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        flowClass:
+          type: string
+          enum:
+          - cloud
+          - edge
+          - embedded
+          - experience
+          - customNode
+        triggers:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/common/triggers/appFile'
+            - $ref: '#/components/schemas/common/triggers/basic'
+            - $ref: '#/components/schemas/common/triggers/beckhoff'
+            - $ref: '#/components/schemas/common/triggers/dataTable'
+            - $ref: '#/components/schemas/common/triggers/integration'
+            - $ref: '#/components/schemas/common/triggers/deviceIdsTags'
+            - $ref: '#/components/schemas/common/triggers/deviceIdsTagsInactivity'
+            - $ref: '#/components/schemas/common/triggers/direct'
+            - $ref: '#/components/schemas/common/triggers/endpoint'
+            - $ref: '#/components/schemas/common/triggers/event'
+            - $ref: '#/components/schemas/common/triggers/fileTail'
+            - $ref: '#/components/schemas/common/triggers/fileWatch'
+            - $ref: '#/components/schemas/common/triggers/flowError'
+            - $ref: '#/components/schemas/common/triggers/mqttTopic'
+            - $ref: '#/components/schemas/common/triggers/onSync'
+            - $ref: '#/components/schemas/common/triggers/opcua'
+            - $ref: '#/components/schemas/common/triggers/redis'
+            - $ref: '#/components/schemas/common/triggers/request'
+            - $ref: '#/components/schemas/common/triggers/serial'
+            - $ref: '#/components/schemas/common/triggers/snmpTrap'
+            - $ref: '#/components/schemas/common/triggers/timer'
+            - $ref: '#/components/schemas/common/triggers/virtualButton'
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/common/optMedStr'
+              type:
+                $ref: '#/components/schemas/common/reqMedStr'
+              config:
+                type: object
+              meta:
+                type: object
+              outputIds:
+                $ref: '#/components/schemas/common/outputIds'
+            additionalProperties: false
+            required:
+            - type
+        customNodeConfig:
+          type: object
+          properties:
+            outputCount:
+              type: number
+              enum:
+              - 1
+              - 2
+            resultMode:
+              type: string
+              enum:
+              - optional
+              - required
+              - none
+            resultDescription:
+              $ref: '#/components/schemas/common/description'
+            fields:
+              type: array
+              maxItems: 100
+              items:
+                $ref: '#/components/schemas/common/customNodeFieldConfig'
+          additionalProperties: false
+          required:
+          - outputCount
+          - resultMode
+          - fields
+        customNodeSupports:
+          type: array
+          maxItems: 1
+          items:
+            type: string
+            enum:
+            - cloud
+            - edge
+        customNodeUseCount:
+          type: number
+        globals:
+          $ref: '#/components/schemas/common/globals'
+        deletedInDevelop:
+          type: boolean
+        stats:
+          type: object
+          properties:
+            runCount:
+              type: number
+            errorCount:
+              type: number
+            byVersion:
+              type: object
+              patternProperties:
+                .*:
+                  type: object
+                  properties:
+                    runCount:
+                      type: number
+                    errorCount:
+                      type: number
+    flowVersion:
+      title: Workflow Version
+      description: Schema for a single Workflow Version
+      oneOf:
+      - description: Schema for a single Cloud/Edge/Embedded/Custom Node Workflow Version
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          flowVersionId:
+            $ref: '#/components/schemas/common/objectId'
+          flowId:
+            $ref: '#/components/schemas/common/objectId'
+          applicationId:
+            $ref: '#/components/schemas/common/objectId'
+          creationDate:
+            $ref: '#/components/schemas/common/date'
+          lastUpdated:
+            $ref: '#/components/schemas/common/date'
+          createdById:
+            $ref: '#/components/schemas/common/objectId'
+          createdByType:
+            $ref: '#/components/schemas/common/expSourceType'
+          lastUpdatedById:
+            $ref: '#/components/schemas/common/objectId'
+          lastUpdatedByType:
+            $ref: '#/components/schemas/common/expSourceType'
+          version:
+            $ref: '#/components/schemas/common/name'
+          flowClass:
+            type: string
+            enum:
+            - cloud
+            - edge
+            - embedded
+            - customNode
+          notes:
+            $ref: '#/components/schemas/common/description'
+          enabled:
+            type: boolean
+          triggers:
+            $ref: '#/components/schemas/flow/properties/triggers'
+          nodes:
+            $ref: '#/components/schemas/flow/properties/nodes'
+          globals:
+            $ref: '#/components/schemas/common/globals'
+          minimumAgentVersion:
+            $ref: '#/components/schemas/common/version'
+          customNodeConfig:
+            $ref: '#/components/schemas/flow/properties/customNodeConfig'
+          stats:
+            type: object
+            properties:
+              runCount:
+                type: number
+              errorCount:
+                type: number
+              byVersion:
+                type: object
+                patternProperties:
+                  .*:
+                    type: object
+                    properties:
+                      runCount:
+                        type: number
+                      errorCount:
+                        type: number
+      - description: Schema for a single Experience Workflow Version
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          flowVersionId:
+            $ref: '#/components/schemas/common/objectId'
+          flowId:
+            $ref: '#/components/schemas/common/objectId'
+          applicationId:
+            $ref: '#/components/schemas/common/objectId'
+          creationDate:
+            $ref: '#/components/schemas/common/date'
+          lastUpdated:
+            $ref: '#/components/schemas/common/date'
+          name:
+            $ref: '#/components/schemas/common/name'
+          description:
+            $ref: '#/components/schemas/common/description'
+          flowClass:
+            type: string
+            enum:
+            - experience
+          versions:
+            type: array
+            items:
+              $ref: '#/components/schemas/common/name'
+          enabled:
+            type: boolean
+          triggers:
+            $ref: '#/components/schemas/flow/properties/triggers'
+          nodes:
+            $ref: '#/components/schemas/flow/properties/nodes'
+          globals:
+            $ref: '#/components/schemas/common/globals'
+          stats:
+            type: object
+            properties:
+              runCount:
+                type: number
+              errorCount:
+                type: number
+              byVersion:
+                type: object
+                patternProperties:
+                  .*:
+                    type: object
+                    properties:
+                      runCount:
+                        type: number
+                      errorCount:
+                        type: number
+    flowVersions:
+      title: Workflow Versions
+      description: Schema for a collection of Workflow Versions
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/flowVersion'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+    flows:
+      title: Workflows
+      description: Schema for a collection of Workflows
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/flow'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        flowClass:
+          type: string
+          enum:
+          - cloud
+          - edge
+          - embedded
+          - experience
+          - customNode
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true

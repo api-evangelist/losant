@@ -1,0 +1,24 @@
+name: Send Device Commands
+description: Send commands from cloud workflows or API consumers to a single device
+  or a fleet.
+provider: losant
+api: device
+operations:
+- path: /applications/{applicationId}/devices/{deviceId}/command
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+- path: /applications/{applicationId}/devices/command
+  methods:
+  - GET
+  - POST
+  - PATCH
+  - DELETE
+auth: BearerAuth (Losant JWT)
+inputs:
+- applicationId
+- deviceId or flowId where applicable
+outputs:
+- Losant resource JSON per OpenAPI schemas

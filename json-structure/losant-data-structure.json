@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/draft/2025-01/structure",
+  "name": "LosantData",
+  "description": "Time-series device data. Aggregation queries return points per device per attribute over a window with a configurable resolution.",
+  "source": "#/definitions/data in https://api.losant.com/",
+  "properties": {},
+  "required": []
+}
