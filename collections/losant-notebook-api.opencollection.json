@@ -1,0 +1,248 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Losant Notebooks API",
+    "version": "1.29.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Notebooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Notebook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/notebooks/:notebookId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "notebookId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the notebook"
+              },
+              {
+                "name": "start",
+                "value": "0",
+                "type": "query",
+                "description": "Start of range for notebook execution query (ms since epoch)"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End of range for notebook execution query (ms since epoch)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Notebook"
+        },
+        {
+          "info": {
+            "name": "Marks a Specific Notebook Execution for Cancellation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/notebooks/:notebookId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "notebookId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the notebook"
+              },
+              {
+                "name": "executionId",
+                "value": "632e18632f59592e773a4153",
+                "type": "query",
+                "description": "The ID of the execution to cancel"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Marks a Specific Notebook Execution for Cancellation"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Notebook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/notebooks/:notebookId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "notebookId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the notebook"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Notebook"
+        },
+        {
+          "info": {
+            "name": "Deletes a Notebook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/notebooks/:notebookId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "notebookId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the notebook"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Notebook"
+        },
+        {
+          "info": {
+            "name": "Returns the Notebooks for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/notebooks",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*notebook",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Notebooks for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Notebook for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/notebooks",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Notebook for an Application"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

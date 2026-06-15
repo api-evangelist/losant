@@ -1,0 +1,272 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Losant Edge and Embedded Compute API",
+    "version": "1.29.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Edge and Embedded Compute",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves Information on an Edge Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/edge/deployments/:edgeDeploymentId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "edgeDeploymentId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the edge deployment"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Edge Deployment"
+        },
+        {
+          "info": {
+            "name": "Returns the Edge Deployments for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/edge/deployments",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "creationDate",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "query",
+                "description": "Filter deployments to the given Device ID"
+              },
+              {
+                "name": "version",
+                "value": "myFlowVersion",
+                "type": "query",
+                "description": "Filter deployments to the given Workflow Version (matches against both current and desired)"
+              },
+              {
+                "name": "filterEmpty",
+                "value": "true",
+                "type": "query",
+                "description": "Filter out deployments where both the current and desired version are null."
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "query",
+                "description": "Filter deployments to the given Workflow ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Edge Deployments for an Application"
+        },
+        {
+          "info": {
+            "name": "Replace Deployments of an Edge Workflow Version with a New Version. New Version Can Be Blank, if Removal Is Desired.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/edge/deployments",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace Deployments of an Edge Workflow Version with a New Version. New Version Can Be Blank, if Removal Is Desired."
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Embedded Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/embedded/deployments/:embeddedDeploymentId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "embeddedDeploymentId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the embedded deployment"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Embedded Deployment"
+        },
+        {
+          "info": {
+            "name": "Returns the Embedded Deployments for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/embedded/deployments",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "creationDate",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "query",
+                "description": "Filter deployments to the given Device ID"
+              },
+              {
+                "name": "version",
+                "value": "myFlowVersion",
+                "type": "query",
+                "description": "Filter deployments to the given Workflow Version (matches against both current and desired)"
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "query",
+                "description": "Filter deployments to the given Workflow ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Embedded Deployments for an Application"
+        },
+        {
+          "info": {
+            "name": "Request an Export of the Compiled WASM Files for a Current Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/embedded/deployments",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Request an Export of the Compiled WASM Files for a Current Deployment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

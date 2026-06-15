@@ -1,0 +1,3999 @@
+{
+  "item": [
+    {
+      "id": "64f9af55-a3bb-438e-aaa2-12f49cf1c1b8",
+      "name": "Authentication and Account",
+      "description": {
+        "content": "Authentication and Account resources on the Losant Platform.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ad72696a-61a1-4caf-a648-02b6905cd1ac",
+          "name": "Authenticates a user via a SAML response.",
+          "request": {
+            "name": "Authenticates a user via a SAML response.",
+            "description": {
+              "content": "Authenticates a user via a SAML response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"SAMLResponse\": \"<string>\",\n  \"SAMLDomain\": {\n    \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n  },\n  \"requestedScopes\": [\n    {\n      \"value\": \"reference #/components/schemas/common/userApiScope not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/userApiScope not found in the OpenAPI spec\"\n    }\n  ],\n  \"tokenTTL\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "735bdf04-f301-483d-910f-7a26e5b2f459",
+              "name": "Successful authentication. The included api access token has the scope 'all.User'.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SAMLResponse\": \"<string>\",\n  \"SAMLDomain\": {\n    \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n  },\n  \"requestedScopes\": [\n    {\n      \"value\": \"reference #/components/schemas/common/userApiScope not found in the OpenAPI spec\"\n    }\n  ],\n  \"tokenTTL\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"userId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"token\": {\n    \"value\": \"reference #/components/schemas/common/token not found in the OpenAPI spec\"\n  },\n  \"needsToVerifyEmail\": false,\n  \"orgId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "963fbbec-c72e-477b-ae29-5f29559b8cc1",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SAMLResponse\": \"<string>\",\n  \"SAMLDomain\": {\n    \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n  },\n  \"requestedScopes\": [\n    {\n      \"value\": \"reference #/components/schemas/common/userApiScope not found in the OpenAPI spec\"\n    }\n  ],\n  \"tokenTTL\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a89b6e2-e641-4139-8960-a60244871eb0",
+              "name": "Unauthorized error if authentication fails",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SAMLResponse\": \"<string>\",\n  \"SAMLDomain\": {\n    \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n  },\n  \"requestedScopes\": [\n    {\n      \"value\": \"reference #/components/schemas/common/userApiScope not found in the OpenAPI spec\"\n    }\n  ],\n  \"tokenTTL\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25712e60-b4cd-470f-9284-40b3bd28abe5",
+          "name": "Checks email domain for SSO configuration.",
+          "request": {
+            "name": "Checks email domain for SSO configuration.",
+            "description": {
+              "content": "Checks email domain for SSO configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "(Required) The email address associated with the user login"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a4a23cf3-9fa9-4ea5-b94f-e714c8729c50",
+              "name": "Successful finding SSO for domain. Returns SSO request URL and type.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "example@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ssoType\": \"SAML\",\n  \"ssoRequest\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d101ad81-9096-4625-87a8-aabcc4cf0f8f",
+              "name": "No domain associated with an SSO configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "example@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "72930892-ca0a-4164-aa07-e10f32c2ed0b",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "example@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7a9941a8-7f89-4eb2-8480-9bf0be0b4e90",
+          "name": "Retrieves Pending Organization Invitations for a User",
+          "request": {
+            "name": "Retrieves Pending Organization Invitations for a User",
+            "description": {},
+            "url": {
+              "path": [
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3df3a52b-16d4-45d9-874c-82561824e535",
+              "name": "Information about invitations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"$ref\": {}\n  },\n  {\n    \"$ref\": {}\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3eb7eeef-2981-4e95-a16b-fd8dae8cacaf",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58bf43b8-e9eb-4887-ad63-e8013102e5fd",
+          "name": "Moves Resources to a New Owner",
+          "request": {
+            "name": "Moves Resources to a New Owner",
+            "description": {},
+            "url": {
+              "path": [
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destinationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"destinationType\": {\n    \"value\": \"reference #/components/schemas/common/ownerType not found in the OpenAPI spec\"\n  },\n  \"applicationIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"dashboardIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"strict\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ca79782f-848b-4cb6-9f32-8ada6d0a2d92",
+              "name": "If resource transfer was successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"destinationType\": {\n    \"value\": \"reference #/components/schemas/common/ownerType not found in the OpenAPI spec\"\n  },\n  \"applicationIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"dashboardIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"strict\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11146404-1b89-418c-a841-ba39a05602c9",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"destinationType\": {\n    \"value\": \"reference #/components/schemas/common/ownerType not found in the OpenAPI spec\"\n  },\n  \"applicationIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"dashboardIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"strict\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "649dec9a-593a-489b-b611-c2ca320e575d",
+          "name": "Accepts or Rejects an Invitation to an Organization",
+          "request": {
+            "name": "Accepts or Rejects an Invitation to an Organization",
+            "description": {},
+            "url": {
+              "path": [
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inviteId",
+                  "description": "(Required) ID associated with the invitation"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35ece633-e36b-4304-9351-c3057c349365",
+              "name": "Acceptance or rejection of invitation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inviteId",
+                      "description": "(Required) ID associated with the invitation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"dismissed\",\n  \"orgId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f8d8ba9-6725-4f79-ba43-87640822feb6",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inviteId",
+                      "description": "(Required) ID associated with the invitation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0a35598-95c5-4004-b9be-35beaed0bfe8",
+              "name": "Error if invitation not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inviteId",
+                      "description": "(Required) ID associated with the invitation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45e9e9cf-e5cb-4d0f-ab34-bc9ad3eac50e",
+              "name": "Error if invitation has expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inviteId",
+                      "description": "(Required) ID associated with the invitation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb01a1b9-bba5-436f-9c55-4005c745a179",
+          "name": "Gets information about an invite",
+          "request": {
+            "name": "Gets information about an invite",
+            "description": {
+              "content": "Gets information about an invite",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) The token associated with the invite"
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "(Required) The email associated with the invite"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "760a6e0a-df03-4ecc-82ba-98b73b85cc3e",
+              "name": "Information about invite",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "aTokenString"
+                    },
+                    {
+                      "key": "email",
+                      "value": "example@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orgName\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"role\": {\n    \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n  },\n  \"inviteDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"ttl\": 6838.566127346054,\n  \"disallowTransfer\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0b4ea2d-a739-49d2-93c7-b1f508bf805e",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "aTokenString"
+                    },
+                    {
+                      "key": "email",
+                      "value": "example@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb49d443-f1be-40d7-8fcc-5197346fd787",
+              "name": "Error if invite not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "aTokenString"
+                    },
+                    {
+                      "key": "email",
+                      "value": "example@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1954728-fa9e-4946-8587-90fdf876a168",
+              "name": "Error if invite has expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "aTokenString"
+                    },
+                    {
+                      "key": "email",
+                      "value": "example@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a904cb63-f635-4f82-92b5-6f135fa62095",
+          "name": "Accepts/Rejects an invite",
+          "request": {
+            "name": "Accepts/Rejects an invite",
+            "description": {
+              "content": "Accepts/Rejects an invite",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "invites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"token\": {\n    \"value\": \"reference #/components/schemas/common/token not found in the OpenAPI spec\"\n  },\n  \"accept\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4ae236f7-a6cd-47d1-aded-edd850cbd619",
+              "name": "Acceptance/Rejection of invite",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"token\": {\n    \"value\": \"reference #/components/schemas/common/token not found in the OpenAPI spec\"\n  },\n  \"accept\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accepted\": true,\n  \"orgId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b3c9f86-6868-4c3f-8a7f-2136550c8d05",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"token\": {\n    \"value\": \"reference #/components/schemas/common/token not found in the OpenAPI spec\"\n  },\n  \"accept\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbc43c4b-3cc3-455a-a3e1-e0f8eca1c2f9",
+              "name": "Error if invite not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"token\": {\n    \"value\": \"reference #/components/schemas/common/token not found in the OpenAPI spec\"\n  },\n  \"accept\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c981d7d-1eec-46ab-af5c-d22a53beaa5e",
+              "name": "Error if invite has expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"token\": {\n    \"value\": \"reference #/components/schemas/common/token not found in the OpenAPI spec\"\n  },\n  \"accept\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf97367c-5205-4b99-9f52-79c79a9f5230",
+          "name": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Organization",
+          "request": {
+            "name": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Organization",
+            "description": {},
+            "url": {
+              "path": [
+                "orgs",
+                ":orgId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<string>",
+                  "description": "Start of range for notebook execution query (ms since epoch)"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<string>",
+                  "description": "End of range for notebook execution query (ms since epoch)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orgId",
+                  "description": "(Required) ID associated with the organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "eead339c-28cc-4d3d-a2af-2d953210ebc1",
+              "name": "Notebook usage information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"start\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"end\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"counts\": [\n    {\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"minutes\": 318,\n      \"completed\": 9792,\n      \"canceled\": 1946,\n      \"errored\": 5226,\n      \"timeout\": 22\n    },\n    {\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"minutes\": 6617,\n      \"completed\": 2891,\n      \"canceled\": 6529,\n      \"errored\": 430,\n      \"timeout\": 8321\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c511b01a-8df7-457e-b4df-3e53e54a359b",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a6600c6-be41-4b43-9b63-d01ee550608a",
+              "name": "Error if organization was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5fa9b24d-79da-4d44-ae36-82a65d843167",
+          "name": "Moves Resources to a New Owner",
+          "request": {
+            "name": "Moves Resources to a New Owner",
+            "description": {},
+            "url": {
+              "path": [
+                "orgs",
+                ":orgId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orgId",
+                  "description": "(Required) ID associated with the organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destinationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"destinationType\": {\n    \"value\": \"reference #/components/schemas/common/ownerType not found in the OpenAPI spec\"\n  },\n  \"applicationIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"dashboardIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"strict\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "42dc564f-8d29-4f4d-86e1-9b4256f09804",
+              "name": "If resource transfer was successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"destinationType\": {\n    \"value\": \"reference #/components/schemas/common/ownerType not found in the OpenAPI spec\"\n  },\n  \"applicationIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"dashboardIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"strict\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eef486e6-f57a-4ebf-b565-ea3ec0f3dfb4",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"destinationType\": {\n    \"value\": \"reference #/components/schemas/common/ownerType not found in the OpenAPI spec\"\n  },\n  \"applicationIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"dashboardIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"strict\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2d2e191-9f81-44c0-8e9d-214bb49d5707",
+              "name": "Error if organization was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"destinationType\": {\n    \"value\": \"reference #/components/schemas/common/ownerType not found in the OpenAPI spec\"\n  },\n  \"applicationIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"dashboardIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"strict\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bcd1221a-2d05-4de1-9938-938ab99082d3",
+          "name": "Removes a Member from the Org",
+          "request": {
+            "name": "Removes a Member from the Org",
+            "description": {},
+            "url": {
+              "path": [
+                "orgs",
+                ":orgId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "userId",
+                  "value": "<string>",
+                  "description": "(Required) Id of user to remove"
+                },
+                {
+                  "disabled": false,
+                  "key": "summaryExclude",
+                  "value": "<string>",
+                  "description": "Comma-separated list of summary fields to exclude from org summary"
+                },
+                {
+                  "disabled": false,
+                  "key": "summaryInclude",
+                  "value": "<string>",
+                  "description": "Comma-separated list of summary fields to include in org summary"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orgId",
+                  "description": "(Required) ID associated with the organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "403ccfb2-a643-455e-bde4-b95b1556c94f",
+              "name": "Updated organization information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "575ed70c7ae143cd83dc4aa9"
+                    },
+                    {
+                      "key": "summaryExclude",
+                      "value": "payloadCount"
+                    },
+                    {
+                      "key": "summaryInclude",
+                      "value": "payloadCount"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"orgId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"members\": [\n    {\n      \"userId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"firstName\": {\n        \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n      },\n      \"lastName\": {\n        \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n      },\n      \"email\": {\n        \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n      },\n      \"avatarUrl\": {\n        \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n      },\n      \"role\": {\n        \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n      },\n      \"applicationRoles\": {\n        \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n      },\n      \"dashboardRoles\": {\n        \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n      },\n      \"twoFactorAuthEnabled\": true,\n      \"ssoLinked\": false\n    },\n    {\n      \"userId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"firstName\": {\n        \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n      },\n      \"lastName\": {\n        \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n      },\n      \"email\": {\n        \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n      },\n      \"avatarUrl\": {\n        \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n      },\n      \"role\": {\n        \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n      },\n      \"applicationRoles\": {\n        \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n      },\n      \"dashboardRoles\": {\n        \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n      },\n      \"twoFactorAuthEnabled\": false,\n      \"ssoLinked\": false\n    }\n  ],\n  \"limits\": {\n    \"value\": \"reference #/components/schemas/common/orgLimits not found in the OpenAPI spec\"\n  },\n  \"summary\": {\n    \"apiTokenCount\": 5428,\n    \"appCount\": 3582,\n    \"certificateCount\": 1801,\n    \"certificateAuthorityCount\": 7127,\n    \"credentialCount\": 8634,\n    \"dashCount\": 5074,\n    \"dataTableCount\": 2904,\n    \"deviceCount\": 1904,\n    \"deviceRecipeCount\": 587,\n    \"eventCount\": 7393,\n    \"experienceDomainCount\": 5718,\n    \"experienceEndpointCount\": 1956,\n    \"experienceGroupCount\": 1880,\n    \"experienceSlugCount\": 6097,\n    \"experienceUserCount\": 1164,\n    \"experienceVersionCount\": 9433,\n    \"experienceViewCount\": 6046,\n    \"fileCount\": 2868,\n    \"flowCount\": 6649,\n    \"integrationCount\": 5433,\n    \"keyCount\": 1153,\n    \"notebookCount\": 7512,\n    \"privateFileCount\": 8038,\n    \"resourceJobCount\": 1507,\n    \"webhookCount\": 6605,\n    \"memberCount\": 9326,\n    \"pendingInviteCount\": 232,\n    \"payloadCount\": {\n      \"appFile\": {\n        \"orw*\\\\\": 4546.38107553618\n      },\n      \"dataTable\": {\n        \"Y`<\": 4177.456336691201\n      },\n      \"deviceCreate\": {\n        \"\": 7381.722715663712\n      },\n      \"deviceCommand\": {\n        \"Zd7;*`\": 9019.130603231979\n      },\n      \"deviceConnect\": {\n        \"9m\\\"!\": 7487.6134875090875\n      },\n      \"deviceDisconnect\": {\n        \"d\": 7741.577825485686\n      },\n      \"deviceState\": {\n        \"\\\"qCK?\": 7910.179600461268\n      },\n      \"endpoint\": {\n        \"Eo+\": 768.5649221411184\n      },\n      \"event\": {\n        \"&5A5*O\": 5358.822541242223\n      },\n      \"flowError\": {\n        \"\": 3542.797205587852\n      },\n      \"inboundEmail\": {\n        \"\\\"'Gg\\\\Z\": 1492.9117148992732\n      },\n      \"integration\": {\n        \"x\": 1984.987211183018\n      },\n      \"mqttIn\": {\n        \"):*\": 8806.207082625811\n      },\n      \"mqttOut\": {\n        \"OqMbe8,<\": 4375.652189257364\n      },\n      \"notebook\": {\n        \"\": 9561.955195587463\n      },\n      \"resourceJob\": {\n        \"-%&~-P=@i\": 4710.498002023089\n      },\n      \"timer\": {\n        \"G\": 3681.2856907043156\n      },\n      \"virtualButton\": {\n        \"R\": 9456.316340718031\n      },\n      \"webhook\": {\n        \"U^O8\\\\ \": 3737.166847726797\n      }\n    },\n    \"storageStats\": {\n      \"value\": \"reference #/components/schemas/common/storageStats not found in the OpenAPI spec\"\n    },\n    \"notebookStats\": {\n      \"value\": \"reference #/components/schemas/common/notebookStats not found in the OpenAPI spec\"\n    }\n  },\n  \"planId\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"billingEmail\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"subscriptionStatus\": \"past_due\",\n  \"currentPeriodStart\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"currentPeriodEnd\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"isEnterprise\": true,\n  \"iconColor\": {\n    \"value\": \"reference #/components/schemas/common/color not found in the OpenAPI spec\"\n  },\n  \"whitelistedEmailDomains\": [\n    {\n      \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n    }\n  ],\n  \"disabledAt\": false,\n  \"isReadOnly\": true,\n  \"mfaMode\": {\n    \"value\": \"reference #/components/schemas/common/mfaMode not found in the OpenAPI spec\"\n  },\n  \"banner\": {\n    \"message\": \"string\",\n    \"level\": \"critical\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ef9f844-72e7-4eba-91ed-ec3fb9a5c6a7",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "575ed70c7ae143cd83dc4aa9"
+                    },
+                    {
+                      "key": "summaryExclude",
+                      "value": "payloadCount"
+                    },
+                    {
+                      "key": "summaryInclude",
+                      "value": "payloadCount"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e94d87c-a141-470c-8ab9-207945b6b6ee",
+              "name": "Error if organization not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "575ed70c7ae143cd83dc4aa9"
+                    },
+                    {
+                      "key": "summaryExclude",
+                      "value": "payloadCount"
+                    },
+                    {
+                      "key": "summaryInclude",
+                      "value": "payloadCount"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d7bf1eb-955a-40eb-b220-8850412cf0a6",
+          "name": "Invites a Person to an Organization",
+          "request": {
+            "name": "Invites a Person to an Organization",
+            "description": {},
+            "url": {
+              "path": [
+                "orgs",
+                ":orgId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orgId",
+                  "description": "(Required) ID associated with the organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"role\": {\n    \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n  },\n  \"applicationRoles\": {\n    \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n  },\n  \"dashboardRoles\": {\n    \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n  },\n  \"disallowTransfer\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e91c2b62-859e-4744-93bf-362d5254b3c9",
+              "name": "Invitation information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"role\": {\n    \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n  },\n  \"applicationRoles\": {\n    \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n  },\n  \"dashboardRoles\": {\n    \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n  },\n  \"disallowTransfer\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"$ref\": {}\n  },\n  {\n    \"$ref\": {}\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa7683c6-cfed-4812-af14-b1d059469972",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"role\": {\n    \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n  },\n  \"applicationRoles\": {\n    \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n  },\n  \"dashboardRoles\": {\n    \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n  },\n  \"disallowTransfer\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d144ac37-807b-4126-a962-dc379730c464",
+              "name": "Error if organization not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":orgId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orgId",
+                      "description": "(Required) ID associated with the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"role\": {\n    \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n  },\n  \"applicationRoles\": {\n    \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n  },\n  \"dashboardRoles\": {\n    \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n  },\n  \"disallowTransfer\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1cead831-b3d3-40b8-bac9-1decae37bca1",
+          "name": "Returns the Organizations Associated with the Current User",
+          "request": {
+            "name": "Returns the Organizations Associated with the Current User",
+            "description": {},
+            "url": {
+              "path": [
+                "orgs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sortField",
+                  "value": "name",
+                  "description": "Field to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "Direction to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Which page of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "How many items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "filterField",
+                  "value": "<string>",
+                  "description": "Field to filter the results by. Blank or not provided means no filtering."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+                },
+                {
+                  "disabled": false,
+                  "key": "summaryExclude",
+                  "value": "<string>",
+                  "description": "Comma-separated list of summary fields to exclude from org summaries"
+                },
+                {
+                  "disabled": false,
+                  "key": "summaryInclude",
+                  "value": "<string>",
+                  "description": "Comma-separated list of summary fields to include in org summary"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "17eed7d0-c831-4b41-baff-d176e504c468",
+              "name": "Collection of organizations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filterField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "my*org"
+                    },
+                    {
+                      "key": "summaryExclude",
+                      "value": "payloadCount"
+                    },
+                    {
+                      "key": "summaryInclude",
+                      "value": "payloadCount"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"orgId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"members\": [\n        {\n          \"userId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"firstName\": {\n            \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n          },\n          \"lastName\": {\n            \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n          },\n          \"email\": {\n            \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n          },\n          \"avatarUrl\": {\n            \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n          },\n          \"role\": {\n            \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n          },\n          \"applicationRoles\": {\n            \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n          },\n          \"dashboardRoles\": {\n            \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n          },\n          \"twoFactorAuthEnabled\": false,\n          \"ssoLinked\": false\n        },\n        {\n          \"userId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"firstName\": {\n            \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n          },\n          \"lastName\": {\n            \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n          },\n          \"email\": {\n            \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n          },\n          \"avatarUrl\": {\n            \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n          },\n          \"role\": {\n            \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n          },\n          \"applicationRoles\": {\n            \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n          },\n          \"dashboardRoles\": {\n            \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n          },\n          \"twoFactorAuthEnabled\": false,\n          \"ssoLinked\": true\n        }\n      ],\n      \"limits\": {\n        \"value\": \"reference #/components/schemas/common/orgLimits not found in the OpenAPI spec\"\n      },\n      \"summary\": {\n        \"apiTokenCount\": 528,\n        \"appCount\": 2543,\n        \"certificateCount\": 5396,\n        \"certificateAuthorityCount\": 6648,\n        \"credentialCount\": 7789,\n        \"dashCount\": 3814,\n        \"dataTableCount\": 1939,\n        \"deviceCount\": 9469,\n        \"deviceRecipeCount\": 4949,\n        \"eventCount\": 2892,\n        \"experienceDomainCount\": 7562,\n        \"experienceEndpointCount\": 8649,\n        \"experienceGroupCount\": 7620,\n        \"experienceSlugCount\": 592,\n        \"experienceUserCount\": 7949,\n        \"experienceVersionCount\": 738,\n        \"experienceViewCount\": 5681,\n        \"fileCount\": 1193,\n        \"flowCount\": 2097,\n        \"integrationCount\": 1448,\n        \"keyCount\": 6389,\n        \"notebookCount\": 5088,\n        \"privateFileCount\": 9329,\n        \"resourceJobCount\": 4152,\n        \"webhookCount\": 3246,\n        \"memberCount\": 5752,\n        \"pendingInviteCount\": 1071,\n        \"payloadCount\": {\n          \"appFile\": {\n            \"T-XKaP\\\"\": 269.98481197883063\n          },\n          \"dataTable\": {\n            \"rsI&'N=Yn=\": 2891.2125917883723\n          },\n          \"deviceCreate\": {\n            \"Zm\": 5194.531461067029\n          },\n          \"deviceCommand\": {\n            \"\\\"S$=\\\\Mzl67\": 7618.516912401051\n          },\n          \"deviceConnect\": {\n            \"yH\": 9589.226462897892\n          },\n          \"deviceDisconnect\": {\n            \"e='FU\": 1261.2876679130413\n          },\n          \"deviceState\": {\n            \"Y7H$V:Tl\": 3731.497849878335\n          },\n          \"endpoint\": {\n            \"$;kp\": 1569.3704338242264\n          },\n          \"event\": {\n            \"^8k\\\\\": 2605.812632786526\n          },\n          \"flowError\": {\n            \"co.h\": 9743.716739228532\n          },\n          \"inboundEmail\": {\n            \"fAooJ+]\": 3757.7801584821236\n          },\n          \"integration\": {\n            \"sauqYsy\": 9959.018214565713\n          },\n          \"mqttIn\": {\n            \"%8l!G_\": 1384.470477466343\n          },\n          \"mqttOut\": {\n            \"\": 3448.841099995026\n          },\n          \"notebook\": {\n            \"\": 7965.625661399524\n          },\n          \"resourceJob\": {\n            \"q}q7szG\": 3512.6581433607694\n          },\n          \"timer\": {\n            \"HeDi>oCs\": 1558.3104256796798\n          },\n          \"virtualButton\": {\n            \"\": 8806.196261961664\n          },\n          \"webhook\": {\n            \",1@ai,T\": 2207.8295153809245\n          }\n        },\n        \"storageStats\": {\n          \"value\": \"reference #/components/schemas/common/storageStats not found in the OpenAPI spec\"\n        },\n        \"notebookStats\": {\n          \"value\": \"reference #/components/schemas/common/notebookStats not found in the OpenAPI spec\"\n        }\n      },\n      \"planId\": {\n        \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n      },\n      \"billingEmail\": {\n        \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n      },\n      \"subscriptionStatus\": \"unpaid\",\n      \"currentPeriodStart\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"currentPeriodEnd\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"isEnterprise\": false,\n      \"iconColor\": {\n        \"value\": \"reference #/components/schemas/common/color not found in the OpenAPI spec\"\n      },\n      \"whitelistedEmailDomains\": [\n        {\n          \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n        }\n      ],\n      \"disabledAt\": false,\n      \"isReadOnly\": false,\n      \"mfaMode\": {\n        \"value\": \"reference #/components/schemas/common/mfaMode not found in the OpenAPI spec\"\n      },\n      \"banner\": {\n        \"message\": \"string\",\n        \"level\": \"info\"\n      }\n    },\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"orgId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"members\": [\n        {\n          \"userId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"firstName\": {\n            \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n          },\n          \"lastName\": {\n            \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n          },\n          \"email\": {\n            \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n          },\n          \"avatarUrl\": {\n            \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n          },\n          \"role\": {\n            \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n          },\n          \"applicationRoles\": {\n            \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n          },\n          \"dashboardRoles\": {\n            \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n          },\n          \"twoFactorAuthEnabled\": false,\n          \"ssoLinked\": true\n        },\n        {\n          \"userId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"firstName\": {\n            \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n          },\n          \"lastName\": {\n            \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n          },\n          \"email\": {\n            \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n          },\n          \"avatarUrl\": {\n            \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n          },\n          \"role\": {\n            \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n          },\n          \"applicationRoles\": {\n            \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n          },\n          \"dashboardRoles\": {\n            \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n          },\n          \"twoFactorAuthEnabled\": true,\n          \"ssoLinked\": true\n        }\n      ],\n      \"limits\": {\n        \"value\": \"reference #/components/schemas/common/orgLimits not found in the OpenAPI spec\"\n      },\n      \"summary\": {\n        \"apiTokenCount\": 8416,\n        \"appCount\": 9313,\n        \"certificateCount\": 4736,\n        \"certificateAuthorityCount\": 7332,\n        \"credentialCount\": 2061,\n        \"dashCount\": 881,\n        \"dataTableCount\": 7892,\n        \"deviceCount\": 8694,\n        \"deviceRecipeCount\": 1424,\n        \"eventCount\": 4926,\n        \"experienceDomainCount\": 7743,\n        \"experienceEndpointCount\": 2835,\n        \"experienceGroupCount\": 3166,\n        \"experienceSlugCount\": 1105,\n        \"experienceUserCount\": 2829,\n        \"experienceVersionCount\": 5089,\n        \"experienceViewCount\": 6030,\n        \"fileCount\": 7765,\n        \"flowCount\": 6716,\n        \"integrationCount\": 4748,\n        \"keyCount\": 7491,\n        \"notebookCount\": 9976,\n        \"privateFileCount\": 9352,\n        \"resourceJobCount\": 8550,\n        \"webhookCount\": 9668,\n        \"memberCount\": 7938,\n        \"pendingInviteCount\": 5695,\n        \"payloadCount\": {\n          \"appFile\": {\n            \"F)\": 9848.701194928444\n          },\n          \"dataTable\": {\n            \"\": 2380.7585354229786\n          },\n          \"deviceCreate\": {\n            \"'SVBi;#<\": 6861.257564422742\n          },\n          \"deviceCommand\": {\n            \"Xo>3-]Zt\": 9913.770875611704\n          },\n          \"deviceConnect\": {\n            \"g/~tT?9+g;\": 8207.156268629748\n          },\n          \"deviceDisconnect\": {\n            \"f47~P4\": 8180.80444177381\n          },\n          \"deviceState\": {\n            \"*B:-egJ'\": 9765.55804839784\n          },\n          \"endpoint\": {\n            \"=ow\": 7700.89519731025\n          },\n          \"event\": {\n            \"WcKK\": 6426.530403804658\n          },\n          \"flowError\": {\n            \"A_.ql\": 9372.5432154917\n          },\n          \"inboundEmail\": {\n            \">4Ra\": 1267.3687260402044\n          },\n          \"integration\": {\n            \"5UtOp\\\"Rwn\": 7804.0063266057705\n          },\n          \"mqttIn\": {\n            \"dX;\": 8812.655386979626\n          },\n          \"mqttOut\": {\n            \"eX:m7>W\": 8611.496984224808\n          },\n          \"notebook\": {\n            \"R<fGV]/\": 8089.706066329624\n          },\n          \"resourceJob\": {\n            \"}WJ)s\": 8825.983398238095\n          },\n          \"timer\": {\n            \";\": 1252.0449350824535\n          },\n          \"virtualButton\": {\n            \"{8SPWhYW\": 60.234787795871995\n          },\n          \"webhook\": {\n            \"^-%}DiA&\": 4966.814652544762\n          }\n        },\n        \"storageStats\": {\n          \"value\": \"reference #/components/schemas/common/storageStats not found in the OpenAPI spec\"\n        },\n        \"notebookStats\": {\n          \"value\": \"reference #/components/schemas/common/notebookStats not found in the OpenAPI spec\"\n        }\n      },\n      \"planId\": {\n        \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n      },\n      \"billingEmail\": {\n        \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n      },\n      \"subscriptionStatus\": \"trialing\",\n      \"currentPeriodStart\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"currentPeriodEnd\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"isEnterprise\": true,\n      \"iconColor\": {\n        \"value\": \"reference #/components/schemas/common/color not found in the OpenAPI spec\"\n      },\n      \"whitelistedEmailDomains\": [\n        {\n          \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n        }\n      ],\n      \"disabledAt\": false,\n      \"isReadOnly\": true,\n      \"mfaMode\": {\n        \"value\": \"reference #/components/schemas/common/mfaMode not found in the OpenAPI spec\"\n      },\n      \"banner\": {\n        \"message\": \"string\",\n        \"level\": \"warning\"\n      }\n    }\n  ],\n  \"count\": 4705,\n  \"totalCount\": 2724,\n  \"perPage\": 9707,\n  \"page\": 9322,\n  \"filter\": \"string\",\n  \"filterField\": \"string\",\n  \"sortField\": \"string\",\n  \"sortDirection\": {\n    \"value\": \"reference #/components/schemas/common/sortDirection not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bbef7b7-91f4-46da-b6a3-f5f7a4b50b7b",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filterField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "my*org"
+                    },
+                    {
+                      "key": "summaryExclude",
+                      "value": "payloadCount"
+                    },
+                    {
+                      "key": "summaryInclude",
+                      "value": "payloadCount"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc3522a5-1e71-443e-8473-cfe61f63a223",
+          "name": "Create a New Organization",
+          "request": {
+            "name": "Create a New Organization",
+            "description": {},
+            "url": {
+              "path": [
+                "orgs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "summaryExclude",
+                  "value": "<string>",
+                  "description": "Comma-separated list of summary fields to exclude from org summary"
+                },
+                {
+                  "disabled": false,
+                  "key": "summaryInclude",
+                  "value": "<string>",
+                  "description": "Comma-separated list of summary fields to include in org summary"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"planId\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"billingEmail\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"cardToken\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"iconColor\": {\n    \"value\": \"reference #/components/schemas/common/color not found in the OpenAPI spec\"\n  },\n  \"mfaMode\": {\n    \"value\": \"reference #/components/schemas/common/mfaMode not found in the OpenAPI spec\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d68b6d9-920b-415d-a42f-707f68276e3c",
+              "name": "Successfully created organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "summaryExclude",
+                      "value": "payloadCount"
+                    },
+                    {
+                      "key": "summaryInclude",
+                      "value": "payloadCount"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"planId\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"billingEmail\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"cardToken\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"iconColor\": {\n    \"value\": \"reference #/components/schemas/common/color not found in the OpenAPI spec\"\n  },\n  \"mfaMode\": {\n    \"value\": \"reference #/components/schemas/common/mfaMode not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"orgId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"members\": [\n    {\n      \"userId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"firstName\": {\n        \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n      },\n      \"lastName\": {\n        \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n      },\n      \"email\": {\n        \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n      },\n      \"avatarUrl\": {\n        \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n      },\n      \"role\": {\n        \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n      },\n      \"applicationRoles\": {\n        \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n      },\n      \"dashboardRoles\": {\n        \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n      },\n      \"twoFactorAuthEnabled\": false,\n      \"ssoLinked\": true\n    },\n    {\n      \"userId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"firstName\": {\n        \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n      },\n      \"lastName\": {\n        \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n      },\n      \"email\": {\n        \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n      },\n      \"avatarUrl\": {\n        \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n      },\n      \"role\": {\n        \"value\": \"reference #/components/schemas/common/orgRole not found in the OpenAPI spec\"\n      },\n      \"applicationRoles\": {\n        \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n      },\n      \"dashboardRoles\": {\n        \"value\": \"reference #/components/schemas/common/resourceRoles not found in the OpenAPI spec\"\n      },\n      \"twoFactorAuthEnabled\": true,\n      \"ssoLinked\": true\n    }\n  ],\n  \"limits\": {\n    \"value\": \"reference #/components/schemas/common/orgLimits not found in the OpenAPI spec\"\n  },\n  \"summary\": {\n    \"apiTokenCount\": 7603,\n    \"appCount\": 5319,\n    \"certificateCount\": 653,\n    \"certificateAuthorityCount\": 7198,\n    \"credentialCount\": 9268,\n    \"dashCount\": 3235,\n    \"dataTableCount\": 9987,\n    \"deviceCount\": 7043,\n    \"deviceRecipeCount\": 2029,\n    \"eventCount\": 1534,\n    \"experienceDomainCount\": 491,\n    \"experienceEndpointCount\": 2836,\n    \"experienceGroupCount\": 4001,\n    \"experienceSlugCount\": 9189,\n    \"experienceUserCount\": 7001,\n    \"experienceVersionCount\": 7084,\n    \"experienceViewCount\": 2236,\n    \"fileCount\": 4448,\n    \"flowCount\": 6293,\n    \"integrationCount\": 5426,\n    \"keyCount\": 978,\n    \"notebookCount\": 6148,\n    \"privateFileCount\": 4074,\n    \"resourceJobCount\": 4983,\n    \"webhookCount\": 9651,\n    \"memberCount\": 9905,\n    \"pendingInviteCount\": 8761,\n    \"payloadCount\": {\n      \"appFile\": {\n        \"M)*$\": 5182.400025196067\n      },\n      \"dataTable\": {\n        \" Ab1l\": 6289.079021577131\n      },\n      \"deviceCreate\": {\n        \"'X/SDXD\": 7035.816406092571\n      },\n      \"deviceCommand\": {\n        \"\": 9387.849084565925\n      },\n      \"deviceConnect\": {\n        \"o*x!]4P\": 2317.3956920068526\n      },\n      \"deviceDisconnect\": {\n        \">(I21U1\": 6111.402271319454\n      },\n      \"deviceState\": {\n        \"hJ*!;7k^\": 1280.7974941574473\n      },\n      \"endpoint\": {\n        \"BP\": 2060.8007972066334\n      },\n      \"event\": {\n        \"#BMHRHH*So\": 1616.7480544403033\n      },\n      \"flowError\": {\n        \"\": 5695.029882302749\n      },\n      \"inboundEmail\": {\n        \"'fgwsl|Q\": 2653.4171182297882\n      },\n      \"integration\": {\n        \"\": 2760.7309501143873\n      },\n      \"mqttIn\": {\n        \"i{@;cQ}i\": 770.0612037712328\n      },\n      \"mqttOut\": {\n        \"P%$u\": 7789.517256016766\n      },\n      \"notebook\": {\n        \"|H\": 8429.361973461402\n      },\n      \"resourceJob\": {\n        \"YN?i(/W\": 1578.2791658673123\n      },\n      \"timer\": {\n        \"(]q-H\": 9725.746597500549\n      },\n      \"virtualButton\": {\n        \"ktAWJ`-\": 8527.428693838405\n      },\n      \"webhook\": {\n        \"6WKQIIQE\": 898.235949052566\n      }\n    },\n    \"storageStats\": {\n      \"value\": \"reference #/components/schemas/common/storageStats not found in the OpenAPI spec\"\n    },\n    \"notebookStats\": {\n      \"value\": \"reference #/components/schemas/common/notebookStats not found in the OpenAPI spec\"\n    }\n  },\n  \"planId\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"billingEmail\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"subscriptionStatus\": \"active\",\n  \"currentPeriodStart\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"currentPeriodEnd\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"isEnterprise\": true,\n  \"iconColor\": {\n    \"value\": \"reference #/components/schemas/common/color not found in the OpenAPI spec\"\n  },\n  \"whitelistedEmailDomains\": [\n    {\n      \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/domainName not found in the OpenAPI spec\"\n    }\n  ],\n  \"disabledAt\": false,\n  \"isReadOnly\": false,\n  \"mfaMode\": {\n    \"value\": \"reference #/components/schemas/common/mfaMode not found in the OpenAPI spec\"\n  },\n  \"banner\": {\n    \"message\": \"string\",\n    \"level\": \"warning\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a802984-5ce9-4031-9c00-8b1b3e9b518e",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "summaryExclude",
+                      "value": "payloadCount"
+                    },
+                    {
+                      "key": "summaryInclude",
+                      "value": "payloadCount"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"planId\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"billingEmail\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"cardToken\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"iconColor\": {\n    \"value\": \"reference #/components/schemas/common/color not found in the OpenAPI spec\"\n  },\n  \"mfaMode\": {\n    \"value\": \"reference #/components/schemas/common/mfaMode not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "231f499d-a381-4248-97a5-e9d170c6bd21",
+          "name": "Retrieves Information on an API Token",
+          "request": {
+            "name": "Retrieves Information on an API Token",
+            "description": {},
+            "url": {
+              "path": [
+                "me",
+                "tokens",
+                ":apiTokenId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiTokenId",
+                  "description": "(Required) ID associated with the API token"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c525c61f-8e1e-48a8-ac89-4c46f3a017ed",
+              "name": "API token information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens",
+                    ":apiTokenId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiTokenId",
+                      "description": "(Required) ID associated with the API token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"apiTokenId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"ownerId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"ownerType\": \"application\",\n  \"creatorId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creatorType\": \"flow\",\n  \"creatorName\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"expirationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"scope\": [\n    {\n      \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n    }\n  ],\n  \"status\": \"inactive\",\n  \"token\": {\n    \"value\": \"reference #/components/schemas/common/token not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a751f7fd-347f-42ee-a5b2-9076bbd3bfb1",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens",
+                    ":apiTokenId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiTokenId",
+                      "description": "(Required) ID associated with the API token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "149f8823-61a8-4b33-99ab-1ecc880b8cff",
+              "name": "Error if API token was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens",
+                    ":apiTokenId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiTokenId",
+                      "description": "(Required) ID associated with the API token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34d34189-9bab-41db-a1af-261e466181a0",
+          "name": "Updates Information About an API Token",
+          "request": {
+            "name": "Updates Information About an API Token",
+            "description": {},
+            "url": {
+              "path": [
+                "me",
+                "tokens",
+                ":apiTokenId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiTokenId",
+                  "description": "(Required) ID associated with the API token"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fd90d909-dfe3-4917-a58e-ea51330c1d0f",
+              "name": "Updated API token information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens",
+                    ":apiTokenId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiTokenId",
+                      "description": "(Required) ID associated with the API token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"apiTokenId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"ownerId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"ownerType\": \"application\",\n  \"creatorId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creatorType\": \"apiToken\",\n  \"creatorName\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"expirationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"scope\": [\n    {\n      \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n    }\n  ],\n  \"status\": \"<string>\",\n  \"token\": {\n    \"value\": \"reference #/components/schemas/common/token not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6e57366-e58b-4913-8fd1-4b702bb781fd",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens",
+                    ":apiTokenId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiTokenId",
+                      "description": "(Required) ID associated with the API token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb2c6890-4a1b-440f-97e4-eab5efa12ffb",
+              "name": "Error if API token was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens",
+                    ":apiTokenId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiTokenId",
+                      "description": "(Required) ID associated with the API token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "906b6b0c-2852-487d-86cb-15e9eae3e0ee",
+          "name": "Deletes an API Token",
+          "request": {
+            "name": "Deletes an API Token",
+            "description": {},
+            "url": {
+              "path": [
+                "me",
+                "tokens",
+                ":apiTokenId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiTokenId",
+                  "description": "(Required) ID associated with the API token"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "259b477b-37be-408c-a3af-4b0527948ee0",
+              "name": "If API token was successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens",
+                    ":apiTokenId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiTokenId",
+                      "description": "(Required) ID associated with the API token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02970484-3521-4878-8168-182e163bf7f1",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens",
+                    ":apiTokenId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiTokenId",
+                      "description": "(Required) ID associated with the API token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e29a11cc-b834-4e38-a49e-374b52fb313c",
+              "name": "Error if API token was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens",
+                    ":apiTokenId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiTokenId",
+                      "description": "(Required) ID associated with the API token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03a6ef41-afd3-4010-a760-ffae182477b7",
+          "name": "Returns the API Tokens for a User",
+          "request": {
+            "name": "Returns the API Tokens for a User",
+            "description": {},
+            "url": {
+              "path": [
+                "me",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sortField",
+                  "value": "name",
+                  "description": "Field to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "Direction to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Which page of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "How many items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "filterField",
+                  "value": "<string>",
+                  "description": "Field to filter the results by. Blank or not provided means no filtering."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "173b68de-ef9f-49b0-879f-3117b1773292",
+              "name": "Collection of API tokens",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filterField",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "my*token"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"apiTokenId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"ownerId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"ownerType\": \"application\",\n  \"creatorId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creatorType\": \"apiToken\",\n  \"creatorName\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"expirationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"scope\": [\n    {\n      \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n    }\n  ],\n  \"status\": \"<string>\",\n  \"token\": {\n    \"value\": \"reference #/components/schemas/common/token not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b34f109b-5ea5-40a1-9e43-c30d68ae1422",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filterField",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "my*token"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "152f5e08-47e0-4e16-a6e2-c5cc35ade5e2",
+          "name": "Create a New API Token for an User",
+          "request": {
+            "name": "Create a New API Token for an User",
+            "description": {},
+            "url": {
+              "path": [
+                "me",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"expirationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"scope\": [\n    {\n      \"value\": \"reference #/components/schemas/common/userApiScope not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/userApiScope not found in the OpenAPI spec\"\n    }\n  ],\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "11d0b7b0-1b53-4ef8-8d09-b66832bbc0a2",
+              "name": "The successfully created API token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"expirationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"scope\": [\n    {\n      \"value\": \"reference #/components/schemas/common/userApiScope not found in the OpenAPI spec\"\n    }\n  ],\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"apiTokenId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"ownerId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"ownerType\": \"application\",\n  \"creatorId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creatorType\": \"apiToken\",\n  \"creatorName\": {\n    \"value\": \"reference #/components/schemas/common/optMedStr not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"expirationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"scope\": [\n    {\n      \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n    }\n  ],\n  \"status\": \"<string>\",\n  \"token\": {\n    \"value\": \"reference #/components/schemas/common/token not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2337e1f9-052c-4d1e-8e01-644ce75c6d58",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"expirationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"scope\": [\n    {\n      \"value\": \"reference #/components/schemas/common/userApiScope not found in the OpenAPI spec\"\n    }\n  ],\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.losant.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "29f080f0-c903-49d6-9105-4bd835bb1f62",
+    "name": "Losant Authentication and Account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Authenticate users and devices, manage personal access tokens, user profile, and organization membership for the Losant Enterprise IoT Platform. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.\n\nContact Support:\n Name: Losant Support\n Email: hello@losant.com",
+      "type": "text/plain"
+    }
+  }
+}

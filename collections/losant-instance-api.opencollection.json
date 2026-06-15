@@ -1,0 +1,1822 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Losant Enterprise Instance API",
+    "version": "1.29.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Enterprise Instance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves Information on an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/tokens/:apiTokenId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "apiTokenId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the API token"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an API Token"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/instances/:instanceId/tokens/:apiTokenId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "apiTokenId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the API token"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an API Token"
+        },
+        {
+          "info": {
+            "name": "Deletes an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/instances/:instanceId/tokens/:apiTokenId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "apiTokenId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the API token"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an API Token"
+        },
+        {
+          "info": {
+            "name": "Returns the API Tokens for an Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/tokens",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "key",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*token",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the API Tokens for an Instance"
+        },
+        {
+          "info": {
+            "name": "Create a New API Token for an Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/instances/:instanceId/tokens",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New API Token for an Instance"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Instance Audit Log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instance/:instanceId/audit-logs/:instanceAuditLogId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "instanceAuditLogId",
+                "value": "57955788124b37010084c053",
+                "type": "path",
+                "description": "ID associated with the instance audit log"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Instance Audit Log"
+        },
+        {
+          "info": {
+            "name": "Returns the Audit Logs for the Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instance/:instanceId/audit-logs",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "sortField",
+                "value": "creationDate",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "start",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "Start of time range for audit log query"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End of time range for audit log query"
+              },
+              {
+                "name": "auditLogFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the audit log query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Audit Logs for the Instance"
+        },
+        {
+          "info": {
+            "name": "Get Information About Errors That Occurred During Runs of This Custom Node",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/nodes/:instanceCustomNodeId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "instanceCustomNodeId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the Custom Node"
+              },
+              {
+                "name": "duration",
+                "value": "86400000",
+                "type": "query",
+                "description": "Duration of time range in milliseconds"
+              },
+              {
+                "name": "end",
+                "value": "0",
+                "type": "query",
+                "description": "End of time range in milliseconds since epoch"
+              },
+              {
+                "name": "limit",
+                "value": "25",
+                "type": "query",
+                "description": "Maximum number of errors to return"
+              },
+              {
+                "name": "sortDirection",
+                "value": "desc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Information About Errors That Occurred During Runs of This Custom Node"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Custom Node",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/instances/:instanceId/nodes/:instanceCustomNodeId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "instanceCustomNodeId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the Custom Node"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Custom Node"
+        },
+        {
+          "info": {
+            "name": "Deletes a Custom Node",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/instances/:instanceId/nodes/:instanceCustomNodeId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "instanceCustomNodeId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the Custom Node"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Custom Node"
+        },
+        {
+          "info": {
+            "name": "Returns the Custom Nodes for an Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/nodes",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "key",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*node",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Custom Nodes for an Instance"
+        },
+        {
+          "info": {
+            "name": "Create a New Custom Node for an Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/instances/:instanceId/nodes",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Custom Node for an Instance"
+        },
+        {
+          "info": {
+            "name": "Returns an Instance Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/members/:userId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "userId",
+                "value": "575ec8687ae143cd83dc4a94",
+                "type": "path",
+                "description": "ID associated with the instance member"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns an Instance Member"
+        },
+        {
+          "info": {
+            "name": "Modifies the Role of an Instance Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/instances/:instanceId/members/:userId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "userId",
+                "value": "575ec8687ae143cd83dc4a94",
+                "type": "path",
+                "description": "ID associated with the instance member"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Modifies the Role of an Instance Member"
+        },
+        {
+          "info": {
+            "name": "Deletes an Instance Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/instances/:instanceId/members/:userId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "userId",
+                "value": "575ec8687ae143cd83dc4a94",
+                "type": "path",
+                "description": "ID associated with the instance member"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Instance Member"
+        },
+        {
+          "info": {
+            "name": "Returns a Collection of Instance Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/members",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "sortField",
+                "value": "role",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "filterField",
+                "value": "email",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my * instance",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a Collection of Instance Members"
+        },
+        {
+          "info": {
+            "name": "Creates a New Instance Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/instances/:instanceId/members",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a New Instance Member"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on Notification Rule Deliveries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/notification-rules/:notificationRuleId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "notificationRuleId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the notification rule"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Max log entries to return (ordered by time descending)"
+              },
+              {
+                "name": "since",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "Look for log entries since this time (ms since epoch)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on Notification Rule Deliveries"
+        },
+        {
+          "info": {
+            "name": "Queues the Evaluation of a Notification Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/instances/:instanceId/notification-rules/:notificationRuleId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "notificationRuleId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the notification rule"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Queues the Evaluation of a Notification Rule"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Notification Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/instances/:instanceId/notification-rules/:notificationRuleId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "notificationRuleId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the notification rule"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Notification Rule"
+        },
+        {
+          "info": {
+            "name": "Deletes a Notification Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/instances/:instanceId/notification-rules/:notificationRuleId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "notificationRuleId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the notification rule"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Notification Rule"
+        },
+        {
+          "info": {
+            "name": "Returns the Notification Rules for an Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/notification-rules",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "key",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*rule",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Notification Rules for an Instance"
+        },
+        {
+          "info": {
+            "name": "Create a New Notification Rule for an Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/instances/:instanceId/notification-rules",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec7417ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the instance"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Notification Rule for an Instance"
+        },
+        {
+          "info": {
+            "name": "Returns an Organization Invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId/invites/:inviteId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "inviteId",
+                "value": "575ec8687ae143cd83dc4a94",
+                "type": "path",
+                "description": "ID associated with the organization invite"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns an Organization Invite"
+        },
+        {
+          "info": {
+            "name": "Resend an Organization Invite with Modified Role Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId/invites/:inviteId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "inviteId",
+                "value": "575ec8687ae143cd83dc4a94",
+                "type": "path",
+                "description": "ID associated with the organization invite"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Resend an Organization Invite with Modified Role Info"
+        },
+        {
+          "info": {
+            "name": "Revokes an Instance Org Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId/invites/:inviteId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "inviteId",
+                "value": "575ec8687ae143cd83dc4a94",
+                "type": "path",
+                "description": "ID associated with the organization invite"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Revokes an Instance Org Invitation"
+        },
+        {
+          "info": {
+            "name": "Returns a Collection of Instance Organization Invites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId/invites",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "sortField",
+                "value": "role",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "filterField",
+                "value": "email",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my * instance",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a Collection of Instance Organization Invites"
+        },
+        {
+          "info": {
+            "name": "Invites a Member to an Instance Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId/invites",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invites a Member to an Instance Organization"
+        },
+        {
+          "info": {
+            "name": "Returns an Organization Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId/members/:userId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "userId",
+                "value": "575ec8687ae143cd83dc4a94",
+                "type": "path",
+                "description": "ID associated with the organization member"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns an Organization Member"
+        },
+        {
+          "info": {
+            "name": "Modifies the Role of an Organization Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId/members/:userId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "userId",
+                "value": "575ec8687ae143cd83dc4a94",
+                "type": "path",
+                "description": "ID associated with the organization member"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Modifies the Role of an Organization Member"
+        },
+        {
+          "info": {
+            "name": "Deletes an Organization Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId/members/:userId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "userId",
+                "value": "575ec8687ae143cd83dc4a94",
+                "type": "path",
+                "description": "ID associated with the organization member"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Organization Member"
+        },
+        {
+          "info": {
+            "name": "Returns a Collection of Instance Organization Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId/members",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "sortField",
+                "value": "role",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "filterField",
+                "value": "email",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my * instance",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a Collection of Instance Organization Members"
+        },
+        {
+          "info": {
+            "name": "Creates a New Organization Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId/members",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a New Organization Member"
+        },
+        {
+          "info": {
+            "name": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ed6e87ae143cd83dc4aa8",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "start",
+                "value": "0",
+                "type": "query",
+                "description": "Start of range for notebook execution query (ms since epoch)"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End of range for notebook execution query (ms since epoch)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Organization"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ed6e87ae143cd83dc4aa8",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "summaryInclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to include in org summary"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Organization"
+        },
+        {
+          "info": {
+            "name": "Deletes an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/instances/:instanceId/orgs/:orgId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "orgId",
+                "value": "575ed6e87ae143cd83dc4aa8",
+                "type": "path",
+                "description": "ID associated with the organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Organization"
+        },
+        {
+          "info": {
+            "name": "Returns the Organizations Associated with the Current Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/orgs",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*org",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "summaryInclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to include in org summary"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Organization filter JSON object which overrides all other filter params."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Organizations Associated with the Current Instance"
+        },
+        {
+          "info": {
+            "name": "Create a New Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/instances/:instanceId/orgs",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "summaryInclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to include in org summary"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Organization"
+        },
+        {
+          "info": {
+            "name": "Returns Notebook Execution Usage by Day for the Time Range Specified for All Applications the Sandbox User Owns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/sandboxes/:instanceSandboxId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "instanceSandboxId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the sandbox user"
+              },
+              {
+                "name": "start",
+                "value": "0",
+                "type": "query",
+                "description": "Start of range for notebook execution query (ms since epoch)"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End of range for notebook execution query (ms since epoch)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns Notebook Execution Usage by Day for the Time Range Specified for All Applications the Sandbox User Owns"
+        },
+        {
+          "info": {
+            "name": "Restores a Sandbox User Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/instances/:instanceId/sandboxes/:instanceSandboxId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "instanceSandboxId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the sandbox user"
+              },
+              {
+                "name": "summaryExclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to exclude from user summary"
+              },
+              {
+                "name": "summaryInclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to include in user summary"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Restores a Sandbox User Account"
+        },
+        {
+          "info": {
+            "name": "Deletes a Sandbox User Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/instances/:instanceId/sandboxes/:instanceSandboxId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "instanceSandboxId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the sandbox user"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Sandbox User Account"
+        },
+        {
+          "info": {
+            "name": "Returns a Collection of Instance Sandboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId/sandboxes",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "summaryExclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to exclude from user summary"
+              },
+              {
+                "name": "summaryInclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to include in user summary"
+              },
+              {
+                "name": "sortField",
+                "value": "firstName",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "startingAfterId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "query",
+                "description": "Exclusive ID from which to begin querying"
+              },
+              {
+                "name": "endingBeforeId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "query",
+                "description": "Exclusive ID at which to end querying"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return"
+              },
+              {
+                "name": "filterField",
+                "value": "firstName",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my * instance",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "includeDeleted",
+                "value": "true",
+                "type": "query",
+                "description": "If the result of the request should also include deleted sandboxes."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a Collection of Instance Sandboxes"
+        },
+        {
+          "info": {
+            "name": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances/:instanceId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              },
+              {
+                "name": "start",
+                "value": "0",
+                "type": "query",
+                "description": "Start of range for notebook execution query (ms since epoch)"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End of range for notebook execution query (ms since epoch)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Instance"
+        },
+        {
+          "info": {
+            "name": "Generates a CSV Report on Instance Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/instances/:instanceId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generates a CSV Report on Instance Stats"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/instances/:instanceId",
+            "params": [
+              {
+                "name": "instanceId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the instance"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Instance"
+        },
+        {
+          "info": {
+            "name": "Returns a Collection of Instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/instances",
+            "params": [
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my * instance",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a Collection of Instances"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

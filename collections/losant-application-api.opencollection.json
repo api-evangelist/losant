@@ -1,0 +1,3031 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Losant Application API",
+    "version": "1.29.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Application",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves Information on an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/tokens/:apiTokenId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "apiTokenId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the API token"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an API Token"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/tokens/:apiTokenId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "apiTokenId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the API token"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an API Token"
+        },
+        {
+          "info": {
+            "name": "Deletes an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/tokens/:apiTokenId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "apiTokenId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the API token"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an API Token"
+        },
+        {
+          "info": {
+            "name": "Returns the API Tokens for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/tokens",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "key",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*token",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the API Tokens for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New API Token for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/tokens",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New API Token for an Application"
+        },
+        {
+          "info": {
+            "name": "Returns the Application Certificate Authorities for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/certificate-authorities",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "the*name",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Application Certificate Authorities for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Application Certificate Authority for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/certificate-authorities",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Application Certificate Authority for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Application Certificate Authority",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/certificate-authorities/:applicationCertificateAuthorityId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "applicationCertificateAuthorityId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the application certificate authority"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Application Certificate Authority"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Application Certificate Authority",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/certificate-authorities/:applicationCertificateAuthorityId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "applicationCertificateAuthorityId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the application certificate authority"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Application Certificate Authority"
+        },
+        {
+          "info": {
+            "name": "Deletes an Application Certificate Authority",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/certificate-authorities/:applicationCertificateAuthorityId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "applicationCertificateAuthorityId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the application certificate authority"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Application Certificate Authority"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Application Certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/certificates/:applicationCertificateId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "applicationCertificateId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the application certificate"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Application Certificate"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Application Certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/certificates/:applicationCertificateId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "applicationCertificateId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the application certificate"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Application Certificate"
+        },
+        {
+          "info": {
+            "name": "Deletes an Application Certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/certificates/:applicationCertificateId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "applicationCertificateId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the application certificate"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Application Certificate"
+        },
+        {
+          "info": {
+            "name": "Returns the Application Certificates for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/certificates",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "status",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "status",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "the*status",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Application Certificates for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Application Certificate for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/certificates",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Application Certificate for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on a Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/dashboards/:dashboardId",
+            "params": [
+              {
+                "name": "dashboardId",
+                "value": "575ece2b7ae143cd83dc4a9b",
+                "type": "path",
+                "description": "ID of the associated dashboard"
+              },
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID of the associated application"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on a Dashboard"
+        },
+        {
+          "info": {
+            "name": "Sends a Snapshot of a Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/dashboards/:dashboardId",
+            "params": [
+              {
+                "name": "dashboardId",
+                "value": "575ece2b7ae143cd83dc4a9b",
+                "type": "path",
+                "description": "ID of the associated dashboard"
+              },
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID of the associated application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sends a Snapshot of a Dashboard"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/dashboards/:dashboardId",
+            "params": [
+              {
+                "name": "dashboardId",
+                "value": "575ece2b7ae143cd83dc4a9b",
+                "type": "path",
+                "description": "ID of the associated dashboard"
+              },
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID of the associated application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Dashboard"
+        },
+        {
+          "info": {
+            "name": "Deletes a Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/dashboards/:dashboardId",
+            "params": [
+              {
+                "name": "dashboardId",
+                "value": "575ece2b7ae143cd83dc4a9b",
+                "type": "path",
+                "description": "ID of the associated dashboard"
+              },
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID of the associated application"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Dashboard"
+        },
+        {
+          "info": {
+            "name": "Returns the Job Log for the Given ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/jobLogs/:jobId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "jobId",
+                "value": "575ec8687ae143cd83dc4a98",
+                "type": "path",
+                "description": "ID associated with the job execution"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Job Log for the Given ID"
+        },
+        {
+          "info": {
+            "name": "Returns All Dashboards Scoped to the Given Application.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/dashboards",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my * dashboard",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns All Dashboards Scoped to the Given Application."
+        },
+        {
+          "info": {
+            "name": "Create a New Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/dashboards",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Dashboard"
+        },
+        {
+          "info": {
+            "name": "Returns the Job Logs for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/jobLogs",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "status",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Filter application job logs by a query."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Job Logs for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an ApplicationKey",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/keys/:applicationKeyId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "applicationKeyId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the applicationKey"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an ApplicationKey"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an ApplicationKey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/keys/:applicationKeyId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "applicationKeyId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the applicationKey"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an ApplicationKey"
+        },
+        {
+          "info": {
+            "name": "Deletes an ApplicationKey",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/keys/:applicationKeyId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "applicationKeyId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the applicationKey"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an ApplicationKey"
+        },
+        {
+          "info": {
+            "name": "Returns the ApplicationKeys for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/keys",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "creationDate",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "key",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "the*key",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Application key filter JSON object which overrides the filterField and filter parameters."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the ApplicationKeys for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New ApplicationKey for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/keys",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New ApplicationKey for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Application Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applicationTemplates/:templateId",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "575ed0de7ae143cd83dc4aa5",
+                "type": "path",
+                "description": "ID associated with the template"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Application Template"
+        },
+        {
+          "info": {
+            "name": "Returns an Array of All Unique Keywords Currently in Use by Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applicationTemplates",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns an Array of All Unique Keywords Currently in Use by Templates"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on Application Import Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID of the associated application"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Max log entries to return (ordered by time descending)"
+              },
+              {
+                "name": "since",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "Look for log entries since this time (ms since epoch)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on Application Import Logs"
+        },
+        {
+          "info": {
+            "name": "Add Multiple Resources to an Application via a Zip File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID of the associated application"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Add Multiple Resources to an Application via a Zip File"
+        },
+        {
+          "info": {
+            "name": "Updates an Application Global at the Given Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID of the associated application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an Application Global at the Given Key"
+        },
+        {
+          "info": {
+            "name": "Deletes an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID of the associated application"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Application"
+        },
+        {
+          "info": {
+            "name": "Returns Application Usage Summaries Over a Selected Date Range",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications",
+            "params": [
+              {
+                "name": "start",
+                "value": "0",
+                "type": "query",
+                "description": "Start of range for resource count queries (ms since epoch)"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End of range for resource count queries (ms since epoch)"
+              },
+              {
+                "name": "asBytes",
+                "value": "true",
+                "type": "query",
+                "description": "If the resulting payload counts should be returned as bytes"
+              },
+              {
+                "name": "includeNonBillable",
+                "value": "true",
+                "type": "query",
+                "description": "If non-billable payloads should be included in the result"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my * app",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "orgId",
+                "value": "575ecdf07ae143cd83dc4a9a",
+                "type": "query",
+                "description": "If not provided, return all applications. If provided but blank, only return applications belonging to the current user. If provided and an id, only return applications belonging to the given organization id."
+              },
+              {
+                "name": "exclude",
+                "value": "payloadCounts, deviceCounts, notebookMinuteCounts",
+                "type": "query",
+                "description": "Comma-separated list of resources to exclude from summary"
+              },
+              {
+                "name": "include",
+                "value": "deviceCounts",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to include in application summary"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns Application Usage Summaries Over a Selected Date Range"
+        },
+        {
+          "info": {
+            "name": "Create a New Application from an Import Bundle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Application from an Import Bundle"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Audit Log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/orgs/:orgId/audit-logs/:auditLogId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "575ed6e87ae143cd83dc4aa8",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "auditLogId",
+                "value": "57955788124b37010084c053",
+                "type": "path",
+                "description": "ID associated with the audit log"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Audit Log"
+        },
+        {
+          "info": {
+            "name": "Returns the Audit Logs for the Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/orgs/:orgId/audit-logs",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "575ed6e87ae143cd83dc4aa8",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "sortField",
+                "value": "creationDate",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "start",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "Start of time range for audit log query"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End of time range for audit log query"
+              },
+              {
+                "name": "auditLogFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the audit log query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Audit Logs for the Organization"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on Resources Linked to a Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/credentials/:credentialId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "credentialId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the credential"
+              },
+              {
+                "name": "includeCustomNodes",
+                "value": "true",
+                "type": "query",
+                "description": "If the result of the request should also include the details of any custom nodes referenced by returned workflows"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on Resources Linked to a Credential"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/credentials/:credentialId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "credentialId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the credential"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Credential"
+        },
+        {
+          "info": {
+            "name": "Deletes a Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/credentials/:credentialId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "credentialId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the credential"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Credential"
+        },
+        {
+          "info": {
+            "name": "Returns a Collection of Credentials for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/credentials",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "creationDate",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "type",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "aws",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a Collection of Credentials for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Credential for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/credentials",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Credential for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on a Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/dashboards/:dashboardId",
+            "params": [
+              {
+                "name": "dashboardId",
+                "value": "575ece2b7ae143cd83dc4a9b",
+                "type": "path",
+                "description": "ID of the associated dashboard"
+              },
+              {
+                "name": "password",
+                "value": "myPassword",
+                "type": "query",
+                "description": "Password for password-protected dashboards"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on a Dashboard"
+        },
+        {
+          "info": {
+            "name": "Sends a Snapshot of a Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/dashboards/:dashboardId",
+            "params": [
+              {
+                "name": "dashboardId",
+                "value": "575ece2b7ae143cd83dc4a9b",
+                "type": "path",
+                "description": "ID of the associated dashboard"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sends a Snapshot of a Dashboard"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/dashboards/:dashboardId",
+            "params": [
+              {
+                "name": "dashboardId",
+                "value": "575ece2b7ae143cd83dc4a9b",
+                "type": "path",
+                "description": "ID of the associated dashboard"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Dashboard"
+        },
+        {
+          "info": {
+            "name": "Deletes a Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/dashboards/:dashboardId",
+            "params": [
+              {
+                "name": "dashboardId",
+                "value": "575ece2b7ae143cd83dc4a9b",
+                "type": "path",
+                "description": "ID of the associated dashboard"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Dashboard"
+        },
+        {
+          "info": {
+            "name": "Returns the Dashboards the Current User Has Permission to See",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/dashboards",
+            "params": [
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my * dashboard",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "query",
+                "description": "If not provided, return all dashboards. If provided but blank, only return dashboards that are not linked to applications. If provided and an id, only return dashboards linked to the given application id."
+              },
+              {
+                "name": "orgId",
+                "value": "575ece7e7ae143cd83dc4a9c",
+                "type": "query",
+                "description": "If not provided, return all dashboards. If provided but blank, only return dashboards belonging to the current user. If provided and an id, only return dashboards belonging to the given organization id."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Dashboards the Current User Has Permission to See"
+        },
+        {
+          "info": {
+            "name": "Create a New Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/dashboards",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Dashboard"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/events/:eventId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "eventId",
+                "value": "575ed0de7ae143cd83dc4aa5",
+                "type": "path",
+                "description": "ID associated with the event"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Event"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/events/:eventId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "eventId",
+                "value": "575ed0de7ae143cd83dc4aa5",
+                "type": "path",
+                "description": "ID associated with the event"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Event"
+        },
+        {
+          "info": {
+            "name": "Deletes an Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/events/:eventId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "eventId",
+                "value": "575ed0de7ae143cd83dc4aa5",
+                "type": "path",
+                "description": "ID associated with the event"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Event"
+        },
+        {
+          "info": {
+            "name": "Returns the First New Event Ordered by Severity and Then Creation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/events",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "filter",
+                "value": "abnormal power to *",
+                "type": "query",
+                "description": "Filter to apply against event subjects. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Event filter JSON object which overrides the filter parameter."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the First New Event Ordered by Severity and Then Creation"
+        },
+        {
+          "info": {
+            "name": "Request an Export of an Application's Event Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/events",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Request an Export of an Application's Event Data"
+        },
+        {
+          "info": {
+            "name": "Asynchronously Updates Information for Matching Events by Subject and/or Current State",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/events",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "filterField",
+                "value": "subject",
+                "type": "query",
+                "description": "Field to filter the events to act on by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "abnormal power to *",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "state",
+                "value": "new",
+                "type": "query",
+                "description": "If provided, act on events only in the given state."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Event filter JSON object which overrides the filterField, filter, and state parameters."
+              },
+              {
+                "name": "email",
+                "value": "email@example.com",
+                "type": "query",
+                "description": "Email address to send a notification with update job results. Defaults to current user's email."
+              },
+              {
+                "name": "callbackUrl",
+                "value": "https://example.com/cburl",
+                "type": "query",
+                "description": "Callback URL to call with update results from a job."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Asynchronously Updates Information for Matching Events by Subject and/or Current State"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on a File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/file/:fileId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "fileId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the file"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on a File"
+        },
+        {
+          "info": {
+            "name": "Uploads the File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/file/:fileId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "fileId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the file"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Uploads the File"
+        },
+        {
+          "info": {
+            "name": "Reupload a File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/file/:fileId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "fileId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the file"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reupload a File"
+        },
+        {
+          "info": {
+            "name": "Deletes a File or Directory, if Directory All the Contents That Directory Will Also Be Removed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/file/:fileId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "fileId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the file"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a File or Directory, if Directory All the Contents That Directory Will Also Be Removed."
+        },
+        {
+          "info": {
+            "name": "Returns the Files for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/files",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "myFile",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "type",
+                "value": "file",
+                "type": "query",
+                "description": "Limit by the type (file or directory) of the file"
+              },
+              {
+                "name": "status",
+                "value": "completed",
+                "type": "query",
+                "description": "Limit the result to only files of this status"
+              },
+              {
+                "name": "directory",
+                "value": "/a/path/",
+                "type": "query",
+                "description": "Get files that are inside of this directory"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Files for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New File for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/files",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New File for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/integrations/:integrationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "integrationId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the integration"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Integration"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/integrations/:integrationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "integrationId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the integration"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Integration"
+        },
+        {
+          "info": {
+            "name": "Deletes an Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/integrations/:integrationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "integrationId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the integration"
+              },
+              {
+                "name": "includeWorkflows",
+                "value": "true",
+                "type": "query",
+                "description": "If the workflows that utilize this integration should also be deleted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Integration"
+        },
+        {
+          "info": {
+            "name": "Returns the Integrations for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/integrations",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "integrationType",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*integration",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Integrations for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Integration for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/integrations",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Integration for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on a Private File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/privateFiles/:privateFileId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "privateFileId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the private file"
+              },
+              {
+                "name": "urlTTL",
+                "value": "900",
+                "type": "query",
+                "description": "Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'. If 0, no url will be returned."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on a Private File"
+        },
+        {
+          "info": {
+            "name": "Uploads the Private File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/privateFiles/:privateFileId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "privateFileId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the private file"
+              },
+              {
+                "name": "urlTTL",
+                "value": "900",
+                "type": "query",
+                "description": "Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'. If 0, no url will be returned."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Uploads the Private File"
+        },
+        {
+          "info": {
+            "name": "Reupload a Private File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/privateFiles/:privateFileId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "privateFileId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the private file"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reupload a Private File"
+        },
+        {
+          "info": {
+            "name": "Deletes a Private File or Directory, if a Directory All the Contents That Directory Will Also Be Removed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/privateFiles/:privateFileId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "privateFileId",
+                "value": "575ec76c7ae143cd83dc4a96",
+                "type": "path",
+                "description": "ID associated with the private file"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Private File or Directory, if a Directory All the Contents That Directory Will Also Be Removed."
+        },
+        {
+          "info": {
+            "name": "Returns the Private Files for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/privateFiles",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "myFile",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "type",
+                "value": "file",
+                "type": "query",
+                "description": "Limit by the type (file or directory) of the file"
+              },
+              {
+                "name": "status",
+                "value": "completed",
+                "type": "query",
+                "description": "Limit the result to only files of this status"
+              },
+              {
+                "name": "directory",
+                "value": "/a/path/",
+                "type": "query",
+                "description": "Get private files that are inside of this directory"
+              },
+              {
+                "name": "urlTTL",
+                "value": "900",
+                "type": "query",
+                "description": "Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'. If 0, no url will be returned."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Private Files for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Private File for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/privateFiles",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Private File for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on Resource Job Executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/resource-jobs/:resourceJobId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "resourceJobId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the resource job"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Max log entries to return (ordered by time descending)"
+              },
+              {
+                "name": "since",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "Look for log entries since this time (ms since epoch)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on Resource Job Executions"
+        },
+        {
+          "info": {
+            "name": "Marks a Specific Resource Job Execution for Cancellation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/resource-jobs/:resourceJobId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "resourceJobId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the resource job"
+              },
+              {
+                "name": "executionId",
+                "value": "632e18632f59592e773a4153",
+                "type": "query",
+                "description": "The ID of the execution to cancel"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Marks a Specific Resource Job Execution for Cancellation"
+        },
+        {
+          "info": {
+            "name": "Update a Resource Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/resource-jobs/:resourceJobId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "resourceJobId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the resource job"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a Resource Job"
+        },
+        {
+          "info": {
+            "name": "Deletes a Resource Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/resource-jobs/:resourceJobId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "resourceJobId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the resource job"
+              },
+              {
+                "name": "includeWorkflows",
+                "value": "true",
+                "type": "query",
+                "description": "If the workflows that trigger from this resource job should also be deleted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Resource Job"
+        },
+        {
+          "info": {
+            "name": "Returns the Resource Jobs for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/resource-jobs",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "device",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*job",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Resource Jobs for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Resource Job for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/resource-jobs",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Resource Job for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on a Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "webhookId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the webhook"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on a Webhook"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "webhookId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the webhook"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Webhook"
+        },
+        {
+          "info": {
+            "name": "Deletes a Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "webhookId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the webhook"
+              },
+              {
+                "name": "includeWorkflows",
+                "value": "true",
+                "type": "query",
+                "description": "If the workflows that utilize this webhook should also be deleted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Webhook"
+        },
+        {
+          "info": {
+            "name": "Returns the Webhooks for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/webhooks",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*webhook",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Webhooks for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Webhook for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/webhooks",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Webhook for an Application"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

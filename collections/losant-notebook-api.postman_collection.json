@@ -1,0 +1,1649 @@
+{
+  "item": [
+    {
+      "id": "0a8f4cfe-ba0f-46d0-a8ef-1b9751990e5e",
+      "name": "Notebooks",
+      "description": {
+        "content": "Notebooks resources on the Losant Platform.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bc081d41-97a3-47e1-a7fe-91ebec3e32e1",
+          "name": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Notebook",
+          "request": {
+            "name": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Notebook",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "notebooks",
+                ":notebookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<string>",
+                  "description": "Start of range for notebook execution query (ms since epoch)"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<string>",
+                  "description": "End of range for notebook execution query (ms since epoch)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "notebookId",
+                  "description": "(Required) ID associated with the notebook"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aa0742c6-15b8-49da-8441-2f32d4948c86",
+              "name": "Notebook usage information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"start\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"end\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"counts\": [\n    {\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"minutes\": 1734,\n      \"completed\": 4080,\n      \"canceled\": 4301,\n      \"errored\": 8714,\n      \"timeout\": 1262\n    },\n    {\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"minutes\": 2063,\n      \"completed\": 1397,\n      \"canceled\": 4876,\n      \"errored\": 1304,\n      \"timeout\": 7556\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b842e8e1-6f2b-4e52-a800-f762e0de9ef7",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18ac1831-d0a4-41b6-8ce8-d53ecddd9b96",
+              "name": "Error if notebook was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77b9635b-1a1e-43bb-b4cf-da2aaa9f1580",
+          "name": "Updates Information About a Notebook",
+          "request": {
+            "name": "Updates Information About a Notebook",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "notebooks",
+                ":notebookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "notebookId",
+                  "description": "(Required) ID associated with the notebook"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"inputs\": [\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    },\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    },\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    }\n  ],\n  \"imageVersion\": {\n    \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ff3f2f18-0831-4ddf-9aa7-58a6abb45110",
+              "name": "Updated notebook information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"inputs\": [\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    },\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    },\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    }\n  ],\n  \"imageVersion\": {\n    \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"notebookId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"jupyterFileName\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"jupyterFileUrl\": \"string\",\n  \"imageVersion\": {\n    \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n  },\n  \"inputs\": [\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    },\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    },\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    }\n  ],\n  \"stats\": {\n    \"minutesThisPeriod\": 8028.987626215573,\n    \"runsThisPeriod\": 6576.146371534282,\n    \"errorsThisPeriod\": 4419.783798418189\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0efa395-d732-4e77-b4a3-3e25fe96ed73",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"inputs\": [\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    },\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    },\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    }\n  ],\n  \"imageVersion\": {\n    \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58b1467e-7c20-4bce-bde9-a005af81bf4c",
+              "name": "Error if notebook was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"inputs\": [\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    },\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    },\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    }\n  ],\n  \"imageVersion\": {\n    \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4134ff69-64df-4dc9-980a-0035415c7a94",
+          "name": "Deletes a Notebook",
+          "request": {
+            "name": "Deletes a Notebook",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "notebooks",
+                ":notebookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "notebookId",
+                  "description": "(Required) ID associated with the notebook"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "476eeec1-8cca-459d-890a-5ece8ab5d2df",
+              "name": "If notebook was successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ecc34c9-2670-4bd4-aa69-4e52191c7e17",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94838658-4ff2-4b01-abcd-19996847fe98",
+              "name": "Error if notebook was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "044740ef-256f-4492-ba66-aad47abd4323",
+          "name": "Marks a Specific Notebook Execution for Cancellation",
+          "request": {
+            "name": "Marks a Specific Notebook Execution for Cancellation",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "notebooks",
+                ":notebookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "notebookId",
+                  "description": "(Required) ID associated with the notebook"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "84bc5baf-982a-41c3-b067-ac77405c9435",
+              "name": "If the execution was successfully marked for cancellation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1575db5c-f5b3-4720-b053-82c94b2ea657",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fdcbdd8-d59f-4d13-a88d-7932e390e339",
+              "name": "Error if execution was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks",
+                    ":notebookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "notebookId",
+                      "description": "(Required) ID associated with the notebook"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c92e09c4-1f56-4f05-a381-47456580a98c",
+          "name": "Returns the Notebooks for an Application",
+          "request": {
+            "name": "Returns the Notebooks for an Application",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "notebooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sortField",
+                  "value": "name",
+                  "description": "Field to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "Direction to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Which page of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "How many items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "filterField",
+                  "value": "<string>",
+                  "description": "Field to filter the results by. Blank or not provided means no filtering."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "637bfdfd-ab80-4e52-aa3a-f8677766ff37",
+              "name": "Collection of notebooks",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filterField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "my*notebook"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"notebookId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"jupyterFileName\": {\n        \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n      },\n      \"jupyterFileUrl\": \"string\",\n      \"imageVersion\": {\n        \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n      },\n      \"inputs\": [\n        {\n          \"inputType\": \"<string>\",\n          \"fileName\": {\n            \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n          },\n          \"start\": \"<number>\",\n          \"end\": \"<number>\",\n          \"deviceTags\": {\n            \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n          },\n          \"deviceIds\": {\n            \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n          },\n          \"queryJson\": {\n            \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n          },\n          \"attributes\": [\n            {\n              \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n            },\n            {\n              \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n            }\n          ]\n        },\n        {\n          \"inputType\": \"<string>\",\n          \"fileName\": {\n            \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n          },\n          \"start\": \"<number>\",\n          \"end\": \"<number>\",\n          \"deviceTags\": {\n            \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n          },\n          \"deviceIds\": {\n            \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n          },\n          \"queryJson\": {\n            \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n          },\n          \"attributes\": [\n            {\n              \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n            },\n            {\n              \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n            }\n          ]\n        }\n      ],\n      \"outputs\": [\n        {\n          \"fileName\": {\n            \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n          },\n          \"outputType\": \"<string>\",\n          \"dataTableId\": {\n            \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n          },\n          \"createMissingColumns\": \"<boolean>\",\n          \"truncateExistingTable\": \"<boolean>\"\n        },\n        {\n          \"fileName\": {\n            \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n          },\n          \"outputType\": \"<string>\",\n          \"dataTableId\": {\n            \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n          },\n          \"createMissingColumns\": \"<boolean>\",\n          \"truncateExistingTable\": \"<boolean>\"\n        }\n      ],\n      \"stats\": {\n        \"minutesThisPeriod\": 8915.732428609686,\n        \"runsThisPeriod\": 1588.0219110719495,\n        \"errorsThisPeriod\": 1691.5170083491437\n      }\n    },\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"notebookId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"jupyterFileName\": {\n        \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n      },\n      \"jupyterFileUrl\": \"string\",\n      \"imageVersion\": {\n        \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n      },\n      \"inputs\": [\n        {\n          \"inputType\": \"<string>\",\n          \"fileName\": {\n            \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n          },\n          \"start\": \"<number>\",\n          \"end\": \"<number>\",\n          \"deviceTags\": {\n            \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n          },\n          \"deviceIds\": {\n            \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n          },\n          \"queryJson\": {\n            \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n          },\n          \"attributes\": [\n            {\n              \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n            },\n            {\n              \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n            }\n          ]\n        },\n        {\n          \"inputType\": \"<string>\",\n          \"fileName\": {\n            \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n          },\n          \"start\": \"<number>\",\n          \"end\": \"<number>\",\n          \"deviceTags\": {\n            \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n          },\n          \"deviceIds\": {\n            \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n          },\n          \"queryJson\": {\n            \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n          },\n          \"attributes\": [\n            {\n              \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n            },\n            {\n              \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n            }\n          ]\n        }\n      ],\n      \"outputs\": [\n        {\n          \"fileName\": {\n            \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n          },\n          \"outputType\": \"<string>\",\n          \"dataTableId\": {\n            \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n          },\n          \"createMissingColumns\": \"<boolean>\",\n          \"truncateExistingTable\": \"<boolean>\"\n        },\n        {\n          \"fileName\": {\n            \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n          },\n          \"outputType\": \"<string>\",\n          \"dataTableId\": {\n            \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n          },\n          \"createMissingColumns\": \"<boolean>\",\n          \"truncateExistingTable\": \"<boolean>\"\n        }\n      ],\n      \"stats\": {\n        \"minutesThisPeriod\": 4231.690426228384,\n        \"runsThisPeriod\": 4967.242624896795,\n        \"errorsThisPeriod\": 4900.344909427639\n      }\n    }\n  ],\n  \"count\": 3073,\n  \"totalCount\": 4630,\n  \"perPage\": 4611,\n  \"page\": 1345,\n  \"filter\": \"string\",\n  \"filterField\": \"string\",\n  \"sortField\": \"string\",\n  \"sortDirection\": {\n    \"value\": \"reference #/components/schemas/common/sortDirection not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6152473-a336-40ac-892a-002e7aeb0954",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filterField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "my*notebook"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d10590d1-0f2b-4516-a2ce-06ab80e91d06",
+              "name": "Error if application was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filterField",
+                      "value": "name"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "my*notebook"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c857f1bc-638f-4537-9fd1-be9cd7eecb5d",
+          "name": "Create a New Notebook for an Application",
+          "request": {
+            "name": "Create a New Notebook for an Application",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "notebooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"imageVersion\": {\n    \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n  },\n  \"inputs\": [\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    },\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    },\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bf11516b-fa21-457a-b363-39a71452a980",
+              "name": "Successfully created notebook",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"imageVersion\": {\n    \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n  },\n  \"inputs\": [\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    },\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    },\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"notebookId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"jupyterFileName\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"jupyterFileUrl\": \"string\",\n  \"imageVersion\": {\n    \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n  },\n  \"inputs\": [\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    },\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    },\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    }\n  ],\n  \"stats\": {\n    \"minutesThisPeriod\": 8028.987626215573,\n    \"runsThisPeriod\": 6576.146371534282,\n    \"errorsThisPeriod\": 4419.783798418189\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ea22f18-f68a-4bd3-bb7b-c2e3b6f9c1dc",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"imageVersion\": {\n    \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n  },\n  \"inputs\": [\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    },\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    },\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72ca87df-84ca-447b-964f-c2512ffecbb4",
+              "name": "Error if application was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "notebooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/reqMedStr not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"imageVersion\": {\n    \"value\": \"reference #/components/schemas/common/notebookImageVersion not found in the OpenAPI spec\"\n  },\n  \"inputs\": [\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    },\n    {\n      \"inputType\": \"<string>\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"start\": \"<number>\",\n      \"end\": \"<number>\",\n      \"deviceTags\": {\n        \"value\": \"reference #/components/schemas/common/templateTags not found in the OpenAPI spec\"\n      },\n      \"deviceIds\": {\n        \"value\": \"reference #/components/schemas/common/templatesOrObjectIds not found in the OpenAPI spec\"\n      },\n      \"queryJson\": {\n        \"value\": \"reference #/components/schemas/common/queryJson not found in the OpenAPI spec\"\n      },\n      \"attributes\": [\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        },\n        {\n          \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n        }\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    },\n    {\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/templateOrSafeFileName not found in the OpenAPI spec\"\n      },\n      \"outputType\": \"<string>\",\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/templateOrObjectId not found in the OpenAPI spec\"\n      },\n      \"createMissingColumns\": \"<boolean>\",\n      \"truncateExistingTable\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.losant.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8741c57d-9752-4e3e-b703-19cb684a36b6",
+    "name": "Losant Notebooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Trigger and manage Jupyter-style Losant Notebook executions for batch analytics, ML, and reporting against historical IoT data. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.\n\nContact Support:\n Name: Losant Support\n Email: hello@losant.com",
+      "type": "text/plain"
+    }
+  }
+}

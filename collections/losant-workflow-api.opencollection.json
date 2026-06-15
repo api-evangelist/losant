@@ -1,0 +1,489 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Losant Workflow Engine API",
+    "version": "1.29.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workflow Engine",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Information About Errors That Occurred During Runs of This Workflow Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/flows/:flowId/versions/:flowVersionId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "path",
+                "description": "ID associated with the flow"
+              },
+              {
+                "name": "flowVersionId",
+                "value": "675ed18f7ae143cd83dc4bb7",
+                "type": "path",
+                "description": "Version ID or version name associated with the flow version"
+              },
+              {
+                "name": "duration",
+                "value": "86400000",
+                "type": "query",
+                "description": "Duration of time range in milliseconds"
+              },
+              {
+                "name": "end",
+                "value": "0",
+                "type": "query",
+                "description": "End of time range in milliseconds since epoch"
+              },
+              {
+                "name": "limit",
+                "value": "25",
+                "type": "query",
+                "description": "Maximum number of errors to return"
+              },
+              {
+                "name": "sortDirection",
+                "value": "desc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ed18f7ae143cd83dc4bb6",
+                "type": "query",
+                "description": "For edge workflows, the Device ID to return workflow errors for. When not included, will be errors for all device IDs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Information About Errors That Occurred During Runs of This Workflow Version"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Flow Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/flows/:flowId/versions/:flowVersionId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "path",
+                "description": "ID associated with the flow"
+              },
+              {
+                "name": "flowVersionId",
+                "value": "675ed18f7ae143cd83dc4bb7",
+                "type": "path",
+                "description": "Version ID or version name associated with the flow version"
+              },
+              {
+                "name": "includeCustomNodes",
+                "value": "true",
+                "type": "query",
+                "description": "If the result of the request should also include the details of any custom nodes referenced by the returned workflows"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Flow Version"
+        },
+        {
+          "info": {
+            "name": "Deletes a Flow Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/flows/:flowId/versions/:flowVersionId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "path",
+                "description": "ID associated with the flow"
+              },
+              {
+                "name": "flowVersionId",
+                "value": "675ed18f7ae143cd83dc4bb7",
+                "type": "path",
+                "description": "Version ID or version name associated with the flow version"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Flow Version"
+        },
+        {
+          "info": {
+            "name": "Returns the Flow Versions for a Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/flows/:flowId/versions",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "path",
+                "description": "ID associated with the flow"
+              },
+              {
+                "name": "sortField",
+                "value": "version",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "version",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*version",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "includeCustomNodes",
+                "value": "true",
+                "type": "query",
+                "description": "If the result of the request should also include the details of any custom nodes referenced by the returned workflows"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Workflow filter JSON object which overrides the filterField and filter parameters."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Flow Versions for a Flow"
+        },
+        {
+          "info": {
+            "name": "Delete Flow Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/flows/:flowId/versions",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "path",
+                "description": "ID associated with the flow"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete Flow Versions"
+        },
+        {
+          "info": {
+            "name": "Get Information About Errors That Occurred During Runs of This Workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/flows/:flowId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "path",
+                "description": "ID associated with the flow"
+              },
+              {
+                "name": "duration",
+                "value": "86400000",
+                "type": "query",
+                "description": "Duration of time range in milliseconds"
+              },
+              {
+                "name": "end",
+                "value": "0",
+                "type": "query",
+                "description": "End of time range in milliseconds since epoch"
+              },
+              {
+                "name": "limit",
+                "value": "25",
+                "type": "query",
+                "description": "Maximum number of errors to return"
+              },
+              {
+                "name": "sortDirection",
+                "value": "desc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "flowVersion",
+                "value": "develop",
+                "type": "query",
+                "description": "Flow version name or ID. When not included, will be errors for all versions. Pass develop for just the develop version."
+              },
+              {
+                "name": "deviceId",
+                "value": "575ed18f7ae143cd83dc4bb6",
+                "type": "query",
+                "description": "For edge or embedded workflows, the Device ID for which to return workflow errors. When not included, will be errors for all device IDs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Information About Errors That Occurred During Runs of This Workflow"
+        },
+        {
+          "info": {
+            "name": "Presses the Specified Virtual Button on the Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/flows/:flowId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "path",
+                "description": "ID associated with the flow"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Presses the Specified Virtual Button on the Flow"
+        },
+        {
+          "info": {
+            "name": "Sets a Storage Value",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/flows/:flowId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "path",
+                "description": "ID associated with the flow"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets a Storage Value"
+        },
+        {
+          "info": {
+            "name": "Clear All Storage Entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/flows/:flowId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "flowId",
+                "value": "575ed18f7ae143cd83dc4aa6",
+                "type": "path",
+                "description": "ID associated with the flow"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Clear All Storage Entries"
+        },
+        {
+          "info": {
+            "name": "Gets Additional Nodes That Should Be Available in the Palette",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/flows",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets Additional Nodes That Should Be Available in the Palette"
+        },
+        {
+          "info": {
+            "name": "Import a Set of Flows and Flow Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/flows",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Import a Set of Flows and Flow Versions"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

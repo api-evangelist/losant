@@ -1,0 +1,1379 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Losant Experience API",
+    "version": "1.29.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Experience",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves Information on an Experience Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/domains/:experienceDomainId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceDomainId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience domain"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Experience Domain"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Experience Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/experience/domains/:experienceDomainId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceDomainId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience domain"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Experience Domain"
+        },
+        {
+          "info": {
+            "name": "Deletes an Experience Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/experience/domains/:experienceDomainId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceDomainId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience domain"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Experience Domain"
+        },
+        {
+          "info": {
+            "name": "Returns the Experience Domains for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/domains",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Experience Domains for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Experience Domain for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/experience/domains",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Experience Domain for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on Resources Linked to an Experience Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/endpoints/:experienceEndpointId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceEndpointId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience endpoint"
+              },
+              {
+                "name": "version",
+                "value": "develop",
+                "type": "query",
+                "description": "Version of this experience endpoint to query"
+              },
+              {
+                "name": "includeCustomNodes",
+                "value": "true",
+                "type": "query",
+                "description": "If the result of the request should also include the details of any custom nodes referenced by returned workflows"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on Resources Linked to an Experience Endpoint"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Experience Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/experience/endpoints/:experienceEndpointId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceEndpointId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience endpoint"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Experience Endpoint"
+        },
+        {
+          "info": {
+            "name": "Deletes an Experience Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/experience/endpoints/:experienceEndpointId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceEndpointId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience endpoint"
+              },
+              {
+                "name": "includeWorkflows",
+                "value": "true",
+                "type": "query",
+                "description": "If the workflows that utilize this experience endpoint should also be deleted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Experience Endpoint"
+        },
+        {
+          "info": {
+            "name": "Get Statistics About Endpoint Requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/endpoints",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "statGrouping",
+                "value": "statusCode",
+                "type": "query",
+                "description": "Field to group the statistics by"
+              },
+              {
+                "name": "duration",
+                "value": "86400000",
+                "type": "query",
+                "description": "Duration in milliseconds"
+              },
+              {
+                "name": "end",
+                "value": "0",
+                "type": "query",
+                "description": "End of time range in milliseconds since epoch"
+              },
+              {
+                "name": "resolution",
+                "value": "3600000",
+                "type": "query",
+                "description": "Resolution in milliseconds"
+              },
+              {
+                "name": "versionFilter",
+                "value": "myVersion",
+                "type": "query",
+                "description": "Filters the stats to a particular experience version"
+              },
+              {
+                "name": "domainFilter",
+                "value": "example.com",
+                "type": "query",
+                "description": "Filters the stats to a particular experience domain or slug"
+              },
+              {
+                "name": "statusCodeFilter",
+                "value": "200",
+                "type": "query",
+                "description": "Filters the stats to a particular status code"
+              },
+              {
+                "name": "endpointIdFilter",
+                "value": "575ec8687ae143cd83dc4a98",
+                "type": "query",
+                "description": "Filters the stats to a particular endpoint"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Statistics About Endpoint Requests"
+        },
+        {
+          "info": {
+            "name": "Create a New Experience Endpoint for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/experience/endpoints",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Experience Endpoint for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Experience Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/groups/:experienceGroupId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceGroupId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience group"
+              },
+              {
+                "name": "includeDirectDeviceCount",
+                "value": "true",
+                "type": "query",
+                "description": "Whether or not to return count of devices associated directly with this group"
+              },
+              {
+                "name": "includeTotalDeviceCount",
+                "value": "true",
+                "type": "query",
+                "description": "Whether or not to return count of devices associated with this group or any of its descendants"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Experience Group"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Experience Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/experience/groups/:experienceGroupId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceGroupId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience group"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Experience Group"
+        },
+        {
+          "info": {
+            "name": "Deletes an Experience Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/experience/groups/:experienceGroupId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceGroupId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience group"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Experience Group"
+        },
+        {
+          "info": {
+            "name": "Returns the Experience Groups for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/groups",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*group",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Experience group filter JSON object which overrides the filter and filterField fields."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Experience Groups for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Experience Group for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/experience/groups",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Experience Group for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Experience Slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/slugs/:experienceSlugId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceSlugId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience slug"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Experience Slug"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Experience Slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/experience/slugs/:experienceSlugId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceSlugId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience slug"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Experience Slug"
+        },
+        {
+          "info": {
+            "name": "Deletes an Experience Slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/experience/slugs/:experienceSlugId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceSlugId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience slug"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Experience Slug"
+        },
+        {
+          "info": {
+            "name": "Returns the Experience Slugs for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/slugs",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Experience Slugs for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Experience Slug for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/experience/slugs",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Experience Slug for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Experience User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/users/:experienceUserId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceUserId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience user"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Experience User"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Experience User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/experience/users/:experienceUserId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceUserId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience user"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Experience User"
+        },
+        {
+          "info": {
+            "name": "Deletes an Experience User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/experience/users/:experienceUserId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceUserId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience user"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Experience User"
+        },
+        {
+          "info": {
+            "name": "Returns the Experience Users for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/users",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "email",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "email",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*user",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "experienceGroupId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "query",
+                "description": "Filter users to those only in the specified group, special experienceGroupIds of 'any' which will give users who are in at least one group and 'none' will give you users who are not in any groups."
+              },
+              {
+                "name": "includeAncestorGroups",
+                "value": "true",
+                "type": "query",
+                "description": "If set will include members from ancestors of the specified experienceGroupId"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Experience user filter JSON object which overrides all other filter params."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Experience Users for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Experience User for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/experience/users",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Experience User for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an Experience Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/versions/:experienceVersionIdOrName",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceVersionIdOrName",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "Version ID or version name associated with the experience version"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an Experience Version"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Experience Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/experience/versions/:experienceVersionIdOrName",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceVersionIdOrName",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "Version ID or version name associated with the experience version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Experience Version"
+        },
+        {
+          "info": {
+            "name": "Deletes an Experience Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/experience/versions/:experienceVersionIdOrName",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceVersionIdOrName",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "Version ID or version name associated with the experience version"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Experience Version"
+        },
+        {
+          "info": {
+            "name": "Returns the Experience Versions for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/versions",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "version",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "email",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*version",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Experience Versions for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Experience Version for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/experience/versions",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Experience Version for an Application"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on Resources Linked to an Experience View",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/views/:experienceViewId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceViewId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience view"
+              },
+              {
+                "name": "version",
+                "value": "develop",
+                "type": "query",
+                "description": "Version of this experience view to query"
+              },
+              {
+                "name": "includeCustomNodes",
+                "value": "true",
+                "type": "query",
+                "description": "If the result of the request should also include the details of any custom nodes referenced by returned workflows"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on Resources Linked to an Experience View"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an Experience View",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/experience/views/:experienceViewId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceViewId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience view"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an Experience View"
+        },
+        {
+          "info": {
+            "name": "Deletes an Experience View",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/experience/views/:experienceViewId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "experienceViewId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the experience view"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Experience View"
+        },
+        {
+          "info": {
+            "name": "Returns the Experience Views for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/experience/views",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*view",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "viewType",
+                "value": "page",
+                "type": "query",
+                "description": "Filter views to those only of the given type"
+              },
+              {
+                "name": "version",
+                "value": "develop",
+                "type": "query",
+                "description": "Return the experience views belonging to this version"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Experience Views for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Experience View for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/experience/views",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Experience View for an Application"
+        },
+        {
+          "info": {
+            "name": "Bootstraps the Experience for This Application with Standard Endpoints and Views",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/experience",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Bootstraps the Experience for This Application with Standard Endpoints and Views"
+        },
+        {
+          "info": {
+            "name": "Deletes Multiple Parts of an Experience Including Users, Groups, Slugs, Domains, Versions, Endpoints, Views, and Workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/experience",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "keepUsers",
+                "value": "true",
+                "type": "query",
+                "description": "If this is set, Experience Users will not be removed."
+              },
+              {
+                "name": "keepGroups",
+                "value": "true",
+                "type": "query",
+                "description": "If this is set, Experience Groups will not be removed."
+              },
+              {
+                "name": "keepSlugs",
+                "value": "true",
+                "type": "query",
+                "description": "If this is set, Experience Slugs will not be removed."
+              },
+              {
+                "name": "keepDomains",
+                "value": "true",
+                "type": "query",
+                "description": "If this is set, Experience Domains will not be removed."
+              },
+              {
+                "name": "removeVersions",
+                "value": "true",
+                "type": "query",
+                "description": "If this is set, all Experience Versions and their contents will be removed (except for develop)."
+              },
+              {
+                "name": "keepViews",
+                "value": "true",
+                "type": "query",
+                "description": "If this is set, Experience Views (in the develop version) will not be removed."
+              },
+              {
+                "name": "keepEndpoints",
+                "value": "true",
+                "type": "query",
+                "description": "If this is set, Experience Endpoints (in the develop version) will not be removed."
+              },
+              {
+                "name": "removeWorkflows",
+                "value": "true",
+                "type": "query",
+                "description": "If this is set, all Experience Workflows (in the develop version) will ve removed."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes Multiple Parts of an Experience Including Users, Groups, Slugs, Domains, Versions, Endpoints, Views, and Workflows"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,548 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Losant Authentication and Account API",
+    "version": "1.29.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication and Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/auth",
+            "params": [
+              {
+                "name": "email",
+                "value": "example@example.com",
+                "type": "query",
+                "description": "The email address associated with the user login"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Checks email domain for SSO configuration."
+        },
+        {
+          "info": {
+            "name": "POST /auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/auth",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Authenticates a user via a SAML response."
+        },
+        {
+          "info": {
+            "name": "Retrieves Pending Organization Invitations for a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/me",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Pending Organization Invitations for a User"
+        },
+        {
+          "info": {
+            "name": "Accepts or Rejects an Invitation to an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/me",
+            "params": [
+              {
+                "name": "inviteId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the invitation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Accepts or Rejects an Invitation to an Organization"
+        },
+        {
+          "info": {
+            "name": "Moves Resources to a New Owner",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/me",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Moves Resources to a New Owner"
+        },
+        {
+          "info": {
+            "name": "GET /invites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/invites",
+            "params": [
+              {
+                "name": "token",
+                "value": "aTokenString",
+                "type": "query",
+                "description": "The token associated with the invite"
+              },
+              {
+                "name": "email",
+                "value": "example@example.com",
+                "type": "query",
+                "description": "The email associated with the invite"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets information about an invite"
+        },
+        {
+          "info": {
+            "name": "POST /invites",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/invites",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Accepts/Rejects an invite"
+        },
+        {
+          "info": {
+            "name": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/orgs/:orgId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "575ed6e87ae143cd83dc4aa8",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "start",
+                "value": "0",
+                "type": "query",
+                "description": "Start of range for notebook execution query (ms since epoch)"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End of range for notebook execution query (ms since epoch)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns Notebook Execution Usage by Day for the Time Range Specified for This Organization"
+        },
+        {
+          "info": {
+            "name": "Invites a Person to an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/orgs/:orgId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "575ed6e87ae143cd83dc4aa8",
+                "type": "path",
+                "description": "ID associated with the organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invites a Person to an Organization"
+        },
+        {
+          "info": {
+            "name": "Moves Resources to a New Owner",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/orgs/:orgId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "575ed6e87ae143cd83dc4aa8",
+                "type": "path",
+                "description": "ID associated with the organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Moves Resources to a New Owner"
+        },
+        {
+          "info": {
+            "name": "Removes a Member from the Org",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/orgs/:orgId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "575ed6e87ae143cd83dc4aa8",
+                "type": "path",
+                "description": "ID associated with the organization"
+              },
+              {
+                "name": "userId",
+                "value": "575ed70c7ae143cd83dc4aa9",
+                "type": "query",
+                "description": "Id of user to remove"
+              },
+              {
+                "name": "summaryExclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to exclude from org summary"
+              },
+              {
+                "name": "summaryInclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to include in org summary"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes a Member from the Org"
+        },
+        {
+          "info": {
+            "name": "Returns the Organizations Associated with the Current User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/orgs",
+            "params": [
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*org",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "summaryExclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to exclude from org summaries"
+              },
+              {
+                "name": "summaryInclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to include in org summary"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Organizations Associated with the Current User"
+        },
+        {
+          "info": {
+            "name": "Create a New Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/orgs",
+            "params": [
+              {
+                "name": "summaryExclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to exclude from org summary"
+              },
+              {
+                "name": "summaryInclude",
+                "value": "payloadCount",
+                "type": "query",
+                "description": "Comma-separated list of summary fields to include in org summary"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Organization"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/me/tokens/:apiTokenId",
+            "params": [
+              {
+                "name": "apiTokenId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the API token"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on an API Token"
+        },
+        {
+          "info": {
+            "name": "Updates Information About an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/me/tokens/:apiTokenId",
+            "params": [
+              {
+                "name": "apiTokenId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the API token"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About an API Token"
+        },
+        {
+          "info": {
+            "name": "Deletes an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/me/tokens/:apiTokenId",
+            "params": [
+              {
+                "name": "apiTokenId",
+                "value": "575ec7417ae143cd83dc4a95",
+                "type": "path",
+                "description": "ID associated with the API token"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an API Token"
+        },
+        {
+          "info": {
+            "name": "Returns the API Tokens for a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/me/tokens",
+            "params": [
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "key",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*token",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the API Tokens for a User"
+        },
+        {
+          "info": {
+            "name": "Create a New API Token for an User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/me/tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New API Token for an User"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

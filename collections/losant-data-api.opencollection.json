@@ -1,0 +1,458 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Losant Data and Data Tables API",
+    "version": "1.29.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data and Data Tables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves the Data Table Row",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "dataTableId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the data table"
+              },
+              {
+                "name": "rowId",
+                "value": "596f832b128eda5cfe765443",
+                "type": "path",
+                "description": "ID associated with the data table row"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the Data Table Row"
+        },
+        {
+          "info": {
+            "name": "Updates the Data Table Row",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "dataTableId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the data table"
+              },
+              {
+                "name": "rowId",
+                "value": "596f832b128eda5cfe765443",
+                "type": "path",
+                "description": "ID associated with the data table row"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the Data Table Row"
+        },
+        {
+          "info": {
+            "name": "Deletes a Data Table Row",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "dataTableId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the data table"
+              },
+              {
+                "name": "rowId",
+                "value": "596f832b128eda5cfe765443",
+                "type": "path",
+                "description": "ID associated with the data table row"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Data Table Row"
+        },
+        {
+          "info": {
+            "name": "Returns the Rows for a Data Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables/:dataTableId/rows",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "dataTableId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the data table"
+              },
+              {
+                "name": "sortColumn",
+                "value": "myColumnName",
+                "type": "query",
+                "description": "Column to sort the rows by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the rows by"
+              },
+              {
+                "name": "limit",
+                "value": "0",
+                "type": "query",
+                "description": "How many rows to return"
+              },
+              {
+                "name": "offset",
+                "value": "0",
+                "type": "query",
+                "description": "How many rows to skip"
+              },
+              {
+                "name": "includeFields",
+                "value": "id,createdAt",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in resulting rows. When not provided, returns all fields."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Rows for a Data Table"
+        },
+        {
+          "info": {
+            "name": "Delete All Data in the Data Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables/:dataTableId/rows",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "dataTableId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the data table"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete All Data in the Data Table"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on a Data Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables/:dataTableId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "dataTableId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the data table"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on a Data Table"
+        },
+        {
+          "info": {
+            "name": "Adds a New Column to This Data Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables/:dataTableId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "dataTableId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the data table"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Adds a New Column to This Data Table"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Data Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables/:dataTableId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "dataTableId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the data table"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Data Table"
+        },
+        {
+          "info": {
+            "name": "Deletes a Data Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables/:dataTableId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "dataTableId",
+                "value": "575ed78e7ae143cd83dc4aab",
+                "type": "path",
+                "description": "ID associated with the data table"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Data Table"
+        },
+        {
+          "info": {
+            "name": "Returns the Data Tables for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my*table",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Data Tables for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Data Table for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/data-tables",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Data Table for an Application"
+        },
+        {
+          "info": {
+            "name": "Creates a CSV File from a Query of Devices and Attributes Over a Time Range.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/data",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a CSV File from a Query of Devices and Attributes Over a Time Range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

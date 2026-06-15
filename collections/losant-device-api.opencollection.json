@@ -1,0 +1,768 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Losant Device API",
+    "version": "1.29.4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Device",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves Information on a Device Attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/devices/:deviceId/attributes/:name",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "path",
+                "description": "ID associated with the device"
+              },
+              {
+                "name": "name",
+                "value": "voltage",
+                "type": "path",
+                "description": "Name of the attribute"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on a Device Attribute"
+        },
+        {
+          "info": {
+            "name": "Updates an Attribute on a Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/devices/:deviceId/attributes/:name",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "path",
+                "description": "ID associated with the device"
+              },
+              {
+                "name": "name",
+                "value": "voltage",
+                "type": "path",
+                "description": "Name of the attribute"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an Attribute on a Device"
+        },
+        {
+          "info": {
+            "name": "Removes an Attribute from a Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/devices/:deviceId/attributes/:name",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "path",
+                "description": "ID associated with the device"
+              },
+              {
+                "name": "name",
+                "value": "voltage",
+                "type": "path",
+                "description": "Name of the attribute"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes an Attribute from a Device"
+        },
+        {
+          "info": {
+            "name": "Returns the Attributes for a Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/devices/:deviceId/attributes",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "path",
+                "description": "ID associated with the device"
+              },
+              {
+                "name": "sortField",
+                "value": "status",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "filterField",
+                "value": "status",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "number",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Attributes for a Device"
+        },
+        {
+          "info": {
+            "name": "Adds a New Attribute to a Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/devices/:deviceId/attributes",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "path",
+                "description": "ID associated with the device"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Adds a New Attribute to a Device"
+        },
+        {
+          "info": {
+            "name": "Retrieves Information on a Device Recipe",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/device-recipes/:deviceRecipeId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceRecipeId",
+                "value": "575ecec57ae143cd83dc4a9f",
+                "type": "path",
+                "description": "ID associated with the device recipe"
+              },
+              {
+                "name": "tagsAsObject",
+                "value": "true",
+                "type": "query",
+                "description": "Return tags as an object map instead of an array"
+              },
+              {
+                "name": "attributesAsObject",
+                "value": "true",
+                "type": "query",
+                "description": "Return attributes as an object map instead of an array"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves Information on a Device Recipe"
+        },
+        {
+          "info": {
+            "name": "Bulk Creates Devices Using This Recipe from a CSV",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/device-recipes/:deviceRecipeId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceRecipeId",
+                "value": "575ecec57ae143cd83dc4a9f",
+                "type": "path",
+                "description": "ID associated with the device recipe"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Bulk Creates Devices Using This Recipe from a CSV"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Device Recipe",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/device-recipes/:deviceRecipeId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceRecipeId",
+                "value": "575ecec57ae143cd83dc4a9f",
+                "type": "path",
+                "description": "ID associated with the device recipe"
+              },
+              {
+                "name": "tagsAsObject",
+                "value": "false",
+                "type": "query",
+                "description": "Return tags as an object map instead of an array"
+              },
+              {
+                "name": "attributesAsObject",
+                "value": "false",
+                "type": "query",
+                "description": "Return attributes as an object map instead of an array"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Device Recipe"
+        },
+        {
+          "info": {
+            "name": "Deletes a Device Recipe",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/device-recipes/:deviceRecipeId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceRecipeId",
+                "value": "575ecec57ae143cd83dc4a9f",
+                "type": "path",
+                "description": "ID associated with the device recipe"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a Device Recipe"
+        },
+        {
+          "info": {
+            "name": "Returns the Device Recipes for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/device-recipes",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "filterField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to filter the results by. Blank or not provided means no filtering."
+              },
+              {
+                "name": "filter",
+                "value": "my * recipe",
+                "type": "query",
+                "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering."
+              },
+              {
+                "name": "tagsAsObject",
+                "value": "false",
+                "type": "query",
+                "description": "Return tags as an object map instead of an array"
+              },
+              {
+                "name": "attributesAsObject",
+                "value": "true",
+                "type": "query",
+                "description": "Return attributes as an object map instead of an array"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the Device Recipes for an Application"
+        },
+        {
+          "info": {
+            "name": "Create a New Device Recipe for an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/device-recipes",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "tagsAsObject",
+                "value": "false",
+                "type": "query",
+                "description": "Return tags as an object map instead of an array"
+              },
+              {
+                "name": "attributesAsObject",
+                "value": "true",
+                "type": "query",
+                "description": "Return attributes as an object map instead of an array"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a New Device Recipe for an Application"
+        },
+        {
+          "info": {
+            "name": "Returns Payload Counts per Resolution in the Time Range Specified for This Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/devices/:deviceId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "path",
+                "description": "ID associated with the device"
+              },
+              {
+                "name": "start",
+                "value": "0",
+                "type": "query",
+                "description": "Start of range for payload count query (ms since epoch)"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End of range for payload count query (ms since epoch)"
+              },
+              {
+                "name": "resolution",
+                "value": "86400000",
+                "type": "query",
+                "description": "Resolution in milliseconds"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns Payload Counts per Resolution in the Time Range Specified for This Device"
+        },
+        {
+          "info": {
+            "name": "Set the Current Connection Status of the Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/devices/:deviceId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "path",
+                "description": "ID associated with the device"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Set the Current Connection Status of the Device"
+        },
+        {
+          "info": {
+            "name": "Updates Information About a Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/devices/:deviceId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "path",
+                "description": "ID associated with the device"
+              },
+              {
+                "name": "tagsAsObject",
+                "value": "true",
+                "type": "query",
+                "description": "Return tags as an object map instead of an array"
+              },
+              {
+                "name": "attributesAsObject",
+                "value": "false",
+                "type": "query",
+                "description": "Return attributes as an object map instead of an array"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates Information About a Device"
+        },
+        {
+          "info": {
+            "name": "Removes All Device Data for the Specified Time Range. Defaults to All Data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.losant.com/applications/:applicationId/devices/:deviceId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "deviceId",
+                "value": "575ecf887ae143cd83dc4aa2",
+                "type": "path",
+                "description": "ID associated with the device"
+              },
+              {
+                "name": "start",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "Start time of export (ms since epoch - 0 means now, negative is relative to now)"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End time of export (ms since epoch - 0 means now, negative is relative to now)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes All Device Data for the Specified Time Range. Defaults to All Data."
+        },
+        {
+          "info": {
+            "name": "Retrieve the Composite Last Complete State of the Matching Devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.losant.com/applications/:applicationId/devices",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              },
+              {
+                "name": "start",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "Start of time range to look at to build composite state"
+              },
+              {
+                "name": "end",
+                "value": "1465790400000",
+                "type": "query",
+                "description": "End of time range to look at to build composite state"
+              },
+              {
+                "name": "attributes",
+                "value": "myAttr1,myAttr2",
+                "type": "query",
+                "description": "Comma-separated list of attributes to include. When not provided, returns all attributes."
+              },
+              {
+                "name": "sortField",
+                "value": "name",
+                "type": "query",
+                "description": "Field to sort the results by"
+              },
+              {
+                "name": "sortDirection",
+                "value": "asc",
+                "type": "query",
+                "description": "Direction to sort the results by"
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Which page of results to return"
+              },
+              {
+                "name": "perPage",
+                "value": "10",
+                "type": "query",
+                "description": "How many items to return per page"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Device advanced query JSON object"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the Composite Last Complete State of the Matching Devices"
+        },
+        {
+          "info": {
+            "name": "Creates an Export of Payload Count Information for the Matching Devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.losant.com/applications/:applicationId/devices",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an Export of Payload Count Information for the Matching Devices"
+        },
+        {
+          "info": {
+            "name": "Update the Fields of One or More Devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.losant.com/applications/:applicationId/devices",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "575ec8687ae143cd83dc4a97",
+                "type": "path",
+                "description": "ID associated with the application"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update the Fields of One or More Devices"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
