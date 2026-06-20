@@ -11,7 +11,7 @@ description: |
   smart-building, agriculture, and connected-product companies; Losant emphasizes white-labeled end-user
   experiences ("Experiences") and edge compute on Linux gateways plus microcontrollers via the Embedded
   Edge Agent (EEA).
-image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 humanURL: https://www.losant.com/
 baseURL: https://api.losant.com
 tags:
