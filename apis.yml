@@ -308,28 +308,28 @@ common:
     type: SourceCode
     name: Losant on GitHub
   - url: https://github.com/Losant/losant-rest-js
-    type: SDK
+    type: SDKs
     name: Node.js / JavaScript REST Client
   - url: https://github.com/Losant/losant-rest-python
-    type: SDK
+    type: SDKs
     name: Python REST Client
   - url: https://github.com/Losant/losant-rest-ruby
-    type: SDK
+    type: SDKs
     name: Ruby REST Client
   - url: https://github.com/Losant/losant-mqtt-js
-    type: SDK
+    type: SDKs
     name: Node.js MQTT Client
   - url: https://github.com/Losant/losant-mqtt-python
-    type: SDK
+    type: SDKs
     name: Python MQTT Client
   - url: https://github.com/Losant/losant-mqtt-ruby
-    type: SDK
+    type: SDKs
     name: Ruby MQTT Client
   - url: https://github.com/Losant/losant-mqtt-arduino
-    type: SDK
+    type: SDKs
     name: Arduino MQTT Client
   - url: https://github.com/Losant/losant-esp-idf-esp32
-    type: SDK
+    type: SDKs
     name: ESP-IDF (ESP32) MQTT Client
   - url: https://github.com/Losant/losant-cli
     type: CLI
