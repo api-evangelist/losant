@@ -1,0 +1,26 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/losant-application-api-openapi.yml, openapi/losant-auth-api-openapi.yml, openapi/losant-data-api-openapi.yml,
+  openapi/losant-device-api-openapi.yml, openapi/losant-edge-api-openapi.yml, openapi/losant-experience-api-openapi.yml,
+  openapi/losant-instance-api-openapi.yml, openapi/losant-notebook-api-openapi.yml, openapi/losant-workflow-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST
+    /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens
+    and pass it in the Authorization header as `Bearer <token>`.
+  sources:
+  - openapi/losant-application-api-openapi.yml
+  - openapi/losant-auth-api-openapi.yml
+  - openapi/losant-data-api-openapi.yml
+  - openapi/losant-device-api-openapi.yml
+  - openapi/losant-edge-api-openapi.yml
+  - openapi/losant-experience-api-openapi.yml
+  - openapi/losant-instance-api-openapi.yml
+  - openapi/losant-notebook-api-openapi.yml
+  - openapi/losant-workflow-api-openapi.yml

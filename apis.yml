@@ -275,6 +275,10 @@ apis:
       - type: OpenAPI
         url: openapi/losant-instance-api-openapi.yml
 common:
+  - type: DomainSecurity
+    url: security/losant-domain-security.yml
+  - type: Authentication
+    url: authentication/losant-authentication.yml
   - url: https://www.losant.com/
     type: Portal
   - url: https://docs.losant.com/
