@@ -275,6 +275,8 @@ apis:
       - type: OpenAPI
         url: openapi/losant-instance-api-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/losant-agentic-access.yml
   - type: DomainSecurity
     url: security/losant-domain-security.yml
   - type: Authentication
