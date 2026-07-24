@@ -1,10 +1,8 @@
 openapi: 3.0.3
 info:
-  title: Losant Enterprise Instance API
+  title: Losant Application Enterprise Instance API
   version: 1.29.4
-  description: 'Administer self-hosted and dedicated Losant Enterprise Instances: instance members, organizations, organization
-    members and invites, custom workflow nodes, sandboxes, notification rules, and audit logs. Derived from the Losant Platform
-    API (Bravado/Swagger 2) at https://api.losant.com/.'
+  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations, files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
   contact:
     name: Losant Support
     url: https://www.losant.com/contact
@@ -17,11 +15,11 @@ info:
 servers:
 - url: https://api.losant.com
   description: Losant Platform API (US multi-tenant cloud)
+security:
+- BearerAuth: []
 tags:
 - name: Enterprise Instance
   description: Enterprise Instance resources on the Losant Platform.
-security:
-- BearerAuth: []
 paths:
   /instances/{instanceId}/tokens/{apiTokenId}:
     get:
@@ -29,8 +27,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id001
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -38,8 +35,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id002
-        name: apiTokenId
+      - name: apiTokenId
         in: path
         description: ID associated with the API token
         required: true
@@ -73,8 +69,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id001
-      - *id002
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: apiTokenId
+        in: path
+        description: ID associated with the API token
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing new properties of the API token
         required: true
@@ -108,8 +118,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id001
-      - *id002
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: apiTokenId
+        in: path
+        description: ID associated with the API token
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
           description: If API token was successfully deleted
@@ -137,8 +161,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id003
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -225,7 +248,14 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id003
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: API token information
         required: true
@@ -389,8 +419,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id004
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -398,8 +427,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id005
-        name: instanceCustomNodeId
+      - name: instanceCustomNodeId
         in: path
         description: ID associated with the Custom Node
         required: true
@@ -468,8 +496,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id004
-      - *id005
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: instanceCustomNodeId
+        in: path
+        description: ID associated with the Custom Node
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing new properties of the Custom Node
         required: true
@@ -503,8 +545,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id004
-      - *id005
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: instanceCustomNodeId
+        in: path
+        description: ID associated with the Custom Node
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
           description: If Custom Node was successfully deleted
@@ -532,8 +588,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id006
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -617,7 +672,14 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id006
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Custom Node information
         required: true
@@ -646,8 +708,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id007
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -655,8 +716,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id008
-        name: userId
+      - name: userId
         in: path
         description: ID associated with the instance member
         required: true
@@ -690,8 +750,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id007
-      - *id008
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: userId
+        in: path
+        description: ID associated with the instance member
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing new member info
         required: true
@@ -725,8 +799,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id007
-      - *id008
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: userId
+        in: path
+        description: ID associated with the instance member
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
           description: If member was successfully deleted
@@ -754,8 +842,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id009
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -828,7 +915,14 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id009
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing new member info
         required: true
@@ -863,8 +957,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id010
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -872,8 +965,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id011
-        name: notificationRuleId
+      - name: notificationRuleId
         in: path
         description: ID associated with the notification rule
         required: true
@@ -922,8 +1014,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id010
-      - *id011
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: notificationRuleId
+        in: path
+        description: ID associated with the notification rule
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing new properties of the notification rule
         required: true
@@ -957,8 +1063,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id010
-      - *id011
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: notificationRuleId
+        in: path
+        description: ID associated with the notification rule
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
           description: If notification rule was successfully deleted
@@ -985,8 +1105,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id010
-      - *id011
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: notificationRuleId
+        in: path
+        description: ID associated with the notification rule
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: The options for the evaluation
         required: true
@@ -1021,8 +1155,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id012
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -1106,7 +1239,14 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id012
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Notification rule information
         required: true
@@ -1135,8 +1275,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id013
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -1144,8 +1283,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id014
-        name: orgId
+      - name: orgId
         in: path
         description: ID associated with the organization
         required: true
@@ -1153,8 +1291,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id015
-        name: inviteId
+      - name: inviteId
         in: path
         description: ID associated with the organization invite
         required: true
@@ -1188,9 +1325,30 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id013
-      - *id014
-      - *id015
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: inviteId
+        in: path
+        description: ID associated with the organization invite
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
           description: If an invite was successfully deleted
@@ -1217,9 +1375,30 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id013
-      - *id014
-      - *id015
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: inviteId
+        in: path
+        description: ID associated with the organization invite
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing updated role info
         required: true
@@ -1254,8 +1433,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id016
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -1263,8 +1441,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id017
-        name: orgId
+      - name: orgId
         in: path
         description: ID associated with the organization
         required: true
@@ -1338,8 +1515,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id016
-      - *id017
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing new invite info
         required: true
@@ -1374,8 +1565,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id018
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -1383,8 +1573,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id019
-        name: orgId
+      - name: orgId
         in: path
         description: ID associated with the organization
         required: true
@@ -1392,8 +1581,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id020
-        name: userId
+      - name: userId
         in: path
         description: ID associated with the organization member
         required: true
@@ -1427,9 +1615,30 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id018
-      - *id019
-      - *id020
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: userId
+        in: path
+        description: ID associated with the organization member
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing new member info
         required: true
@@ -1463,9 +1672,30 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id018
-      - *id019
-      - *id020
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: userId
+        in: path
+        description: ID associated with the organization member
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
           description: If member was successfully deleted
@@ -1493,8 +1723,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id021
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -1502,8 +1731,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id022
-        name: orgId
+      - name: orgId
         in: path
         description: ID associated with the organization
         required: true
@@ -1576,8 +1804,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id021
-      - *id022
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing new member info
         required: true
@@ -1612,8 +1854,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id023
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -1621,8 +1862,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id024
-        name: orgId
+      - name: orgId
         in: path
         description: ID associated with the organization
         required: true
@@ -1670,8 +1910,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id023
-      - *id024
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ed6e87ae143cd83dc4aa8
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       - name: summaryInclude
         in: query
         description: Comma-separated list of summary fields to include in org summary
@@ -1712,8 +1966,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id023
-      - *id024
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ed6e87ae143cd83dc4aa8
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
           description: If organization was successfully deleted
@@ -1741,8 +2009,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id025
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -1839,7 +2106,14 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id025
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       - name: summaryInclude
         in: query
         description: Comma-separated list of summary fields to include in org summary
@@ -1871,13 +2145,11 @@ paths:
       - BearerAuth: []
   /instances/{instanceId}/sandboxes/{instanceSandboxId}:
     get:
-      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for All Applications the Sandbox User
-        Owns
+      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for All Applications the Sandbox User Owns
       tags:
       - Enterprise Instance
       parameters:
-      - &id026
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -1885,8 +2157,7 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - &id027
-        name: instanceSandboxId
+      - name: instanceSandboxId
         in: path
         description: ID associated with the sandbox user
         required: true
@@ -1934,8 +2205,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id026
-      - *id027
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: instanceSandboxId
+        in: path
+        description: ID associated with the sandbox user
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
           description: If a sandbox was successfully deleted
@@ -1962,8 +2247,22 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id026
-      - *id027
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: instanceSandboxId
+        in: path
+        description: ID associated with the sandbox user
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       - name: summaryExclude
         in: query
         description: Comma-separated list of summary fields to exclude from user summary
@@ -2126,8 +2425,7 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - &id028
-        name: instanceId
+      - name: instanceId
         in: path
         description: ID associated with the instance
         required: true
@@ -2175,7 +2473,14 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id028
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Updated instance information
         required: true
@@ -2203,7 +2508,14 @@ paths:
       tags:
       - Enterprise Instance
       parameters:
-      - *id028
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing report configuration
         required: false
@@ -2304,61 +2616,7 @@ paths:
       security:
       - BearerAuth: []
 components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
-        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
   schemas:
-    apiToken:
-      title: API Token
-      description: Schema for a single API Token
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        apiTokenId:
-          $ref: '#/components/schemas/common/objectId'
-        ownerId:
-          $ref: '#/components/schemas/common/objectId'
-        ownerType:
-          type: string
-          enum:
-          - application
-          - user
-        creatorId:
-          $ref: '#/components/schemas/common/objectId'
-        creatorType:
-          type: string
-          enum:
-          - apiToken
-          - user
-          - flow
-        creatorName:
-          $ref: '#/components/schemas/common/optMedStr'
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        expirationDate:
-          $ref: '#/components/schemas/common/date'
-        scope:
-          type: array
-          items:
-            $ref: '#/components/schemas/common/reqMedStr'
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-        token:
-          $ref: '#/components/schemas/common/token'
     apiTokenPatch:
       title: API Token Patch
       description: Schema for the body of an API Token modification request
@@ -2371,1554 +2629,6 @@ components:
         status:
           $ref: '#/components/schemas/apiToken/properties/status'
       additionalProperties: false
-    apiTokenPost:
-      title: API Token Post
-      description: Schema for the body of an API Token creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        expirationDate:
-          $ref: '#/components/schemas/common/date'
-        scope:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/common/userApiScope'
-        status:
-          $ref: '#/components/schemas/apiToken/properties/status'
-      additionalProperties: false
-      required:
-      - name
-    deviceCounts:
-      title: Device Counts
-      description: Schema for the result of a device counts request
-      type: object
-      properties:
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        counts:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              created:
-                type: integer
-              deleted:
-                type: integer
-              total:
-                type: integer
-    error:
-      title: Error
-      description: Schema for errors returned by the API
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
-    flowErrors:
-      title: Workflow Errors
-      description: Workflow run error information
-      type: object
-      properties:
-        flowVersion:
-          $ref: '#/components/schemas/common/name'
-        flowVersionId:
-          $ref: '#/components/schemas/common/objectId'
-        deviceId:
-          $ref: '#/components/schemas/common/objectId'
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        limit:
-          type: number
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              time:
-                $ref: '#/components/schemas/common/date'
-              deviceId:
-                $ref: '#/components/schemas/common/objectId'
-              deviceName:
-                $ref: '#/components/schemas/common/name'
-              flowVersion:
-                $ref: '#/components/schemas/common/name'
-              flowVersionId:
-                $ref: '#/components/schemas/common/objectId'
-              nodeId:
-                type: string
-              nodeLabel:
-                type: string
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
-    flowStats:
-      title: Workflow Statistics
-      description: Statistics about the runs for a given workflow
-      type: object
-      properties:
-        flowVersion:
-          $ref: '#/components/schemas/common/name'
-        flowVersionId:
-          $ref: '#/components/schemas/common/objectId'
-        deviceId:
-          $ref: '#/components/schemas/common/objectId'
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        resolution:
-          type: number
-        metrics:
-          type: array
-          items:
-            type: object
-            properties:
-              time:
-                $ref: '#/components/schemas/common/date'
-              pathsFailed:
-                type: number
-              pathsCompleted:
-                type: number
-              runCount:
-                type: number
-              wallTime:
-                type: number
-    historicalSummaries:
-      title: Historical Summaries
-      description: Schema for a collection of Historical Summaries
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/historicalSummary'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-    historicalSummary:
-      title: Historical Summary
-      description: Schema for a historical summary report
-      type: object
-      properties:
-        resourceType:
-          type: string
-          enum:
-          - application
-          - organization
-          - whitelabel
-        resourceId:
-          $ref: '#/components/schemas/common/objectId'
-        resourceName:
-          $ref: '#/components/schemas/common/name'
-        resourceProration:
-          type: number
-        ownerType:
-          type: string
-          enum:
-          - organization
-          - user
-        ownerId:
-          $ref: '#/components/schemas/common/objectId'
-        ownerName:
-          $ref: '#/components/schemas/common/name'
-        limits:
-          $ref: '#/components/schemas/org/properties/limits'
-        currentPeriodStart:
-          $ref: '#/components/schemas/common/date'
-        currentPeriodEnd:
-          $ref: '#/components/schemas/common/date'
-        applicationCount:
-          type: number
-        applicationCountProrated:
-          type: number
-        userCount:
-          type: number
-        userCountProrated:
-          type: number
-        apiTokenCount:
-          type: number
-        applicationKeyCount:
-          type: number
-        certificateAuthorityCount:
-          type: number
-        certificateCount:
-          type: number
-        credentialCount:
-          type: integer
-        dashboardCount:
-          type: number
-        dashboardCountProrated:
-          type: number
-        dataTableCount:
-          type: number
-        dataTableRowCount:
-          type: number
-        dataTableTotalSizeMb:
-          type: number
-        deviceCount:
-          type: number
-        deviceCountProrated:
-          type: number
-        deviceRecipeCount:
-          type: number
-        eventCount:
-          type: number
-        experienceDomainCount:
-          type: number
-        experienceEndpointCount:
-          type: number
-        experienceGroupCount:
-          type: number
-        experienceSlugCount:
-          type: number
-        experienceUserCount:
-          type: number
-        experienceVersionCount:
-          type: number
-        experienceViewCount:
-          type: number
-        fileCount:
-          type: number
-        fileTotalSizeMb:
-          type: number
-        integrationCount:
-          type: number
-        notebookCount:
-          type: number
-        resourceJobCount:
-          type: integer
-        notebookRunCount:
-          type: number
-        notebookMinutesCount:
-          type: number
-        privateFileCount:
-          type: number
-        privateFileTotalSizeMb:
-          type: number
-        webhookCount:
-          type: number
-        workflowCount:
-          type: number
-        payloadBillableCount:
-          type: number
-        payloadNonbillableCount:
-          type: number
-        payloadBillableSizeMb:
-          type: number
-        payloadNonbillableSizeMb:
-          type: number
-        payloadCountDetails:
-          $ref: '#/components/schemas/payloadStats'
-        payloadSizeDetails:
-          $ref: '#/components/schemas/payloadStats'
-      additionalProperties: false
-    instance:
-      title: Instance
-      description: Schema for a single Instance
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        allowAuditLogging:
-          type: boolean
-        reportConfigs:
-          type: array
-          maxItems: 10
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                maxLength: 48
-              cron:
-                type: string
-                maxLength: 255
-              timezone:
-                type: string
-                maxLength: 255
-              emails:
-                type: array
-                maxItems: 10
-                items:
-                  $ref: '#/components/schemas/common/email'
-              callbackUrl:
-                $ref: '#/components/schemas/common/url'
-              resourceGroupBy:
-                $ref: '#/components/schemas/instanceReportOptionsPost/properties/resourceGroupBy'
-              dateGroupBy:
-                $ref: '#/components/schemas/instanceReportOptionsPost/properties/dateGroupBy'
-              periods:
-                type: integer
-                minimum: 1
-                maximum: 90
-              includeSandbox:
-                type: boolean
-            required:
-            - cron
-            additionalProperties: false
-        limits:
-          type: object
-          properties:
-            organization:
-              type: integer
-            instanceApiToken:
-              type: integer
-            instanceNotificationRule:
-              type: integer
-            instanceCustomNode:
-              type: integer
-            apitoken:
-              type: integer
-            application:
-              type: integer
-            applicationcertificate:
-              type: integer
-            applicationcertificateauthority:
-              type: integer
-            applicationkey:
-              type: integer
-            credential:
-              type: integer
-            dashboard:
-              type: integer
-            datatable:
-              type: integer
-            device:
-              type: integer
-            devicerecipe:
-              type: integer
-            experiencedomain:
-              type: integer
-            experienceendpoint:
-              type: integer
-            experiencegroup:
-              type: integer
-            experienceslug:
-              type: integer
-            experienceuser:
-              type: integer
-            experienceversion:
-              type: integer
-            experienceview:
-              type: integer
-            file:
-              type: integer
-            flow:
-              type: integer
-            integration:
-              type: integer
-            notebook:
-              type: integer
-            privatefile:
-              type: integer
-            resourcejob:
-              type: integer
-            webhook:
-              type: integer
-            dataTTL:
-              type: integer
-            member:
-              type: integer
-            payload:
-              type: integer
-            storage:
-              type: integer
-            notebookMinutesPerRun:
-              type: integer
-            notebookMinutesPerMonth:
-              type: integer
-            notebookInParallel:
-              type: integer
-            experienceFlowSlots:
-              type: integer
-            applicationFlowSlots:
-              type: integer
-            systemInterval:
-              type: integer
-          additionalProperties: false
-        orgDefaultLimitConfig:
-          $ref: '#/components/schemas/common/orgLimits'
-        members:
-          type: array
-          items:
-            type: object
-            properties:
-              userId:
-                $ref: '#/components/schemas/common/objectId'
-              role:
-                $ref: '#/components/schemas/common/instanceRole'
-        mfaMode:
-          $ref: '#/components/schemas/common/mfaMode'
-    instanceAuditLog:
-      title: Instance Audit Log
-      description: Schema for a single Instance Audit Log entry
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        instanceAuditLogId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        primaryTargetId:
-          $ref: '#/components/schemas/common/objectId'
-        primaryTargetType:
-          type: string
-          enum:
-          - Organization
-          - ApiToken
-          - User
-          - InstanceCustomNode
-          - NotificationRule
-        primaryTargetName:
-          $ref: '#/components/schemas/common/optMedStr'
-        secondaryTargetId:
-          $ref: '#/components/schemas/common/objectId'
-        secondaryTargetType:
-          type: string
-          enum:
-          - OrgInvite
-          - ApiToken
-        secondaryTargetName:
-          $ref: '#/components/schemas/common/optMedStr'
-        actorId:
-          $ref: '#/components/schemas/common/objectId'
-        actorType:
-          type: string
-          enum:
-          - User
-          - ApiToken
-        actorName:
-          $ref: '#/components/schemas/common/optMedStr'
-        requestResource:
-          $ref: '#/components/schemas/common/optMedStr'
-        requestAction:
-          $ref: '#/components/schemas/common/optMedStr'
-        requestQueryParams:
-          type: object
-        requestBody:
-          type: object
-        requestPathParams:
-          type: object
-        responseBody:
-          type: object
-        responseStatus:
-          $ref: '#/components/schemas/common/responseCode'
-    instanceAuditLogs:
-      title: Instance Audit Logs
-      description: Schema for a collection of Instance Audit Logs
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instanceAuditLogs'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-    instanceCustomNode:
-      title: Instance Custom Node
-      description: Schema for a single Instance Custom Node
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        instanceCustomNodeId:
-          $ref: '#/components/schemas/common/objectId'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        createdById:
-          $ref: '#/components/schemas/common/objectId'
-        createdByType:
-          type: string
-          enum:
-          - apiToken
-          - user
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        lastUpdatedById:
-          $ref: '#/components/schemas/common/objectId'
-        lastUpdatedByType:
-          type: string
-          enum:
-          - apiToken
-          - user
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        shortDescription:
-          $ref: '#/components/schemas/common/shortString'
-        iconData:
-          $ref: '#/components/schemas/common/imageDataUri'
-        docsUrl:
-          $ref: '#/components/schemas/common/shortString'
-        category:
-          $ref: '#/components/schemas/flow/properties/category'
-        minimumAgentVersion:
-          $ref: '#/components/schemas/common/version'
-        triggers:
-          type: array
-          items:
-            type: object
-            properties:
-              key:
-                $ref: '#/components/schemas/common/optMedStr'
-              type:
-                type: string
-                enum:
-                - customNodeStart
-              config:
-                type: object
-                additionalProperties: false
-              meta:
-                type: object
-                properties:
-                  category:
-                    type: string
-                    enum:
-                    - trigger
-                  name:
-                    type: string
-                    enum:
-                    - customNodeStart
-                  label:
-                    $ref: '#/components/schemas/common/name'
-                  x:
-                    type: number
-                  y:
-                    type: number
-                  uiId:
-                    type: string
-                    maxLength: 48
-                  description:
-                    $ref: '#/components/schemas/common/description'
-                additionalProperties: false
-              outputIds:
-                $ref: '#/components/schemas/common/outputIds'
-            required:
-            - type
-            additionalProperties: false
-          maxItems: 1
-        nodes:
-          $ref: '#/components/schemas/flow/properties/nodes'
-        customNodeConfig:
-          $ref: '#/components/schemas/flow/properties/customNodeConfig'
-        customNodeSupports:
-          type: array
-          maxItems: 1
-          items:
-            type: string
-            enum:
-            - cloud
-            - edge
-        sourceApplicationId:
-          $ref: '#/components/schemas/common/objectId'
-        sourceFlowId:
-          $ref: '#/components/schemas/common/objectId'
-        sourceFlowVersion:
-          $ref: '#/components/schemas/common/name'
-        stats:
-          type: object
-          properties:
-            errorCount:
-              type: integer
-            runCount:
-              type: integer
-          additionalProperties: false
-        usage:
-          type: object
-          properties:
-            sandbox:
-              type: object
-              properties:
-                appCount:
-                  type: integer
-                flowCount:
-                  type: integer
-              additionalProperties: false
-          patternProperties:
-            ^[A-Fa-f\d]{24}$:
-              type: object
-              properties:
-                appCount:
-                  type: integer
-                flowCount:
-                  type: integer
-                orgName:
-                  $ref: '#/components/schemas/common/name'
-                orgIconColor:
-                  $ref: '#/components/schemas/common/color'
-              additionalProperties: false
-          additionalProperties: false
-    instanceCustomNodePatch:
-      title: Instance Custom Node Patch
-      description: Schema for the body of a Instance Custom Node modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        shortDescription:
-          $ref: '#/components/schemas/common/shortString'
-        iconData:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/iconData'
-        docsUrl:
-          $ref: '#/components/schemas/common/shortString'
-        category:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/category'
-        minimumAgentVersion:
-          $ref: '#/components/schemas/common/version'
-        triggers:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/triggers'
-        nodes:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/nodes'
-        customNodeConfig:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/customNodeConfig'
-        customNodeSupports:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/customNodeSupports'
-      additionalProperties:
-        oneOf:
-        - type: array
-          maxItems: 0
-        - type: string
-          maxLength: 1024
-        - type: boolean
-      maxProperties: 25
-    instanceCustomNodePost:
-      title: Instance Custom Node Post
-      description: Schema for the body of a Instance Custom Node creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        shortDescription:
-          $ref: '#/components/schemas/common/shortString'
-        iconData:
-          $ref: '#/components/schemas/flowPost/properties/iconData'
-        docsUrl:
-          $ref: '#/components/schemas/common/shortString'
-        category:
-          $ref: '#/components/schemas/flowPost/properties/category'
-        minimumAgentVersion:
-          $ref: '#/components/schemas/common/version'
-        triggers:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/common/triggers/basic'
-            - $ref: '#/components/schemas/common/triggers/virtualButton'
-        nodes:
-          $ref: '#/components/schemas/flow/properties/nodes'
-        customNodeConfig:
-          $ref: '#/components/schemas/flow/properties/customNodeConfig'
-        customNodeSupports:
-          type: array
-          maxItems: 1
-          items:
-            type: string
-            enum:
-            - cloud
-            - edge
-      additionalProperties:
-        oneOf:
-        - type: array
-          maxItems: 0
-        - type: string
-          maxLength: 1024
-        - type: boolean
-      maxProperties: 25
-      required:
-      - name
-      - triggers
-      - nodes
-    instanceCustomNodes:
-      title: Instance Custom Nodes
-      description: Schema for a collection of Custom Nodes within an instance
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instanceCustomNode'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-    instanceMember:
-      title: Instance Member
-      description: Schema for an Instance member
-      type: object
-      properties:
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        userId:
-          $ref: '#/components/schemas/common/objectId'
-        email:
-          $ref: '#/components/schemas/common/email'
-        firstName:
-          $ref: '#/components/schemas/common/reqMedStr'
-        lastName:
-          $ref: '#/components/schemas/common/optMedStr'
-        role:
-          $ref: '#/components/schemas/common/instanceRole'
-        avatarUrl:
-          $ref: '#/components/schemas/common/url'
-        twoFactorAuthEnabled:
-          type: boolean
-        ssoLinked:
-          type: boolean
-      additionalProperties: false
-    instanceMemberPatch:
-      title: Instance Member Patch
-      description: Schema for an Instance member modification request
-      type: object
-      properties:
-        role:
-          $ref: '#/components/schemas/common/instanceRole'
-      additionalProperties: false
-      required:
-      - role
-    instanceMemberPost:
-      title: Instance Member Post
-      description: Schema for an Instance member creation request
-      type: object
-      properties:
-        userId:
-          $ref: '#/components/schemas/common/objectId'
-        email:
-          $ref: '#/components/schemas/common/email'
-        role:
-          $ref: '#/components/schemas/common/instanceRole'
-      additionalProperties: false
-      anyOf:
-      - required:
-        - email
-        - role
-      - required:
-        - userId
-        - role
-    instanceMembers:
-      title: Instance Members
-      description: Schema for a collection of Instance members
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instanceMember'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        count:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-    instanceOrg:
-      title: Instance Organization
-      description: Schema for the body of an Organization owned by an instance
-      type: object
-      properties:
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        name:
-          $ref: '#/components/schemas/org/properties/name'
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        description:
-          $ref: '#/components/schemas/org/properties/description'
-        iconColor:
-          $ref: '#/components/schemas/org/properties/iconColor'
-        limits:
-          $ref: '#/components/schemas/org/properties/limits'
-        summary:
-          $ref: '#/components/schemas/org/properties/summary'
-        whitelistedEmailDomains:
-          $ref: '#/components/schemas/org/properties/whitelistedEmailDomains'
-        auditLogEnabled:
-          type: boolean
-        disabledAt:
-          $ref: '#/components/schemas/org/properties/disabledAt'
-        isReadOnly:
-          type: boolean
-        tags:
-          $ref: '#/components/schemas/common/tagsRequired'
-        referralId:
-          $ref: '#/components/schemas/common/optMedStr'
-        mfaMode:
-          $ref: '#/components/schemas/common/mfaMode'
-        banner:
-          $ref: '#/components/schemas/org/properties/banner'
-        planId:
-          $ref: '#/components/schemas/org/properties/planId'
-        customerId:
-          $ref: '#/components/schemas/common/optMedStr'
-        subscriptionId:
-          $ref: '#/components/schemas/common/optMedStr'
-        billingEmail:
-          $ref: '#/components/schemas/org/properties/billingEmail'
-        subscriptionStatus:
-          $ref: '#/components/schemas/org/properties/subscriptionStatus'
-        currentPeriodStart:
-          $ref: '#/components/schemas/org/properties/currentPeriodStart'
-        currentPeriodEnd:
-          $ref: '#/components/schemas/org/properties/currentPeriodEnd'
-      additionalProperties: false
-      required:
-      - name
-    instanceOrgMember:
-      title: Instance Org Member
-      description: Schema for an Instance Organization member
-      type: object
-      properties:
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
-        userId:
-          $ref: '#/components/schemas/common/objectId'
-        email:
-          $ref: '#/components/schemas/common/email'
-        firstName:
-          $ref: '#/components/schemas/common/reqMedStr'
-        lastName:
-          $ref: '#/components/schemas/common/optMedStr'
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        avatarUrl:
-          $ref: '#/components/schemas/common/url'
-        twoFactorAuthEnabled:
-          type: boolean
-        ssoLinked:
-          type: boolean
-      additionalProperties: false
-    instanceOrgMemberPatch:
-      title: Instance Org Member Patch
-      description: Schema for an Instance Organization member modification request
-      type: object
-      properties:
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        applicationRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        dashboardRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-      additionalProperties: false
-    instanceOrgMemberPost:
-      title: Instance Org Member Post
-      description: Schema for an Instance Organization member creation request
-      oneOf:
-      - type: object
-        properties:
-          userId:
-            $ref: '#/components/schemas/common/objectId'
-          role:
-            $ref: '#/components/schemas/common/orgRole'
-          applicationRoles:
-            $ref: '#/components/schemas/common/resourceRoles'
-          dashboardRoles:
-            $ref: '#/components/schemas/common/resourceRoles'
-        additionalProperties: false
-        required:
-        - userId
-        - role
-      - type: object
-        properties:
-          email:
-            $ref: '#/components/schemas/common/email'
-          role:
-            $ref: '#/components/schemas/common/orgRole'
-          applicationRoles:
-            $ref: '#/components/schemas/common/resourceRoles'
-          dashboardRoles:
-            $ref: '#/components/schemas/common/resourceRoles'
-          disallowTransfer:
-            type: boolean
-        additionalProperties: false
-        required:
-        - email
-        - role
-    instanceOrgMembers:
-      title: Instance Organization Members
-      description: Schema for a collection of Organization members within an instance
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instanceOrgMembers'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
-        count:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-    instanceOrgPatch:
-      title: Instance Owned Organization Patch
-      description: Schema for the body of an Organization modification request within an instance
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/org/properties/name'
-        description:
-          $ref: '#/components/schemas/org/properties/description'
-        iconColor:
-          $ref: '#/components/schemas/org/properties/iconColor'
-        limits:
-          $ref: '#/components/schemas/instanceOrgPost/properties/limits'
-        whitelistedEmailDomains:
-          $ref: '#/components/schemas/org/properties/whitelistedEmailDomains'
-        auditLogEnabled:
-          type: boolean
-        disabledAt:
-          $ref: '#/components/schemas/instanceOrgPost/properties/disabledAt'
-        isReadOnly:
-          type: boolean
-        tags:
-          $ref: '#/components/schemas/common/tagsRequired'
-        referralId:
-          $ref: '#/components/schemas/common/optMedStr'
-        mfaMode:
-          $ref: '#/components/schemas/common/mfaMode'
-        banner:
-          $ref: '#/components/schemas/org/properties/banner'
-      additionalProperties: false
-    instanceOrgPost:
-      title: Instance Owned Organization Post
-      description: Schema for the body of an Organization creation request within an instance
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/org/properties/name'
-        description:
-          $ref: '#/components/schemas/org/properties/description'
-        iconColor:
-          $ref: '#/components/schemas/org/properties/iconColor'
-        limits:
-          $ref: '#/components/schemas/common/orgLimits'
-        members:
-          type: array
-          maxItems: '10'
-          items:
-            $ref: '#/components/schemas/instanceOrgMemberPost'
-        whitelistedEmailDomains:
-          $ref: '#/components/schemas/org/properties/whitelistedEmailDomains'
-        auditLogEnabled:
-          type: boolean
-        disabledAt:
-          oneOf:
-          - $ref: '#/components/schemas/common/date'
-          - type: boolean
-        isReadOnly:
-          type: boolean
-        tags:
-          $ref: '#/components/schemas/common/tagsRequired'
-        referralId:
-          $ref: '#/components/schemas/common/optMedStr'
-        mfaMode:
-          $ref: '#/components/schemas/common/mfaMode'
-        banner:
-          $ref: '#/components/schemas/org/properties/banner'
-      additionalProperties: false
-      required:
-      - name
-    instanceOrgs:
-      title: Instance Organizations
-      description: Schema for a collection of Organizations within an instance
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instanceOrg'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-    instancePatch:
-      title: Instance Patch
-      description: Schema for instance patch request
-      type: object
-      properties:
-        reportConfigs:
-          $ref: '#/components/schemas/instance/properties/reportConfigs'
-        orgDefaultLimitConfig:
-          $ref: '#/components/schemas/common/orgLimits'
-        mfaMode:
-          $ref: '#/components/schemas/common/mfaMode'
-      additionalProperties: false
-    instanceReportOptionsPost:
-      title: Instance Report Options Post
-      description: Schema for the body of a instance report request
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/common/email'
-        callbackUrl:
-          $ref: '#/components/schemas/common/url'
-        resourceGroupBy:
-          type: string
-          enum:
-          - application
-          - organization
-        dateGroupBy:
-          type: string
-          enum:
-          - day
-          - month
-        includeSandbox:
-          type: boolean
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-      additionalProperties: false
-    instanceSandbox:
-      title: Instance Sandbox User
-      description: Schema for information about a sandbox user within an instance domain
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        instanceSandboxId:
-          $ref: '#/components/schemas/common/objectId'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        permanentDeletion:
-          $ref: '#/components/schemas/common/date'
-        dataDeletion:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        lastSuccessfulLogin:
-          $ref: '#/components/schemas/common/date'
-        lastFailedLogin:
-          $ref: '#/components/schemas/common/date'
-        failedLoginCount:
-          type: number
-        passwordLastUpdated:
-          $ref: '#/components/schemas/common/date'
-        email:
-          $ref: '#/components/schemas/common/email'
-        firstName:
-          $ref: '#/components/schemas/common/reqMedStr'
-        lastName:
-          $ref: '#/components/schemas/common/optMedStr'
-        companyName:
-          $ref: '#/components/schemas/common/optMedStr'
-        title:
-          $ref: '#/components/schemas/common/optMedStr'
-        phoneNumber:
-          $ref: '#/components/schemas/common/optMedStr'
-        location:
-          $ref: '#/components/schemas/common/optMedStr'
-        url:
-          $ref: '#/components/schemas/common/optMedStr'
-        tokenCutoff:
-          $ref: '#/components/schemas/common/date'
-        emailVerified:
-          type: boolean
-        needsToVerifyEmail:
-          type: boolean
-        twoFactorAuthEnabled:
-          type: boolean
-        fullName:
-          type: string
-        githubName:
-          type: string
-        avatarUrl:
-          $ref: '#/components/schemas/common/url'
-        limits:
-          $ref: '#/components/schemas/me/properties/limits'
-        summary:
-          $ref: '#/components/schemas/me/properties/summary'
-        currentPeriodStart:
-          $ref: '#/components/schemas/common/date'
-        currentPeriodEnd:
-          $ref: '#/components/schemas/common/date'
-        ssoLinked:
-          type: boolean
-        orgs:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                $ref: '#/components/schemas/common/objectId'
-              iconColor:
-                $ref: '#/components/schemas/common/color'
-              name:
-                $ref: '#/components/schemas/common/name'
-    instanceSandboxes:
-      title: Instance Sandboxes
-      description: Schema for a collection of instance associated sandboxes
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instanceSandbox'
-        count:
-          type: integer
-        limit:
-          type: integer
-        startingAfterId:
-          $ref: '#/components/schemas/common/objectId'
-        endingBeforeId:
-          $ref: '#/components/schemas/common/objectId'
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        hasMore:
-          type: boolean
-    instances:
-      title: Instances
-      description: Schema for a collection of Instances
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instance'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-    jobEnqueuedResult:
-      title: Job Enqueued API Result
-      description: Schema for the result of a job being queued
-      type: object
-      properties:
-        jobQueued:
-          type: boolean
-          enum:
-          - true
-        jobId:
-          type: string
-          maxLength: 21
-        success:
-          type: boolean
-          enum:
-          - true
-    notebookMinuteCounts:
-      title: Notebook Minute Counts
-      description: Schema for the result of a notebook minute counts request
-      type: object
-      properties:
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        counts:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              minutes:
-                type: integer
-              completed:
-                type: integer
-              canceled:
-                type: integer
-              errored:
-                type: integer
-              timeout:
-                type: integer
-    notificationRule:
-      title: Notification Rule
-      description: Schema for a single notification rule
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        notificationRuleId:
-          $ref: '#/components/schemas/common/objectId'
-        ownerId:
-          $ref: '#/components/schemas/common/objectId'
-        ownerType:
-          type: string
-          enum:
-          - instance
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        createdById:
-          $ref: '#/components/schemas/common/objectId'
-        createdByType:
-          type: string
-          enum:
-          - apiToken
-          - user
-        lastUpdatedById:
-          $ref: '#/components/schemas/common/objectId'
-        lastUpdatedByType:
-          type: string
-          enum:
-          - apiToken
-          - user
-        targetType:
-          type: string
-          enum:
-          - organization
-        targetQueryJson:
-          type: string
-          maxLength: 8192
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        enabled:
-          type: boolean
-        callbackUrl:
-          $ref: '#/components/schemas/common/url'
-        emailConfig:
-          type: object
-          properties:
-            subjectTemplate:
-              $ref: '#/components/schemas/common/reqMedStr'
-            bodyTemplate:
-              $ref: '#/components/schemas/common/description'
-            sendToTarget:
-              type: string
-              enum:
-              - admins
-              - members
-              - none
-            sendToOwner:
-              type: string
-              enum:
-              - admins
-              - members
-              - none
-            sendToAddresses:
-              type: array
-              maxItems: 10
-              items:
-                $ref: '#/components/schemas/common/email'
-          required:
-          - subjectTemplate
-          - bodyTemplate
-          additionalProperties: false
-        ruleConfig:
-          type: object
-          properties:
-            ruleType:
-              type: string
-              enum:
-              - payloadUsage
-              - notebookMinuteUsage
-            thresholdType:
-              type: string
-              enum:
-              - percentOfLimit
-            threshold:
-              type: number
-              minimum: 0
-              maximum: 1000
-            maxFrequency:
-              type: string
-              enum:
-              - billingCycle
-              - daily
-          required:
-          - ruleType
-          - thresholdType
-          - threshold
-          additionalProperties: false
-    notificationRuleDeliveryLogs:
-      title: Notification Rule Delivery Logs
-      description: Schema for a set of Notification Rule delivery logs
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/common/objectId'
-          notificationRuleDeliveryId:
-            $ref: '#/components/schemas/common/objectId'
-          notificationRuleId:
-            $ref: '#/components/schemas/common/objectId'
-          ownerId:
-            $ref: '#/components/schemas/common/objectId'
-          ownerType:
-            type: string
-            enum:
-            - instance
-          requestedById:
-            $ref: '#/components/schemas/common/objectId'
-          requestedByType:
-            type: string
-            enum:
-            - user
-            - apiToken
-            - system
-          sentAt:
-            $ref: '#/components/schemas/common/date'
-          targetType:
-            type: string
-            enum:
-            - organization
-          targetId:
-            $ref: '#/components/schemas/common/objectId'
-          targetName:
-            $ref: '#/components/schemas/common/name'
-          callbackUrl:
-            $ref: '#/components/schemas/common/url'
-          email:
-            type: object
-            properties:
-              subject:
-                type: string
-              body:
-                type: string
-              addresses:
-                type: array
-                items:
-                  $ref: '#/components/schemas/common/email'
-          evaluation:
-            type: object
-            properties:
-              value:
-                type: number
-              limit:
-                type: number
-              ruleType:
-                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/ruleType'
-              thresholdType:
-                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/thresholdType'
-              threshold:
-                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/threshold'
-              maxFrequency:
-                type: string
-                enum:
-                - billingCycle
-                - daily
-                - unlimited
-    notificationRuleEvaluationOptions:
-      title: Notification Rule Evaluation Options
-      description: Schema for evaluation options for a notification rule
-      type: object
-      properties:
-        ignoreFrequencyCheck:
-          type: boolean
-      additionalProperties: false
-    notificationRulePatch:
-      title: Notification Rule Patch
-      description: Schema for the body of a notification rule modification request
-      type: object
-      properties:
-        targetQueryJson:
-          $ref: '#/components/schemas/notificationRule/properties/targetQueryJson'
-        name:
-          $ref: '#/components/schemas/notificationRule/properties/name'
-        description:
-          $ref: '#/components/schemas/notificationRule/properties/description'
-        enabled:
-          $ref: '#/components/schemas/notificationRule/properties/enabled'
-        callbackUrl:
-          oneOf:
-          - $ref: '#/components/schemas/notificationRule/properties/callbackUrl'
-          - type: 'null'
-          - type: string
-            enum:
-            - ''
-        emailConfig:
-          oneOf:
-          - $ref: '#/components/schemas/notificationRule/properties/emailConfig'
-          - type: 'null'
-        ruleConfig:
-          $ref: '#/components/schemas/notificationRule/properties/ruleConfig'
-      additionalProperties: false
-    notificationRulePost:
-      title: Notification Rule Post
-      description: Schema for the body of a notification rule creation request
-      type: object
-      properties:
-        targetType:
-          $ref: '#/components/schemas/notificationRule/properties/targetType'
-        targetQueryJson:
-          $ref: '#/components/schemas/notificationRule/properties/targetQueryJson'
-        name:
-          $ref: '#/components/schemas/notificationRule/properties/name'
-        description:
-          $ref: '#/components/schemas/notificationRule/properties/description'
-        enabled:
-          $ref: '#/components/schemas/notificationRule/properties/enabled'
-        callbackUrl:
-          oneOf:
-          - $ref: '#/components/schemas/notificationRule/properties/callbackUrl'
-          - type: 'null'
-          - type: string
-            enum:
-            - ''
-        emailConfig:
-          oneOf:
-          - $ref: '#/components/schemas/notificationRule/properties/emailConfig'
-          - type: 'null'
-        ruleConfig:
-          $ref: '#/components/schemas/notificationRule/properties/ruleConfig'
-      additionalProperties: false
-      required:
-      - targetType
-      - targetQueryJson
-      - name
-      - ruleConfig
-    notificationRules:
-      title: Notification Rules
-      description: Schema for a collection of notification rules
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/notificationRule'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        ownerId:
-          $ref: '#/components/schemas/common/objectId'
-        ownerType:
-          type: string
-          enum:
-          - instance
     org:
       title: Organization
       description: Schema for a single Organization
@@ -4073,6 +2783,32 @@ components:
               - warning
               - critical
           additionalProperties: false
+    instanceReportOptionsPost:
+      title: Instance Report Options Post
+      description: Schema for the body of a instance report request
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+        resourceGroupBy:
+          type: string
+          enum:
+          - application
+          - organization
+        dateGroupBy:
+          type: string
+          enum:
+          - day
+          - month
+        includeSandbox:
+          type: boolean
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+      additionalProperties: false
     orgInvite:
       title: Organization Invitation
       description: Schema for a pending invitation to an Organization
@@ -4096,6 +2832,516 @@ components:
           type: boolean
         disallowTransfer:
           type: boolean
+    notificationRule:
+      title: Notification Rule
+      description: Schema for a single notification rule
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        notificationRuleId:
+          $ref: '#/components/schemas/common/objectId'
+        ownerId:
+          $ref: '#/components/schemas/common/objectId'
+        ownerType:
+          type: string
+          enum:
+          - instance
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          type: string
+          enum:
+          - apiToken
+          - user
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          type: string
+          enum:
+          - apiToken
+          - user
+        targetType:
+          type: string
+          enum:
+          - organization
+        targetQueryJson:
+          type: string
+          maxLength: 8192
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        enabled:
+          type: boolean
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+        emailConfig:
+          type: object
+          properties:
+            subjectTemplate:
+              $ref: '#/components/schemas/common/reqMedStr'
+            bodyTemplate:
+              $ref: '#/components/schemas/common/description'
+            sendToTarget:
+              type: string
+              enum:
+              - admins
+              - members
+              - none
+            sendToOwner:
+              type: string
+              enum:
+              - admins
+              - members
+              - none
+            sendToAddresses:
+              type: array
+              maxItems: 10
+              items:
+                $ref: '#/components/schemas/common/email'
+          required:
+          - subjectTemplate
+          - bodyTemplate
+          additionalProperties: false
+        ruleConfig:
+          type: object
+          properties:
+            ruleType:
+              type: string
+              enum:
+              - payloadUsage
+              - notebookMinuteUsage
+            thresholdType:
+              type: string
+              enum:
+              - percentOfLimit
+            threshold:
+              type: number
+              minimum: 0
+              maximum: 1000
+            maxFrequency:
+              type: string
+              enum:
+              - billingCycle
+              - daily
+          required:
+          - ruleType
+          - thresholdType
+          - threshold
+          additionalProperties: false
+    instanceCustomNodePost:
+      title: Instance Custom Node Post
+      description: Schema for the body of a Instance Custom Node creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        shortDescription:
+          $ref: '#/components/schemas/common/shortString'
+        iconData:
+          $ref: '#/components/schemas/flowPost/properties/iconData'
+        docsUrl:
+          $ref: '#/components/schemas/common/shortString'
+        category:
+          $ref: '#/components/schemas/flowPost/properties/category'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        triggers:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/common/triggers/basic'
+            - $ref: '#/components/schemas/common/triggers/virtualButton'
+        nodes:
+          $ref: '#/components/schemas/flow/properties/nodes'
+        customNodeConfig:
+          $ref: '#/components/schemas/flow/properties/customNodeConfig'
+        customNodeSupports:
+          type: array
+          maxItems: 1
+          items:
+            type: string
+            enum:
+            - cloud
+            - edge
+      additionalProperties:
+        oneOf:
+        - type: array
+          maxItems: 0
+        - type: string
+          maxLength: 1024
+        - type: boolean
+      maxProperties: 25
+      required:
+      - name
+      - triggers
+      - nodes
+    instanceOrgMembers:
+      title: Instance Organization Members
+      description: Schema for a collection of Organization members within an instance
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceOrgMembers'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+        count:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    notificationRuleEvaluationOptions:
+      title: Notification Rule Evaluation Options
+      description: Schema for evaluation options for a notification rule
+      type: object
+      properties:
+        ignoreFrequencyCheck:
+          type: boolean
+      additionalProperties: false
+    instanceOrgPost:
+      title: Instance Owned Organization Post
+      description: Schema for the body of an Organization creation request within an instance
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/org/properties/name'
+        description:
+          $ref: '#/components/schemas/org/properties/description'
+        iconColor:
+          $ref: '#/components/schemas/org/properties/iconColor'
+        limits:
+          $ref: '#/components/schemas/common/orgLimits'
+        members:
+          type: array
+          maxItems: '10'
+          items:
+            $ref: '#/components/schemas/instanceOrgMemberPost'
+        whitelistedEmailDomains:
+          $ref: '#/components/schemas/org/properties/whitelistedEmailDomains'
+        auditLogEnabled:
+          type: boolean
+        disabledAt:
+          oneOf:
+          - $ref: '#/components/schemas/common/date'
+          - type: boolean
+        isReadOnly:
+          type: boolean
+        tags:
+          $ref: '#/components/schemas/common/tagsRequired'
+        referralId:
+          $ref: '#/components/schemas/common/optMedStr'
+        mfaMode:
+          $ref: '#/components/schemas/common/mfaMode'
+        banner:
+          $ref: '#/components/schemas/org/properties/banner'
+      additionalProperties: false
+      required:
+      - name
+    orgInvitePost:
+      title: Organization Invitation Post
+      description: Schema for the body of a request to send an invitation
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        applicationRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        dashboardRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        disallowTransfer:
+          type: boolean
+      additionalProperties: false
+      required:
+      - email
+      - role
+    instanceOrgs:
+      title: Instance Organizations
+      description: Schema for a collection of Organizations within an instance
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceOrg'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    instanceMemberPatch:
+      title: Instance Member Patch
+      description: Schema for an Instance member modification request
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/common/instanceRole'
+      additionalProperties: false
+      required:
+      - role
+    instanceAuditLogs:
+      title: Instance Audit Logs
+      description: Schema for a collection of Instance Audit Logs
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceAuditLogs'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+    instanceMember:
+      title: Instance Member
+      description: Schema for an Instance member
+      type: object
+      properties:
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        userId:
+          $ref: '#/components/schemas/common/objectId'
+        email:
+          $ref: '#/components/schemas/common/email'
+        firstName:
+          $ref: '#/components/schemas/common/reqMedStr'
+        lastName:
+          $ref: '#/components/schemas/common/optMedStr'
+        role:
+          $ref: '#/components/schemas/common/instanceRole'
+        avatarUrl:
+          $ref: '#/components/schemas/common/url'
+        twoFactorAuthEnabled:
+          type: boolean
+        ssoLinked:
+          type: boolean
+      additionalProperties: false
+    notificationRuleDeliveryLogs:
+      title: Notification Rule Delivery Logs
+      description: Schema for a set of Notification Rule delivery logs
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          notificationRuleDeliveryId:
+            $ref: '#/components/schemas/common/objectId'
+          notificationRuleId:
+            $ref: '#/components/schemas/common/objectId'
+          ownerId:
+            $ref: '#/components/schemas/common/objectId'
+          ownerType:
+            type: string
+            enum:
+            - instance
+          requestedById:
+            $ref: '#/components/schemas/common/objectId'
+          requestedByType:
+            type: string
+            enum:
+            - user
+            - apiToken
+            - system
+          sentAt:
+            $ref: '#/components/schemas/common/date'
+          targetType:
+            type: string
+            enum:
+            - organization
+          targetId:
+            $ref: '#/components/schemas/common/objectId'
+          targetName:
+            $ref: '#/components/schemas/common/name'
+          callbackUrl:
+            $ref: '#/components/schemas/common/url'
+          email:
+            type: object
+            properties:
+              subject:
+                type: string
+              body:
+                type: string
+              addresses:
+                type: array
+                items:
+                  $ref: '#/components/schemas/common/email'
+          evaluation:
+            type: object
+            properties:
+              value:
+                type: number
+              limit:
+                type: number
+              ruleType:
+                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/ruleType'
+              thresholdType:
+                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/thresholdType'
+              threshold:
+                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/threshold'
+              maxFrequency:
+                type: string
+                enum:
+                - billingCycle
+                - daily
+                - unlimited
+    instanceMembers:
+      title: Instance Members
+      description: Schema for a collection of Instance members
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceMember'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        count:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    instanceMemberPost:
+      title: Instance Member Post
+      description: Schema for an Instance member creation request
+      type: object
+      properties:
+        userId:
+          $ref: '#/components/schemas/common/objectId'
+        email:
+          $ref: '#/components/schemas/common/email'
+        role:
+          $ref: '#/components/schemas/common/instanceRole'
+      additionalProperties: false
+      anyOf:
+      - required:
+        - email
+        - role
+      - required:
+        - userId
+        - role
+    instanceOrgPatch:
+      title: Instance Owned Organization Patch
+      description: Schema for the body of an Organization modification request within an instance
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/org/properties/name'
+        description:
+          $ref: '#/components/schemas/org/properties/description'
+        iconColor:
+          $ref: '#/components/schemas/org/properties/iconColor'
+        limits:
+          $ref: '#/components/schemas/instanceOrgPost/properties/limits'
+        whitelistedEmailDomains:
+          $ref: '#/components/schemas/org/properties/whitelistedEmailDomains'
+        auditLogEnabled:
+          type: boolean
+        disabledAt:
+          $ref: '#/components/schemas/instanceOrgPost/properties/disabledAt'
+        isReadOnly:
+          type: boolean
+        tags:
+          $ref: '#/components/schemas/common/tagsRequired'
+        referralId:
+          $ref: '#/components/schemas/common/optMedStr'
+        mfaMode:
+          $ref: '#/components/schemas/common/mfaMode'
+        banner:
+          $ref: '#/components/schemas/org/properties/banner'
+      additionalProperties: false
+    instanceCustomNodePatch:
+      title: Instance Custom Node Patch
+      description: Schema for the body of a Instance Custom Node modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        shortDescription:
+          $ref: '#/components/schemas/common/shortString'
+        iconData:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/iconData'
+        docsUrl:
+          $ref: '#/components/schemas/common/shortString'
+        category:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/category'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        triggers:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/triggers'
+        nodes:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/nodes'
+        customNodeConfig:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/customNodeConfig'
+        customNodeSupports:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/customNodeSupports'
+      additionalProperties:
+        oneOf:
+        - type: array
+          maxItems: 0
+        - type: string
+          maxLength: 1024
+        - type: boolean
+      maxProperties: 25
+    orgRoleInfo:
+      title: Organization Role Info
+      description: Schema for an Organization member's role info
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        applicationRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        dashboardRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+      additionalProperties: false
     orgInviteCollection:
       title: Instance Organization Invitations
       description: Schema for an collection of pending invitations to an Instance Organization
@@ -4119,40 +3365,239 @@ components:
           type: string
         sortDirection:
           $ref: '#/components/schemas/common/sortDirection'
-    orgInvitePost:
-      title: Organization Invitation Post
-      description: Schema for the body of a request to send an invitation
+    instanceOrg:
+      title: Instance Organization
+      description: Schema for the body of an Organization owned by an instance
       type: object
       properties:
-        email:
-          $ref: '#/components/schemas/common/email'
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        applicationRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        dashboardRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        disallowTransfer:
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        name:
+          $ref: '#/components/schemas/org/properties/name'
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        description:
+          $ref: '#/components/schemas/org/properties/description'
+        iconColor:
+          $ref: '#/components/schemas/org/properties/iconColor'
+        limits:
+          $ref: '#/components/schemas/org/properties/limits'
+        summary:
+          $ref: '#/components/schemas/org/properties/summary'
+        whitelistedEmailDomains:
+          $ref: '#/components/schemas/org/properties/whitelistedEmailDomains'
+        auditLogEnabled:
           type: boolean
+        disabledAt:
+          $ref: '#/components/schemas/org/properties/disabledAt'
+        isReadOnly:
+          type: boolean
+        tags:
+          $ref: '#/components/schemas/common/tagsRequired'
+        referralId:
+          $ref: '#/components/schemas/common/optMedStr'
+        mfaMode:
+          $ref: '#/components/schemas/common/mfaMode'
+        banner:
+          $ref: '#/components/schemas/org/properties/banner'
+        planId:
+          $ref: '#/components/schemas/org/properties/planId'
+        customerId:
+          $ref: '#/components/schemas/common/optMedStr'
+        subscriptionId:
+          $ref: '#/components/schemas/common/optMedStr'
+        billingEmail:
+          $ref: '#/components/schemas/org/properties/billingEmail'
+        subscriptionStatus:
+          $ref: '#/components/schemas/org/properties/subscriptionStatus'
+        currentPeriodStart:
+          $ref: '#/components/schemas/org/properties/currentPeriodStart'
+        currentPeriodEnd:
+          $ref: '#/components/schemas/org/properties/currentPeriodEnd'
       additionalProperties: false
       required:
-      - email
-      - role
-    orgRoleInfo:
-      title: Organization Role Info
-      description: Schema for an Organization member's role info
+      - name
+    instance:
+      title: Instance
+      description: Schema for a single Instance
       type: object
       properties:
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        applicationRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        dashboardRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
+        name:
+          $ref: '#/components/schemas/common/name'
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        allowAuditLogging:
+          type: boolean
+        reportConfigs:
+          type: array
+          maxItems: 10
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                maxLength: 48
+              cron:
+                type: string
+                maxLength: 255
+              timezone:
+                type: string
+                maxLength: 255
+              emails:
+                type: array
+                maxItems: 10
+                items:
+                  $ref: '#/components/schemas/common/email'
+              callbackUrl:
+                $ref: '#/components/schemas/common/url'
+              resourceGroupBy:
+                $ref: '#/components/schemas/instanceReportOptionsPost/properties/resourceGroupBy'
+              dateGroupBy:
+                $ref: '#/components/schemas/instanceReportOptionsPost/properties/dateGroupBy'
+              periods:
+                type: integer
+                minimum: 1
+                maximum: 90
+              includeSandbox:
+                type: boolean
+            required:
+            - cron
+            additionalProperties: false
+        limits:
+          type: object
+          properties:
+            organization:
+              type: integer
+            instanceApiToken:
+              type: integer
+            instanceNotificationRule:
+              type: integer
+            instanceCustomNode:
+              type: integer
+            apitoken:
+              type: integer
+            application:
+              type: integer
+            applicationcertificate:
+              type: integer
+            applicationcertificateauthority:
+              type: integer
+            applicationkey:
+              type: integer
+            credential:
+              type: integer
+            dashboard:
+              type: integer
+            datatable:
+              type: integer
+            device:
+              type: integer
+            devicerecipe:
+              type: integer
+            experiencedomain:
+              type: integer
+            experienceendpoint:
+              type: integer
+            experiencegroup:
+              type: integer
+            experienceslug:
+              type: integer
+            experienceuser:
+              type: integer
+            experienceversion:
+              type: integer
+            experienceview:
+              type: integer
+            file:
+              type: integer
+            flow:
+              type: integer
+            integration:
+              type: integer
+            notebook:
+              type: integer
+            privatefile:
+              type: integer
+            resourcejob:
+              type: integer
+            webhook:
+              type: integer
+            dataTTL:
+              type: integer
+            member:
+              type: integer
+            payload:
+              type: integer
+            storage:
+              type: integer
+            notebookMinutesPerRun:
+              type: integer
+            notebookMinutesPerMonth:
+              type: integer
+            notebookInParallel:
+              type: integer
+            experienceFlowSlots:
+              type: integer
+            applicationFlowSlots:
+              type: integer
+            systemInterval:
+              type: integer
+          additionalProperties: false
+        orgDefaultLimitConfig:
+          $ref: '#/components/schemas/common/orgLimits'
+        members:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                $ref: '#/components/schemas/common/objectId'
+              role:
+                $ref: '#/components/schemas/common/instanceRole'
+        mfaMode:
+          $ref: '#/components/schemas/common/mfaMode'
+    notificationRulePatch:
+      title: Notification Rule Patch
+      description: Schema for the body of a notification rule modification request
+      type: object
+      properties:
+        targetQueryJson:
+          $ref: '#/components/schemas/notificationRule/properties/targetQueryJson'
+        name:
+          $ref: '#/components/schemas/notificationRule/properties/name'
+        description:
+          $ref: '#/components/schemas/notificationRule/properties/description'
+        enabled:
+          $ref: '#/components/schemas/notificationRule/properties/enabled'
+        callbackUrl:
+          oneOf:
+          - $ref: '#/components/schemas/notificationRule/properties/callbackUrl'
+          - type: 'null'
+          - type: string
+            enum:
+            - ''
+        emailConfig:
+          oneOf:
+          - $ref: '#/components/schemas/notificationRule/properties/emailConfig'
+          - type: 'null'
+        ruleConfig:
+          $ref: '#/components/schemas/notificationRule/properties/ruleConfig'
       additionalProperties: false
-    payloadCountsBreakdown:
-      title: Payload Counts Breakdown
-      description: Schema for the result of a payload counts breakdown request
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
       type: object
       properties:
         start:
@@ -4166,8 +3611,226 @@ components:
             properties:
               date:
                 $ref: '#/components/schemas/common/date'
-              value:
+              minutes:
                 type: integer
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+    instanceCustomNode:
+      title: Instance Custom Node
+      description: Schema for a single Instance Custom Node
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        instanceCustomNodeId:
+          $ref: '#/components/schemas/common/objectId'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          type: string
+          enum:
+          - apiToken
+          - user
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          type: string
+          enum:
+          - apiToken
+          - user
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        shortDescription:
+          $ref: '#/components/schemas/common/shortString'
+        iconData:
+          $ref: '#/components/schemas/common/imageDataUri'
+        docsUrl:
+          $ref: '#/components/schemas/common/shortString'
+        category:
+          $ref: '#/components/schemas/flow/properties/category'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        triggers:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                $ref: '#/components/schemas/common/optMedStr'
+              type:
+                type: string
+                enum:
+                - customNodeStart
+              config:
+                type: object
+                additionalProperties: false
+              meta:
+                type: object
+                properties:
+                  category:
+                    type: string
+                    enum:
+                    - trigger
+                  name:
+                    type: string
+                    enum:
+                    - customNodeStart
+                  label:
+                    $ref: '#/components/schemas/common/name'
+                  x:
+                    type: number
+                  y:
+                    type: number
+                  uiId:
+                    type: string
+                    maxLength: 48
+                  description:
+                    $ref: '#/components/schemas/common/description'
+                additionalProperties: false
+              outputIds:
+                $ref: '#/components/schemas/common/outputIds'
+            required:
+            - type
+            additionalProperties: false
+          maxItems: 1
+        nodes:
+          $ref: '#/components/schemas/flow/properties/nodes'
+        customNodeConfig:
+          $ref: '#/components/schemas/flow/properties/customNodeConfig'
+        customNodeSupports:
+          type: array
+          maxItems: 1
+          items:
+            type: string
+            enum:
+            - cloud
+            - edge
+        sourceApplicationId:
+          $ref: '#/components/schemas/common/objectId'
+        sourceFlowId:
+          $ref: '#/components/schemas/common/objectId'
+        sourceFlowVersion:
+          $ref: '#/components/schemas/common/name'
+        stats:
+          type: object
+          properties:
+            errorCount:
+              type: integer
+            runCount:
+              type: integer
+          additionalProperties: false
+        usage:
+          type: object
+          properties:
+            sandbox:
+              type: object
+              properties:
+                appCount:
+                  type: integer
+                flowCount:
+                  type: integer
+              additionalProperties: false
+          patternProperties:
+            ^[A-Fa-f\d]{24}$:
+              type: object
+              properties:
+                appCount:
+                  type: integer
+                flowCount:
+                  type: integer
+                orgName:
+                  $ref: '#/components/schemas/common/name'
+                orgIconColor:
+                  $ref: '#/components/schemas/common/color'
+              additionalProperties: false
+          additionalProperties: false
+    instancePatch:
+      title: Instance Patch
+      description: Schema for instance patch request
+      type: object
+      properties:
+        reportConfigs:
+          $ref: '#/components/schemas/instance/properties/reportConfigs'
+        orgDefaultLimitConfig:
+          $ref: '#/components/schemas/common/orgLimits'
+        mfaMode:
+          $ref: '#/components/schemas/common/mfaMode'
+      additionalProperties: false
+    notificationRules:
+      title: Notification Rules
+      description: Schema for a collection of notification rules
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/notificationRule'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        ownerId:
+          $ref: '#/components/schemas/common/objectId'
+        ownerType:
+          type: string
+          enum:
+          - instance
+    apiTokenPost:
+      title: API Token Post
+      description: Schema for the body of an API Token creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        expirationDate:
+          $ref: '#/components/schemas/common/date'
+        scope:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/common/userApiScope'
+        status:
+          $ref: '#/components/schemas/apiToken/properties/status'
+      additionalProperties: false
+      required:
+      - name
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
     payloadStats:
       title: Payload Stats
       description: Schema for the result of a payload stats request
@@ -4268,12 +3931,446 @@ components:
           patternProperties:
             .*:
               type: number
-    success:
-      title: Success
-      description: Schema for reporting a successful operation
+    instanceSandboxes:
+      title: Instance Sandboxes
+      description: Schema for a collection of instance associated sandboxes
       type: object
       properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceSandbox'
+        count:
+          type: integer
+        limit:
+          type: integer
+        startingAfterId:
+          $ref: '#/components/schemas/common/objectId'
+        endingBeforeId:
+          $ref: '#/components/schemas/common/objectId'
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        hasMore:
+          type: boolean
+    instanceOrgMember:
+      title: Instance Org Member
+      description: Schema for an Instance Organization member
+      type: object
+      properties:
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+        userId:
+          $ref: '#/components/schemas/common/objectId'
+        email:
+          $ref: '#/components/schemas/common/email'
+        firstName:
+          $ref: '#/components/schemas/common/reqMedStr'
+        lastName:
+          $ref: '#/components/schemas/common/optMedStr'
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        avatarUrl:
+          $ref: '#/components/schemas/common/url'
+        twoFactorAuthEnabled:
+          type: boolean
+        ssoLinked:
+          type: boolean
+      additionalProperties: false
+    flowErrors:
+      title: Workflow Errors
+      description: Workflow run error information
+      type: object
+      properties:
+        flowVersion:
+          $ref: '#/components/schemas/common/name'
+        flowVersionId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        limit:
+          type: number
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              time:
+                $ref: '#/components/schemas/common/date'
+              deviceId:
+                $ref: '#/components/schemas/common/objectId'
+              deviceName:
+                $ref: '#/components/schemas/common/name'
+              flowVersion:
+                $ref: '#/components/schemas/common/name'
+              flowVersionId:
+                $ref: '#/components/schemas/common/objectId'
+              nodeId:
+                type: string
+              nodeLabel:
+                type: string
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    instanceAuditLog:
+      title: Instance Audit Log
+      description: Schema for a single Instance Audit Log entry
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        instanceAuditLogId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        primaryTargetId:
+          $ref: '#/components/schemas/common/objectId'
+        primaryTargetType:
+          type: string
+          enum:
+          - Organization
+          - ApiToken
+          - User
+          - InstanceCustomNode
+          - NotificationRule
+        primaryTargetName:
+          $ref: '#/components/schemas/common/optMedStr'
+        secondaryTargetId:
+          $ref: '#/components/schemas/common/objectId'
+        secondaryTargetType:
+          type: string
+          enum:
+          - OrgInvite
+          - ApiToken
+        secondaryTargetName:
+          $ref: '#/components/schemas/common/optMedStr'
+        actorId:
+          $ref: '#/components/schemas/common/objectId'
+        actorType:
+          type: string
+          enum:
+          - User
+          - ApiToken
+        actorName:
+          $ref: '#/components/schemas/common/optMedStr'
+        requestResource:
+          $ref: '#/components/schemas/common/optMedStr'
+        requestAction:
+          $ref: '#/components/schemas/common/optMedStr'
+        requestQueryParams:
+          type: object
+        requestBody:
+          type: object
+        requestPathParams:
+          type: object
+        responseBody:
+          type: object
+        responseStatus:
+          $ref: '#/components/schemas/common/responseCode'
+    notificationRulePost:
+      title: Notification Rule Post
+      description: Schema for the body of a notification rule creation request
+      type: object
+      properties:
+        targetType:
+          $ref: '#/components/schemas/notificationRule/properties/targetType'
+        targetQueryJson:
+          $ref: '#/components/schemas/notificationRule/properties/targetQueryJson'
+        name:
+          $ref: '#/components/schemas/notificationRule/properties/name'
+        description:
+          $ref: '#/components/schemas/notificationRule/properties/description'
+        enabled:
+          $ref: '#/components/schemas/notificationRule/properties/enabled'
+        callbackUrl:
+          oneOf:
+          - $ref: '#/components/schemas/notificationRule/properties/callbackUrl'
+          - type: 'null'
+          - type: string
+            enum:
+            - ''
+        emailConfig:
+          oneOf:
+          - $ref: '#/components/schemas/notificationRule/properties/emailConfig'
+          - type: 'null'
+        ruleConfig:
+          $ref: '#/components/schemas/notificationRule/properties/ruleConfig'
+      additionalProperties: false
+      required:
+      - targetType
+      - targetQueryJson
+      - name
+      - ruleConfig
+    instanceCustomNodes:
+      title: Instance Custom Nodes
+      description: Schema for a collection of Custom Nodes within an instance
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceCustomNode'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    apiToken:
+      title: API Token
+      description: Schema for a single API Token
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        apiTokenId:
+          $ref: '#/components/schemas/common/objectId'
+        ownerId:
+          $ref: '#/components/schemas/common/objectId'
+        ownerType:
+          type: string
+          enum:
+          - application
+          - user
+        creatorId:
+          $ref: '#/components/schemas/common/objectId'
+        creatorType:
+          type: string
+          enum:
+          - apiToken
+          - user
+          - flow
+        creatorName:
+          $ref: '#/components/schemas/common/optMedStr'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        expirationDate:
+          $ref: '#/components/schemas/common/date'
+        scope:
+          type: array
+          items:
+            $ref: '#/components/schemas/common/reqMedStr'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        token:
+          $ref: '#/components/schemas/common/token'
+    instanceSandbox:
+      title: Instance Sandbox User
+      description: Schema for information about a sandbox user within an instance domain
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        instanceSandboxId:
+          $ref: '#/components/schemas/common/objectId'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        permanentDeletion:
+          $ref: '#/components/schemas/common/date'
+        dataDeletion:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        lastSuccessfulLogin:
+          $ref: '#/components/schemas/common/date'
+        lastFailedLogin:
+          $ref: '#/components/schemas/common/date'
+        failedLoginCount:
+          type: number
+        passwordLastUpdated:
+          $ref: '#/components/schemas/common/date'
+        email:
+          $ref: '#/components/schemas/common/email'
+        firstName:
+          $ref: '#/components/schemas/common/reqMedStr'
+        lastName:
+          $ref: '#/components/schemas/common/optMedStr'
+        companyName:
+          $ref: '#/components/schemas/common/optMedStr'
+        title:
+          $ref: '#/components/schemas/common/optMedStr'
+        phoneNumber:
+          $ref: '#/components/schemas/common/optMedStr'
+        location:
+          $ref: '#/components/schemas/common/optMedStr'
+        url:
+          $ref: '#/components/schemas/common/optMedStr'
+        tokenCutoff:
+          $ref: '#/components/schemas/common/date'
+        emailVerified:
+          type: boolean
+        needsToVerifyEmail:
+          type: boolean
+        twoFactorAuthEnabled:
+          type: boolean
+        fullName:
+          type: string
+        githubName:
+          type: string
+        avatarUrl:
+          $ref: '#/components/schemas/common/url'
+        limits:
+          $ref: '#/components/schemas/me/properties/limits'
+        summary:
+          $ref: '#/components/schemas/me/properties/summary'
+        currentPeriodStart:
+          $ref: '#/components/schemas/common/date'
+        currentPeriodEnd:
+          $ref: '#/components/schemas/common/date'
+        ssoLinked:
+          type: boolean
+        orgs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/common/objectId'
+              iconColor:
+                $ref: '#/components/schemas/common/color'
+              name:
+                $ref: '#/components/schemas/common/name'
+    instanceOrgMemberPost:
+      title: Instance Org Member Post
+      description: Schema for an Instance Organization member creation request
+      oneOf:
+      - type: object
+        properties:
+          userId:
+            $ref: '#/components/schemas/common/objectId'
+          role:
+            $ref: '#/components/schemas/common/orgRole'
+          applicationRoles:
+            $ref: '#/components/schemas/common/resourceRoles'
+          dashboardRoles:
+            $ref: '#/components/schemas/common/resourceRoles'
+        additionalProperties: false
+        required:
+        - userId
+        - role
+      - type: object
+        properties:
+          email:
+            $ref: '#/components/schemas/common/email'
+          role:
+            $ref: '#/components/schemas/common/orgRole'
+          applicationRoles:
+            $ref: '#/components/schemas/common/resourceRoles'
+          dashboardRoles:
+            $ref: '#/components/schemas/common/resourceRoles'
+          disallowTransfer:
+            type: boolean
+        additionalProperties: false
+        required:
+        - email
+        - role
+    instanceOrgMemberPatch:
+      title: Instance Org Member Patch
+      description: Schema for an Instance Organization member modification request
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        applicationRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        dashboardRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+      additionalProperties: false
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    instances:
+      title: Instances
+      description: Schema for a collection of Instances
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instance'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
         success:
           type: boolean
           enum:
           - true
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
