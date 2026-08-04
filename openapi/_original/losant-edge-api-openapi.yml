@@ -1,0 +1,760 @@
+openapi: 3.0.3
+info:
+  title: Losant Edge and Embedded Compute API
+  version: 1.29.4
+  description: Manage Edge Compute deployments to Linux gateways and Embedded Edge Agent (EEA) deployments to microcontrollers,
+    including release management and edge workflow distribution. Derived from the Losant Platform API (Bravado/Swagger 2)
+    at https://api.losant.com/.
+  contact:
+    name: Losant Support
+    url: https://www.losant.com/contact
+    email: hello@losant.com
+  license:
+    name: Proprietary
+    url: https://www.losant.com/legal
+  x-source: https://api.losant.com/
+  x-publisher: Losant IoT, Inc.
+servers:
+- url: https://api.losant.com
+  description: Losant Platform API (US multi-tenant cloud)
+tags:
+- name: Edge and Embedded Compute
+  description: Edge and Embedded Compute resources on the Losant Platform.
+security:
+- BearerAuth: []
+paths:
+  /applications/{applicationId}/edge/deployments/{edgeDeploymentId}:
+    get:
+      summary: Retrieves Information on an Edge Deployment
+      tags:
+      - Edge and Embedded Compute
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: edgeDeploymentId
+        in: path
+        description: ID associated with the edge deployment
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Edge deployment information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/edgeDeployment'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if edge deployment was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/edge/deployments:
+    get:
+      summary: Returns the Edge Deployments for an Application
+      tags:
+      - Edge and Embedded Compute
+      parameters:
+      - &id001
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: creationDate
+        schema:
+          type: string
+          enum:
+          - id
+          - deviceId
+          - flowId
+          - desiredVersion
+          - currentVersion
+          - creationDate
+          - lastUpdated
+          default: lastUpdated
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: deviceId
+        in: query
+        description: Filter deployments to the given Device ID
+        required: false
+        example: 575ecf887ae143cd83dc4aa2
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: version
+        in: query
+        description: Filter deployments to the given Workflow Version (matches against both current and desired)
+        required: false
+        example: myFlowVersion
+        schema:
+          type: string
+      - name: filterEmpty
+        in: query
+        description: Filter out deployments where both the current and desired version are null.
+        required: false
+        example: true
+      - name: flowId
+        in: query
+        description: Filter deployments to the given Workflow ID
+        required: false
+        example: 575ed18f7ae143cd83dc4aa6
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Collection of edge deployments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/edgeDeployments'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Replace Deployments of an Edge Workflow Version with a New Version. New Version Can Be Blank, if Removal Is
+        Desired.
+      tags:
+      - Edge and Embedded Compute
+      parameters:
+      - *id001
+      requestBody:
+        description: Deployment replacement information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edgeDeploymentReplace'
+      responses:
+        '201':
+          description: If deployment replacement has been initiated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/embedded/deployments/{embeddedDeploymentId}:
+    get:
+      summary: Retrieves Information on an Embedded Deployment
+      tags:
+      - Edge and Embedded Compute
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: embeddedDeploymentId
+        in: path
+        description: ID associated with the embedded deployment
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Embedded deployment information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/embeddedDeployment'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if embedded deployment was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/embedded/deployments:
+    get:
+      summary: Returns the Embedded Deployments for an Application
+      tags:
+      - Edge and Embedded Compute
+      parameters:
+      - &id002
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: creationDate
+        schema:
+          type: string
+          enum:
+          - id
+          - creationDate
+          - lastUpdated
+          default: lastUpdated
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 1000
+      - name: deviceId
+        in: query
+        description: Filter deployments to the given Device ID
+        required: false
+        example: 575ecf887ae143cd83dc4aa2
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: version
+        in: query
+        description: Filter deployments to the given Workflow Version (matches against both current and desired)
+        required: false
+        example: myFlowVersion
+        schema:
+          type: string
+      - name: flowId
+        in: query
+        description: Filter deployments to the given Workflow ID
+        required: false
+        example: 575ed18f7ae143cd83dc4aa6
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Collection of embedded deployments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/embeddedDeployments'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application or device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Request an Export of the Compiled WASM Files for a Current Deployment
+      tags:
+      - Edge and Embedded Compute
+      parameters:
+      - *id002
+      requestBody:
+        description: Export options for embedded deployment
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/embeddedDeploymentExport'
+      responses:
+        '202':
+          description: If generation of export was successfully started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if deployment was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
+        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+  schemas:
+    edgeDeployment:
+      title: Edge Deployment
+      description: Schema for a single deployment of an edge workflow to an edge device
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        edgeDeploymentId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceName:
+          $ref: '#/components/schemas/common/name'
+        deviceConnectionInfo:
+          type: object
+          properties:
+            time:
+              $ref: '#/components/schemas/common/date'
+            connected:
+              enum:
+              - 1
+              - 0
+              - null
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        flowName:
+          $ref: '#/components/schemas/common/name'
+        flowClass:
+          type: string
+          enum:
+          - edge
+          - customNode
+        fileName:
+          $ref: '#/components/schemas/common/safeFileName'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        currentVersion:
+          $ref: '#/components/schemas/common/nullableName'
+        desiredVersion:
+          $ref: '#/components/schemas/common/nullableName'
+        currentEtag:
+          $ref: '#/components/schemas/common/name'
+        desiredEtag:
+          $ref: '#/components/schemas/common/name'
+        logs:
+          type: array
+          items:
+            type: object
+            properties:
+              sourceType:
+                $ref: '#/components/schemas/common/sourceType'
+              sourceId:
+                $ref: '#/components/schemas/common/objectId'
+              date:
+                $ref: '#/components/schemas/common/date'
+              changeType:
+                type: string
+                enum:
+                - current
+                - desired
+              newValue:
+                $ref: '#/components/schemas/common/nullableName'
+              previousValue:
+                $ref: '#/components/schemas/common/nullableName'
+              attemptedValue:
+                $ref: '#/components/schemas/common/nullableName'
+              newEtag:
+                $ref: '#/components/schemas/common/name'
+              previousEtag:
+                $ref: '#/components/schemas/common/name'
+              attemptedEtag:
+                $ref: '#/components/schemas/common/name'
+              error:
+                type: string
+    edgeDeploymentRelease:
+      title: Edge Deployment Release
+      description: Schema for deploying an edge workflow to one or more edge devices
+      type: object
+      properties:
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        version:
+          $ref: '#/components/schemas/common/nullableName'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+      additionalProperties: false
+      required:
+      - flowId
+      - version
+    edgeDeploymentRemove:
+      title: Edge Deployment Remove
+      description: Schema for removing edge deployments. Can remove a specific workflow from a specific device, can remove
+        all workflows from a specific device, or can remove a specific workflow from all devices.
+      type: object
+      properties:
+        flowId:
+          $ref: '#/components/schemas/common/nullableObjectId'
+        deviceId:
+          $ref: '#/components/schemas/common/nullableObjectId'
+      additionalProperties: false
+      required:
+      - flowId
+      - deviceId
+    edgeDeploymentReplace:
+      title: Edge Deployment Replace
+      description: Schema for replacing a deployment of a workflow version with a different workflow version
+      type: object
+      properties:
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        oldVersion:
+          $ref: '#/components/schemas/common/name'
+        newVersion:
+          $ref: '#/components/schemas/common/nullableName'
+      additionalProperties: false
+      required:
+      - flowId
+      - oldVersion
+      - newVersion
+    edgeDeployments:
+      title: Edge Deployments
+      description: Schema for a collection of Edge Deployments
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/edgeDeployment'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        version:
+          $ref: '#/components/schemas/common/name'
+    embeddedDeployment:
+      title: Embedded Deployment
+      description: Schema for a single deployment of embedded workflows to embedded devices
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        embeddedDeploymentId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceName:
+          $ref: '#/components/schemas/common/name'
+        deviceConnectionInfo:
+          type: object
+          properties:
+            time:
+              $ref: '#/components/schemas/common/date'
+            connected:
+              enum:
+              - 1
+              - 0
+              - null
+        flows:
+          type: object
+          patternProperties:
+            ^[A-Fa-f\d]{24}$:
+              type: object
+              properties:
+                flowName:
+                  $ref: '#/components/schemas/common/name'
+                currentVersion:
+                  $ref: '#/components/schemas/common/nullableName'
+                desiredVersion:
+                  $ref: '#/components/schemas/common/nullableName'
+          additionalProperties: false
+        currentBundleVersion:
+          $ref: '#/components/schemas/common/nullableName'
+        desiredBundleVersion:
+          $ref: '#/components/schemas/common/nullableName'
+        unknownBundle:
+          type: boolean
+        logs:
+          type: array
+          items:
+            type: object
+            properties:
+              sourceType:
+                $ref: '#/components/schemas/common/sourceType'
+              sourceId:
+                $ref: '#/components/schemas/common/objectId'
+              date:
+                $ref: '#/components/schemas/common/date'
+              changeType:
+                type: string
+                enum:
+                - current
+                - desired
+              updateType:
+                type: string
+                enum:
+                - newFlow
+                - replaceFlow
+                - removeFlow
+                - clear
+                - globals
+                - device
+                - unknownBundle
+                - knownBundle
+              updateFlowId:
+                $ref: '#/components/schemas/common/objectId'
+              desiredVersion:
+                $ref: '#/components/schemas/common/nullableName'
+              newBundle:
+                $ref: '#/components/schemas/common/nullableName'
+              attemptedBundle:
+                $ref: '#/components/schemas/common/nullableName'
+              error:
+                type: string
+    embeddedDeploymentExport:
+      title: Embedded Deployment Export
+      description: Schema for the body of a compiled embedded deployment files request
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+        embeddedDeploymentId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        traceLevel:
+          enum:
+          - 0
+          - 1
+          - 2
+        disableDebugMessage:
+          type: boolean
+        stackSize:
+          type: integer
+          minimum: 1600
+          maximum: 2147483648
+        debugSymbols:
+          type: boolean
+        exportMemory:
+          type: boolean
+        gzip:
+          type: boolean
+      additionalProperties: false
+    embeddedDeploymentRelease:
+      title: Embedded Deployment Release
+      description: Schema for deploying an embedded workflow to one or more edge devices
+      type: object
+      properties:
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        version:
+          $ref: '#/components/schemas/common/nullableName'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        releaseTag:
+          $ref: '#/components/schemas/common/nullableName'
+      additionalProperties: false
+      required:
+      - flowId
+      - version
+    embeddedDeploymentRemove:
+      title: Embedded Deployment Remove
+      description: Schema for removing embedded deployments. Can remove a specific workflow from a specific device, can remove
+        all workflows from a specific device, or can remove a specific workflow from all devices.
+      type: object
+      properties:
+        flowId:
+          $ref: '#/components/schemas/common/nullableObjectId'
+        deviceId:
+          $ref: '#/components/schemas/common/nullableObjectId'
+      additionalProperties: false
+      required:
+      - flowId
+      - deviceId
+    embeddedDeploymentReplace:
+      title: Embedded Deployment Replace
+      description: Schema for replacing a deployment of a workflow version with a different workflow version
+      type: object
+      properties:
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        oldVersion:
+          $ref: '#/components/schemas/common/name'
+        newVersion:
+          $ref: '#/components/schemas/common/nullableName'
+      additionalProperties: false
+      required:
+      - flowId
+      - oldVersion
+      - newVersion
+    embeddedDeployments:
+      title: Embedded Deployments
+      description: Schema for a collection of Embedded Deployments
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/embeddedDeployment'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        version:
+          $ref: '#/components/schemas/common/name'
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
+        success:
+          type: boolean
+          enum:
+          - true
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true

@@ -1,0 +1,854 @@
+openapi: 3.0.3
+info:
+  title: Losant Notebooks API
+  version: 1.29.4
+  description: Trigger and manage Jupyter-style Losant Notebook executions for batch analytics, ML, and reporting against
+    historical IoT data. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  contact:
+    name: Losant Support
+    url: https://www.losant.com/contact
+    email: hello@losant.com
+  license:
+    name: Proprietary
+    url: https://www.losant.com/legal
+  x-source: https://api.losant.com/
+  x-publisher: Losant IoT, Inc.
+servers:
+- url: https://api.losant.com
+  description: Losant Platform API (US multi-tenant cloud)
+tags:
+- name: Notebooks
+  description: Notebooks resources on the Losant Platform.
+security:
+- BearerAuth: []
+paths:
+  /applications/{applicationId}/notebooks/{notebookId}:
+    get:
+      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for This Notebook
+      tags:
+      - Notebooks
+      parameters:
+      - &id001
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - &id002
+        name: notebookId
+        in: path
+        description: ID associated with the notebook
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: start
+        in: query
+        description: Start of range for notebook execution query (ms since epoch)
+        required: false
+        example: 0
+        schema:
+          type: string
+      - name: end
+        in: query
+        description: End of range for notebook execution query (ms since epoch)
+        required: false
+        example: 1465790400000
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Notebook usage information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebookMinuteCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About a Notebook
+      tags:
+      - Notebooks
+      parameters:
+      - *id001
+      - *id002
+      requestBody:
+        description: Object containing new properties of the notebook
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/notebookPatch'
+      responses:
+        '200':
+          description: Updated notebook information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebook'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes a Notebook
+      tags:
+      - Notebooks
+      parameters:
+      - *id001
+      - *id002
+      responses:
+        '200':
+          description: If notebook was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Marks a Specific Notebook Execution for Cancellation
+      tags:
+      - Notebooks
+      parameters:
+      - *id001
+      - *id002
+      - name: executionId
+        in: query
+        description: The ID of the execution to cancel
+        required: true
+        example: 632e18632f59592e773a4153
+        schema:
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If the execution was successfully marked for cancellation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if execution was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/notebooks:
+    get:
+      summary: Returns the Notebooks for an Application
+      tags:
+      - Notebooks
+      parameters:
+      - &id003
+        name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          - lastExecutionRequested
+          default: name
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my*notebook
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection of notebooks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebooks'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a New Notebook for an Application
+      tags:
+      - Notebooks
+      parameters:
+      - *id003
+      requestBody:
+        description: New notebook information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/notebookPost'
+      responses:
+        '201':
+          description: Successfully created notebook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebook'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
+        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
+        success:
+          type: boolean
+          enum:
+          - true
+    notebook:
+      title: Notebook
+      description: Schema for a single Notebook
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        notebookId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        name:
+          $ref: '#/components/schemas/common/reqMedStr'
+        description:
+          $ref: '#/components/schemas/common/description'
+        jupyterFileName:
+          $ref: '#/components/schemas/common/reqMedStr'
+        jupyterFileUrl:
+          type: string
+        imageVersion:
+          $ref: '#/components/schemas/common/notebookImageVersion'
+        inputs:
+          type: array
+          items:
+            maxItems: 100
+            oneOf:
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - deviceData
+                fileName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                deviceTags:
+                  $ref: '#/components/schemas/common/templateTags'
+                deviceIds:
+                  $ref: '#/components/schemas/common/templatesOrObjectIds'
+                queryJson:
+                  $ref: '#/components/schemas/common/queryJson'
+                attributes:
+                  type: array
+                  maxItems: 100
+                  items:
+                    $ref: '#/components/schemas/common/key'
+                start:
+                  type: number
+                end:
+                  type: number
+              required:
+              - inputType
+              - fileName
+              - start
+              - end
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - deviceConnectionHistory
+                fileName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                deviceTags:
+                  $ref: '#/components/schemas/common/templateTags'
+                deviceIds:
+                  $ref: '#/components/schemas/common/templatesOrObjectIds'
+                queryJson:
+                  $ref: '#/components/schemas/common/queryJson'
+                start:
+                  type: number
+                end:
+                  type: number
+              required:
+              - inputType
+              - fileName
+              - start
+              - end
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - deviceMetadata
+                fileName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                deviceTags:
+                  $ref: '#/components/schemas/common/templateTags'
+                deviceIds:
+                  $ref: '#/components/schemas/common/templatesOrObjectIds'
+                queryJson:
+                  $ref: '#/components/schemas/common/queryJson'
+                format:
+                  type: string
+                  enum:
+                  - csv
+                  - json
+                  default: csv
+              required:
+              - inputType
+              - fileName
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - dataTable
+                fileName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                dataTableId:
+                  $ref: '#/components/schemas/common/templateOrObjectId'
+                queryJson:
+                  $ref: '#/components/schemas/common/queryJson'
+              required:
+              - inputType
+              - fileName
+              - dataTableId
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - eventData
+                fileName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                queryJson:
+                  $ref: '#/components/schemas/common/queryJson'
+                format:
+                  type: string
+                  enum:
+                  - csv
+                  - json
+                  default: csv
+              required:
+              - inputType
+              - fileName
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - externalUrl
+                fileName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                sourceUrl:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+              required:
+              - inputType
+              - fileName
+              - sourceUrl
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - applicationFile
+                fileName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                filePath:
+                  type: string
+                  minLength: 1
+                  maxLength: 2048
+                private:
+                  type: boolean
+              required:
+              - inputType
+              - fileName
+              - filePath
+              additionalProperties: false
+        outputs:
+          type: array
+          items:
+            maxItems: 100
+            oneOf:
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - dataTable
+                fileName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                dataTableId:
+                  $ref: '#/components/schemas/common/templateOrObjectId'
+                createMissingColumns:
+                  type: boolean
+                truncateExistingTable:
+                  type: boolean
+              required:
+              - fileName
+              - outputType
+              - dataTableId
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - file
+                fileName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                destinationDirectoryTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationFileNameTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationPrivate:
+                  type: boolean
+              required:
+              - fileName
+              - outputType
+              - destinationFileNameTemplate
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - directory
+                directoryName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                destinationDirectoryTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationPrivate:
+                  type: boolean
+              required:
+              - directoryName
+              - outputType
+              - destinationDirectoryTemplate
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - executionResult
+                fileName:
+                  type: string
+                  enum:
+                  - result.html
+                  - result.pdf
+                  - result.ipynb
+                  - result.error.log
+                  - result.log
+                destinationDirectoryTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationFileNameTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationPrivate:
+                  type: boolean
+              required:
+              - fileName
+              - outputType
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - temporaryUrl
+                fileName:
+                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+              required:
+              - fileName
+              - outputType
+              additionalProperties: false
+        stats:
+          type: object
+          properties:
+            minutesThisPeriod:
+              type: number
+            runsThisPeriod:
+              type: number
+            errorsThisPeriod:
+              type: number
+          additionalProperties: false
+    notebookDataExportOptions:
+      title: Notebook Data Export Options
+      description: Schema for the options for a Notebook data export request
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        relativeTo:
+          $ref: '#/components/schemas/common/timeFormats'
+        templateContext:
+          type: string
+          maxLength: 32767
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+      additionalProperties: false
+    notebookExecutionLogs:
+      title: Notebook Execution Logs
+      description: Schema for a set of Notebook execution logs
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          notebookExecutionId:
+            $ref: '#/components/schemas/common/objectId'
+          notebookId:
+            $ref: '#/components/schemas/common/objectId'
+          imageVersion:
+            $ref: '#/components/schemas/common/notebookImageVersion'
+          applicationId:
+            $ref: '#/components/schemas/common/objectId'
+          status:
+            type: string
+            enum:
+            - queued
+            - inProgress
+            - completed
+            - errored
+            - timeout
+            - canceling
+            - canceled
+          executionRelativeTo:
+            $ref: '#/components/schemas/common/date'
+          maxAllowedRunMinutes:
+            type: number
+          sourceType:
+            $ref: '#/components/schemas/common/sourceType'
+          sourceId:
+            $ref: '#/components/schemas/common/objectId'
+          runQueuedAt:
+            $ref: '#/components/schemas/common/date'
+          runStartedAt:
+            $ref: '#/components/schemas/common/date'
+          inputsCompletedAt:
+            $ref: '#/components/schemas/common/date'
+          notebookCompletedAt:
+            $ref: '#/components/schemas/common/date'
+          outputsCompletedAt:
+            $ref: '#/components/schemas/common/date'
+          templateContext:
+            type: string
+            maxLength: 32767
+          inputInfo:
+            type: object
+            patternProperties:
+              .*:
+                type: object
+                properties:
+                  size:
+                    type: number
+                  url:
+                    type: string
+          outputInfo:
+            type: object
+            patternProperties:
+              .*:
+                type: object
+                properties:
+                  size:
+                    type: number
+                  url:
+                    type: string
+                  contentType:
+                    type: string
+          executionErrors:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                message:
+                  type: string
+    notebookExecutionOptions:
+      title: Notebook Execution Options
+      description: Schema for the options for a Notebook execution request
+      type: object
+      properties:
+        relativeTo:
+          $ref: '#/components/schemas/common/timeFormats'
+        templateContext:
+          type: string
+          maxLength: 32767
+        email:
+          $ref: '#/components/schemas/common/email'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+      additionalProperties: false
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                $ref: '#/components/schemas/common/date'
+              minutes:
+                type: integer
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+    notebookPatch:
+      title: Notebook Patch
+      description: Schema for the body of a Notebook modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/reqMedStr'
+        description:
+          $ref: '#/components/schemas/common/description'
+        inputs:
+          $ref: '#/components/schemas/notebook/properties/inputs'
+        outputs:
+          $ref: '#/components/schemas/notebook/properties/outputs'
+        imageVersion:
+          $ref: '#/components/schemas/common/notebookImageVersion'
+      additionalProperties: false
+    notebookPost:
+      title: Notebook Post
+      description: Schema for the body of an Notebook creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/reqMedStr'
+        description:
+          $ref: '#/components/schemas/common/description'
+        imageVersion:
+          $ref: '#/components/schemas/common/notebookImageVersion'
+        inputs:
+          $ref: '#/components/schemas/notebook/properties/inputs'
+        outputs:
+          $ref: '#/components/schemas/notebook/properties/outputs'
+      additionalProperties: false
+      required:
+      - name
+    notebooks:
+      title: Notebooks
+      description: Schema for a collection of Notebooks
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/notebook'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    successWithExecutionId:
+      title: Success With Execution ID
+      description: Schema for reporting a successful operation with a corresponding execution ID
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+        executionId:
+          $ref: '#/components/schemas/common/objectId'

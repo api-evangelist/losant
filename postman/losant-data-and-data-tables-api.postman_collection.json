@@ -1,0 +1,3221 @@
+{
+  "info": {
+    "_postman_id": "324d202a-a8e7-4b2a-955a-0d74718afab7",
+    "name": "Losant Application Data and Data Tables API",
+    "description": "Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations, files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.\n\nContact Support:\n Name: Losant Support\n Email: hello@losant.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:08:33.000Z",
+    "updatedAt": "2026-07-28T02:08:33.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-324d202a-a8e7-4b2a-955a-0d74718afab7"
+  },
+  "item": [
+    {
+      "name": "applications",
+      "item": [
+        {
+          "name": "{applicationId}",
+          "item": [
+            {
+              "name": "data-tables",
+              "item": [
+                {
+                  "name": "{dataTableId}",
+                  "item": [
+                    {
+                      "name": "rows",
+                      "item": [
+                        {
+                          "name": "{rowId}",
+                          "item": [
+                            {
+                              "name": "Retrieves the Data Table Row",
+                              "id": "6d3c80ac-6e9b-4cab-8fc8-4d2e025995ea",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "auth": {
+                                  "type": "bearer",
+                                  "bearer": [
+                                    {
+                                      "key": "token",
+                                      "value": "{{bearerToken}}",
+                                      "type": "string"
+                                    }
+                                  ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "data-tables",
+                                    ":dataTableId",
+                                    "rows",
+                                    ":rowId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "565eeaaa-eed8-4aad-ac1d-58ce68adfce8",
+                                      "key": "applicationId",
+                                      "value": "87ab423E90F63bE96389a0b7",
+                                      "description": "(Required) ID associated with the application"
+                                    },
+                                    {
+                                      "id": "da5f110e-cca7-4c02-9d7e-c5d251bc46ae",
+                                      "key": "dataTableId",
+                                      "value": "87ab423E90F63bE96389a0b7",
+                                      "description": "(Required) ID associated with the data table"
+                                    },
+                                    {
+                                      "id": "86faced7-fa7f-4a44-8206-1d77467bf3ba",
+                                      "key": "rowId",
+                                      "value": "87ab423E90F63bE96389a0b7",
+                                      "description": "(Required) ID associated with the data table row"
+                                    }
+                                  ]
+                                }
+                              },
+                              "response": [
+                                {
+                                  "id": "f3344583-ed5c-4982-8802-1b8a876798b0",
+                                  "name": "Data table row information",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "applications",
+                                        ":applicationId",
+                                        "data-tables",
+                                        ":dataTableId",
+                                        "rows",
+                                        ":rowId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "applicationId"
+                                        },
+                                        {
+                                          "key": "dataTableId"
+                                        },
+                                        {
+                                          "key": "rowId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"id\": -53908675.88850714,\n  \"createdAt\": -46650142.58596298,\n  \"updatedAt\": \"mollit eu\",\n  \"22IKwGAJMkzpmO2wTMXXhCM7N9_1A0p4mIsYWiHp88EoDginxsB3hrgMiVpLAsV0GAyCT9Fx_zKRNQe7wrobNs_0SZMP6eNKshfzeN0wEy3VgwsmgQVXHG\": 51264934.9726769\n}",
+                                  "createdAt": "2026-07-28T02:08:34.000Z",
+                                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                                  "uid": "35240-f3344583-ed5c-4982-8802-1b8a876798b0"
+                                },
+                                {
+                                  "id": "5510748d-9170-4920-8bd4-905d4f089d42",
+                                  "name": "Error if malformed request",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "applications",
+                                        ":applicationId",
+                                        "data-tables",
+                                        ":dataTableId",
+                                        "rows",
+                                        ":rowId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "applicationId"
+                                        },
+                                        {
+                                          "key": "dataTableId"
+                                        },
+                                        {
+                                          "key": "rowId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T02:08:34.000Z",
+                                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                                  "uid": "35240-5510748d-9170-4920-8bd4-905d4f089d42"
+                                },
+                                {
+                                  "id": "7a994c26-b217-434d-9dc0-dbe612267e21",
+                                  "name": "Error if data table row was not found",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "applications",
+                                        ":applicationId",
+                                        "data-tables",
+                                        ":dataTableId",
+                                        "rows",
+                                        ":rowId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "applicationId"
+                                        },
+                                        {
+                                          "key": "dataTableId"
+                                        },
+                                        {
+                                          "key": "rowId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T02:08:34.000Z",
+                                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                                  "uid": "35240-7a994c26-b217-434d-9dc0-dbe612267e21"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:08:34.000Z",
+                              "updatedAt": "2026-07-28T02:08:34.000Z",
+                              "uid": "35240-6d3c80ac-6e9b-4cab-8fc8-4d2e025995ea"
+                            },
+                            {
+                              "name": "Updates the Data Table Row",
+                              "id": "a1ed75ea-233a-461f-886e-f043cbcbe883",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "auth": {
+                                  "type": "bearer",
+                                  "bearer": [
+                                    {
+                                      "key": "token",
+                                      "value": "{{bearerToken}}",
+                                      "type": "string"
+                                    }
+                                  ]
+                                },
+                                "method": "PATCH",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "data-tables",
+                                    ":dataTableId",
+                                    "rows",
+                                    ":rowId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "fbaa9dae-2d9a-44c2-862e-434dbe747778",
+                                      "key": "applicationId",
+                                      "value": "87ab423E90F63bE96389a0b7",
+                                      "description": "(Required) ID associated with the application"
+                                    },
+                                    {
+                                      "id": "d73fbfa8-c944-4442-9868-6dcfb85ad91b",
+                                      "key": "dataTableId",
+                                      "value": "87ab423E90F63bE96389a0b7",
+                                      "description": "(Required) ID associated with the data table"
+                                    },
+                                    {
+                                      "id": "c45e598b-ac7d-4af6-bb86-a37eab4d444c",
+                                      "key": "rowId",
+                                      "value": "87ab423E90F63bE96389a0b7",
+                                      "description": "(Required) ID associated with the data table row"
+                                    }
+                                  ]
+                                }
+                              },
+                              "response": [
+                                {
+                                  "id": "d5a7954c-fb08-45ac-8f29-9263ff7dfb7b",
+                                  "name": "Updated data table row information",
+                                  "originalRequest": {
+                                    "method": "PATCH",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "applications",
+                                        ":applicationId",
+                                        "data-tables",
+                                        ":dataTableId",
+                                        "rows",
+                                        ":rowId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "applicationId"
+                                        },
+                                        {
+                                          "key": "dataTableId"
+                                        },
+                                        {
+                                          "key": "rowId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"id\": -53908675.88850714,\n  \"createdAt\": -46650142.58596298,\n  \"updatedAt\": \"mollit eu\",\n  \"22IKwGAJMkzpmO2wTMXXhCM7N9_1A0p4mIsYWiHp88EoDginxsB3hrgMiVpLAsV0GAyCT9Fx_zKRNQe7wrobNs_0SZMP6eNKshfzeN0wEy3VgwsmgQVXHG\": 51264934.9726769\n}",
+                                  "createdAt": "2026-07-28T02:08:34.000Z",
+                                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                                  "uid": "35240-d5a7954c-fb08-45ac-8f29-9263ff7dfb7b"
+                                },
+                                {
+                                  "id": "9b02ff31-5844-4290-ba31-b81dff37547f",
+                                  "name": "Error if malformed request",
+                                  "originalRequest": {
+                                    "method": "PATCH",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "applications",
+                                        ":applicationId",
+                                        "data-tables",
+                                        ":dataTableId",
+                                        "rows",
+                                        ":rowId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "applicationId"
+                                        },
+                                        {
+                                          "key": "dataTableId"
+                                        },
+                                        {
+                                          "key": "rowId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T02:08:34.000Z",
+                                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                                  "uid": "35240-9b02ff31-5844-4290-ba31-b81dff37547f"
+                                },
+                                {
+                                  "id": "98db8b27-e4f7-421a-b31c-5bca2d9af5ff",
+                                  "name": "Error if data table row was not found",
+                                  "originalRequest": {
+                                    "method": "PATCH",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "applications",
+                                        ":applicationId",
+                                        "data-tables",
+                                        ":dataTableId",
+                                        "rows",
+                                        ":rowId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "applicationId"
+                                        },
+                                        {
+                                          "key": "dataTableId"
+                                        },
+                                        {
+                                          "key": "rowId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T02:08:34.000Z",
+                                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                                  "uid": "35240-98db8b27-e4f7-421a-b31c-5bca2d9af5ff"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:08:34.000Z",
+                              "updatedAt": "2026-07-28T02:08:34.000Z",
+                              "uid": "35240-a1ed75ea-233a-461f-886e-f043cbcbe883"
+                            },
+                            {
+                              "name": "Deletes a Data Table Row",
+                              "id": "5e27bf4a-70b3-484e-ae9a-d9574fece0d5",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "auth": {
+                                  "type": "bearer",
+                                  "bearer": [
+                                    {
+                                      "key": "token",
+                                      "value": "{{bearerToken}}",
+                                      "type": "string"
+                                    }
+                                  ]
+                                },
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "data-tables",
+                                    ":dataTableId",
+                                    "rows",
+                                    ":rowId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "5c3759f9-7d3d-440b-8aa0-638746a9ebfb",
+                                      "key": "applicationId",
+                                      "value": "87ab423E90F63bE96389a0b7",
+                                      "description": "(Required) ID associated with the application"
+                                    },
+                                    {
+                                      "id": "a36b311e-417d-4a62-9b35-b80ef705f153",
+                                      "key": "dataTableId",
+                                      "value": "87ab423E90F63bE96389a0b7",
+                                      "description": "(Required) ID associated with the data table"
+                                    },
+                                    {
+                                      "id": "227befa2-c280-4f41-b1c4-3e4bc00ed51f",
+                                      "key": "rowId",
+                                      "value": "87ab423E90F63bE96389a0b7",
+                                      "description": "(Required) ID associated with the data table row"
+                                    }
+                                  ]
+                                }
+                              },
+                              "response": [
+                                {
+                                  "id": "2b7fdba5-195c-4a2e-b459-4747752a3688",
+                                  "name": "If data table row was successfully deleted",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "applications",
+                                        ":applicationId",
+                                        "data-tables",
+                                        ":dataTableId",
+                                        "rows",
+                                        ":rowId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "applicationId"
+                                        },
+                                        {
+                                          "key": "dataTableId"
+                                        },
+                                        {
+                                          "key": "rowId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"success\": true\n}",
+                                  "createdAt": "2026-07-28T02:08:34.000Z",
+                                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                                  "uid": "35240-2b7fdba5-195c-4a2e-b459-4747752a3688"
+                                },
+                                {
+                                  "id": "585d7bfb-5cc9-4eb0-a8cf-3ca60fd935a7",
+                                  "name": "Error if malformed request",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "applications",
+                                        ":applicationId",
+                                        "data-tables",
+                                        ":dataTableId",
+                                        "rows",
+                                        ":rowId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "applicationId"
+                                        },
+                                        {
+                                          "key": "dataTableId"
+                                        },
+                                        {
+                                          "key": "rowId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T02:08:34.000Z",
+                                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                                  "uid": "35240-585d7bfb-5cc9-4eb0-a8cf-3ca60fd935a7"
+                                },
+                                {
+                                  "id": "f94f48e6-e5d1-4b38-9d3d-01ca866a48fa",
+                                  "name": "Error if data table row was not found",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows/:rowId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "applications",
+                                        ":applicationId",
+                                        "data-tables",
+                                        ":dataTableId",
+                                        "rows",
+                                        ":rowId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "applicationId"
+                                        },
+                                        {
+                                          "key": "dataTableId"
+                                        },
+                                        {
+                                          "key": "rowId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T02:08:34.000Z",
+                                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                                  "uid": "35240-f94f48e6-e5d1-4b38-9d3d-01ca866a48fa"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:08:34.000Z",
+                              "updatedAt": "2026-07-28T02:08:34.000Z",
+                              "uid": "35240-5e27bf4a-70b3-484e-ae9a-d9574fece0d5"
+                            }
+                          ],
+                          "id": "83275e94-8be0-442f-9ca4-d7fe2ae6063b",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-83275e94-8be0-442f-9ca4-d7fe2ae6063b"
+                        },
+                        {
+                          "name": "Returns the Rows for a Data Table",
+                          "id": "cf7d5a78-bae7-4b5c-bcf3-3bea369672df",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows?sortColumn=<string>&sortDirection=asc&limit=1000&offset=0&includeFields=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId",
+                                "rows"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Column to sort the rows by",
+                                  "key": "sortColumn",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Direction to sort the rows by",
+                                  "key": "sortDirection",
+                                  "value": "asc"
+                                },
+                                {
+                                  "description": "How many rows to return",
+                                  "key": "limit",
+                                  "value": "1000"
+                                },
+                                {
+                                  "description": "How many rows to skip",
+                                  "key": "offset",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Comma-separated list of fields to include in resulting rows. When not provided, returns all fields.",
+                                  "key": "includeFields",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "7ccbe89f-f338-4063-bf82-0840898eb7b4",
+                                  "key": "applicationId",
+                                  "value": "87ab423E90F63bE96389a0b7",
+                                  "description": "(Required) ID associated with the application"
+                                },
+                                {
+                                  "id": "a043549e-14b5-4251-a1fc-e4ab06d0e1af",
+                                  "key": "dataTableId",
+                                  "value": "87ab423E90F63bE96389a0b7",
+                                  "description": "(Required) ID associated with the data table"
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "f070362a-0fce-4f02-89d4-b2d4367043c5",
+                              "name": "Collection of data table rows",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows?sortColumn=<string>&sortDirection=asc&limit=1000&offset=0&includeFields=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "data-tables",
+                                    ":dataTableId",
+                                    "rows"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Column to sort the rows by",
+                                      "key": "sortColumn",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Direction to sort the rows by",
+                                      "key": "sortDirection",
+                                      "value": "asc"
+                                    },
+                                    {
+                                      "description": "How many rows to return",
+                                      "key": "limit",
+                                      "value": "1000"
+                                    },
+                                    {
+                                      "description": "How many rows to skip",
+                                      "key": "offset",
+                                      "value": "0"
+                                    },
+                                    {
+                                      "description": "Comma-separated list of fields to include in resulting rows. When not provided, returns all fields.",
+                                      "key": "includeFields",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "dataTableId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"items\": [\n    {\n      \"id\": -46055525.99343454,\n      \"createdAt\": \"laborum\",\n      \"updatedAt\": true,\n      \"GHBRHeTe9MlGIaqrFQjI1G47vDq0tSinJ3eajsAeGb2uTyier-nD26TPd0NbojnpCK5O8sOQUyhweKgoKa8MHn7EA84bqB6EALu-EO3MVbHprWar4pXZ2pBe9L_9Jc05WoYZIRN0WIkUAOhT90Rh0glVwtkO63Bd8an-ASGDdmDcn9hQ_iF7OrblHIA3vM5CXoBzMAzNN6sLdO9bl-I\": null\n    },\n    {\n      \"id\": null,\n      \"createdAt\": null,\n      \"updatedAt\": 24128679.624119088,\n      \"MPuU9V-N-Dk_hwo2gsrzCyZqB2opuP0X5OP-HPwk4O2ET7y3i5Dl4oAaQpgR9uvz2ZMP39QsyMy9cbU9qPla2iCHLcvZEjm2PsIlTINsvAogzws5HBEMC3yCVt\": \"ipsum proident officia velit deserunt\"\n    }\n  ],\n  \"count\": \"<integer>\",\n  \"totalCount\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"offset\": \"<integer>\",\n  \"sortColumn\": \"<string>\",\n  \"sortDirection\": {\n    \"value\": \"reference #/components/schemas/common/sortDirection not found in the OpenAPI spec\"\n  },\n  \"dataTableId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"query\": {}\n}",
+                              "createdAt": "2026-07-28T02:08:34.000Z",
+                              "updatedAt": "2026-07-28T02:08:34.000Z",
+                              "uid": "35240-f070362a-0fce-4f02-89d4-b2d4367043c5"
+                            },
+                            {
+                              "id": "87a9be70-50bc-4ebf-a35c-55a61b625b68",
+                              "name": "Error if malformed request",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows?sortColumn=<string>&sortDirection=asc&limit=1000&offset=0&includeFields=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "data-tables",
+                                    ":dataTableId",
+                                    "rows"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Column to sort the rows by",
+                                      "key": "sortColumn",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Direction to sort the rows by",
+                                      "key": "sortDirection",
+                                      "value": "asc"
+                                    },
+                                    {
+                                      "description": "How many rows to return",
+                                      "key": "limit",
+                                      "value": "1000"
+                                    },
+                                    {
+                                      "description": "How many rows to skip",
+                                      "key": "offset",
+                                      "value": "0"
+                                    },
+                                    {
+                                      "description": "Comma-separated list of fields to include in resulting rows. When not provided, returns all fields.",
+                                      "key": "includeFields",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "dataTableId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:08:34.000Z",
+                              "updatedAt": "2026-07-28T02:08:34.000Z",
+                              "uid": "35240-87a9be70-50bc-4ebf-a35c-55a61b625b68"
+                            },
+                            {
+                              "id": "8ba2c8c6-7714-4f1b-84a2-2c9ffe71cb40",
+                              "name": "Error if data table was not found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows?sortColumn=<string>&sortDirection=asc&limit=1000&offset=0&includeFields=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "data-tables",
+                                    ":dataTableId",
+                                    "rows"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Column to sort the rows by",
+                                      "key": "sortColumn",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Direction to sort the rows by",
+                                      "key": "sortDirection",
+                                      "value": "asc"
+                                    },
+                                    {
+                                      "description": "How many rows to return",
+                                      "key": "limit",
+                                      "value": "1000"
+                                    },
+                                    {
+                                      "description": "How many rows to skip",
+                                      "key": "offset",
+                                      "value": "0"
+                                    },
+                                    {
+                                      "description": "Comma-separated list of fields to include in resulting rows. When not provided, returns all fields.",
+                                      "key": "includeFields",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "dataTableId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:08:34.000Z",
+                              "updatedAt": "2026-07-28T02:08:34.000Z",
+                              "uid": "35240-8ba2c8c6-7714-4f1b-84a2-2c9ffe71cb40"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-cf7d5a78-bae7-4b5c-bcf3-3bea369672df"
+                        },
+                        {
+                          "name": "Delete All Data in the Data Table",
+                          "id": "a2b1bb5f-34af-4606-8de5-a410a53d76b8",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId",
+                                "rows"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "164e6a7b-fd40-4f7e-ba39-bb44bd2135ee",
+                                  "key": "applicationId",
+                                  "value": "87ab423E90F63bE96389a0b7",
+                                  "description": "(Required) ID associated with the application"
+                                },
+                                {
+                                  "id": "50fabcda-9b10-480a-ae21-82affdde3c8f",
+                                  "key": "dataTableId",
+                                  "value": "87ab423E90F63bE96389a0b7",
+                                  "description": "(Required) ID associated with the data table"
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "02330b01-591e-478b-8632-dee4c9480043",
+                              "name": "If request successfully deleted **all** rows in the data table, this will **not** send workflow data table deletion triggers",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "data-tables",
+                                    ":dataTableId",
+                                    "rows"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "dataTableId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"success\": true\n}",
+                              "createdAt": "2026-07-28T02:08:34.000Z",
+                              "updatedAt": "2026-07-28T02:08:34.000Z",
+                              "uid": "35240-02330b01-591e-478b-8632-dee4c9480043"
+                            },
+                            {
+                              "id": "c38df44a-38be-4716-b718-038a0ac9b26d",
+                              "name": "Error if malformed request",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "data-tables",
+                                    ":dataTableId",
+                                    "rows"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "dataTableId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:08:34.000Z",
+                              "updatedAt": "2026-07-28T02:08:34.000Z",
+                              "uid": "35240-c38df44a-38be-4716-b718-038a0ac9b26d"
+                            },
+                            {
+                              "id": "fdf33833-63af-426d-bbe7-8cd6c0a5c4f8",
+                              "name": "Error if data table was not found",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId/rows",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "data-tables",
+                                    ":dataTableId",
+                                    "rows"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "dataTableId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:08:34.000Z",
+                              "updatedAt": "2026-07-28T02:08:34.000Z",
+                              "uid": "35240-fdf33833-63af-426d-bbe7-8cd6c0a5c4f8"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-a2b1bb5f-34af-4606-8de5-a410a53d76b8"
+                        }
+                      ],
+                      "id": "5bb058b5-b1f1-42ed-9734-70ad45c2cb3c",
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-5bb058b5-b1f1-42ed-9734-70ad45c2cb3c"
+                    },
+                    {
+                      "name": "Retrieves Information on a Data Table",
+                      "id": "323e4fb4-0b65-45f5-aed6-070617f67eca",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data-tables",
+                            ":dataTableId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "c954b763-2bbf-46b1-aadd-b2c7dbe23b20",
+                              "key": "applicationId",
+                              "value": "87ab423E90F63bE96389a0b7",
+                              "description": "(Required) ID associated with the application"
+                            },
+                            {
+                              "id": "9d01db98-b3ac-4361-a28e-7cbdbc2ecb9b",
+                              "key": "dataTableId",
+                              "value": "87ab423E90F63bE96389a0b7",
+                              "description": "(Required) ID associated with the data table"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "09258d4d-ee89-4b82-b284-454af263a300",
+                          "name": "Data table information",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"dataTableId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"columns\": [\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"boolean\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    },\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"number\",\n      \"constraint\": \"required\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-09258d4d-ee89-4b82-b284-454af263a300"
+                        },
+                        {
+                          "id": "520918c4-a182-4f30-b0b0-4e925176f983",
+                          "name": "Error if malformed request",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-520918c4-a182-4f30-b0b0-4e925176f983"
+                        },
+                        {
+                          "id": "f1ed9145-7277-470a-abc5-9f67af0975d4",
+                          "name": "Error if data table was not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-f1ed9145-7277-470a-abc5-9f67af0975d4"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-323e4fb4-0b65-45f5-aed6-070617f67eca"
+                    },
+                    {
+                      "name": "Updates Information About a Data Table",
+                      "id": "62579d51-4ea8-40c9-a4f7-8f26cb7ca7a1",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data-tables",
+                            ":dataTableId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "d95f0637-0074-4b5e-b472-b615c51d42db",
+                              "key": "applicationId",
+                              "value": "87ab423E90F63bE96389a0b7",
+                              "description": "(Required) ID associated with the application"
+                            },
+                            {
+                              "id": "6e5f7010-60e5-4ea6-adde-8594166720d3",
+                              "key": "dataTableId",
+                              "value": "87ab423E90F63bE96389a0b7",
+                              "description": "(Required) ID associated with the data table"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "53a7cd1e-b2ce-4407-936a-b402edfe8157",
+                          "name": "Updated data table information",
+                          "originalRequest": {
+                            "method": "PATCH",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"dataTableId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"columns\": [\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"boolean\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    },\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"number\",\n      \"constraint\": \"required\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-53a7cd1e-b2ce-4407-936a-b402edfe8157"
+                        },
+                        {
+                          "id": "eb179d05-d48c-46f3-a33f-099e880a32b3",
+                          "name": "Error if malformed request",
+                          "originalRequest": {
+                            "method": "PATCH",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-eb179d05-d48c-46f3-a33f-099e880a32b3"
+                        },
+                        {
+                          "id": "2e10872b-c0ea-47f9-b7a6-7d6c8c2d7ce5",
+                          "name": "Error if data table was not found",
+                          "originalRequest": {
+                            "method": "PATCH",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-2e10872b-c0ea-47f9-b7a6-7d6c8c2d7ce5"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-62579d51-4ea8-40c9-a4f7-8f26cb7ca7a1"
+                    },
+                    {
+                      "name": "Adds a New Column to This Data Table",
+                      "id": "f32d772d-d178-4d1d-abd0-1d25825ce906",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n  },\n  \"dataType\": \"string\",\n  \"constraint\": \"unique\",\n  \"defaultValue\": \"<string,number,boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data-tables",
+                            ":dataTableId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "299554dd-bbde-40ec-8334-3621ec514fd3",
+                              "key": "applicationId",
+                              "value": "87ab423E90F63bE96389a0b7",
+                              "description": "(Required) ID associated with the application"
+                            },
+                            {
+                              "id": "46905d9c-0106-4491-9b59-b5d145ea0018",
+                              "key": "dataTableId",
+                              "value": "87ab423E90F63bE96389a0b7",
+                              "description": "(Required) ID associated with the data table"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "5377c4b7-8ab4-494d-b259-9746655711b1",
+                          "name": "Updated data table information",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n  },\n  \"dataType\": \"string\",\n  \"constraint\": \"unique\",\n  \"defaultValue\": \"<string,number,boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"dataTableId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"columns\": [\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"boolean\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    },\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"number\",\n      \"constraint\": \"required\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-5377c4b7-8ab4-494d-b259-9746655711b1"
+                        },
+                        {
+                          "id": "be8dde49-5c61-4840-a811-76e123d9d851",
+                          "name": "Error if malformed request",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n  },\n  \"dataType\": \"string\",\n  \"constraint\": \"unique\",\n  \"defaultValue\": \"<string,number,boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-be8dde49-5c61-4840-a811-76e123d9d851"
+                        },
+                        {
+                          "id": "174aa896-ba75-499b-80a9-7c1ff7398768",
+                          "name": "Error if data table was not found",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n  },\n  \"dataType\": \"string\",\n  \"constraint\": \"unique\",\n  \"defaultValue\": \"<string,number,boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-174aa896-ba75-499b-80a9-7c1ff7398768"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-f32d772d-d178-4d1d-abd0-1d25825ce906"
+                    },
+                    {
+                      "name": "Deletes a Data Table",
+                      "id": "9432f169-a79f-4dd0-b5eb-36f14a85d45b",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data-tables",
+                            ":dataTableId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "c42b1f29-690e-4c8d-bc8a-512698155d16",
+                              "key": "applicationId",
+                              "value": "87ab423E90F63bE96389a0b7",
+                              "description": "(Required) ID associated with the application"
+                            },
+                            {
+                              "id": "0f74b61f-e2e2-4a07-b9d4-1397819a8f08",
+                              "key": "dataTableId",
+                              "value": "87ab423E90F63bE96389a0b7",
+                              "description": "(Required) ID associated with the data table"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "9cf0b147-6bf9-4123-8cc8-9531911e96f6",
+                          "name": "If data table was successfully deleted",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"success\": true\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-9cf0b147-6bf9-4123-8cc8-9531911e96f6"
+                        },
+                        {
+                          "id": "8035fae3-5298-4dbc-b80e-54e5b2682a48",
+                          "name": "Error if malformed request",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-8035fae3-5298-4dbc-b80e-54e5b2682a48"
+                        },
+                        {
+                          "id": "61410137-3491-4581-a427-a213cae222db",
+                          "name": "Error if data table was not found",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/data-tables/:dataTableId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "data-tables",
+                                ":dataTableId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "applicationId"
+                                },
+                                {
+                                  "key": "dataTableId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:08:34.000Z",
+                          "updatedAt": "2026-07-28T02:08:34.000Z",
+                          "uid": "35240-61410137-3491-4581-a427-a213cae222db"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-9432f169-a79f-4dd0-b5eb-36f14a85d45b"
+                    }
+                  ],
+                  "id": "808c2431-9f99-44b1-b1e9-1fe6bbf1d754",
+                  "createdAt": "2026-07-28T02:08:34.000Z",
+                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                  "uid": "35240-808c2431-9f99-44b1-b1e9-1fe6bbf1d754"
+                },
+                {
+                  "name": "Returns the Data Tables for an Application",
+                  "id": "cbcfbeb5-8c60-45ae-8a33-d314fa7195a4",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables?sortField=name&sortDirection=asc&page=0&perPage=100&filterField=name&filter=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        ":applicationId",
+                        "data-tables"
+                      ],
+                      "query": [
+                        {
+                          "description": "Field to sort the results by",
+                          "key": "sortField",
+                          "value": "name"
+                        },
+                        {
+                          "description": "Direction to sort the results by",
+                          "key": "sortDirection",
+                          "value": "asc"
+                        },
+                        {
+                          "description": "Which page of results to return",
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "description": "How many items to return per page",
+                          "key": "perPage",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Field to filter the results by. Blank or not provided means no filtering.",
+                          "key": "filterField",
+                          "value": "name"
+                        },
+                        {
+                          "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.",
+                          "key": "filter",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "7ba54294-5354-4584-9443-e97fc82c0505",
+                          "key": "applicationId",
+                          "value": "87ab423E90F63bE96389a0b7",
+                          "description": "(Required) ID associated with the application"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "743977bc-4cdb-4b4b-aeb7-b79d6545f856",
+                      "name": "Collection of data tables",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data-tables?sortField=name&sortDirection=asc&page=0&perPage=100&filterField=name&filter=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data-tables"
+                          ],
+                          "query": [
+                            {
+                              "description": "Field to sort the results by",
+                              "key": "sortField",
+                              "value": "name"
+                            },
+                            {
+                              "description": "Direction to sort the results by",
+                              "key": "sortDirection",
+                              "value": "asc"
+                            },
+                            {
+                              "description": "Which page of results to return",
+                              "key": "page",
+                              "value": "0"
+                            },
+                            {
+                              "description": "How many items to return per page",
+                              "key": "perPage",
+                              "value": "100"
+                            },
+                            {
+                              "description": "Field to filter the results by. Blank or not provided means no filtering.",
+                              "key": "filterField",
+                              "value": "name"
+                            },
+                            {
+                              "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.",
+                              "key": "filter",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "applicationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"items\": [\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"columns\": [\n        {\n          \"name\": {\n            \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n          },\n          \"dataType\": \"boolean\",\n          \"constraint\": \"required\",\n          \"defaultValue\": \"<string,number,boolean>\"\n        },\n        {\n          \"name\": {\n            \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n          },\n          \"dataType\": \"boolean\",\n          \"constraint\": \"unique\",\n          \"defaultValue\": \"<string,number,boolean>\"\n        }\n      ]\n    },\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"dataTableId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"columns\": [\n        {\n          \"name\": {\n            \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n          },\n          \"dataType\": \"boolean\",\n          \"constraint\": \"required\",\n          \"defaultValue\": \"<string,number,boolean>\"\n        },\n        {\n          \"name\": {\n            \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n          },\n          \"dataType\": \"number\",\n          \"constraint\": \"unique\",\n          \"defaultValue\": \"<string,number,boolean>\"\n        }\n      ]\n    }\n  ],\n  \"count\": \"<integer>\",\n  \"totalCount\": \"<integer>\",\n  \"perPage\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filter\": \"<string>\",\n  \"filterField\": \"<string>\",\n  \"sortField\": \"<string>\",\n  \"sortDirection\": {\n    \"value\": \"reference #/components/schemas/common/sortDirection not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  }\n}",
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-743977bc-4cdb-4b4b-aeb7-b79d6545f856"
+                    },
+                    {
+                      "id": "8a89c1db-4bfa-4e26-89d1-f3b9821dabc5",
+                      "name": "Error if malformed request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data-tables?sortField=name&sortDirection=asc&page=0&perPage=100&filterField=name&filter=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data-tables"
+                          ],
+                          "query": [
+                            {
+                              "description": "Field to sort the results by",
+                              "key": "sortField",
+                              "value": "name"
+                            },
+                            {
+                              "description": "Direction to sort the results by",
+                              "key": "sortDirection",
+                              "value": "asc"
+                            },
+                            {
+                              "description": "Which page of results to return",
+                              "key": "page",
+                              "value": "0"
+                            },
+                            {
+                              "description": "How many items to return per page",
+                              "key": "perPage",
+                              "value": "100"
+                            },
+                            {
+                              "description": "Field to filter the results by. Blank or not provided means no filtering.",
+                              "key": "filterField",
+                              "value": "name"
+                            },
+                            {
+                              "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.",
+                              "key": "filter",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "applicationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-8a89c1db-4bfa-4e26-89d1-f3b9821dabc5"
+                    },
+                    {
+                      "id": "cb0b6b1c-23c7-4401-94f7-8e41a2ee67b0",
+                      "name": "Error if application was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data-tables?sortField=name&sortDirection=asc&page=0&perPage=100&filterField=name&filter=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data-tables"
+                          ],
+                          "query": [
+                            {
+                              "description": "Field to sort the results by",
+                              "key": "sortField",
+                              "value": "name"
+                            },
+                            {
+                              "description": "Direction to sort the results by",
+                              "key": "sortDirection",
+                              "value": "asc"
+                            },
+                            {
+                              "description": "Which page of results to return",
+                              "key": "page",
+                              "value": "0"
+                            },
+                            {
+                              "description": "How many items to return per page",
+                              "key": "perPage",
+                              "value": "100"
+                            },
+                            {
+                              "description": "Field to filter the results by. Blank or not provided means no filtering.",
+                              "key": "filterField",
+                              "value": "name"
+                            },
+                            {
+                              "description": "Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.",
+                              "key": "filter",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "applicationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-cb0b6b1c-23c7-4401-94f7-8e41a2ee67b0"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:34.000Z",
+                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                  "uid": "35240-cbcfbeb5-8c60-45ae-8a33-d314fa7195a4"
+                },
+                {
+                  "name": "Create a New Data Table for an Application",
+                  "id": "b0666b88-9698-4872-87d4-041860793460",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"columns\": [\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"number\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    },\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"boolean\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/:applicationId/data-tables",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        ":applicationId",
+                        "data-tables"
+                      ],
+                      "variable": [
+                        {
+                          "id": "f4ea74fd-e528-442b-88a3-43e83dd3c8dd",
+                          "key": "applicationId",
+                          "value": "87ab423E90F63bE96389a0b7",
+                          "description": "(Required) ID associated with the application"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "1cba4063-2fcf-4ec4-be47-f163779efd93",
+                      "name": "Successfully created data table",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"columns\": [\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"number\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    },\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"boolean\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data-tables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data-tables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "applicationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"dataTableId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"columns\": [\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"boolean\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    },\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"number\",\n      \"constraint\": \"required\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-1cba4063-2fcf-4ec4-be47-f163779efd93"
+                    },
+                    {
+                      "id": "eff4c959-828e-44e4-bd4a-725253a87978",
+                      "name": "Error if malformed request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"columns\": [\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"number\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    },\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"boolean\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data-tables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data-tables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "applicationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-eff4c959-828e-44e4-bd4a-725253a87978"
+                    },
+                    {
+                      "id": "42cb2d57-f619-4597-899a-79f26736c4ff",
+                      "name": "Error if application was not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"columns\": [\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"number\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    },\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n      },\n      \"dataType\": \"boolean\",\n      \"constraint\": \"unique\",\n      \"defaultValue\": \"<string,number,boolean>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data-tables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data-tables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "applicationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-42cb2d57-f619-4597-899a-79f26736c4ff"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:34.000Z",
+                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                  "uid": "35240-b0666b88-9698-4872-87d4-041860793460"
+                }
+              ],
+              "id": "dd52c502-7597-4b9e-bffd-a14760c930a6",
+              "createdAt": "2026-07-28T02:08:34.000Z",
+              "updatedAt": "2026-07-28T02:08:34.000Z",
+              "uid": "35240-dd52c502-7597-4b9e-bffd-a14760c930a6"
+            },
+            {
+              "name": "data",
+              "item": [
+                {
+                  "name": "Creates a CSV File from a Query of Devices and Attributes Over a Time Range.",
+                  "id": "ceb61ad8-f417-49b3-ab96-13de86c24d27",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"callbackUrl\": {\n    \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n  },\n  \"deviceIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"deviceTags\": {\n    \"value\": \"reference #/components/schemas/common/tagsOptional not found in the OpenAPI spec\"\n  },\n  \"deviceQuery\": {\n    \"$and\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"$or\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"$nor\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"id\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"creationDate\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"lastUpdated\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"deletedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"name\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"deviceClass\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"gatewayId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"parentId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"ancestorId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"attributeName\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"experienceUserId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"experienceGroupId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"tags\": {\n      \"value\": \"reference #/components/schemas/common/advancedTagQueryWithOps not found in the OpenAPI spec\"\n    },\n    \"disconnectedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"connectedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"connectionStatus\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    }\n  },\n  \"attributes\": [\n    {\n      \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n    }\n  ],\n  \"start\": \"<number>\",\n  \"end\": \"<number>\",\n  \"options\": {\n    \"includeDate\": true,\n    \"includeID\": true,\n    \"includeBlobData\": false,\n    \"filePerDevice\": false\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/:applicationId/data",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        ":applicationId",
+                        "data"
+                      ],
+                      "variable": [
+                        {
+                          "id": "452878b0-e61b-48a2-9a0a-fdb699d23485",
+                          "key": "applicationId",
+                          "value": "87ab423E90F63bE96389a0b7",
+                          "description": "(Required) ID associated with the application"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "4397b56b-249f-43d2-ab88-773004f16357",
+                      "name": "If command was successfully sent",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"callbackUrl\": {\n    \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n  },\n  \"deviceIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"deviceTags\": {\n    \"value\": \"reference #/components/schemas/common/tagsOptional not found in the OpenAPI spec\"\n  },\n  \"deviceQuery\": {\n    \"$and\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"$or\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"$nor\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"id\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"creationDate\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"lastUpdated\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"deletedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"name\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"deviceClass\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"gatewayId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"parentId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"ancestorId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"attributeName\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"experienceUserId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"experienceGroupId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"tags\": {\n      \"value\": \"reference #/components/schemas/common/advancedTagQueryWithOps not found in the OpenAPI spec\"\n    },\n    \"disconnectedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"connectedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"connectionStatus\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    }\n  },\n  \"attributes\": [\n    {\n      \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n    }\n  ],\n  \"start\": \"<number>\",\n  \"end\": \"<number>\",\n  \"options\": {\n    \"includeDate\": true,\n    \"includeID\": true,\n    \"includeBlobData\": false,\n    \"filePerDevice\": false\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data"
+                          ],
+                          "variable": [
+                            {
+                              "key": "applicationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Accepted",
+                      "code": 202,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"jobQueued\": true,\n  \"jobId\": \"<string>\",\n  \"success\": true\n}",
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-4397b56b-249f-43d2-ab88-773004f16357"
+                    },
+                    {
+                      "id": "b4773975-2010-4f9d-ad33-f44b1a712328",
+                      "name": "Error if malformed request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"callbackUrl\": {\n    \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n  },\n  \"deviceIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"deviceTags\": {\n    \"value\": \"reference #/components/schemas/common/tagsOptional not found in the OpenAPI spec\"\n  },\n  \"deviceQuery\": {\n    \"$and\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"$or\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"$nor\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"id\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"creationDate\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"lastUpdated\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"deletedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"name\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"deviceClass\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"gatewayId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"parentId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"ancestorId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"attributeName\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"experienceUserId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"experienceGroupId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"tags\": {\n      \"value\": \"reference #/components/schemas/common/advancedTagQueryWithOps not found in the OpenAPI spec\"\n    },\n    \"disconnectedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"connectedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"connectionStatus\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    }\n  },\n  \"attributes\": [\n    {\n      \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n    }\n  ],\n  \"start\": \"<number>\",\n  \"end\": \"<number>\",\n  \"options\": {\n    \"includeDate\": true,\n    \"includeID\": true,\n    \"includeBlobData\": false,\n    \"filePerDevice\": false\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data"
+                          ],
+                          "variable": [
+                            {
+                              "key": "applicationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-b4773975-2010-4f9d-ad33-f44b1a712328"
+                    },
+                    {
+                      "id": "d9747a06-b208-4a19-b829-671428ce0e59",
+                      "name": "Error if application was not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"callbackUrl\": {\n    \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n  },\n  \"deviceIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"deviceTags\": {\n    \"value\": \"reference #/components/schemas/common/tagsOptional not found in the OpenAPI spec\"\n  },\n  \"deviceQuery\": {\n    \"$and\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"$or\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"$nor\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/advancedDeviceQuery detected>\"\n      }\n    ],\n    \"id\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"creationDate\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"lastUpdated\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"deletedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"name\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"deviceClass\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"gatewayId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"parentId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"ancestorId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"attributeName\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"experienceUserId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"experienceGroupId\": {\n      \"value\": \"reference #/components/schemas/common/advancedIdQuery not found in the OpenAPI spec\"\n    },\n    \"tags\": {\n      \"value\": \"reference #/components/schemas/common/advancedTagQueryWithOps not found in the OpenAPI spec\"\n    },\n    \"disconnectedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"connectedAt\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    },\n    \"connectionStatus\": {\n      \"value\": \"reference #/components/schemas/common/advancedValueQuery not found in the OpenAPI spec\"\n    }\n  },\n  \"attributes\": [\n    {\n      \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/common/key not found in the OpenAPI spec\"\n    }\n  ],\n  \"start\": \"<number>\",\n  \"end\": \"<number>\",\n  \"options\": {\n    \"includeDate\": true,\n    \"includeID\": true,\n    \"includeBlobData\": false,\n    \"filePerDevice\": false\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:applicationId/data",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":applicationId",
+                            "data"
+                          ],
+                          "variable": [
+                            {
+                              "key": "applicationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:08:34.000Z",
+                      "updatedAt": "2026-07-28T02:08:34.000Z",
+                      "uid": "35240-d9747a06-b208-4a19-b829-671428ce0e59"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:08:34.000Z",
+                  "updatedAt": "2026-07-28T02:08:34.000Z",
+                  "uid": "35240-ceb61ad8-f417-49b3-ab96-13de86c24d27"
+                }
+              ],
+              "id": "b95f766a-eac1-48b8-88e2-085d9478c5f2",
+              "createdAt": "2026-07-28T02:08:34.000Z",
+              "updatedAt": "2026-07-28T02:08:34.000Z",
+              "uid": "35240-b95f766a-eac1-48b8-88e2-085d9478c5f2"
+            }
+          ],
+          "id": "f247fb81-e9b6-4e05-a95d-1dae938e1659",
+          "createdAt": "2026-07-28T02:08:34.000Z",
+          "updatedAt": "2026-07-28T02:08:34.000Z",
+          "uid": "35240-f247fb81-e9b6-4e05-a95d-1dae938e1659"
+        }
+      ],
+      "id": "1fb0776f-3fbd-4ab4-8edf-5d315d0ecd27",
+      "createdAt": "2026-07-28T02:08:34.000Z",
+      "updatedAt": "2026-07-28T02:08:34.000Z",
+      "uid": "35240-1fb0776f-3fbd-4ab4-8edf-5d315d0ecd27"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.losant.com"
+    }
+  ]
+}
