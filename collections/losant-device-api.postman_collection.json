@@ -1,7 +1,7 @@
 {
   "item": [
     {
-      "id": "bf6ad6e6-1b6a-4ce1-9e84-d7407acf3fb2",
+      "id": "ef82cfaa-d106-4648-8f3b-61681db6ff6f",
       "name": "Device",
       "description": {
         "content": "Device resources on the Losant Platform.",
@@ -9,7 +9,7 @@
       },
       "item": [
         {
-          "id": "7c2eba5a-f549-4a39-bfba-31adbd0bedc8",
+          "id": "82170188-70e9-4f52-b333-9929be7566bb",
           "name": "Retrieves Information on a Device Attribute",
           "request": {
             "name": "Retrieves Information on a Device Attribute",
@@ -70,7 +70,7 @@
           },
           "response": [
             {
-              "id": "c60b4b47-f99c-4d9c-890a-9d504487c761",
+              "id": "22529841-59df-4f04-bfa1-7b8bf430dbe7",
               "name": "Device attribute information",
               "originalRequest": {
                 "url": {
@@ -140,7 +140,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "1984f4d8-6f78-4955-a1fc-f75844e40f74",
+              "id": "3613b9f0-d883-4a18-8d6a-096989d44d61",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -210,7 +210,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "751c5650-d528-41d9-b9f7-7d8e517c8b1e",
+              "id": "597f3566-5396-48a4-b76b-e0c0d28c03dd",
               "name": "Error if device attribute was not found",
               "originalRequest": {
                 "url": {
@@ -286,7 +286,7 @@
           }
         },
         {
-          "id": "7342440c-92a8-40ea-9d68-911f1410f410",
+          "id": "67baf0cf-2c8a-4e32-a5a9-3a9df046bfb4",
           "name": "Updates an Attribute on a Device",
           "request": {
             "name": "Updates an Attribute on a Device",
@@ -360,7 +360,7 @@
           },
           "response": [
             {
-              "id": "78b6a71e-9804-4ce6-8ba6-0467e0c9fdd6",
+              "id": "fba48f21-3a65-4718-8d65-1d58852e5775",
               "name": "Updated device attribute information",
               "originalRequest": {
                 "url": {
@@ -438,7 +438,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "a11ae228-af4b-4c6f-8114-4d6a4c4b3490",
+              "id": "664d802c-2b31-464f-af4c-4b1b0238efba",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -516,7 +516,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "447f99a4-2607-42e0-85c4-6e99ec829263",
+              "id": "17118abf-1bbf-4700-8dab-36b22351fe7e",
               "name": "Error if device attribute was not found",
               "originalRequest": {
                 "url": {
@@ -600,7 +600,7 @@
           }
         },
         {
-          "id": "7d06cfb4-7a22-406c-b569-18bcbb08f135",
+          "id": "0a95ffe1-4c04-44ba-b67c-e6a6d5fdcd84",
           "name": "Removes an Attribute from a Device",
           "request": {
             "name": "Removes an Attribute from a Device",
@@ -661,7 +661,7 @@
           },
           "response": [
             {
-              "id": "ed56f9fc-7b6e-41b1-81c6-c8f6c2cea08a",
+              "id": "d0cf879d-79f2-4096-ac74-61285c4e4922",
               "name": "If device attribute was successfully deleted",
               "originalRequest": {
                 "url": {
@@ -731,7 +731,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "5ddf100a-fe2b-48aa-859d-9b9e9783133e",
+              "id": "c2228c15-9b20-4dac-af9d-302ebc099e3d",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -801,7 +801,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "2f7e6b88-3867-4fa1-b5bd-73920c9c470c",
+              "id": "c9f1e9d8-bb4f-4c06-9cb9-54da181bf925",
               "name": "Error if device attribute was not found",
               "originalRequest": {
                 "url": {
@@ -877,7 +877,7 @@
           }
         },
         {
-          "id": "61e465db-ac66-41a6-b040-554a1702fbd4",
+          "id": "ca9f6ec0-cf4a-4880-b5ae-5f88d25fb258",
           "name": "Returns the Attributes for a Device",
           "request": {
             "name": "Returns the Attributes for a Device",
@@ -955,7 +955,7 @@
           },
           "response": [
             {
-              "id": "6a023df6-aa5a-45e3-b696-04c3f603c2bd",
+              "id": "0905bef8-0182-4929-ad79-17e564f2ef48",
               "name": "Collection of device attributes",
               "originalRequest": {
                 "url": {
@@ -1029,12 +1029,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/name not found in the OpenAPI spec\"\n      },\n      \"dataType\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/dataType not found in the OpenAPI spec\"\n      },\n      \"contentType\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/contentType not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/description not found in the OpenAPI spec\"\n      },\n      \"attributeTags\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/attributeTags not found in the OpenAPI spec\"\n      },\n      \"system\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/system not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      }\n    },\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/name not found in the OpenAPI spec\"\n      },\n      \"dataType\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/dataType not found in the OpenAPI spec\"\n      },\n      \"contentType\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/contentType not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/description not found in the OpenAPI spec\"\n      },\n      \"attributeTags\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/attributeTags not found in the OpenAPI spec\"\n      },\n      \"system\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/system not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      }\n    }\n  ],\n  \"count\": 3475,\n  \"totalCount\": 3084,\n  \"filter\": \"string\",\n  \"filterField\": \"string\",\n  \"sortField\": \"string\",\n  \"sortDirection\": {\n    \"value\": \"reference #/components/schemas/common/sortDirection not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  }\n}",
+              "body": "{\n  \"items\": [\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/name not found in the OpenAPI spec\"\n      },\n      \"dataType\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/dataType not found in the OpenAPI spec\"\n      },\n      \"contentType\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/contentType not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/description not found in the OpenAPI spec\"\n      },\n      \"attributeTags\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/attributeTags not found in the OpenAPI spec\"\n      },\n      \"system\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/system not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      }\n    },\n    {\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/name not found in the OpenAPI spec\"\n      },\n      \"dataType\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/dataType not found in the OpenAPI spec\"\n      },\n      \"contentType\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/contentType not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/description not found in the OpenAPI spec\"\n      },\n      \"attributeTags\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/attributeTags not found in the OpenAPI spec\"\n      },\n      \"system\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributeInternal/properties/system not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      }\n    }\n  ],\n  \"count\": 8280,\n  \"totalCount\": 5236,\n  \"filter\": \"string\",\n  \"filterField\": \"string\",\n  \"sortField\": \"string\",\n  \"sortDirection\": {\n    \"value\": \"reference #/components/schemas/common/sortDirection not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "a5f51d51-9c8b-4454-982e-9cfa260d6308",
+              "id": "745bb91b-fc9b-4324-b158-49dae02a0676",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -1113,7 +1113,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "502767ad-a646-4a02-ae13-28799d396f02",
+              "id": "9d147124-592b-4b3b-ae62-8b22bc5eeb19",
               "name": "Error if device was not found",
               "originalRequest": {
                 "url": {
@@ -1198,7 +1198,7 @@
           }
         },
         {
-          "id": "bcb6da2f-830b-4dcb-96fc-3ef0db27e84c",
+          "id": "d7f89529-361b-4400-8666-b70aa16546bf",
           "name": "Adds a New Attribute to a Device",
           "request": {
             "name": "Adds a New Attribute to a Device",
@@ -1264,7 +1264,7 @@
           },
           "response": [
             {
-              "id": "8a45a7d7-e0ba-490d-b985-7d77ee572881",
+              "id": "976076a4-120c-4462-b88c-81901246f1d8",
               "name": "Successfully created device attribute",
               "originalRequest": {
                 "url": {
@@ -1334,7 +1334,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "5caef1c0-feab-428a-8a91-9d3a2e9264d3",
+              "id": "0e507992-460d-4833-a195-da446c739959",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -1404,7 +1404,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "297ca427-07a3-48b0-99e4-f8158011e6ff",
+              "id": "0cd59050-6735-4232-8b96-61b2c0c35e51",
               "name": "Error if device was not found",
               "originalRequest": {
                 "url": {
@@ -1480,7 +1480,7 @@
           }
         },
         {
-          "id": "3c0e7b3d-9eec-4eff-affe-5bbad27ae17a",
+          "id": "0654a47f-8e80-4774-9b6a-f35ac5ecbe58",
           "name": "Retrieves Information on a Device Recipe",
           "request": {
             "name": "Retrieves Information on a Device Recipe",
@@ -1545,7 +1545,7 @@
           },
           "response": [
             {
-              "id": "dd6ee782-046b-4edf-9c79-e10defe59f49",
+              "id": "c8633a04-483a-4313-be80-eed930ecabea",
               "name": "Device recipe information",
               "originalRequest": {
                 "url": {
@@ -1610,12 +1610,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceRecipeId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"deviceName\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"deviceDescription\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"tags\": {\n    \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n  },\n  \"attributes\": {\n    \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n  },\n  \"deviceClass\": {\n    \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n  },\n  \"gatewayId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"parentId\": {\n    \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n  },\n  \"systemInterval\": {\n    \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n  },\n  \"keepDuplicates\": true\n}",
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceRecipeId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"deviceName\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"deviceDescription\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"tags\": {\n    \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n  },\n  \"attributes\": {\n    \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n  },\n  \"deviceClass\": {\n    \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n  },\n  \"gatewayId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"parentId\": {\n    \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n  },\n  \"systemInterval\": {\n    \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n  },\n  \"keepDuplicates\": false\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "c6aa38bf-7f37-479a-8098-147c96339610",
+              "id": "c500d851-0f4c-41c6-a8a6-310eec26c77f",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -1685,7 +1685,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "ff3e638a-b581-4362-8955-61f7e94e0a4f",
+              "id": "b5c53651-115d-4407-95ae-80b82d80977d",
               "name": "Error if device recipe was not found",
               "originalRequest": {
                 "url": {
@@ -1761,7 +1761,7 @@
           }
         },
         {
-          "id": "979ab199-85c0-4bba-8c9f-04ab9d35ac0c",
+          "id": "aa48af77-091b-4d42-ba09-db07a7007642",
           "name": "Updates Information About a Device Recipe",
           "request": {
             "name": "Updates Information About a Device Recipe",
@@ -1839,7 +1839,7 @@
           },
           "response": [
             {
-              "id": "2d2ed59e-042e-4d55-89d8-f686fe856b95",
+              "id": "2dbaf676-1817-457b-96ab-266699f3997c",
               "name": "Updated device recipe information",
               "originalRequest": {
                 "url": {
@@ -1912,12 +1912,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceRecipeId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"deviceName\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"deviceDescription\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"tags\": {\n    \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n  },\n  \"attributes\": {\n    \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n  },\n  \"deviceClass\": {\n    \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n  },\n  \"gatewayId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"parentId\": {\n    \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n  },\n  \"systemInterval\": {\n    \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n  },\n  \"keepDuplicates\": true\n}",
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceRecipeId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"deviceName\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"deviceDescription\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"tags\": {\n    \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n  },\n  \"attributes\": {\n    \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n  },\n  \"deviceClass\": {\n    \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n  },\n  \"gatewayId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"parentId\": {\n    \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n  },\n  \"systemInterval\": {\n    \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n  },\n  \"keepDuplicates\": false\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "72e7f825-d2db-4408-96d5-e62e96ced5a9",
+              "id": "cbe49b5d-0bdb-491f-81d7-2926646dc64f",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -1995,7 +1995,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "dbc3b37c-2170-42ba-afcc-ac63425d5e0d",
+              "id": "d754e7e2-b2e7-40e6-916a-bf5dfd5729f8",
               "name": "Error if device recipe was not found",
               "originalRequest": {
                 "url": {
@@ -2079,7 +2079,7 @@
           }
         },
         {
-          "id": "42205bfb-c823-4e4f-a2a6-4af67cddc4fb",
+          "id": "35a3ec76-44ee-45e4-9552-192f81e846ba",
           "name": "Deletes a Device Recipe",
           "request": {
             "name": "Deletes a Device Recipe",
@@ -2131,7 +2131,7 @@
           },
           "response": [
             {
-              "id": "0c768a23-f48f-4197-9a00-2b41e7a2b9a6",
+              "id": "09047ac4-abf8-44b3-b3dd-5212e810ed36",
               "name": "If device recipe was successfully deleted",
               "originalRequest": {
                 "url": {
@@ -2192,7 +2192,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "78fec73f-3e8c-463f-a947-b0f5801327d6",
+              "id": "a9e7cb2b-7490-4412-a82e-be230ed920b7",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -2253,7 +2253,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "d436abc7-5ac5-4765-a7a1-dbb3e252fb9d",
+              "id": "df67939e-18a1-4a2e-adf0-f15df83a6b01",
               "name": "Error if device recipe was not found",
               "originalRequest": {
                 "url": {
@@ -2320,7 +2320,7 @@
           }
         },
         {
-          "id": "0fe575b6-e867-40ab-a47e-2944159a6faa",
+          "id": "255b6b27-9fe2-45c0-a5ab-d967f2afe98f",
           "name": "Bulk Creates Devices Using This Recipe from a CSV",
           "request": {
             "name": "Bulk Creates Devices Using This Recipe from a CSV",
@@ -2385,7 +2385,7 @@
           },
           "response": [
             {
-              "id": "22a2e0af-5294-4c23-ad2d-b70327b49499",
+              "id": "1277dbbb-58f0-4946-af6a-92aedc84cb6d",
               "name": "If devices were successfully created",
               "originalRequest": {
                 "url": {
@@ -2449,12 +2449,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"created\": 8272.096088002803,\n  \"failed\": 8551.415198162831,\n  \"csvResult\": \"string\"\n}",
+              "body": "{\n  \"created\": 9506.10942519332,\n  \"failed\": 8638.187611000114,\n  \"csvResult\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "62ef8c8d-dc9a-45f6-a61f-fafb2b635fd5",
+              "id": "3571c0f2-f425-427a-99e3-60fea0c62ddd",
               "name": "If devices were enqueued to be created",
               "originalRequest": {
                 "url": {
@@ -2523,7 +2523,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "3ac87e5b-37e1-4da1-92ac-136085f880a3",
+              "id": "c5e75733-3f6d-4683-9ffb-3a16f71e0473",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -2592,7 +2592,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "4f50d840-0b2f-498c-bdb6-158173ce69fb",
+              "id": "24f46d02-b523-444c-9bf5-a12a2864f896",
               "name": "Error if device recipe was not found",
               "originalRequest": {
                 "url": {
@@ -2667,7 +2667,7 @@
           }
         },
         {
-          "id": "a5218087-5f1b-4952-837d-98ef1cf07e05",
+          "id": "800a5b1d-cb3e-4889-ab9b-3b99ca96bbc8",
           "name": "Returns the Device Recipes for an Application",
           "request": {
             "name": "Returns the Device Recipes for an Application",
@@ -2760,7 +2760,7 @@
           },
           "response": [
             {
-              "id": "6da97cf0-d931-44c1-a013-84bc4d8a039d",
+              "id": "a0c2d8a5-cb90-4d54-be79-25a0fc0c75e0",
               "name": "Collection of device recipes",
               "originalRequest": {
                 "url": {
@@ -2841,12 +2841,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceRecipeId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"deviceName\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"deviceDescription\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"tags\": {\n        \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n      },\n      \"attributes\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n      },\n      \"deviceClass\": {\n        \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n      },\n      \"gatewayId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"parentId\": {\n        \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n      },\n      \"systemInterval\": {\n        \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n      },\n      \"keepDuplicates\": true\n    },\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceRecipeId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"deviceName\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"deviceDescription\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"tags\": {\n        \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n      },\n      \"attributes\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n      },\n      \"deviceClass\": {\n        \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n      },\n      \"gatewayId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"parentId\": {\n        \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n      },\n      \"systemInterval\": {\n        \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n      },\n      \"keepDuplicates\": false\n    }\n  ],\n  \"count\": 1324,\n  \"totalCount\": 6582,\n  \"perPage\": 8314,\n  \"page\": 6660,\n  \"filter\": \"string\",\n  \"filterField\": \"string\",\n  \"sortField\": \"string\",\n  \"sortDirection\": {\n    \"value\": \"reference #/components/schemas/common/sortDirection not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  }\n}",
+              "body": "{\n  \"items\": [\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceRecipeId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"deviceName\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"deviceDescription\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"tags\": {\n        \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n      },\n      \"attributes\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n      },\n      \"deviceClass\": {\n        \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n      },\n      \"gatewayId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"parentId\": {\n        \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n      },\n      \"systemInterval\": {\n        \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n      },\n      \"keepDuplicates\": true\n    },\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceRecipeId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"deviceName\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"description\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"deviceDescription\": {\n        \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n      },\n      \"tags\": {\n        \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n      },\n      \"attributes\": {\n        \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n      },\n      \"deviceClass\": {\n        \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n      },\n      \"gatewayId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"parentId\": {\n        \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n      },\n      \"systemInterval\": {\n        \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n      },\n      \"keepDuplicates\": true\n    }\n  ],\n  \"count\": 1755,\n  \"totalCount\": 867,\n  \"perPage\": 7842,\n  \"page\": 9818,\n  \"filter\": \"string\",\n  \"filterField\": \"string\",\n  \"sortField\": \"string\",\n  \"sortDirection\": {\n    \"value\": \"reference #/components/schemas/common/sortDirection not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "90182656-e5f6-4e77-a8a4-b751794f3238",
+              "id": "ef577d06-c971-4a0a-be63-088ab2a99ed5",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -2932,7 +2932,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "833e2d19-17e8-4e43-beaf-638d40cc5a38",
+              "id": "099fba48-a40c-4370-a3c9-da02c4ef42ca",
               "name": "Error if application was not found",
               "originalRequest": {
                 "url": {
@@ -3024,7 +3024,7 @@
           }
         },
         {
-          "id": "5b27bd85-4a31-476f-966a-e94e08779a2d",
+          "id": "cb4fe91b-2508-4c4b-9f83-d47505cab1fb",
           "name": "Create a New Device Recipe for an Application",
           "request": {
             "name": "Create a New Device Recipe for an Application",
@@ -3094,7 +3094,7 @@
           },
           "response": [
             {
-              "id": "f82da94e-5e94-4bcf-a786-77e32e92f20d",
+              "id": "62bdc4f7-326a-47e4-84d5-f6b771477437",
               "name": "Successfully created device recipe",
               "originalRequest": {
                 "url": {
@@ -3159,12 +3159,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceRecipeId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"deviceName\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"deviceDescription\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"tags\": {\n    \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n  },\n  \"attributes\": {\n    \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n  },\n  \"deviceClass\": {\n    \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n  },\n  \"gatewayId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"parentId\": {\n    \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n  },\n  \"systemInterval\": {\n    \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n  },\n  \"keepDuplicates\": true\n}",
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceRecipeId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"deviceName\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"deviceDescription\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"tags\": {\n    \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n  },\n  \"attributes\": {\n    \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n  },\n  \"deviceClass\": {\n    \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n  },\n  \"gatewayId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"parentId\": {\n    \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n  },\n  \"systemInterval\": {\n    \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n  },\n  \"keepDuplicates\": false\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "de304b21-e75a-4ed7-8d44-e28fb0babdc1",
+              "id": "821bad53-fa4b-42a4-9faf-c339a926bf88",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -3234,7 +3234,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "008daa6c-e441-4dd6-b0c9-f1934fd7bfda",
+              "id": "dff818a6-eca4-4fff-aa8c-91fb2e5fca13",
               "name": "Error if application was not found",
               "originalRequest": {
                 "url": {
@@ -3310,7 +3310,7 @@
           }
         },
         {
-          "id": "dc26c557-9279-450b-9459-6f71768a4680",
+          "id": "2e9923bd-335b-410a-952c-81a17de7eb65",
           "name": "Returns Payload Counts per Resolution in the Time Range Specified for This Device",
           "request": {
             "name": "Returns Payload Counts per Resolution in the Time Range Specified for This Device",
@@ -3381,7 +3381,7 @@
           },
           "response": [
             {
-              "id": "b0c1187d-0510-4b01-9f67-56f614fc73af",
+              "id": "9874123a-0434-4316-8053-7dcf1ca463ca",
               "name": "Sum of payload counts by date",
               "originalRequest": {
                 "url": {
@@ -3450,12 +3450,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"start\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"end\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"counts\": [\n    {\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"value\": 8635\n    },\n    {\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"value\": 4690\n    }\n  ]\n}",
+              "body": "{\n  \"start\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"end\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"counts\": [\n    {\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"value\": 1740\n    },\n    {\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"value\": 7396\n    }\n  ]\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "364e85e0-87da-4b40-b8ed-21ed238606e6",
+              "id": "8e5bedf7-fdc8-43f6-8903-60d7b2ac561c",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -3529,7 +3529,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "9d160c8a-33a8-4347-905e-b1a1f82d13bb",
+              "id": "f2ce1826-9585-4da2-86ae-a7202fec62df",
               "name": "Error if device was not found",
               "originalRequest": {
                 "url": {
@@ -3609,7 +3609,7 @@
           }
         },
         {
-          "id": "404f149e-00d9-410f-aaf1-50254a319892",
+          "id": "8fc089bb-7c45-4652-a16d-9c0ed832029e",
           "name": "Updates Information About a Device",
           "request": {
             "name": "Updates Information About a Device",
@@ -3687,7 +3687,7 @@
           },
           "response": [
             {
-              "id": "9749461a-8beb-4f31-b622-d64bf7a56dff",
+              "id": "c3ea2604-b6b4-471e-bc13-937e52071e02",
               "name": "Updated device information",
               "originalRequest": {
                 "url": {
@@ -3760,12 +3760,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"deletedAt\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"tags\": {\n    \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n  },\n  \"attributes\": {\n    \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n  },\n  \"deviceClass\": {\n    \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n  },\n  \"gatewayId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"edgeAgentVersion\": {\n    \"value\": \"reference #/components/schemas/common/version not found in the OpenAPI spec\"\n  },\n  \"connectionInfo\": {\n    \"time\": {\n      \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n    },\n    \"connected\": 3404.445416132448\n  },\n  \"parentId\": {\n    \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n  },\n  \"ancestorIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"systemInterval\": {\n    \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n  },\n  \"keepDuplicates\": false\n}",
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"deletedAt\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"name\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"description\": {\n    \"value\": \"reference #/components/schemas/common/description not found in the OpenAPI spec\"\n  },\n  \"tags\": {\n    \"value\": \"reference #/components/schemas/common/tagsRequired not found in the OpenAPI spec\"\n  },\n  \"attributes\": {\n    \"value\": \"reference #/components/schemas/common/deviceAttributesInternal not found in the OpenAPI spec\"\n  },\n  \"deviceClass\": {\n    \"value\": \"reference #/components/schemas/common/deviceClass not found in the OpenAPI spec\"\n  },\n  \"gatewayId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"edgeAgentVersion\": {\n    \"value\": \"reference #/components/schemas/common/version not found in the OpenAPI spec\"\n  },\n  \"connectionInfo\": {\n    \"time\": {\n      \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n    },\n    \"connected\": 6077.490192888002\n  },\n  \"parentId\": {\n    \"value\": \"reference #/components/schemas/common/objectIdOrNull not found in the OpenAPI spec\"\n  },\n  \"ancestorIds\": {\n    \"value\": \"reference #/components/schemas/common/objectIds not found in the OpenAPI spec\"\n  },\n  \"systemInterval\": {\n    \"value\": \"reference #/components/schemas/common/systemInterval not found in the OpenAPI spec\"\n  },\n  \"keepDuplicates\": true\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "c2acbdf6-043b-45f0-856a-83e7bcfbf32d",
+              "id": "d9a0532c-6312-4c68-b850-7ebc58fdbe56",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -3843,7 +3843,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "5df7a889-4881-4689-9a7e-68f69a5a0e23",
+              "id": "6e64e77d-7106-4539-aaba-b2874e754572",
               "name": "Error if device was not found",
               "originalRequest": {
                 "url": {
@@ -3927,7 +3927,7 @@
           }
         },
         {
-          "id": "f4955ca9-1f62-4978-abab-4415adb6f4ef",
+          "id": "91b7a688-7656-4af4-af18-e88ebf6977dd",
           "name": "Removes All Device Data for the Specified Time Range. Defaults to All Data.",
           "request": {
             "name": "Removes All Device Data for the Specified Time Range. Defaults to All Data.",
@@ -3992,7 +3992,7 @@
           },
           "response": [
             {
-              "id": "02522740-bf45-4676-b188-14cb9e809e32",
+              "id": "bb117fc7-26a2-4ab8-9cf4-b4aa79736886",
               "name": "If data removal was successfully started",
               "originalRequest": {
                 "url": {
@@ -4062,7 +4062,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "8f5c839e-858f-44ab-b414-a0c4c7ca7cd6",
+              "id": "c2ac3863-aa2c-4f4d-90a5-0d660f3a1dfb",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -4132,7 +4132,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "54e2c18a-42fd-46a5-905f-6e62ce28842e",
+              "id": "6e7a4487-388d-4385-b040-d6f8c0f5b3ec",
               "name": "Error if device was not found",
               "originalRequest": {
                 "url": {
@@ -4208,7 +4208,7 @@
           }
         },
         {
-          "id": "bb4a0bb4-8c8d-4411-927e-8dc62734efcd",
+          "id": "aa0f3cfc-5556-4093-9f1f-1617108c31e7",
           "name": "Set the Current Connection Status of the Device",
           "request": {
             "name": "Set the Current Connection Status of the Device",
@@ -4273,7 +4273,7 @@
           },
           "response": [
             {
-              "id": "245c4b62-4f46-4881-a35f-4f975a8a34b2",
+              "id": "7842661b-64d4-46c8-a7e4-ca0b734b4c21",
               "name": "If connection status was successfully applied",
               "originalRequest": {
                 "url": {
@@ -4342,7 +4342,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "c86840a9-6d88-4bfa-a7c2-50f75ac79a3b",
+              "id": "d8d99755-622f-4eee-bfed-0a8a6baf1fff",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -4411,7 +4411,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "0485fc59-fc72-4dc1-978c-4f384c433885",
+              "id": "f67f7d87-ba47-48be-9f25-a8cacd7e2502",
               "name": "Error if device was not found",
               "originalRequest": {
                 "url": {
@@ -4486,7 +4486,7 @@
           }
         },
         {
-          "id": "37700dd6-77fc-4713-8474-7e377a2c1c21",
+          "id": "001d2c8c-b251-4bd7-876d-799aad93b3d6",
           "name": "Retrieve the Composite Last Complete State of the Matching Devices",
           "request": {
             "name": "Retrieve the Composite Last Complete State of the Matching Devices",
@@ -4573,7 +4573,7 @@
           },
           "response": [
             {
-              "id": "2df90006-851d-49ff-a6c6-9fc328e9c71b",
+              "id": "52beb4dc-8d0e-4d59-b8a5-e21fb69e74e8",
               "name": "Collection of composite last state of the devices",
               "originalRequest": {
                 "url": {
@@ -4650,12 +4650,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"compositeState\": {}\n    },\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"compositeState\": {}\n    }\n  ],\n  \"count\": 8205,\n  \"totalCount\": 6872,\n  \"perPage\": 8367,\n  \"page\": 1890,\n  \"sortField\": \"string\",\n  \"sortDirection\": {\n    \"value\": \"reference #/components/schemas/common/sortDirection not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"query\": {}\n}",
+              "body": "{\n  \"items\": [\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"compositeState\": {}\n    },\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"name\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"compositeState\": {}\n    }\n  ],\n  \"count\": 9006,\n  \"totalCount\": 2663,\n  \"perPage\": 1764,\n  \"page\": 263,\n  \"sortField\": \"string\",\n  \"sortDirection\": {\n    \"value\": \"reference #/components/schemas/common/sortDirection not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"query\": {}\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "ad1e61b4-c769-4114-9d73-de144777ab12",
+              "id": "5466ff62-a682-4917-9669-95e5f102fa8a",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -4737,7 +4737,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "ee8cf339-8c15-4978-9dc0-a786687d0758",
+              "id": "4f5b3786-62cc-49f8-b6cf-0d5f633991d4",
               "name": "Error if application was not found",
               "originalRequest": {
                 "url": {
@@ -4825,7 +4825,7 @@
           }
         },
         {
-          "id": "8656488a-1fb0-403f-aa84-779b6b202139",
+          "id": "ee94de77-1df5-4641-8297-2bd00f05dc6d",
           "name": "Creates an Export of Payload Count Information for the Matching Devices",
           "request": {
             "name": "Creates an Export of Payload Count Information for the Matching Devices",
@@ -4882,7 +4882,7 @@
           },
           "response": [
             {
-              "id": "a4496e38-5502-48ca-96c4-ffe64e8d2a14",
+              "id": "e7c78513-b944-489d-b584-9796f58d9d7b",
               "name": "If generation of export was successfully started",
               "originalRequest": {
                 "url": {
@@ -4943,7 +4943,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "0131e9a3-6f43-4800-b9e0-e396ec628a96",
+              "id": "789ac6cc-7396-4db0-ab56-ddaf7b566de3",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -5004,7 +5004,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "844eafda-878e-4644-82a9-4ced67543405",
+              "id": "910d0a7a-4385-451c-bf6a-e695b8252241",
               "name": "Error if application was not found",
               "originalRequest": {
                 "url": {
@@ -5071,7 +5071,7 @@
           }
         },
         {
-          "id": "be29d811-6bd1-42f1-88e6-8500abec4cc7",
+          "id": "794d0518-54d3-4014-9e5f-694ed650b8ca",
           "name": "Update the Fields of One or More Devices",
           "request": {
             "name": "Update the Fields of One or More Devices",
@@ -5128,7 +5128,7 @@
           },
           "response": [
             {
-              "id": "41788432-7965-4f73-9812-8cca48891195",
+              "id": "c9f425a9-79a8-480e-97ed-8372b77a0f6c",
               "name": "Object including an update log link and the number of devices updated, failed, and skipped",
               "originalRequest": {
                 "url": {
@@ -5184,12 +5184,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"updated\": 8931.955912663769,\n  \"failed\": 2112.730123918706,\n  \"skipped\": 4855.304400025704,\n  \"logLink\": \"string\"\n}",
+              "body": "{\n  \"updated\": 6995.670213859085,\n  \"failed\": 6385.974644030151,\n  \"skipped\": 4390.002892087465,\n  \"logLink\": \"string\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "002d3c7c-8203-4737-87d2-a8382a3ced15",
+              "id": "ad6b17d7-a539-492e-ba90-6eb5177a9b3e",
               "name": "Successfully queued bulk update job",
               "originalRequest": {
                 "url": {
@@ -5250,7 +5250,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "5fe58fcd-7a70-4f77-b10f-5b3e09dfecc2",
+              "id": "20a3562d-bc4a-4820-ad7c-357728bc33dc",
               "name": "Error if malformed request",
               "originalRequest": {
                 "url": {
@@ -5311,7 +5311,7 @@
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "6366a7ba-957b-49a7-a2e6-28c7dfe7e67d",
+              "id": "b8249de0-363c-4f19-86d1-fa933b5023b7",
               "name": "Error if application was not found",
               "originalRequest": {
                 "url": {
@@ -5399,11 +5399,11 @@
     ]
   },
   "info": {
-    "_postman_id": "a6d8850c-1f5b-4f89-a822-8a1500553ca2",
-    "name": "Losant Device API",
+    "_postman_id": "c276012f-b534-4768-8895-8454a8367fb1",
+    "name": "Losant Application Device API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "Provision, manage, query, and send commands to IoT devices and device recipes. Read device state, attributes, connection status, logs, and tag-based queries. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.\n\nContact Support:\n Name: Losant Support\n Email: hello@losant.com",
+      "content": "Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations, files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.\n\nContact Support:\n Name: Losant Support\n Email: hello@losant.com",
       "type": "text/plain"
     }
   }

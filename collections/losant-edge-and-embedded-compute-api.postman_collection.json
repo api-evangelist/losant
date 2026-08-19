@@ -1,0 +1,1737 @@
+{
+  "item": [
+    {
+      "id": "5f5720da-6b73-4fa6-98e7-ef1da7afa87f",
+      "name": "Edge and Embedded Compute",
+      "description": {
+        "content": "Edge and Embedded Compute resources on the Losant Platform.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ce04cc3a-8228-42bc-a193-0a558f231179",
+          "name": "Retrieves Information on an Edge Deployment",
+          "request": {
+            "name": "Retrieves Information on an Edge Deployment",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "edge",
+                "deployments",
+                ":edgeDeploymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "edgeDeploymentId",
+                  "description": "(Required) ID associated with the edge deployment"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "996f8d0a-f3f0-4808-8580-e54c2799badf",
+              "name": "Edge deployment information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "edge",
+                    "deployments",
+                    ":edgeDeploymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "edgeDeploymentId",
+                      "description": "(Required) ID associated with the edge deployment"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"edgeDeploymentId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceName\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"deviceConnectionInfo\": {\n    \"time\": {\n      \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n    },\n    \"connected\": 8879.030852963022\n  },\n  \"flowId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"flowName\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"flowClass\": \"customNode\",\n  \"fileName\": {\n    \"value\": \"reference #/components/schemas/common/safeFileName not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"currentVersion\": {\n    \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n  },\n  \"desiredVersion\": {\n    \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n  },\n  \"currentEtag\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"desiredEtag\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"logs\": [\n    {\n      \"sourceType\": {\n        \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n      },\n      \"sourceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"changeType\": \"desired\",\n      \"newValue\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"previousValue\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"attemptedValue\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"newEtag\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"previousEtag\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"attemptedEtag\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"error\": \"string\"\n    },\n    {\n      \"sourceType\": {\n        \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n      },\n      \"sourceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"changeType\": \"current\",\n      \"newValue\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"previousValue\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"attemptedValue\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"newEtag\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"previousEtag\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"attemptedEtag\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"error\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d663dc2-76f7-4f38-bcc6-ba5fef958c6d",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "edge",
+                    "deployments",
+                    ":edgeDeploymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "edgeDeploymentId",
+                      "description": "(Required) ID associated with the edge deployment"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f62f3e2-8598-4594-8547-3cc66fcbcbb4",
+              "name": "Error if edge deployment was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "edge",
+                    "deployments",
+                    ":edgeDeploymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "edgeDeploymentId",
+                      "description": "(Required) ID associated with the edge deployment"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d411b195-2861-4f9e-8d9c-f9ff99913da5",
+          "name": "Returns the Edge Deployments for an Application",
+          "request": {
+            "name": "Returns the Edge Deployments for an Application",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "edge",
+                "deployments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sortField",
+                  "value": "lastUpdated",
+                  "description": "Field to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "Direction to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Which page of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "How many items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "deviceId",
+                  "value": "<string>",
+                  "description": "Filter deployments to the given Device ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "Filter deployments to the given Workflow Version (matches against both current and desired)"
+                },
+                {
+                  "description": {
+                    "content": "Filter out deployments where both the current and desired version are null.",
+                    "type": "text/plain"
+                  },
+                  "key": "filterEmpty",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "flowId",
+                  "value": "<string>",
+                  "description": "Filter deployments to the given Workflow ID"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "faff3ca2-8d2e-4a5f-9ffa-e4550166f1f1",
+              "name": "Collection of edge deployments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "edge",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "creationDate"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "575ecf887ae143cd83dc4aa2"
+                    },
+                    {
+                      "key": "version",
+                      "value": "myFlowVersion"
+                    },
+                    {
+                      "key": "filterEmpty",
+                      "value": ""
+                    },
+                    {
+                      "key": "flowId",
+                      "value": "575ed18f7ae143cd83dc4aa6"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"edgeDeploymentId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceName\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"deviceConnectionInfo\": {\n        \"time\": {\n          \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n        },\n        \"connected\": 6096.137904871097\n      },\n      \"flowId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"flowName\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"flowClass\": \"customNode\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/safeFileName not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"currentVersion\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"desiredVersion\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"currentEtag\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"desiredEtag\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"logs\": [\n        {\n          \"sourceType\": {\n            \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n          },\n          \"sourceId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"date\": {\n            \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n          },\n          \"changeType\": \"desired\",\n          \"newValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"previousValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"attemptedValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"newEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"previousEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"attemptedEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"error\": \"string\"\n        },\n        {\n          \"sourceType\": {\n            \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n          },\n          \"sourceId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"date\": {\n            \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n          },\n          \"changeType\": \"desired\",\n          \"newValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"previousValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"attemptedValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"newEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"previousEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"attemptedEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"error\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"edgeDeploymentId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceName\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"deviceConnectionInfo\": {\n        \"time\": {\n          \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n        },\n        \"connected\": 1006.1279249170974\n      },\n      \"flowId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"flowName\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"flowClass\": \"customNode\",\n      \"fileName\": {\n        \"value\": \"reference #/components/schemas/common/safeFileName not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"currentVersion\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"desiredVersion\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"currentEtag\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"desiredEtag\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"logs\": [\n        {\n          \"sourceType\": {\n            \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n          },\n          \"sourceId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"date\": {\n            \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n          },\n          \"changeType\": \"desired\",\n          \"newValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"previousValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"attemptedValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"newEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"previousEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"attemptedEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"error\": \"string\"\n        },\n        {\n          \"sourceType\": {\n            \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n          },\n          \"sourceId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"date\": {\n            \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n          },\n          \"changeType\": \"current\",\n          \"newValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"previousValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"attemptedValue\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"newEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"previousEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"attemptedEtag\": {\n            \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n          },\n          \"error\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"count\": 5289,\n  \"totalCount\": 3178,\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"flowId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"version\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f543ede-15ac-4897-85c5-af7117402dc6",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "edge",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "creationDate"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "575ecf887ae143cd83dc4aa2"
+                    },
+                    {
+                      "key": "version",
+                      "value": "myFlowVersion"
+                    },
+                    {
+                      "key": "filterEmpty",
+                      "value": ""
+                    },
+                    {
+                      "key": "flowId",
+                      "value": "575ed18f7ae143cd83dc4aa6"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2600d9b-4444-4d01-b6c7-aeb3b2165c03",
+              "name": "Error if application was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "edge",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "creationDate"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "575ecf887ae143cd83dc4aa2"
+                    },
+                    {
+                      "key": "version",
+                      "value": "myFlowVersion"
+                    },
+                    {
+                      "key": "filterEmpty",
+                      "value": ""
+                    },
+                    {
+                      "key": "flowId",
+                      "value": "575ed18f7ae143cd83dc4aa6"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8ee0397-8e55-49e6-8a3b-e96dbbb65dcc",
+          "name": "Replace Deployments of an Edge Workflow Version with a New Version. New Version Can Be Blank, if Removal Is Desired.",
+          "request": {
+            "name": "Replace Deployments of an Edge Workflow Version with a New Version. New Version Can Be Blank, if Removal Is Desired.",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "edge",
+                "deployments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flowId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"oldVersion\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"newVersion\": {\n    \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "85c92045-e975-4afd-a9bf-182601a0582a",
+              "name": "If deployment replacement has been initiated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "edge",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"oldVersion\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"newVersion\": {\n    \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e20f933-6897-47c0-8471-f633866c5787",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "edge",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"oldVersion\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"newVersion\": {\n    \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "125d35ba-fd36-49de-aa3f-bd6878d154f8",
+              "name": "Error if application was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "edge",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"oldVersion\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"newVersion\": {\n    \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a34db753-c05f-4c25-91ff-7af98583f238",
+          "name": "Retrieves Information on an Embedded Deployment",
+          "request": {
+            "name": "Retrieves Information on an Embedded Deployment",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "embedded",
+                "deployments",
+                ":embeddedDeploymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "embeddedDeploymentId",
+                  "description": "(Required) ID associated with the embedded deployment"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1f5e5237-edd4-4a4a-aa6f-4bd85aecd9a0",
+              "name": "Embedded deployment information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "embedded",
+                    "deployments",
+                    ":embeddedDeploymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "embeddedDeploymentId",
+                      "description": "(Required) ID associated with the embedded deployment"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"embeddedDeploymentId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"creationDate\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"lastUpdated\": {\n    \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceName\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  },\n  \"deviceConnectionInfo\": {\n    \"time\": {\n      \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n    },\n    \"connected\": 2184.450764835212\n  },\n  \"flows\": {},\n  \"currentBundleVersion\": {\n    \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n  },\n  \"desiredBundleVersion\": {\n    \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n  },\n  \"unknownBundle\": true,\n  \"logs\": [\n    {\n      \"sourceType\": {\n        \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n      },\n      \"sourceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"changeType\": \"current\",\n      \"updateType\": \"replaceFlow\",\n      \"updateFlowId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"desiredVersion\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"newBundle\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"attemptedBundle\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"error\": \"string\"\n    },\n    {\n      \"sourceType\": {\n        \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n      },\n      \"sourceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"date\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"changeType\": \"desired\",\n      \"updateType\": \"device\",\n      \"updateFlowId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"desiredVersion\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"newBundle\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"attemptedBundle\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"error\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd866d31-33af-4454-a84d-6ca9c3b59b69",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "embedded",
+                    "deployments",
+                    ":embeddedDeploymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "embeddedDeploymentId",
+                      "description": "(Required) ID associated with the embedded deployment"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5631c9fd-f555-4add-946d-3ebf26c8b8d5",
+              "name": "Error if embedded deployment was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "embedded",
+                    "deployments",
+                    ":embeddedDeploymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "embeddedDeploymentId",
+                      "description": "(Required) ID associated with the embedded deployment"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49bedd6e-0d7c-4645-9504-5a47e742e623",
+          "name": "Returns the Embedded Deployments for an Application",
+          "request": {
+            "name": "Returns the Embedded Deployments for an Application",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "embedded",
+                "deployments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sortField",
+                  "value": "lastUpdated",
+                  "description": "Field to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "desc",
+                  "description": "Direction to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Which page of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "1000",
+                  "description": "How many items to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "deviceId",
+                  "value": "<string>",
+                  "description": "Filter deployments to the given Device ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "Filter deployments to the given Workflow Version (matches against both current and desired)"
+                },
+                {
+                  "disabled": false,
+                  "key": "flowId",
+                  "value": "<string>",
+                  "description": "Filter deployments to the given Workflow ID"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e7bbdbf7-7e23-43a6-82c6-d06a93f84f21",
+              "name": "Collection of embedded deployments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "embedded",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "creationDate"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "575ecf887ae143cd83dc4aa2"
+                    },
+                    {
+                      "key": "version",
+                      "value": "myFlowVersion"
+                    },
+                    {
+                      "key": "flowId",
+                      "value": "575ed18f7ae143cd83dc4aa6"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"embeddedDeploymentId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"deviceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceName\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"deviceConnectionInfo\": {\n        \"time\": {\n          \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n        },\n        \"connected\": 7876.898966813799\n      },\n      \"flows\": {},\n      \"currentBundleVersion\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"desiredBundleVersion\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"unknownBundle\": false,\n      \"logs\": [\n        {\n          \"sourceType\": {\n            \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n          },\n          \"sourceId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"date\": {\n            \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n          },\n          \"changeType\": \"desired\",\n          \"updateType\": \"removeFlow\",\n          \"updateFlowId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"desiredVersion\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"newBundle\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"attemptedBundle\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"error\": \"string\"\n        },\n        {\n          \"sourceType\": {\n            \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n          },\n          \"sourceId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"date\": {\n            \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n          },\n          \"changeType\": \"desired\",\n          \"updateType\": \"replaceFlow\",\n          \"updateFlowId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"desiredVersion\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"newBundle\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"attemptedBundle\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"error\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"embeddedDeploymentId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"applicationId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"creationDate\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"lastUpdated\": {\n        \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n      },\n      \"deviceId\": {\n        \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n      },\n      \"deviceName\": {\n        \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n      },\n      \"deviceConnectionInfo\": {\n        \"time\": {\n          \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n        },\n        \"connected\": 442.2076081655513\n      },\n      \"flows\": {},\n      \"currentBundleVersion\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"desiredBundleVersion\": {\n        \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n      },\n      \"unknownBundle\": false,\n      \"logs\": [\n        {\n          \"sourceType\": {\n            \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n          },\n          \"sourceId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"date\": {\n            \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n          },\n          \"changeType\": \"desired\",\n          \"updateType\": \"clear\",\n          \"updateFlowId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"desiredVersion\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"newBundle\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"attemptedBundle\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"error\": \"string\"\n        },\n        {\n          \"sourceType\": {\n            \"value\": \"reference #/components/schemas/common/sourceType not found in the OpenAPI spec\"\n          },\n          \"sourceId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"date\": {\n            \"value\": \"reference #/components/schemas/common/date not found in the OpenAPI spec\"\n          },\n          \"changeType\": \"current\",\n          \"updateType\": \"device\",\n          \"updateFlowId\": {\n            \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n          },\n          \"desiredVersion\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"newBundle\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"attemptedBundle\": {\n            \"value\": \"reference #/components/schemas/common/nullableName not found in the OpenAPI spec\"\n          },\n          \"error\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"count\": 204,\n  \"totalCount\": 1875,\n  \"applicationId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"flowId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"version\": {\n    \"value\": \"reference #/components/schemas/common/name not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f5f811d-c132-4473-a67f-39920deec33c",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "embedded",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "creationDate"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "575ecf887ae143cd83dc4aa2"
+                    },
+                    {
+                      "key": "version",
+                      "value": "myFlowVersion"
+                    },
+                    {
+                      "key": "flowId",
+                      "value": "575ed18f7ae143cd83dc4aa6"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f32d1ca-f708-47e5-9800-22dbe3ebe063",
+              "name": "Error if application or device was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "embedded",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sortField",
+                      "value": "creationDate"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "575ecf887ae143cd83dc4aa2"
+                    },
+                    {
+                      "key": "version",
+                      "value": "myFlowVersion"
+                    },
+                    {
+                      "key": "flowId",
+                      "value": "575ed18f7ae143cd83dc4aa6"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ccd7af70-3cf4-4418-afe0-75d6fca3e9e7",
+          "name": "Request an Export of the Compiled WASM Files for a Current Deployment",
+          "request": {
+            "name": "Request an Export of the Compiled WASM Files for a Current Deployment",
+            "description": {},
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId",
+                "embedded",
+                "deployments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) ID associated with the application"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"callbackUrl\": {\n    \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n  },\n  \"embeddedDeploymentId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"traceLevel\": \"<number>\",\n  \"disableDebugMessage\": \"<boolean>\",\n  \"stackSize\": \"<integer>\",\n  \"debugSymbols\": \"<boolean>\",\n  \"exportMemory\": \"<boolean>\",\n  \"gzip\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a4fe97ff-89a4-4285-a8a8-a21873b23e53",
+              "name": "If generation of export was successfully started",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "embedded",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"callbackUrl\": {\n    \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n  },\n  \"embeddedDeploymentId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"traceLevel\": \"<number>\",\n  \"disableDebugMessage\": \"<boolean>\",\n  \"stackSize\": \"<integer>\",\n  \"debugSymbols\": \"<boolean>\",\n  \"exportMemory\": \"<boolean>\",\n  \"gzip\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobQueued\": true,\n  \"jobId\": \"string\",\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5483396f-42ff-497c-a2d0-de8b0d1e472c",
+              "name": "Error if malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "embedded",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"callbackUrl\": {\n    \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n  },\n  \"embeddedDeploymentId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"traceLevel\": \"<number>\",\n  \"disableDebugMessage\": \"<boolean>\",\n  \"stackSize\": \"<integer>\",\n  \"debugSymbols\": \"<boolean>\",\n  \"exportMemory\": \"<boolean>\",\n  \"gzip\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62b1b8c8-6ac5-4dad-a5ff-bebbfd489e13",
+              "name": "Error if deployment was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId",
+                    "embedded",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) ID associated with the application"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": {\n    \"value\": \"reference #/components/schemas/common/email not found in the OpenAPI spec\"\n  },\n  \"callbackUrl\": {\n    \"value\": \"reference #/components/schemas/common/url not found in the OpenAPI spec\"\n  },\n  \"embeddedDeploymentId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"deviceId\": {\n    \"value\": \"reference #/components/schemas/common/objectId not found in the OpenAPI spec\"\n  },\n  \"traceLevel\": \"<number>\",\n  \"disableDebugMessage\": \"<boolean>\",\n  \"stackSize\": \"<integer>\",\n  \"debugSymbols\": \"<boolean>\",\n  \"exportMemory\": \"<boolean>\",\n  \"gzip\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.losant.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "13e57abf-3ab6-4c6d-a0ff-c6b466da3ed6",
+    "name": "Losant Application Edge and Embedded Compute API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations, files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.\n\nContact Support:\n Name: Losant Support\n Email: hello@losant.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "opencollection": "1.0.0",
   "info": {
-    "name": "Losant Experience API",
+    "name": "Losant Application Experience API",
     "version": "1.29.4"
   },
   "request": {
