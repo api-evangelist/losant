@@ -29,6 +29,21 @@ humanURL: https://www.losant.com/
 baseURL: https://api.losant.com
 tags:
   - IoT
+  - Internet of Things
+  - Devices
+  - Edge Compute
+  - Embedded
+  - MQTT
+  - Industrial IoT
+  - Telemetry
+  - Workflow-Automation
+  - Visual Workflow Engine
+  - Dashboards
+  - Time Series
+  - Connected Products
+  - Enterprise
+tags_raw:
+  - IoT
   - Internet Of Things
   - Devices
   - Edge Compute
@@ -49,6 +64,18 @@ apis:
 - aid: losant:losant-application-api
   name: Losant Application API
   tags:
+  - Application
+  - Dashboards
+  - Event
+  - Webhook
+  - Integration
+  - File
+  - Audit Logs
+  - Credentials
+  - Certificates
+  - API Tokens
+  - Resource Jobs
+  tags_raw:
   - Applications
   - Dashboards
   - Events
@@ -92,6 +119,13 @@ apis:
   - Devices
   - Device Recipes
   - Telemetry
+  - States
+  - Commands
+  - IoT
+  tags_raw:
+  - Devices
+  - Device Recipes
+  - Telemetry
   - State
   - Commands
   - IoT
@@ -121,6 +155,14 @@ apis:
 - aid: losant:losant-experience-api
   name: Losant Experience API
   tags:
+  - Experience
+  - End User
+  - White Label
+  - Web
+  - User
+  - Group
+  - Views
+  tags_raw:
   - Experiences
   - End User
   - White Label
