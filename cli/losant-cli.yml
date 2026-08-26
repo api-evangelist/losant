@@ -1,0 +1,60 @@
+generated: '2026-08-26'
+method: searched
+source: https://docs.losant.com/cli/overview/
+sources:
+  - https://docs.losant.com/cli/overview/
+  - https://docs.losant.com/cli/files/
+  - https://docs.losant.com/cli/data-tables/
+  - https://github.com/Losant/losant-cli
+name: losant
+description: |
+  First-party command line tool for working with a Losant Application from a local directory. It is a
+  sync tool, not a full API client: it links a directory to one Application and moves Experience Views,
+  Experience Versions, public Files and Data Tables between disk and the platform.
+install:
+  - {method: npm, command: 'npm install -g losant-cli', prerequisite: 'Node.js 14 or higher'}
+package: packages/losant-packages.yml
+repository: https://github.com/Losant/losant-cli
+authentication:
+  commands: [losant login, losant set-token]
+  detail: |
+    `losant login` prompts for the account email, then password plus MFA code - unless the account is
+    linked to an SSO provider, in which case it prompts for a User Token instead. `losant set-token
+    [token]` stores a User Token directly. Credentials are written to ~/.losant/.credentials.yml and
+    shared across every configured directory.
+  token_scope: all.User.cli
+  token_scope_note: 'the "CLI developer" permission option in the UI, or scope all.User.cli via the API - the exact permission set the CLI needs and nothing more'
+  self_hosted: 'LOSANT_API_URL (default https://api.losant.com) targets a dedicated or self-hosted Enterprise Instance; losant configure remembers which installation a directory belongs to'
+commands:
+  - group: auth
+    commands:
+      - {name: login, usage: 'losant login', description: 'Authenticate and store credentials.'}
+      - {name: set-token, usage: 'losant set-token [token]', description: 'Store a User Token, verified against the API before saving.'}
+  - group: setup
+    commands:
+      - {name: configure, usage: 'losant configure', description: 'Link the current directory to a Losant Application and create the .losant/, experience/, files/ and dataTables/ directories.'}
+  - group: experience
+    commands:
+      - {name: 'experience download', usage: 'losant experience download [options] [pattern]', options: ['--type components|layouts|pages', '-f, --force', '--dry-run'], description: 'Download Experience Views; prompts to resolve conflicts.'}
+      - {name: 'experience status', usage: 'losant experience status', description: 'Show local vs remote view state and conflicts.'}
+      - {name: 'experience upload', usage: 'losant experience upload [options] [pattern]', description: 'Upload Experience Views.'}
+      - {name: 'experience version', usage: 'losant experience version [version] [-d <description>] [-l <pattern>]', description: 'List or create Experience Versions.'}
+      - {name: 'experience watch', usage: 'losant experience watch', description: 'Watch the working tree and upload changes automatically.'}
+      - {name: 'experience layout', usage: 'losant experience layout [-l <pattern>]', description: 'Show which layout each experience page uses.'}
+      - {name: 'experience bootstrap', usage: 'losant experience bootstrap', description: 'Generate the standard experience starter views.'}
+  - group: files
+    commands:
+      - {name: 'files download', usage: 'losant files download [options] [pattern]', options: ['-f, --force', '--dry-run'], description: 'Download public Application Files into files/, mirroring the remote directory structure.'}
+      - {name: 'files status', usage: 'losant files status', description: 'Show local vs remote file state and conflicts.'}
+      - {name: 'files upload', usage: 'losant files upload [options] [pattern]', description: 'Upload public Application Files.'}
+  - group: data-tables
+    commands:
+      - {name: 'datatables export', usage: 'losant datatables export [options] [pattern]', options: ['-f, --force', '--dry-run'], description: 'Export Data Tables to CSV, with the table id appended to each file name.'}
+flows:
+  - {name: 'Local Experience development', steps: ['losant login', 'losant configure', 'losant experience download', 'edit views on disk', 'losant experience upload', 'losant experience version v1.0.0 -d "release notes"']}
+  - {name: 'File sync', steps: ['losant files download', 'add or remove files under files/', 'losant files upload']}
+dry_run: 'Both download and export accept --dry-run, which prints the actions without performing them - the only rehearsal facility Losant publishes anywhere (see conventions/losant-conventions.yml dry_run_mode).'
+limitations:
+  - 'Private Files are not supported - public Application Files only.'
+  - 'No device, workflow, dashboard or data-ingest commands; the CLI does not cover the Platform API.'
+  - 'The published npm release (1.3.3, 2024-02-09) trails active development on the repository.'

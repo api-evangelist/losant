@@ -1,0 +1,71 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Losant Application Device API
+  version: 1.0.0
+extends: openapi/losant-device-api-openapi.yml
+x-generated: '2026-08-26'
+x-method: generated
+x-source: https://api.losant.com/ (Losant Bravado API schema, info.version 1.30.2)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      pass: local-v1
+      date: '2026-08-26'
+      operation-ids: added from the Losant Bravado schema at https://api.losant.com/ (resource.action identifiers, e.g. device.get)
+      paths: sub-path operations restored from the same schema; the prior revision collapsed operations such as device.payloadCountsBreakdown
+        onto their parent resource path
+- target: $.paths['/applications/{applicationId}/device-recipes'].get
+  update:
+    operationId: deviceRecipes.get
+- target: $.paths['/applications/{applicationId}/device-recipes'].post
+  update:
+    operationId: deviceRecipes.post
+- target: $.paths['/applications/{applicationId}/device-recipes/{deviceRecipeId}'].get
+  update:
+    operationId: deviceRecipe.get
+- target: $.paths['/applications/{applicationId}/device-recipes/{deviceRecipeId}'].patch
+  update:
+    operationId: deviceRecipe.patch
+- target: $.paths['/applications/{applicationId}/device-recipes/{deviceRecipeId}'].delete
+  update:
+    operationId: deviceRecipe.delete
+- target: $.paths['/applications/{applicationId}/device-recipes/{deviceRecipeId}/bulkCreate'].post
+  update:
+    operationId: deviceRecipe.bulkCreate
+- target: $.paths['/applications/{applicationId}/devices'].patch
+  update:
+    operationId: devices.patch
+- target: $.paths['/applications/{applicationId}/devices/compositeState'].get
+  update:
+    operationId: devices.getCompositeState
+- target: $.paths['/applications/{applicationId}/devices/payloadCounts'].post
+  update:
+    operationId: devices.payloadCounts
+- target: $.paths['/applications/{applicationId}/devices/{deviceId}'].patch
+  update:
+    operationId: device.patch
+- target: $.paths['/applications/{applicationId}/devices/{deviceId}/attributes'].get
+  update:
+    operationId: deviceAttributes.get
+- target: $.paths['/applications/{applicationId}/devices/{deviceId}/attributes'].post
+  update:
+    operationId: deviceAttributes.post
+- target: $.paths['/applications/{applicationId}/devices/{deviceId}/attributes/{name}'].get
+  update:
+    operationId: deviceAttribute.get
+- target: $.paths['/applications/{applicationId}/devices/{deviceId}/attributes/{name}'].patch
+  update:
+    operationId: deviceAttribute.patch
+- target: $.paths['/applications/{applicationId}/devices/{deviceId}/attributes/{name}'].delete
+  update:
+    operationId: deviceAttribute.delete
+- target: $.paths['/applications/{applicationId}/devices/{deviceId}/data'].delete
+  update:
+    operationId: device.removeData
+- target: $.paths['/applications/{applicationId}/devices/{deviceId}/payloadCountsBreakdown'].get
+  update:
+    operationId: device.payloadCountsBreakdown
+- target: $.paths['/applications/{applicationId}/devices/{deviceId}/setConnectionStatus'].post
+  update:
+    operationId: device.setConnectionStatus

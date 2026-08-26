@@ -10,7 +10,10 @@ description: |
   enterprise instance administration. Devices may also connect via MQTT. Customers include industrial,
   smart-building, agriculture, and connected-product companies; Losant emphasizes white-labeled end-user
   experiences ("Experiences") and edge compute on Linux gateways plus microcontrollers via the Embedded
-  Edge Agent (EEA).
+  Edge Agent (EEA). Losant also ships a hosted, OAuth 2.0-protected Model Context Protocol (MCP) server at
+  https://mcp.losant.com/mcp so AI assistants can query and write application configuration and telemetry.
+  Losant was acquired by SUSE, which is folding the platform into an open process automation offering for
+  Industrial IoT.
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -612,7 +615,118 @@ common:
     type: SpectralRules
   - url: json-ld/losant-context.jsonld
     type: JSONLD
+  - url: packages/losant-packages.yml
+    type: Packages
+    name: Losant first-party SDKs and packages
+  - url: well-known/losant-well-known.yml
+    type: WellKnown
+    name: Losant .well-known discovery documents
+  - url: mcp/losant-mcp.yml
+    type: MCPServer
+    name: Losant MCP Server
+  - url: https://mcp.losant.com/mcp
+    type: MCPServer
+    name: Losant hosted MCP endpoint
+  - url: mcp/losant-tool-crosswalk.yml
+    type: ToolCrosswalk
+    name: MCP tools to REST operations crosswalk
+  - url: llms/losant-llms.txt
+    type: LLMsTxt
+  - url: conformance/losant-conformance.yml
+    type: Conformance
+  - url: https://docs.losant.com/references/security/
+    type: Compliance
+    name: Losant Security Overview (SOC 2, ISO 27001)
+  - url: errors/losant-problem-types.yml
+    type: ErrorCatalog
+  - url: lifecycle/losant-lifecycle.yml
+    type: Lifecycle
+  - url: https://docs.losant.com/edge-compute/gateway-edge-agent/changelog/
+    type: Deprecation
+    name: Gateway Edge Agent version support and end-of-life policy
+  - url: scopes/losant-scopes.yml
+    type: OAuthScopes
+  - url: security/losant-vulnerability-disclosure.yml
+    type: VulnerabilityDisclosure
+  - url: https://github.com/Losant/losant-mcp-server/blob/main/SECURITY.md
+    type: Security
+    name: Losant security policy and vulnerability reporting
+  - url: sandbox/losant-sandbox.yml
+    type: Sandbox
+    name: Losant Developer Sandbox and test facilities
+  - url: conventions/losant-conventions.yml
+    type: Conventions
+    name: Losant API conventions and reversibility
+  - url: changelog/losant-changelog.yml
+    type: ChangeLog
+  - url: cli/losant-cli.yml
+    type: CLI
+    name: Losant CLI command surface
+  - url: data-model/losant-data-model.yml
+    type: DataModel
+  - url: asyncapi/losant-event-surface.yml
+    type: Webhooks
+    name: Losant event surface - MQTT topics and application webhooks
+  - url: skills/_index.yml
+    type: AgentSkill
+    name: Losant Agent Skills
+  - url: overlays/losant-application-api-overlay.yaml
+    type: Overlay
+    name: Application API overlay
+  - url: overlays/losant-authentication-and-account-api-overlay.yaml
+    type: Overlay
+    name: Authentication and Account API overlay
+  - url: overlays/losant-data-and-data-tables-api-overlay.yaml
+    type: Overlay
+    name: Data and Data Tables API overlay
+  - url: overlays/losant-device-api-overlay.yaml
+    type: Overlay
+    name: Device API overlay
+  - url: overlays/losant-edge-and-embedded-compute-api-overlay.yaml
+    type: Overlay
+    name: Edge and Embedded Compute API overlay
+  - url: overlays/losant-enterprise-instance-api-overlay.yaml
+    type: Overlay
+    name: Enterprise Instance API overlay
+  - url: overlays/losant-experience-api-overlay.yaml
+    type: Overlay
+    name: Experience API overlay
+  - url: overlays/losant-notebooks-api-overlay.yaml
+    type: Overlay
+    name: Notebooks API overlay
+  - url: overlays/losant-workflow-engine-api-overlay.yaml
+    type: Overlay
+    name: Workflow Engine API overlay
+  - url: https://docs.losant.com/rest-api/overview/
+    type: APIReference
+    name: Losant REST API reference
+  - url: https://github.com/Losant
+    type: GitHubOrganization
+    name: Losant on GitHub
+  - url: https://accounts.losant.com/create-account
+    type: SignUp
+    name: Create a free Losant account
+  - url: https://www.losant.com/legal/terms-of-service
+    type: TermsOfService
+  - url: https://www.losant.com/legal/privacy-policy
+    type: PrivacyPolicy
+  - url: https://forums.losant.com/
+    type: Community
+    name: Losant Forums
+  - url: https://www.losant.com/
+    type: DeveloperPortal
+    name: Losant
+  - url: https://www.suse.com/news/suse-acquires-losant
+    type: ParentCompany
+    name: SUSE (acquired Losant)
+created: '2026-05-25'
+modified: '2026-08-26'
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.23'
+x-enrichment:
+  date: '2026-08-26'
+  status: enriched
+  artifacts_added: 33
+  pass: local-v1

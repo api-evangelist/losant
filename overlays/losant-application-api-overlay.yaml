@@ -1,0 +1,266 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Losant Application API
+  version: 1.0.0
+extends: openapi/losant-application-api-openapi.yml
+x-generated: '2026-08-26'
+x-method: generated
+x-source: https://api.losant.com/ (Losant Bravado API schema, info.version 1.30.2)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      pass: local-v1
+      date: '2026-08-26'
+      operation-ids: added from the Losant Bravado schema at https://api.losant.com/ (resource.action identifiers, e.g. device.get)
+      paths: sub-path operations restored from the same schema; the prior revision collapsed operations such as device.payloadCountsBreakdown
+        onto their parent resource path
+- target: $.paths['/applicationTemplates/keywords'].get
+  update:
+    operationId: applicationTemplates.getUniqueKeywords
+- target: $.paths['/applicationTemplates/{templateId}'].get
+  update:
+    operationId: applicationTemplate.get
+- target: $.paths['/applications/import'].post
+  update:
+    operationId: applications.import
+- target: $.paths['/applications/periodSummaries'].get
+  update:
+    operationId: applications.periodSummaries
+- target: $.paths['/applications/{applicationId}'].delete
+  update:
+    operationId: application.delete
+- target: $.paths['/applications/{applicationId}/certificate-authorities'].get
+  update:
+    operationId: applicationCertificateAuthorities.get
+- target: $.paths['/applications/{applicationId}/certificate-authorities'].post
+  update:
+    operationId: applicationCertificateAuthorities.post
+- target: $.paths['/applications/{applicationId}/certificate-authorities/{applicationCertificateAuthorityId}'].get
+  update:
+    operationId: applicationCertificateAuthority.get
+- target: $.paths['/applications/{applicationId}/certificate-authorities/{applicationCertificateAuthorityId}'].patch
+  update:
+    operationId: applicationCertificateAuthority.patch
+- target: $.paths['/applications/{applicationId}/certificate-authorities/{applicationCertificateAuthorityId}'].delete
+  update:
+    operationId: applicationCertificateAuthority.delete
+- target: $.paths['/applications/{applicationId}/certificates'].get
+  update:
+    operationId: applicationCertificates.get
+- target: $.paths['/applications/{applicationId}/certificates'].post
+  update:
+    operationId: applicationCertificates.post
+- target: $.paths['/applications/{applicationId}/certificates/{applicationCertificateId}'].get
+  update:
+    operationId: applicationCertificate.get
+- target: $.paths['/applications/{applicationId}/certificates/{applicationCertificateId}'].patch
+  update:
+    operationId: applicationCertificate.patch
+- target: $.paths['/applications/{applicationId}/certificates/{applicationCertificateId}'].delete
+  update:
+    operationId: applicationCertificate.delete
+- target: $.paths['/applications/{applicationId}/credentials'].get
+  update:
+    operationId: credentials.get
+- target: $.paths['/applications/{applicationId}/credentials'].post
+  update:
+    operationId: credentials.post
+- target: $.paths['/applications/{applicationId}/credentials/{credentialId}'].patch
+  update:
+    operationId: credential.patch
+- target: $.paths['/applications/{applicationId}/credentials/{credentialId}'].delete
+  update:
+    operationId: credential.delete
+- target: $.paths['/applications/{applicationId}/credentials/{credentialId}/linkedResources'].get
+  update:
+    operationId: credential.linkedResources
+- target: $.paths['/applications/{applicationId}/dashboards'].get
+  update:
+    operationId: applicationDashboards.get
+- target: $.paths['/applications/{applicationId}/dashboards'].post
+  update:
+    operationId: applicationDashboards.post
+- target: $.paths['/applications/{applicationId}/dashboards/{dashboardId}'].get
+  update:
+    operationId: applicationDashboard.get
+- target: $.paths['/applications/{applicationId}/dashboards/{dashboardId}'].patch
+  update:
+    operationId: applicationDashboard.patch
+- target: $.paths['/applications/{applicationId}/dashboards/{dashboardId}'].delete
+  update:
+    operationId: applicationDashboard.delete
+- target: $.paths['/applications/{applicationId}/dashboards/{dashboardId}'].post
+  update:
+    operationId: applicationDashboard.sendReport
+- target: $.paths['/applications/{applicationId}/events'].patch
+  update:
+    operationId: events.patch
+- target: $.paths['/applications/{applicationId}/events/export'].post
+  update:
+    operationId: events.export
+- target: $.paths['/applications/{applicationId}/events/mostRecentBySeverity'].get
+  update:
+    operationId: events.mostRecentBySeverity
+- target: $.paths['/applications/{applicationId}/events/{eventId}'].get
+  update:
+    operationId: event.get
+- target: $.paths['/applications/{applicationId}/events/{eventId}'].patch
+  update:
+    operationId: event.patch
+- target: $.paths['/applications/{applicationId}/events/{eventId}'].delete
+  update:
+    operationId: event.delete
+- target: $.paths['/applications/{applicationId}/file/{fileId}'].get
+  update:
+    operationId: file.get
+- target: $.paths['/applications/{applicationId}/file/{fileId}'].patch
+  update:
+    operationId: file.patch
+- target: $.paths['/applications/{applicationId}/file/{fileId}'].delete
+  update:
+    operationId: file.delete
+- target: $.paths['/applications/{applicationId}/file/{fileId}/upload'].post
+  update:
+    operationId: file.upload
+- target: $.paths['/applications/{applicationId}/files'].get
+  update:
+    operationId: files.get
+- target: $.paths['/applications/{applicationId}/files'].post
+  update:
+    operationId: files.post
+- target: $.paths['/applications/{applicationId}/globals'].patch
+  update:
+    operationId: application.globals
+- target: $.paths['/applications/{applicationId}/import'].post
+  update:
+    operationId: application.import
+- target: $.paths['/applications/{applicationId}/importLogs'].get
+  update:
+    operationId: application.importLogs
+- target: $.paths['/applications/{applicationId}/integrations'].get
+  update:
+    operationId: integrations.get
+- target: $.paths['/applications/{applicationId}/integrations'].post
+  update:
+    operationId: integrations.post
+- target: $.paths['/applications/{applicationId}/integrations/{integrationId}'].get
+  update:
+    operationId: integration.get
+- target: $.paths['/applications/{applicationId}/integrations/{integrationId}'].patch
+  update:
+    operationId: integration.patch
+- target: $.paths['/applications/{applicationId}/integrations/{integrationId}'].delete
+  update:
+    operationId: integration.delete
+- target: $.paths['/applications/{applicationId}/jobLogs'].get
+  update:
+    operationId: applicationJobLogs.get
+- target: $.paths['/applications/{applicationId}/jobLogs/{jobId}'].get
+  update:
+    operationId: applicationJobLog.get
+- target: $.paths['/applications/{applicationId}/keys'].get
+  update:
+    operationId: applicationKeys.get
+- target: $.paths['/applications/{applicationId}/keys'].post
+  update:
+    operationId: applicationKeys.post
+- target: $.paths['/applications/{applicationId}/keys/{applicationKeyId}'].get
+  update:
+    operationId: applicationKey.get
+- target: $.paths['/applications/{applicationId}/keys/{applicationKeyId}'].patch
+  update:
+    operationId: applicationKey.patch
+- target: $.paths['/applications/{applicationId}/keys/{applicationKeyId}'].delete
+  update:
+    operationId: applicationKey.delete
+- target: $.paths['/applications/{applicationId}/privateFiles'].get
+  update:
+    operationId: privateFiles.get
+- target: $.paths['/applications/{applicationId}/privateFiles'].post
+  update:
+    operationId: privateFiles.post
+- target: $.paths['/applications/{applicationId}/privateFiles/{privateFileId}'].get
+  update:
+    operationId: privateFile.get
+- target: $.paths['/applications/{applicationId}/privateFiles/{privateFileId}'].patch
+  update:
+    operationId: privateFile.patch
+- target: $.paths['/applications/{applicationId}/privateFiles/{privateFileId}'].delete
+  update:
+    operationId: privateFile.delete
+- target: $.paths['/applications/{applicationId}/privateFiles/{privateFileId}/upload'].post
+  update:
+    operationId: privateFile.upload
+- target: $.paths['/applications/{applicationId}/resource-jobs'].get
+  update:
+    operationId: resourceJobs.get
+- target: $.paths['/applications/{applicationId}/resource-jobs'].post
+  update:
+    operationId: resourceJobs.post
+- target: $.paths['/applications/{applicationId}/resource-jobs/{resourceJobId}'].patch
+  update:
+    operationId: resourceJob.patch
+- target: $.paths['/applications/{applicationId}/resource-jobs/{resourceJobId}'].delete
+  update:
+    operationId: resourceJob.delete
+- target: $.paths['/applications/{applicationId}/resource-jobs/{resourceJobId}/cancelExecution'].post
+  update:
+    operationId: resourceJob.cancelExecution
+- target: $.paths['/applications/{applicationId}/resource-jobs/{resourceJobId}/logs'].get
+  update:
+    operationId: resourceJob.logs
+- target: $.paths['/applications/{applicationId}/tokens'].get
+  update:
+    operationId: applicationApiTokens.get
+- target: $.paths['/applications/{applicationId}/tokens'].post
+  update:
+    operationId: applicationApiTokens.post
+- target: $.paths['/applications/{applicationId}/tokens/{apiTokenId}'].get
+  update:
+    operationId: applicationApiToken.get
+- target: $.paths['/applications/{applicationId}/tokens/{apiTokenId}'].patch
+  update:
+    operationId: applicationApiToken.patch
+- target: $.paths['/applications/{applicationId}/tokens/{apiTokenId}'].delete
+  update:
+    operationId: applicationApiToken.delete
+- target: $.paths['/applications/{applicationId}/webhooks'].get
+  update:
+    operationId: webhooks.get
+- target: $.paths['/applications/{applicationId}/webhooks'].post
+  update:
+    operationId: webhooks.post
+- target: $.paths['/applications/{applicationId}/webhooks/{webhookId}'].get
+  update:
+    operationId: webhook.get
+- target: $.paths['/applications/{applicationId}/webhooks/{webhookId}'].patch
+  update:
+    operationId: webhook.patch
+- target: $.paths['/applications/{applicationId}/webhooks/{webhookId}'].delete
+  update:
+    operationId: webhook.delete
+- target: $.paths['/dashboards'].get
+  update:
+    operationId: dashboards.get
+- target: $.paths['/dashboards'].post
+  update:
+    operationId: dashboards.post
+- target: $.paths['/dashboards/{dashboardId}'].get
+  update:
+    operationId: dashboard.get
+- target: $.paths['/dashboards/{dashboardId}'].patch
+  update:
+    operationId: dashboard.patch
+- target: $.paths['/dashboards/{dashboardId}'].delete
+  update:
+    operationId: dashboard.delete
+- target: $.paths['/dashboards/{dashboardId}'].post
+  update:
+    operationId: dashboard.sendReport
+- target: $.paths['/orgs/{orgId}/audit-logs'].get
+  update:
+    operationId: auditLogs.get
+- target: $.paths['/orgs/{orgId}/audit-logs/{auditLogId}'].get
+  update:
+    operationId: auditLog.get

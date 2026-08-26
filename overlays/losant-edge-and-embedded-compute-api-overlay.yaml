@@ -1,0 +1,35 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Losant Application Edge and Embedded Compute API
+  version: 1.0.0
+extends: openapi/losant-edge-and-embedded-compute-api-openapi.yml
+x-generated: '2026-08-26'
+x-method: generated
+x-source: https://api.losant.com/ (Losant Bravado API schema, info.version 1.30.2)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      pass: local-v1
+      date: '2026-08-26'
+      operation-ids: added from the Losant Bravado schema at https://api.losant.com/ (resource.action identifiers, e.g. device.get)
+      paths: sub-path operations restored from the same schema; the prior revision collapsed operations such as device.payloadCountsBreakdown
+        onto their parent resource path
+- target: $.paths['/applications/{applicationId}/edge/deployments'].get
+  update:
+    operationId: edgeDeployments.get
+- target: $.paths['/applications/{applicationId}/edge/deployments/replace'].post
+  update:
+    operationId: edgeDeployments.replace
+- target: $.paths['/applications/{applicationId}/edge/deployments/{edgeDeploymentId}'].get
+  update:
+    operationId: edgeDeployment.get
+- target: $.paths['/applications/{applicationId}/embedded/deployments'].get
+  update:
+    operationId: embeddedDeployments.get
+- target: $.paths['/applications/{applicationId}/embedded/deployments/export'].post
+  update:
+    operationId: embeddedDeployments.export
+- target: $.paths['/applications/{applicationId}/embedded/deployments/{embeddedDeploymentId}'].get
+  update:
+    operationId: embeddedDeployment.get

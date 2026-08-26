@@ -1,0 +1,94 @@
+generated: '2026-08-26'
+method: searched
+source: |
+  https://api.losant.com/.well-known/oauth-authorization-server,
+  https://mcp.losant.com/.well-known/oauth-protected-resource,
+  https://docs.losant.com/references/security/, https://docs.losant.com/mqtt/overview/,
+  https://docs.losant.com/mcp/overview/, openapi/*.yml
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: 'RFC 6749 authorization code flow with PKCE; authorization_endpoint https://accounts.losant.com/oauth, token_endpoint https://api.losant.com/oauth/token'
+  - id: rfc8414-oauth-authorization-server-metadata
+    conforms: true
+    evidence: 'https://api.losant.com/.well-known/oauth-authorization-server returns 200 with issuer, endpoints, grant_types_supported and scopes_supported (saved as well-known/losant-oauth-authorization-server.json)'
+  - id: rfc9728-oauth-protected-resource-metadata
+    conforms: true
+    evidence: 'https://mcp.losant.com/.well-known/oauth-protected-resource returns 200 naming resource https://mcp.losant.com/mcp and authorization_servers [https://api.losant.com]'
+  - id: rfc7636-pkce
+    conforms: true
+    evidence: 'code_challenge_methods_supported: ["S256"]'
+  - id: rfc7591-dynamic-client-registration
+    conforms: true
+    evidence: 'registration_endpoint https://api.losant.com/oauth/clients; client_id_metadata_document_supported true'
+  - id: rfc7009-token-revocation
+    conforms: true
+    evidence: 'revocation_endpoint https://api.losant.com/oauth/revoke'
+  - id: rfc9207-authorization-server-issuer-identification
+    conforms: true
+    evidence: 'authorization_response_iss_parameter_supported: true'
+  - id: rfc6750-bearer-token
+    conforms: true
+    evidence: 'Authorization: Bearer <token> on the Platform API; the MCP server returns an RFC-compliant WWW-Authenticate challenge on 401'
+  - id: rfc6238-totp
+    conforms: true
+    evidence: 'multi-factor authentication documented at https://docs.losant.com/references/security/ as RFC 6238 TOTP'
+  - id: jwt
+    conforms: true
+    evidence: 'API access tokens are JSON Web Tokens with scope encrypted into the token'
+  - id: openidconnect
+    conforms: false
+    evidence: '/.well-known/openid-configuration returns 405 on api.losant.com; Losant is an OAuth 2.0 authorization server, not an OIDC provider'
+  - id: mqtt-3.1.1
+    conforms: true
+    evidence: 'https://docs.losant.com/mqtt/overview/ - MQTT v3.1.1 with documented exceptions: subscribe QoS 0 only, publish QoS 0 or 1, no retained messages, no CleanSession 0, 256KB max payload'
+  - id: model-context-protocol
+    conforms: true
+    evidence: 'hosted MCP server at https://mcp.losant.com/mcp (streamable HTTP), OAuth-gated; source github.com/Losant/losant-mcp-server, CHANGELOG cites MCP spec version 2025-03-26'
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'errors return application/json with a bespoke {type, message} envelope, not application/problem+json - see errors/losant-problem-types.yml'
+  - id: json-api
+    conforms: false
+    evidence: 'responses are plain JSON collections {count, items, page, perPage, totalCount, _links}, not JSON:API'
+  - id: hal
+    conforms: partial
+    evidence: 'responses embed a _links object with self/parent hrefs and a _type discriminator - HAL-like link relations without the application/hal+json media type'
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: 'no Sunset or Deprecation header documented; see lifecycle/losant-lifecycle.yml'
+  - id: openapi-3.0
+    conforms: true
+    evidence: 'openapi/*.yml are OpenAPI 3.0.3, derived by API Evangelist from the provider Bravado schema at https://api.losant.com/ - Losant itself publishes Bravado/Swagger-2-style JSON, not OpenAPI'
+  - id: asyncapi
+    conforms: false
+    evidence: 'no AsyncAPI document is published; the event surface (MQTT topics + webhooks) is captured in asyncapi/losant-event-surface.yml'
+  - id: scim
+    conforms: false
+  - id: odata
+    conforms: false
+  - id: fhir
+    conforms: false
+compliance:
+  published: true
+  page: https://docs.losant.com/references/security/
+  certifications:
+    - {name: 'SOC 2', status: certified, cadence: 'annual recertification and audit', evidence: 'https://docs.losant.com/references/security/'}
+    - {name: 'ISO 27001', status: certified, cadence: 'annual audit and recertification', evidence: 'https://docs.losant.com/references/security/'}
+  practices:
+    - {name: 'Annual whitebox penetration test by an outside firm', evidence: 'https://docs.losant.com/references/security/'}
+    - {name: 'TLS 1.2 / 1.3 for all device and API traffic', evidence: 'https://docs.losant.com/references/security/'}
+    - {name: 'Encryption at rest on Google Compute Engine persistent disks', evidence: 'https://docs.losant.com/references/security/'}
+domain_standards:
+  market: Industrial IoT / connected products
+  checked:
+    - {id: sparkplug-b, present: false, note: 'no Sparkplug topic namespace (spBv1.0/...) - Losant defines its own losant/<deviceId>/state and losant/<deviceId>/command topics'}
+    - {id: lwm2m, present: false}
+    - {id: opc-ua, present: false, note: 'reachable only through Gateway Edge Agent protocol nodes, not through the Platform API contract'}
+    - {id: ocf-onem2m, present: false}
+    - {id: wot-thing-description, present: false}
+  declared: null
+  note: |
+    REWARD-ONLY check, and Losant declares no IIoT domain standard in its contract. The one genuine
+    protocol-level standard it does declare is MQTT 3.1.1 (recorded above with its documented exceptions);
+    the payload schema on those topics is Losant's own, not Sparkplug B.

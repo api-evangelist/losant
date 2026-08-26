@@ -1,0 +1,102 @@
+generated: '2026-08-26'
+method: derived
+source: openapi/*.yml (4xx/5xx responses) + https://docs.losant.com/rest-api/overview/
+format: bespoke-json
+notes: 'Losant does NOT use RFC 9457 application/problem+json. Every error response is application/json carrying the
+  `error` schema: {"type": "<ErrorName>", "message": "<human readable>"}. The same envelope is returned by the API host
+  for routing failures - an unmapped path answers 405 {"type":"MethodNotAllowed","message":"GET is not allowed"}, which
+  is how this envelope was confirmed live rather than only from the spec.'
+envelope:
+  media_type: application/json
+  schema: '#/components/schemas/error'
+  fields:
+  - name: type
+    type: string
+    description: Machine-readable error name, e.g. MethodNotAllowed, Validation, NotFound.
+  - name: message
+    type: string
+    description: Human-readable explanation.
+  observed_example:
+    type: MethodNotAllowed
+    message: GET is not allowed
+  observed_at: https://api.losant.com/openapi.json (GET, HTTP 405, probed 2026-08-26)
+problems:
+- status: 400
+  title: Malformed request
+  occurrences: 236
+  descriptions:
+  - Error if malformed request
+  remediation: Fix the request body or query parameters against the operation schema; validation failures are returned
+    as a single 400 with a message naming the field.
+  schema: '#/components/schemas/error'
+  example_operations:
+  - openapi/losant-application-api-openapi.yml#applicationTemplates.getUniqueKeywords
+  - openapi/losant-application-api-openapi.yml#applicationTemplate.get
+  - openapi/losant-application-api-openapi.yml#applications.import
+  - openapi/losant-application-api-openapi.yml#applications.periodSummaries
+  - openapi/losant-application-api-openapi.yml#application.delete
+  - openapi/losant-application-api-openapi.yml#applicationCertificateAuthorities.get
+- status: 401
+  title: Unauthorized
+  occurrences: 1
+  descriptions:
+  - Unauthorized error if authentication fails
+  remediation: 'Obtain a token via POST /auth/user, POST /auth/device or an API/OAuth token, and send it as `Authorization:
+    Bearer <token>`. A missing or expired token returns 401.'
+  schema: '#/components/schemas/error'
+  example_operations:
+  - openapi/losant-authentication-and-account-api-openapi.yml#auth.authenticateUserSaml
+- status: 404
+  title: Resource not found
+  occurrences: 211
+  descriptions:
+  - Error if application was not found
+  - Error if API token was not found
+  - Error if dashboard was not found
+  - Error if data table was not found
+  - Error if device was not found
+  - Error if instance was not found
+  remediation: Verify the applicationId and the resource id (both are 24-character hex ObjectIds, pattern ^[A-Fa-f\d]{24}$).
+    A deleted device also 404s unless the request passes queryDeleted.
+  schema: '#/components/schemas/error'
+  example_operations:
+  - openapi/losant-application-api-openapi.yml#applicationTemplate.get
+  - openapi/losant-application-api-openapi.yml#applications.import
+  - openapi/losant-application-api-openapi.yml#application.delete
+  - openapi/losant-application-api-openapi.yml#applicationCertificateAuthorities.get
+  - openapi/losant-application-api-openapi.yml#applicationCertificateAuthorities.post
+  - openapi/losant-application-api-openapi.yml#applicationCertificateAuthority.get
+- status: 410
+  title: Gone
+  occurrences: 3
+  descriptions:
+  - Error if invite has expired
+  - Error if invitation has expired
+  remediation: The organization invitation has expired; issue a new invite with org.inviteMember.
+  schema: '#/components/schemas/error'
+  example_operations:
+  - openapi/losant-authentication-and-account-api-openapi.yml#orgInvites.get
+  - openapi/losant-authentication-and-account-api-openapi.yml#orgInvites.post
+  - openapi/losant-authentication-and-account-api-openapi.yml#me.respondToInvite
+- status: 422
+  title: Unprocessable entity
+  occurrences: 1
+  descriptions:
+  - Error if too many validation errors occurred on other resources
+  remediation: Too many validation errors occurred on related resources - correct the referenced resources and retry.
+  schema: '#/components/schemas/error'
+  example_operations:
+  - openapi/losant-application-api-openapi.yml#applications.import
+undocumented:
+  note: No 429 or 5xx response is declared in any operation, yet Losant documents per-endpoint throttles (rate-limits/losant-rate-limits.yml)
+    and MQTT bans. Agents must handle 429 and 5xx even though the contract does not declare them.
+  statuses:
+  - 429
+  - 500
+  - 502
+  - 503
+rate_limit_errors:
+  http: 429 Too Many Requests on throttled REST endpoints
+  mqtt: exceeding MQTT message limits disconnects and bans the client for 30 seconds, doubling on each repeat violation
+    up to 1 hour; resets after 15 minutes of compliant traffic
+  source: https://docs.losant.com/mqtt/overview/

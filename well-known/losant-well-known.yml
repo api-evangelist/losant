@@ -1,0 +1,58 @@
+generated: '2026-08-26'
+method: probed
+source: live GET of each /.well-known/ path on every Losant host in apis.yml
+notes: |
+  Losant serves a real RFC 8414 OAuth 2.0 Authorization Server Metadata document from the Platform API
+  host, and the hosted MCP server (mcp.losant.com) serves both RFC 8414 and RFC 9728 (OAuth 2.0
+  Protected Resource Metadata) documents. These are the documents an MCP client discovers when it hits
+  the 401 challenge on https://mcp.losant.com/mcp.
+
+  The Platform API host answers every unmapped path with HTTP 405 {"type":"MethodNotAllowed"} rather
+  than 404, so a 405 here is a genuine "this path is not served" result, not a soft block. The marketing
+  site (www.losant.com) and the Docusaurus docs host both answer unmapped /.well-known/ paths with an
+  HTML 404 page.
+hit_count: 3
+hosts:
+  - host: https://api.losant.com
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: losant-oauth-authorization-server.json
+      - path: /.well-known/oauth-protected-resource
+        status: 405
+      - path: /.well-known/openid-configuration
+        status: 405
+      - path: /.well-known/security.txt
+        status: 405
+      - path: /.well-known/api-catalog
+        status: 405
+      - path: /.well-known/ai-plugin.json
+        status: 405
+      - path: /.well-known/agent-card.json
+        status: 405
+      - path: /.well-known/agent.json
+        status: 405
+  - host: https://mcp.losant.com
+    documents:
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        file: losant-mcp-oauth-protected-resource.json
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: losant-mcp-oauth-authorization-server.json
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+  - host: https://www.losant.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://docs.losant.com
+    documents:
+      - path: /.well-known/agent-card.json
+        status: 404

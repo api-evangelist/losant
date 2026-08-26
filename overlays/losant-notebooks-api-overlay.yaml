@@ -1,0 +1,35 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Losant Application Notebooks API
+  version: 1.0.0
+extends: openapi/losant-notebooks-api-openapi.yml
+x-generated: '2026-08-26'
+x-method: generated
+x-source: https://api.losant.com/ (Losant Bravado API schema, info.version 1.30.2)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      pass: local-v1
+      date: '2026-08-26'
+      operation-ids: added from the Losant Bravado schema at https://api.losant.com/ (resource.action identifiers, e.g. device.get)
+      paths: sub-path operations restored from the same schema; the prior revision collapsed operations such as device.payloadCountsBreakdown
+        onto their parent resource path
+- target: $.paths['/applications/{applicationId}/notebooks'].get
+  update:
+    operationId: notebooks.get
+- target: $.paths['/applications/{applicationId}/notebooks'].post
+  update:
+    operationId: notebooks.post
+- target: $.paths['/applications/{applicationId}/notebooks/{notebookId}'].patch
+  update:
+    operationId: notebook.patch
+- target: $.paths['/applications/{applicationId}/notebooks/{notebookId}'].delete
+  update:
+    operationId: notebook.delete
+- target: $.paths['/applications/{applicationId}/notebooks/{notebookId}/cancelExecution'].post
+  update:
+    operationId: notebook.cancelExecution
+- target: $.paths['/applications/{applicationId}/notebooks/{notebookId}/notebookMinuteCounts'].get
+  update:
+    operationId: notebook.notebookMinuteCounts

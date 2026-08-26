@@ -1,0 +1,87 @@
+generated: '2026-08-26'
+method: searched
+source: https://www.losant.com/blog
+sources:
+  - {name: 'Platform Update blog series (the platform changelog)', url: 'https://www.losant.com/blog', feed: 'https://www.losant.com/blog/rss.xml'}
+  - {name: 'Gateway Edge Agent changelog', url: 'https://docs.losant.com/edge-compute/gateway-edge-agent/changelog/'}
+  - {name: 'Embedded Edge Agent changelog', url: 'https://docs.losant.com/edge-compute/embedded-edge-agent/changelog/'}
+  - {name: 'Losant MCP Server changelog', url: 'https://github.com/Losant/losant-mcp-server/blob/main/CHANGELOG.md'}
+scheme:
+  platform: 'No dated per-release changelog page. Platform changes are announced as "Platform Update - <title>" posts on the company blog, roughly every 4-10 weeks. The API schema at https://api.losant.com/ carries a semver info.version that advances silently (1.30.2 on 2026-08-26).'
+  components: 'Semantic Versioning with Keep a Changelog formatting for the Gateway Edge Agent, Embedded Edge Agent and MCP Server, each with its own dated changelog.'
+current:
+  platform_api: '1.30.2'
+  gateway_edge_agent: '2.5.0'
+  mcp_server: '1.1.0'
+entries:
+  - version: null
+    date: '2026-08-26'
+    channel: platform
+    title: 'Platform Update - Losant MCP Server Write Tools'
+    url: https://www.losant.com/blog/platform-update-losant-mcp-server-write-tools
+    breaking: false
+    additions: ['losant_write MCP tool']
+  - version: '1.1.0'
+    date: '2026-08-25'
+    channel: mcp-server
+    title: 'losant_write tool, flow/dashboard/experience authoring guides'
+    url: https://github.com/Losant/losant-mcp-server/blob/main/CHANGELOG.md
+    breaking: false
+    additions:
+      - 'losant_write MCP tool with 25 writable resource types'
+      - 'flow authoring guide - 90 node specs, 35 trigger specs'
+      - 'dashboard authoring guide with block-level specs'
+      - 'experience view and endpoint authoring guides'
+      - 'ARM64 Docker image, SBOM and provenance attestations'
+    changed: ['Node.js runtime upgraded to 24.19']
+  - version: '2.5.0'
+    date: '2026-08-25'
+    channel: gateway-edge-agent
+    url: https://docs.losant.com/edge-compute/gateway-edge-agent/changelog/
+    breaking: false
+    additions: ['Redis Node configurable timeout template field']
+    fixed: ['Modbus Read/Write honor the configured Start of Frame character for ASCII serial', 'Snowflake Node timeout race condition', 'Lambda Node DNS caching', 'comparison helpers usable as subexpressions']
+  - version: null
+    date: '2026-07-21'
+    channel: platform
+    title: 'Platform Update - Device Certificates, Edge: Deploy Node'
+    url: https://www.losant.com/blog/platform-update-device-certificates-edge-deploy-node
+    breaking: false
+    additions: ['device certificates (X.509)', 'Edge: Deploy workflow node']
+  - version: '1.0.1'
+    date: '2026-06-12'
+    channel: mcp-server
+    url: https://github.com/Losant/losant-mcp-server/blob/main/CHANGELOG.md
+    breaking: false
+    additions: ['/.well-known/oauth-authorization-server endpoint (RFC 8414 / MCP spec 2025-03-26)']
+  - version: '1.0.0'
+    date: '2026-06-04'
+    channel: mcp-server
+    url: https://www.losant.com/blog/introducing-the-losant-mcp-server
+    breaking: false
+    additions: ['initial Losant MCP Server release with losant_query and losant_timeseries', 'OAuth 2.0 bearer auth (RFC 6750, 7235, 8707, 9728)', 'RFC 9728 protected-resource metadata', 'Docker support', '/healthz']
+  - version: null
+    date: '2026-04-08'
+    channel: platform
+    title: 'Platform Update - New Crypto and Certificate Nodes'
+    url: https://www.losant.com/blog/platform-update-new-crypto-and-certificate-nodes
+    breaking: false
+  - version: null
+    date: '2026-03-04'
+    channel: platform
+    title: 'Platform Update - Access Key Improvements, Datadog Workflow Node'
+    url: https://www.losant.com/blog/platform-update-access-key-improvements-datadog-workflow-node
+    breaking: false
+  - version: null
+    date: '2026-01-27'
+    channel: platform
+    title: 'Platform Update - Updatable Event Fields, Cloud Storage To/From Edge Device Files'
+    url: https://www.losant.com/blog/platform-update-updatable-event-fields-cloud-storage-to-from-edge-device-files
+    breaking: false
+  - version: null
+    date: '2025-10-28'
+    channel: platform
+    title: 'Platform Update - Private Application Files and Custom HTML Block Code Generation'
+    url: https://www.losant.com/blog/platform-update-private-application-files-and-custom-html-block-code-generation
+    breaking: false
+window: 'recent - 2025-10 through 2026-08; the blog feed at https://www.losant.com/blog/rss.xml is the live source'

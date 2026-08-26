@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: Losant Application API
   version: 1.29.4
-  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations, files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations,
+    files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant
+    Platform API (Bravado/Swagger 2) at https://api.losant.com/.
   contact:
     name: Losant Support
     url: https://www.losant.com/contact
@@ -21,1510 +23,21 @@ tags:
 - name: Application
   description: Application resources on the Losant Platform.
 paths:
-  /applications/{applicationId}/tokens/{apiTokenId}:
+  /applicationTemplates/keywords:
     get:
-      summary: Retrieves Information on an API Token
+      operationId: applicationTemplates.getUniqueKeywords
+      summary: Returns an Array of All Unique Keywords Currently in Use by Templates
       tags:
       - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: apiTokenId
-        in: path
-        description: ID associated with the API token
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
-          description: API token information
+          description: Array of all unique template keywords
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/apiToken'
+                $ref: '#/components/schemas/templateKeywords'
         '400':
           description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if API token was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates Information About an API Token
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: apiTokenId
-        in: path
-        description: ID associated with the API token
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new properties of the API token
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/apiTokenPatch'
-      responses:
-        '200':
-          description: Updated API token information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiToken'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if API token was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes an API Token
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: apiTokenId
-        in: path
-        description: ID associated with the API token
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If API token was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if API token was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/tokens:
-    get:
-      summary: Returns the API Tokens for an Application
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortField
-        in: query
-        description: Field to sort the results by
-        required: false
-        example: name
-        schema:
-          type: string
-          enum:
-          - name
-          - status
-          - id
-          - creationDate
-          - lastUpdated
-          - expirationDate
-          default: name
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: asc
-      - name: page
-        in: query
-        description: Which page of results to return
-        required: false
-        example: 0
-        schema:
-          type: string
-          default: 0
-      - name: perPage
-        in: query
-        description: How many items to return per page
-        required: false
-        example: 10
-        schema:
-          type: string
-          default: 100
-      - name: filterField
-        in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
-        required: false
-        example: key
-        schema:
-          type: string
-          enum:
-          - name
-          - status
-      - name: filter
-        in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: my*token
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Collection of API tokens
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiTokens'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Create a New API Token for an Application
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: API token information
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/apiTokenPost'
-      responses:
-        '201':
-          description: The successfully created API token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiToken'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/certificate-authorities:
-    get:
-      summary: Returns the Application Certificate Authorities for an Application
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortField
-        in: query
-        description: Field to sort the results by
-        required: false
-        example: name
-        schema:
-          type: string
-          enum:
-          - name
-          - status
-          - id
-          - creationDate
-          - lastUpdated
-          default: name
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: asc
-      - name: page
-        in: query
-        description: Which page of results to return
-        required: false
-        example: 0
-        schema:
-          type: string
-          default: 0
-      - name: perPage
-        in: query
-        description: How many items to return per page
-        required: false
-        example: 10
-        schema:
-          type: string
-          default: 100
-      - name: filterField
-        in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
-        required: false
-        example: name
-        schema:
-          type: string
-          enum:
-          - name
-          - status
-      - name: filter
-        in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: the*name
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Collection of application certificate authorities
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationCertificateAuthorities'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Create a New Application Certificate Authority for an Application
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Application certificate authority information
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/applicationCertificateAuthorityPost'
-      responses:
-        '201':
-          description: Successfully created application certificate authority
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationCertificateAuthority'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/certificate-authorities/{applicationCertificateAuthorityId}:
-    get:
-      summary: Retrieves Information on an Application Certificate Authority
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationCertificateAuthorityId
-        in: path
-        description: ID associated with the application certificate authority
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: Application certificate authority information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationCertificateAuthority'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application certificate authority was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates Information About an Application Certificate Authority
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationCertificateAuthorityId
-        in: path
-        description: ID associated with the application certificate authority
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new properties of the application certificate authority
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/applicationCertificateAuthorityPatch'
-      responses:
-        '200':
-          description: Updated application certificate authority information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationCertificateAuthority'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application certificate authority was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes an Application Certificate Authority
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationCertificateAuthorityId
-        in: path
-        description: ID associated with the application certificate authority
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If application certificate authority was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application certificate authority was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/certificates/{applicationCertificateId}:
-    get:
-      summary: Retrieves Information on an Application Certificate
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationCertificateId
-        in: path
-        description: ID associated with the application certificate
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: Application certificate information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationCertificate'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application certificate was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates Information About an Application Certificate
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationCertificateId
-        in: path
-        description: ID associated with the application certificate
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new properties of the application certificate
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/applicationCertificatePatch'
-      responses:
-        '200':
-          description: Updated application certificate information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationCertificate'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application certificate was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes an Application Certificate
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationCertificateId
-        in: path
-        description: ID associated with the application certificate
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If application certificate was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application certificate was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/certificates:
-    get:
-      summary: Returns the Application Certificates for an Application
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortField
-        in: query
-        description: Field to sort the results by
-        required: false
-        example: status
-        schema:
-          type: string
-          enum:
-          - certificateInfo.commonName
-          - status
-          - id
-          - creationDate
-          - lastUpdated
-          default: certificateInfo.commonName
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: asc
-      - name: page
-        in: query
-        description: Which page of results to return
-        required: false
-        example: 0
-        schema:
-          type: string
-          default: 0
-      - name: perPage
-        in: query
-        description: How many items to return per page
-        required: false
-        example: 10
-        schema:
-          type: string
-          default: 100
-      - name: filterField
-        in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
-        required: false
-        example: status
-        schema:
-          type: string
-          enum:
-          - certificateInfo.commonName
-          - status
-      - name: filter
-        in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: the*status
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Collection of application certificates
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationCertificates'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Create a New Application Certificate for an Application
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Application certificate information
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/applicationCertificatePost'
-      responses:
-        '201':
-          description: Successfully created application certificate
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationCertificate'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/dashboards/{dashboardId}:
-    get:
-      summary: Retrieves Information on a Dashboard
-      tags:
-      - Application
-      parameters:
-      - name: dashboardId
-        in: path
-        description: ID of the associated dashboard
-        required: true
-        example: 575ece2b7ae143cd83dc4a9b
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationId
-        in: path
-        description: ID of the associated application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: Dashboard information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dashboard'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if dashboard was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates Information About a Dashboard
-      tags:
-      - Application
-      parameters:
-      - name: dashboardId
-        in: path
-        description: ID of the associated dashboard
-        required: true
-        example: 575ece2b7ae143cd83dc4a9b
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationId
-        in: path
-        description: ID of the associated application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new dashboard properties
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/dashboardPatch'
-      responses:
-        '200':
-          description: Update dashboard information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dashboard'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if dashboard was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes a Dashboard
-      tags:
-      - Application
-      parameters:
-      - name: dashboardId
-        in: path
-        description: ID of the associated dashboard
-        required: true
-        example: 575ece2b7ae143cd83dc4a9b
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationId
-        in: path
-        description: ID of the associated application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If dashboard was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if dashboard was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Sends a Snapshot of a Dashboard
-      tags:
-      - Application
-      parameters:
-      - name: dashboardId
-        in: path
-        description: ID of the associated dashboard
-        required: true
-        example: 575ece2b7ae143cd83dc4a9b
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationId
-        in: path
-        description: ID of the associated application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing report options
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/dashboardSendReport'
-      responses:
-        '202':
-          description: If dashboard report was enqueued to be sent
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/jobEnqueuedResult'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if dashboard was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/jobLogs/{jobId}:
-    get:
-      summary: Returns the Job Log for the Given ID
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: jobId
-        in: path
-        description: ID associated with the job execution
-        required: true
-        example: 575ec8687ae143cd83dc4a98
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: An application job log
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationJobLog'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application job log was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/dashboards:
-    get:
-      summary: Returns All Dashboards Scoped to the Given Application.
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortField
-        in: query
-        description: Field to sort the results by
-        required: false
-        example: name
-        schema:
-          type: string
-          enum:
-          - name
-          - id
-          - creationDate
-          - lastUpdated
-          default: name
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: asc
-      - name: page
-        in: query
-        description: Which page of results to return
-        required: false
-        example: 0
-        schema:
-          type: string
-          default: 0
-      - name: perPage
-        in: query
-        description: How many items to return per page
-        required: false
-        example: 10
-        schema:
-          type: string
-          default: 100
-      - name: filterField
-        in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
-        required: false
-        example: name
-        schema:
-          type: string
-          enum:
-          - name
-      - name: filter
-        in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: my * dashboard
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Collection of dashboards
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dashboards'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Create a New Dashboard
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: New dashboard information
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/applicationDashboardPost'
-      responses:
-        '201':
-          description: Successfully created dashboard
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dashboard'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/jobLogs:
-    get:
-      summary: Returns the Job Logs for an Application
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortField
-        in: query
-        description: Field to sort the results by
-        required: false
-        example: status
-        schema:
-          type: string
-          enum:
-          - name
-          - status
-          - resourceType
-          - runQueuedAt
-          - runStartedAt
-          - runCompletedAt
-          default: runQueuedAt
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: asc
-      - name: page
-        in: query
-        description: Which page of results to return
-        required: false
-        example: 0
-        schema:
-          type: string
-          default: 0
-      - name: perPage
-        in: query
-        description: How many items to return per page
-        required: false
-        example: 10
-        schema:
-          type: string
-          default: 100
-      - name: query
-        in: query
-        description: Filter application job logs by a query.
-        required: false
-        schema:
-          type: object
-      responses:
-        '200':
-          description: Collection of application job logs
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationJobLogs'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/keys/{applicationKeyId}:
-    get:
-      summary: Retrieves Information on an ApplicationKey
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationKeyId
-        in: path
-        description: ID associated with the applicationKey
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: applicationKey information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationKey'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if applicationKey was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates Information About an ApplicationKey
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationKeyId
-        in: path
-        description: ID associated with the applicationKey
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new properties of the applicationKey
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/applicationKeyPatch'
-      responses:
-        '200':
-          description: Updated applicationKey information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationKey'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if applicationKey was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes an ApplicationKey
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: applicationKeyId
-        in: path
-        description: ID associated with the applicationKey
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If applicationKey was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if applicationKey was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/keys:
-    get:
-      summary: Returns the ApplicationKeys for an Application
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortField
-        in: query
-        description: Field to sort the results by
-        required: false
-        example: creationDate
-        schema:
-          type: string
-          enum:
-          - key
-          - status
-          - id
-          - creationDate
-          - lastUpdated
-          - name
-          default: creationDate
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: desc
-      - name: page
-        in: query
-        description: Which page of results to return
-        required: false
-        example: 0
-        schema:
-          type: string
-          default: 0
-      - name: perPage
-        in: query
-        description: How many items to return per page
-        required: false
-        example: 10
-        schema:
-          type: string
-          default: 100
-      - name: filterField
-        in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
-        required: false
-        example: key
-        schema:
-          type: string
-          enum:
-          - key
-          - status
-          - name
-      - name: filter
-        in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: the*key
-        schema:
-          type: string
-      - name: query
-        in: query
-        description: Application key filter JSON object which overrides the filterField and filter parameters.
-        required: false
-        schema:
-          type: object
-      responses:
-        '200':
-          description: Collection of applicationKeys
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationKeys'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Create a New ApplicationKey for an Application
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: ApplicationKey information
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/applicationKeyPost'
-      responses:
-        '201':
-          description: Successfully created applicationKey
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationKeyPostResponse'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
           content:
             application/json:
               schema:
@@ -1533,6 +46,7 @@ paths:
       - BearerAuth: []
   /applicationTemplates/{templateId}:
     get:
+      operationId: applicationTemplate.get
       summary: Retrieves Information on an Application Template
       tags:
       - Application
@@ -1566,173 +80,63 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /applicationTemplates:
-    get:
-      summary: Returns an Array of All Unique Keywords Currently in Use by Templates
-      tags:
-      - Application
-      responses:
-        '200':
-          description: Array of all unique template keywords
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/templateKeywords'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}:
-    get:
-      summary: Retrieves Information on Application Import Logs
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID of the associated application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: limit
-        in: query
-        description: Max log entries to return (ordered by time descending)
-        required: false
-        example: 10
-        schema:
-          type: string
-          default: 1
-      - name: since
-        in: query
-        description: Look for log entries since this time (ms since epoch)
-        required: false
-        example: 1465790400000
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Application log objects
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationImportExecutions'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates an Application Global at the Given Key
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID of the associated application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Array of objects containing new application global information
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/applicationGlobalPatch'
-      responses:
-        '200':
-          description: Updated application information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/application'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes an Application
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID of the associated application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If application was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
+  /applications/import:
     post:
-      summary: Add Multiple Resources to an Application via a Zip File
+      operationId: applications.import
+      summary: Create a New Application from an Import Bundle
       tags:
       - Application
       parameters:
-      - name: applicationId
-        in: path
-        description: ID of the associated application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
       - name: importBundle
         in: multipart
-        description: The zip file containing all of the resources to import into the application
+        description: The zip file containing the application to import and all of its resources
         required: false
         schema:
           type: file
+      - name: ownerId
+        in: multipart
+        description: The owner id of the new application, defaults to the id of the user making the request
+        required: false
+        example: 575ed6e87ae143cd83dc4aa8
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: ownerType
+        in: multipart
+        description: The type of the owner id
+        required: false
+        example: user
+        schema:
+          type: string
+          enum:
+          - user
+          - organization
+          default: user
+      - name: includeDevices
+        in: multipart
+        description: If set, import devices from the import bundle
+        required: false
+        example: true
+        schema:
+          type: string
+      - name: includeDataTableRows
+        in: multipart
+        description: If set, import data table rows from import bundle
+        required: false
+        example: true
+        schema:
+          type: string
+      - name: includeFiles
+        in: multipart
+        description: If set, import files from import bundle
+        required: false
+        example: true
+        schema:
+          type: string
       - name: email
         in: multipart
-        description: Email address to notify the user when the job to import the application resources has completed or errored, defaults to the email address of the user making the request
+        description: Email address to notify the user when the job to import the application has completed or errored, defaults
+          to the email address of the user making the request
         required: false
         example: email@example.com
         schema:
@@ -1744,14 +148,14 @@ paths:
         schema:
           type: object
       responses:
-        '200':
-          description: Updated application information
+        '201':
+          description: Successfully created application
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/application'
+                $ref: '#/components/schemas/applicationCreationByTemplateResult'
         '202':
-          description: If a job was enqueued for the resources to be imported into the application
+          description: If application was enqueued to be imported
           content:
             application/json:
               schema:
@@ -1768,10 +172,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+        '422':
+          description: Error if too many validation errors occurred on other resources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/validationErrors'
       security:
       - BearerAuth: []
-  /applications:
+  /applications/periodSummaries:
     get:
+      operationId: applications.periodSummaries
       summary: Returns Application Usage Summaries Over a Selected Date Range
       tags:
       - Application
@@ -1865,7 +276,8 @@ paths:
           type: string
       - name: orgId
         in: query
-        description: If not provided, return all applications. If provided but blank, only return applications belonging to the current user. If provided and an id, only return applications belonging to the given organization id.
+        description: If not provided, return all applications. If provided but blank, only return applications belonging to
+          the current user. If provided and an id, only return applications belonging to the given organization id.
         required: false
         example: 575ecdf07ae143cd83dc4a9a
         schema:
@@ -1900,132 +312,28 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-    post:
-      summary: Create a New Application from an Import Bundle
+  /applications/{applicationId}:
+    delete:
+      operationId: application.delete
+      summary: Deletes an Application
       tags:
       - Application
       parameters:
-      - name: importBundle
-        in: multipart
-        description: The zip file containing the application to import and all of its resources
-        required: false
-        schema:
-          type: file
-      - name: ownerId
-        in: multipart
-        description: The owner id of the new application, defaults to the id of the user making the request
-        required: false
-        example: 575ed6e87ae143cd83dc4aa8
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: ownerType
-        in: multipart
-        description: The type of the owner id
-        required: false
-        example: user
-        schema:
-          type: string
-          enum:
-          - user
-          - organization
-          default: user
-      - name: includeDevices
-        in: multipart
-        description: If set, import devices from the import bundle
-        required: false
-        example: true
-        schema:
-          type: string
-      - name: includeDataTableRows
-        in: multipart
-        description: If set, import data table rows from import bundle
-        required: false
-        example: true
-        schema:
-          type: string
-      - name: includeFiles
-        in: multipart
-        description: If set, import files from import bundle
-        required: false
-        example: true
-        schema:
-          type: string
-      - name: email
-        in: multipart
-        description: Email address to notify the user when the job to import the application has completed or errored, defaults to the email address of the user making the request
-        required: false
-        example: email@example.com
-        schema:
-          type: string
-      - name: options
-        in: multipart
-        description: Additional import options
-        required: false
-        schema:
-          type: object
-      responses:
-        '201':
-          description: Successfully created application
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/applicationCreationByTemplateResult'
-        '202':
-          description: If application was enqueued to be imported
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/jobEnqueuedResult'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application is not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '422':
-          description: Error if too many validation errors occurred on other resources
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/validationErrors'
-      security:
-      - BearerAuth: []
-  /orgs/{orgId}/audit-logs/{auditLogId}:
-    get:
-      summary: Retrieves Information on an Audit Log
-      tags:
-      - Application
-      parameters:
-      - name: orgId
+      - name: applicationId
         in: path
-        description: ID associated with the organization
+        description: ID of the associated application
         required: true
-        example: 575ed6e87ae143cd83dc4aa8
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: auditLogId
-        in: path
-        description: ID associated with the audit log
-        required: true
-        example: 57955788124b37010084c053
+        example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
-          description: Audit log information
+          description: If application was successfully deleted
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/auditLog'
+                $ref: '#/components/schemas/success'
         '400':
           description: Error if malformed request
           content:
@@ -2033,24 +341,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if audit log was not found
+          description: Error if application was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /orgs/{orgId}/audit-logs:
+  /applications/{applicationId}/certificate-authorities:
     get:
-      summary: Returns the Audit Logs for the Organization
+      operationId: applicationCertificateAuthorities.get
+      summary: Returns the Application Certificate Authorities for an Application
       tags:
       - Application
       parameters:
-      - name: orgId
+      - name: applicationId
         in: path
-        description: ID associated with the organization
+        description: ID associated with the application
         required: true
-        example: 575ed6e87ae143cd83dc4aa8
+        example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
@@ -2058,14 +367,16 @@ paths:
         in: query
         description: Field to sort the results by
         required: false
-        example: creationDate
+        example: name
         schema:
           type: string
           enum:
+          - name
+          - status
+          - id
           - creationDate
-          - responseStatus
-          - actorName
-          default: creationDate
+          - lastUpdated
+          default: name
       - name: sortDirection
         in: query
         description: Direction to sort the results by
@@ -2076,7 +387,7 @@ paths:
           enum:
           - asc
           - desc
-          default: desc
+          default: asc
       - name: page
         in: query
         description: Which page of results to return
@@ -2093,31 +404,30 @@ paths:
         schema:
           type: string
           default: 100
-      - name: start
+      - name: filterField
         in: query
-        description: Start of time range for audit log query
+        description: Field to filter the results by. Blank or not provided means no filtering.
         required: false
-        example: 1465790400000
+        example: name
         schema:
           type: string
-      - name: end
+          enum:
+          - name
+          - status
+      - name: filter
         in: query
-        description: End of time range for audit log query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
         required: false
-        example: 1465790400000
+        example: the*name
         schema:
           type: string
-      - name: auditLogFilter
-        in: query
-        description: Filters for the audit log query
-        required: false
       responses:
         '200':
-          description: Collection of audit logs
+          description: Collection of application certificate authorities
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/auditLogs'
+                $ref: '#/components/schemas/applicationCertificateAuthorities'
         '400':
           description: Error if malformed request
           content:
@@ -2125,16 +435,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if organization was not found
+          description: Error if application was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /applications/{applicationId}/credentials/{credentialId}:
-    get:
-      summary: Retrieves Information on Resources Linked to a Credential
+    post:
+      operationId: applicationCertificateAuthorities.post
+      summary: Create a New Application Certificate Authority for an Application
       tags:
       - Application
       parameters:
@@ -2146,29 +456,20 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: credentialId
-        in: path
-        description: ID associated with the credential
+      requestBody:
+        description: Application certificate authority information
         required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: includeCustomNodes
-        in: query
-        description: If the result of the request should also include the details of any custom nodes referenced by returned workflows
-        required: false
-        example: true
-        schema:
-          type: string
-          default: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationCertificateAuthorityPost'
       responses:
-        '200':
-          description: Linked resource information
+        '201':
+          description: Successfully created application certificate authority
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/credentialLinkedResources'
+                $ref: '#/components/schemas/applicationCertificateAuthority'
         '400':
           description: Error if malformed request
           content:
@@ -2176,7 +477,51 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if credential was not found
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/certificate-authorities/{applicationCertificateAuthorityId}:
+    get:
+      operationId: applicationCertificateAuthority.get
+      summary: Retrieves Information on an Application Certificate Authority
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: applicationCertificateAuthorityId
+        in: path
+        description: ID associated with the application certificate authority
+        required: true
+        example: 575ec76c7ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Application certificate authority information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationCertificateAuthority'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application certificate authority was not found
           content:
             application/json:
               schema:
@@ -2184,7 +529,8 @@ paths:
       security:
       - BearerAuth: []
     patch:
-      summary: Updates Information About a Credential
+      operationId: applicationCertificateAuthority.patch
+      summary: Updates Information About an Application Certificate Authority
       tags:
       - Application
       parameters:
@@ -2196,28 +542,28 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: credentialId
+      - name: applicationCertificateAuthorityId
         in: path
-        description: ID associated with the credential
+        description: ID associated with the application certificate authority
         required: true
         example: 575ec76c7ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Object containing new properties of the credential
+        description: Object containing new properties of the application certificate authority
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/credentialPatch'
+              $ref: '#/components/schemas/applicationCertificateAuthorityPatch'
       responses:
         '200':
-          description: Updated credential information
+          description: Updated application certificate authority information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/credential'
+                $ref: '#/components/schemas/applicationCertificateAuthority'
         '400':
           description: Error if malformed request
           content:
@@ -2225,7 +571,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if credential was not found
+          description: Error if application certificate authority was not found
           content:
             application/json:
               schema:
@@ -2233,7 +579,8 @@ paths:
       security:
       - BearerAuth: []
     delete:
-      summary: Deletes a Credential
+      operationId: applicationCertificateAuthority.delete
+      summary: Deletes an Application Certificate Authority
       tags:
       - Application
       parameters:
@@ -2245,9 +592,9 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: credentialId
+      - name: applicationCertificateAuthorityId
         in: path
-        description: ID associated with the credential
+        description: ID associated with the application certificate authority
         required: true
         example: 575ec76c7ae143cd83dc4a96
         schema:
@@ -2255,7 +602,7 @@ paths:
           pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
-          description: If credential was successfully deleted
+          description: If application certificate authority was successfully deleted
           content:
             application/json:
               schema:
@@ -2267,7 +614,280 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if credential was not found
+          description: Error if application certificate authority was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/certificates:
+    get:
+      operationId: applicationCertificates.get
+      summary: Returns the Application Certificates for an Application
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: status
+        schema:
+          type: string
+          enum:
+          - certificateInfo.commonName
+          - status
+          - id
+          - creationDate
+          - lastUpdated
+          default: certificateInfo.commonName
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: status
+        schema:
+          type: string
+          enum:
+          - certificateInfo.commonName
+          - status
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: the*status
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection of application certificates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationCertificates'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      operationId: applicationCertificates.post
+      summary: Create a New Application Certificate for an Application
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Application certificate information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationCertificatePost'
+      responses:
+        '201':
+          description: Successfully created application certificate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationCertificate'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/certificates/{applicationCertificateId}:
+    get:
+      operationId: applicationCertificate.get
+      summary: Retrieves Information on an Application Certificate
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: applicationCertificateId
+        in: path
+        description: ID associated with the application certificate
+        required: true
+        example: 575ec76c7ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Application certificate information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationCertificate'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application certificate was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      operationId: applicationCertificate.patch
+      summary: Updates Information About an Application Certificate
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: applicationCertificateId
+        in: path
+        description: ID associated with the application certificate
+        required: true
+        example: 575ec76c7ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new properties of the application certificate
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationCertificatePatch'
+      responses:
+        '200':
+          description: Updated application certificate information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationCertificate'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application certificate was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: applicationCertificate.delete
+      summary: Deletes an Application Certificate
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: applicationCertificateId
+        in: path
+        description: ID associated with the application certificate
+        required: true
+        example: 575ec76c7ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If application certificate was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application certificate was not found
           content:
             application/json:
               schema:
@@ -2276,6 +896,7 @@ paths:
       - BearerAuth: []
   /applications/{applicationId}/credentials:
     get:
+      operationId: credentials.get
       summary: Returns a Collection of Credentials for an Application
       tags:
       - Application
@@ -2367,6 +988,7 @@ paths:
       security:
       - BearerAuth: []
     post:
+      operationId: credentials.post
       summary: Create a New Credential for an Application
       tags:
       - Application
@@ -2407,75 +1029,43 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /dashboards/{dashboardId}:
-    get:
-      summary: Retrieves Information on a Dashboard
+  /applications/{applicationId}/credentials/{credentialId}:
+    patch:
+      operationId: credential.patch
+      summary: Updates Information About a Credential
       tags:
       - Application
       parameters:
-      - name: dashboardId
+      - name: applicationId
         in: path
-        description: ID of the associated dashboard
+        description: ID associated with the application
         required: true
-        example: 575ece2b7ae143cd83dc4a9b
+        example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: password
-        in: query
-        description: Password for password-protected dashboards
-        required: false
-        example: myPassword
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Dashboard information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dashboard'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if dashboard was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates Information About a Dashboard
-      tags:
-      - Application
-      parameters:
-      - name: dashboardId
+      - name: credentialId
         in: path
-        description: ID of the associated dashboard
+        description: ID associated with the credential
         required: true
-        example: 575ece2b7ae143cd83dc4a9b
+        example: 575ec76c7ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Object containing new dashboard properties
+        description: Object containing new properties of the credential
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/dashboardPatch'
+              $ref: '#/components/schemas/credentialPatch'
       responses:
         '200':
-          description: Update dashboard information
+          description: Updated credential information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/dashboard'
+                $ref: '#/components/schemas/credential'
         '400':
           description: Error if malformed request
           content:
@@ -2483,7 +1073,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if dashboard was not found
+          description: Error if credential was not found
           content:
             application/json:
               schema:
@@ -2491,21 +1081,30 @@ paths:
       security:
       - BearerAuth: []
     delete:
-      summary: Deletes a Dashboard
+      operationId: credential.delete
+      summary: Deletes a Credential
       tags:
       - Application
       parameters:
-      - name: dashboardId
+      - name: applicationId
         in: path
-        description: ID of the associated dashboard
+        description: ID associated with the application
         required: true
-        example: 575ece2b7ae143cd83dc4a9b
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: credentialId
+        in: path
+        description: ID associated with the credential
+        required: true
+        example: 575ec76c7ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
-          description: If dashboard was successfully deleted
+          description: If credential was successfully deleted
           content:
             application/json:
               schema:
@@ -2517,40 +1116,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if dashboard was not found
+          description: Error if credential was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-    post:
-      summary: Sends a Snapshot of a Dashboard
+  /applications/{applicationId}/credentials/{credentialId}/linkedResources:
+    get:
+      operationId: credential.linkedResources
+      summary: Retrieves Information on Resources Linked to a Credential
       tags:
       - Application
       parameters:
-      - name: dashboardId
+      - name: applicationId
         in: path
-        description: ID of the associated dashboard
+        description: ID associated with the application
         required: true
-        example: 575ece2b7ae143cd83dc4a9b
+        example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing report options
+      - name: credentialId
+        in: path
+        description: ID associated with the credential
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/dashboardSendReport'
+        example: 575ec76c7ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: includeCustomNodes
+        in: query
+        description: If the result of the request should also include the details of any custom nodes referenced by returned
+          workflows
+        required: false
+        example: true
+        schema:
+          type: string
+          default: false
       responses:
-        '202':
-          description: If dashboard report was enqueued to be sent
+        '200':
+          description: Linked resource information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/jobEnqueuedResult'
+                $ref: '#/components/schemas/credentialLinkedResources'
         '400':
           description: Error if malformed request
           content:
@@ -2558,19 +1169,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if dashboard was not found
+          description: Error if credential was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /dashboards:
+  /applications/{applicationId}/dashboards:
     get:
-      summary: Returns the Dashboards the Current User Has Permission to See
+      operationId: applicationDashboards.get
+      summary: Returns All Dashboards Scoped to the Given Application.
       tags:
       - Application
       parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       - name: sortField
         in: query
         description: Field to sort the results by
@@ -2582,8 +1202,6 @@ paths:
           - name
           - id
           - creationDate
-          - ownerId
-          - applicationId
           - lastUpdated
           default: name
       - name: sortDirection
@@ -2629,22 +1247,6 @@ paths:
         example: my * dashboard
         schema:
           type: string
-      - name: applicationId
-        in: query
-        description: If not provided, return all dashboards. If provided but blank, only return dashboards that are not linked to applications. If provided and an id, only return dashboards linked to the given application id.
-        required: false
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^([A-Fa-f\d]{24}|)$
-      - name: orgId
-        in: query
-        description: If not provided, return all dashboards. If provided but blank, only return dashboards belonging to the current user. If provided and an id, only return dashboards belonging to the given organization id.
-        required: false
-        example: 575ece7e7ae143cd83dc4a9c
-        schema:
-          type: string
-          pattern: ^([A-Fa-f\d]{24}|)$
       responses:
         '200':
           description: Collection of dashboards
@@ -2658,19 +1260,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
     post:
+      operationId: applicationDashboards.post
       summary: Create a New Dashboard
       tags:
       - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: New dashboard information
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/dashboardPost'
+              $ref: '#/components/schemas/applicationDashboardPost'
       responses:
         '201':
           description: Successfully created dashboard
@@ -2684,37 +1302,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /applications/{applicationId}/events/{eventId}:
+  /applications/{applicationId}/dashboards/{dashboardId}:
     get:
-      summary: Retrieves Information on an Event
+      operationId: applicationDashboard.get
+      summary: Retrieves Information on a Dashboard
       tags:
       - Application
       parameters:
+      - name: dashboardId
+        in: path
+        description: ID of the associated dashboard
+        required: true
+        example: 575ece2b7ae143cd83dc4a9b
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       - name: applicationId
         in: path
-        description: ID associated with the application
+        description: ID of the associated application
         required: true
         example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: eventId
-        in: path
-        description: ID associated with the event
-        required: true
-        example: 575ed0de7ae143cd83dc4aa5
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
-          description: Event information
+          description: Dashboard information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/event'
+                $ref: '#/components/schemas/dashboard'
         '400':
           description: Error if malformed request
           content:
@@ -2722,7 +1347,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if event was not found
+          description: Error if dashboard was not found
           content:
             application/json:
               schema:
@@ -2730,40 +1355,41 @@ paths:
       security:
       - BearerAuth: []
     patch:
-      summary: Updates Information About an Event
+      operationId: applicationDashboard.patch
+      summary: Updates Information About a Dashboard
       tags:
       - Application
       parameters:
+      - name: dashboardId
+        in: path
+        description: ID of the associated dashboard
+        required: true
+        example: 575ece2b7ae143cd83dc4a9b
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       - name: applicationId
         in: path
-        description: ID associated with the application
+        description: ID of the associated application
         required: true
         example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: eventId
-        in: path
-        description: ID associated with the event
-        required: true
-        example: 575ed0de7ae143cd83dc4aa5
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Object containing new properties of the event
+        description: Object containing new dashboard properties
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/eventPatch'
+              $ref: '#/components/schemas/dashboardPatch'
       responses:
         '200':
-          description: Updated event information
+          description: Update dashboard information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/event'
+                $ref: '#/components/schemas/dashboard'
         '400':
           description: Error if malformed request
           content:
@@ -2771,7 +1397,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if event is not found
+          description: Error if dashboard was not found
           content:
             application/json:
               schema:
@@ -2779,29 +1405,30 @@ paths:
       security:
       - BearerAuth: []
     delete:
-      summary: Deletes an Event
+      operationId: applicationDashboard.delete
+      summary: Deletes a Dashboard
       tags:
       - Application
       parameters:
+      - name: dashboardId
+        in: path
+        description: ID of the associated dashboard
+        required: true
+        example: 575ece2b7ae143cd83dc4a9b
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       - name: applicationId
         in: path
-        description: ID associated with the application
+        description: ID of the associated application
         required: true
         example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: eventId
-        in: path
-        description: ID associated with the event
-        required: true
-        example: 575ed0de7ae143cd83dc4aa5
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
-          description: If event was successfully deleted
+          description: If dashboard was successfully deleted
           content:
             application/json:
               schema:
@@ -2813,49 +1440,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if event was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/events:
-    get:
-      summary: Returns the First New Event Ordered by Severity and Then Creation
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: filter
-        in: query
-        description: Filter to apply against event subjects. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: abnormal power to *
-        schema:
-          type: string
-      - name: query
-        in: query
-        description: Event filter JSON object which overrides the filter parameter.
-        required: false
-        schema:
-          type: object
-      responses:
-        '200':
-          description: The event, plus count of currently new events
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/eventPlusNewCount'
-        '404':
-          description: Error if application was not found
+          description: Error if dashboard was not found
           content:
             application/json:
               schema:
@@ -2863,28 +1448,37 @@ paths:
       security:
       - BearerAuth: []
     post:
-      summary: Request an Export of an Application's Event Data
+      operationId: applicationDashboard.sendReport
+      summary: Sends a Snapshot of a Dashboard
       tags:
       - Application
       parameters:
+      - name: dashboardId
+        in: path
+        description: ID of the associated dashboard
+        required: true
+        example: 575ece2b7ae143cd83dc4a9b
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       - name: applicationId
         in: path
-        description: ID associated with the application
+        description: ID of the associated application
         required: true
         example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Export options for events
-        required: false
+        description: Object containing report options
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/eventsExport'
+              $ref: '#/components/schemas/dashboardSendReport'
       responses:
         '202':
-          description: If generation of export was successfully started
+          description: If dashboard report was enqueued to be sent
           content:
             application/json:
               schema:
@@ -2896,14 +1490,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if application was not found
+          description: Error if dashboard was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+  /applications/{applicationId}/events:
     patch:
+      operationId: events.patch
       summary: Asynchronously Updates Information for Matching Events by Subject and/or Current State
       tags:
       - Application
@@ -2997,8 +1593,232 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+  /applications/{applicationId}/events/export:
+    post:
+      operationId: events.export
+      summary: Request an Export of an Application's Event Data
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Export options for events
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/eventsExport'
+      responses:
+        '202':
+          description: If generation of export was successfully started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/events/mostRecentBySeverity:
+    get:
+      operationId: events.mostRecentBySeverity
+      summary: Returns the First New Event Ordered by Severity and Then Creation
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: filter
+        in: query
+        description: Filter to apply against event subjects. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: abnormal power to *
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: Event filter JSON object which overrides the filter parameter.
+        required: false
+        schema:
+          type: object
+      responses:
+        '200':
+          description: The event, plus count of currently new events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/eventPlusNewCount'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/events/{eventId}:
+    get:
+      operationId: event.get
+      summary: Retrieves Information on an Event
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: eventId
+        in: path
+        description: ID associated with the event
+        required: true
+        example: 575ed0de7ae143cd83dc4aa5
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Event information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/event'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if event was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      operationId: event.patch
+      summary: Updates Information About an Event
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: eventId
+        in: path
+        description: ID associated with the event
+        required: true
+        example: 575ed0de7ae143cd83dc4aa5
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new properties of the event
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/eventPatch'
+      responses:
+        '200':
+          description: Updated event information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/event'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if event is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: event.delete
+      summary: Deletes an Event
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: eventId
+        in: path
+        description: ID associated with the event
+        required: true
+        example: 575ed0de7ae143cd83dc4aa5
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If event was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if event was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
   /applications/{applicationId}/file/{fileId}:
     get:
+      operationId: file.get
       summary: Retrieves Information on a File
       tags:
       - Application
@@ -3041,6 +1861,7 @@ paths:
       security:
       - BearerAuth: []
     patch:
+      operationId: file.patch
       summary: Reupload a File
       tags:
       - Application
@@ -3089,7 +1910,52 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+    delete:
+      operationId: file.delete
+      summary: Deletes a File or Directory, if Directory All the Contents That Directory Will Also Be Removed.
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: fileId
+        in: path
+        description: ID associated with the file
+        required: true
+        example: 575ec76c7ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If file was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if file was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/file/{fileId}/upload:
     post:
+      operationId: file.upload
       summary: Uploads the File
       tags:
       - Application
@@ -3137,50 +2003,9 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-    delete:
-      summary: Deletes a File or Directory, if Directory All the Contents That Directory Will Also Be Removed.
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: fileId
-        in: path
-        description: ID associated with the file
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If file was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if file was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
   /applications/{applicationId}/files:
     get:
+      operationId: files.get
       summary: Returns the Files for an Application
       tags:
       - Application
@@ -3295,6 +2120,7 @@ paths:
       security:
       - BearerAuth: []
     post:
+      operationId: files.post
       summary: Create a New File for an Application
       tags:
       - Application
@@ -3335,84 +2161,35 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /applications/{applicationId}/integrations/{integrationId}:
-    get:
-      summary: Retrieves Information on an Integration
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: integrationId
-        in: path
-        description: ID associated with the integration
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: integration information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/integration'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if integration was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
+  /applications/{applicationId}/globals:
     patch:
-      summary: Updates Information About an Integration
+      operationId: application.globals
+      summary: Updates an Application Global at the Given Key
       tags:
       - Application
       parameters:
       - name: applicationId
         in: path
-        description: ID associated with the application
+        description: ID of the associated application
         required: true
         example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: integrationId
-        in: path
-        description: ID associated with the integration
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Object containing new properties of the integration
+        description: Array of objects containing new application global information
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/integrationPatch'
+              $ref: '#/components/schemas/applicationGlobalPatch'
       responses:
         '200':
-          description: Updated integration information
+          description: Updated application information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/integration'
+                $ref: '#/components/schemas/application'
         '400':
           description: Error if malformed request
           content:
@@ -3420,48 +2197,61 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if integration was not found
+          description: Error if application was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-    delete:
-      summary: Deletes an Integration
+  /applications/{applicationId}/import:
+    post:
+      operationId: application.import
+      summary: Add Multiple Resources to an Application via a Zip File
       tags:
       - Application
       parameters:
       - name: applicationId
         in: path
-        description: ID associated with the application
+        description: ID of the associated application
         required: true
         example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: integrationId
-        in: path
-        description: ID associated with the integration
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: includeWorkflows
-        in: query
-        description: If the workflows that utilize this integration should also be deleted.
+      - name: importBundle
+        in: multipart
+        description: The zip file containing all of the resources to import into the application
         required: false
-        example: true
+        schema:
+          type: file
+      - name: email
+        in: multipart
+        description: Email address to notify the user when the job to import the application resources has completed or errored,
+          defaults to the email address of the user making the request
+        required: false
+        example: email@example.com
         schema:
           type: string
+      - name: options
+        in: multipart
+        description: Additional import options
+        required: false
+        schema:
+          type: object
       responses:
         '200':
-          description: If integration was successfully deleted
+          description: Updated application information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/success'
+                $ref: '#/components/schemas/application'
+        '202':
+          description: If a job was enqueued for the resources to be imported into the application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
         '400':
           description: Error if malformed request
           content:
@@ -3469,7 +2259,58 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if integration was not found
+          description: Error if application is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/importLogs:
+    get:
+      operationId: application.importLogs
+      summary: Retrieves Information on Application Import Logs
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID of the associated application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: limit
+        in: query
+        description: Max log entries to return (ordered by time descending)
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 1
+      - name: since
+        in: query
+        description: Look for log entries since this time (ms since epoch)
+        required: false
+        example: 1465790400000
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Application log objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationImportExecutions'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
           content:
             application/json:
               schema:
@@ -3478,6 +2319,7 @@ paths:
       - BearerAuth: []
   /applications/{applicationId}/integrations:
     get:
+      operationId: integrations.get
       summary: Returns the Integrations for an Application
       tags:
       - Application
@@ -3570,6 +2412,7 @@ paths:
       security:
       - BearerAuth: []
     post:
+      operationId: integrations.post
       summary: Create a New Integration for an Application
       tags:
       - Application
@@ -3610,9 +2453,10 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /applications/{applicationId}/privateFiles/{privateFileId}:
+  /applications/{applicationId}/integrations/{integrationId}:
     get:
-      summary: Retrieves Information on a Private File
+      operationId: integration.get
+      summary: Retrieves Information on an Integration
       tags:
       - Application
       parameters:
@@ -3624,29 +2468,21 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: privateFileId
+      - name: integrationId
         in: path
-        description: ID associated with the private file
+        description: ID associated with the integration
         required: true
-        example: 575ec76c7ae143cd83dc4a96
+        example: 575ed78e7ae143cd83dc4aab
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: urlTTL
-        in: query
-        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'. If 0, no url will be returned.
-        required: false
-        example: 900
-        schema:
-          type: string
-          default: 900
       responses:
         '200':
-          description: Private file information
+          description: integration information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/file'
+                $ref: '#/components/schemas/integration'
         '400':
           description: Error if malformed request
           content:
@@ -3654,7 +2490,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if private file was not found
+          description: Error if integration was not found
           content:
             application/json:
               schema:
@@ -3662,7 +2498,8 @@ paths:
       security:
       - BearerAuth: []
     patch:
-      summary: Reupload a Private File
+      operationId: integration.patch
+      summary: Updates Information About an Integration
       tags:
       - Application
       parameters:
@@ -3674,84 +2511,28 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: privateFileId
+      - name: integrationId
         in: path
-        description: ID associated with the private file
+        description: ID associated with the integration
         required: true
-        example: 575ec76c7ae143cd83dc4a96
+        example: 575ed78e7ae143cd83dc4aab
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Updated information about the private file
+        description: Object containing new properties of the integration
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/filePatch'
-      responses:
-        '201':
-          description: Successfully updated private file and the information needed to upload the file content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/fileUploadPostResponse'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if private file was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Uploads the Private File
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: privateFileId
-        in: path
-        description: ID associated with the private file
-        required: true
-        example: 575ec76c7ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: privateFile
-        in: multipart
-        description: The content of the private file to upload
-        required: true
-        schema:
-          type: file
-      - name: urlTTL
-        in: query
-        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'. If 0, no url will be returned.
-        required: false
-        example: 900
-        schema:
-          type: string
-          default: 900
+              $ref: '#/components/schemas/integrationPatch'
       responses:
         '200':
-          description: Updated private file content
+          description: Updated integration information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/file'
+                $ref: '#/components/schemas/integration'
         '400':
           description: Error if malformed request
           content:
@@ -3759,7 +2540,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if file was not found
+          description: Error if integration was not found
           content:
             application/json:
               schema:
@@ -3767,7 +2548,8 @@ paths:
       security:
       - BearerAuth: []
     delete:
-      summary: Deletes a Private File or Directory, if a Directory All the Contents That Directory Will Also Be Removed.
+      operationId: integration.delete
+      summary: Deletes an Integration
       tags:
       - Application
       parameters:
@@ -3779,17 +2561,24 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: privateFileId
+      - name: integrationId
         in: path
-        description: ID associated with the private file
+        description: ID associated with the integration
         required: true
-        example: 575ec76c7ae143cd83dc4a96
+        example: 575ed78e7ae143cd83dc4aab
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
+      - name: includeWorkflows
+        in: query
+        description: If the workflows that utilize this integration should also be deleted.
+        required: false
+        example: true
+        schema:
+          type: string
       responses:
         '200':
-          description: If private file was successfully deleted
+          description: If integration was successfully deleted
           content:
             application/json:
               schema:
@@ -3801,7 +2590,416 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if private file was not found
+          description: Error if integration was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/jobLogs:
+    get:
+      operationId: applicationJobLogs.get
+      summary: Returns the Job Logs for an Application
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: status
+        schema:
+          type: string
+          enum:
+          - name
+          - status
+          - resourceType
+          - runQueuedAt
+          - runStartedAt
+          - runCompletedAt
+          default: runQueuedAt
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: query
+        in: query
+        description: Filter application job logs by a query.
+        required: false
+        schema:
+          type: object
+      responses:
+        '200':
+          description: Collection of application job logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationJobLogs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/jobLogs/{jobId}:
+    get:
+      operationId: applicationJobLog.get
+      summary: Returns the Job Log for the Given ID
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: jobId
+        in: path
+        description: ID associated with the job execution
+        required: true
+        example: 575ec8687ae143cd83dc4a98
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: An application job log
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationJobLog'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application job log was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/keys:
+    get:
+      operationId: applicationKeys.get
+      summary: Returns the ApplicationKeys for an Application
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: creationDate
+        schema:
+          type: string
+          enum:
+          - key
+          - status
+          - id
+          - creationDate
+          - lastUpdated
+          - name
+          default: creationDate
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: key
+        schema:
+          type: string
+          enum:
+          - key
+          - status
+          - name
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: the*key
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: Application key filter JSON object which overrides the filterField and filter parameters.
+        required: false
+        schema:
+          type: object
+      responses:
+        '200':
+          description: Collection of applicationKeys
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationKeys'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      operationId: applicationKeys.post
+      summary: Create a New ApplicationKey for an Application
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: ApplicationKey information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationKeyPost'
+      responses:
+        '201':
+          description: Successfully created applicationKey
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationKeyPostResponse'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/keys/{applicationKeyId}:
+    get:
+      operationId: applicationKey.get
+      summary: Retrieves Information on an ApplicationKey
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: applicationKeyId
+        in: path
+        description: ID associated with the applicationKey
+        required: true
+        example: 575ec76c7ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: applicationKey information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationKey'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if applicationKey was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      operationId: applicationKey.patch
+      summary: Updates Information About an ApplicationKey
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: applicationKeyId
+        in: path
+        description: ID associated with the applicationKey
+        required: true
+        example: 575ec76c7ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new properties of the applicationKey
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationKeyPatch'
+      responses:
+        '200':
+          description: Updated applicationKey information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationKey'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if applicationKey was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: applicationKey.delete
+      summary: Deletes an ApplicationKey
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: applicationKeyId
+        in: path
+        description: ID associated with the applicationKey
+        required: true
+        example: 575ec76c7ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If applicationKey was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if applicationKey was not found
           content:
             application/json:
               schema:
@@ -3810,6 +3008,7 @@ paths:
       - BearerAuth: []
   /applications/{applicationId}/privateFiles:
     get:
+      operationId: privateFiles.get
       summary: Returns the Private Files for an Application
       tags:
       - Application
@@ -3904,7 +3103,8 @@ paths:
           type: string
       - name: urlTTL
         in: query
-        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'. If 0, no url will be returned.
+        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'.
+          If 0, no url will be returned.
         required: false
         example: 900
         schema:
@@ -3932,6 +3132,7 @@ paths:
       security:
       - BearerAuth: []
     post:
+      operationId: privateFiles.post
       summary: Create a New Private File for an Application
       tags:
       - Application
@@ -3972,9 +3173,10 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /applications/{applicationId}/resource-jobs/{resourceJobId}:
+  /applications/{applicationId}/privateFiles/{privateFileId}:
     get:
-      summary: Retrieves Information on Resource Job Executions
+      operationId: privateFile.get
+      summary: Retrieves Information on a Private File
       tags:
       - Application
       parameters:
@@ -3986,36 +3188,30 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: resourceJobId
+      - name: privateFileId
         in: path
-        description: ID associated with the resource job
+        description: ID associated with the private file
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        example: 575ec76c7ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: limit
+      - name: urlTTL
         in: query
-        description: Max log entries to return (ordered by time descending)
+        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'.
+          If 0, no url will be returned.
         required: false
-        example: 10
+        example: 900
         schema:
           type: string
-          default: 1
-      - name: since
-        in: query
-        description: Look for log entries since this time (ms since epoch)
-        required: false
-        example: 1465790400000
-        schema:
-          type: string
+          default: 900
       responses:
         '200':
-          description: Resource job execution information
+          description: Private file information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/resourceJobExecutionLogs'
+                $ref: '#/components/schemas/file'
         '400':
           description: Error if malformed request
           content:
@@ -4023,7 +3219,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if resource job was not found
+          description: Error if private file was not found
           content:
             application/json:
               schema:
@@ -4031,7 +3227,8 @@ paths:
       security:
       - BearerAuth: []
     patch:
-      summary: Update a Resource Job
+      operationId: privateFile.patch
+      summary: Reupload a Private File
       tags:
       - Application
       parameters:
@@ -4043,28 +3240,28 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: resourceJobId
+      - name: privateFileId
         in: path
-        description: ID associated with the resource job
+        description: ID associated with the private file
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        example: 575ec76c7ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: The new resource job configuration
+        description: Updated information about the private file
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/resourceJobPatch'
+              $ref: '#/components/schemas/filePatch'
       responses:
         '201':
-          description: Successfully updated resource job
+          description: Successfully updated private file and the information needed to upload the file content
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/resourceJob'
+                $ref: '#/components/schemas/fileUploadPostResponse'
         '400':
           description: Error if malformed request
           content:
@@ -4072,7 +3269,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if resource job was not found
+          description: Error if private file was not found
           content:
             application/json:
               schema:
@@ -4080,7 +3277,8 @@ paths:
       security:
       - BearerAuth: []
     delete:
-      summary: Deletes a Resource Job
+      operationId: privateFile.delete
+      summary: Deletes a Private File or Directory, if a Directory All the Contents That Directory Will Also Be Removed.
       tags:
       - Application
       parameters:
@@ -4092,24 +3290,17 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: resourceJobId
+      - name: privateFileId
         in: path
-        description: ID associated with the resource job
+        description: ID associated with the private file
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        example: 575ec76c7ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: includeWorkflows
-        in: query
-        description: If the workflows that trigger from this resource job should also be deleted.
-        required: false
-        example: true
-        schema:
-          type: string
       responses:
         '200':
-          description: If resource job was successfully deleted
+          description: If private file was successfully deleted
           content:
             application/json:
               schema:
@@ -4121,15 +3312,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if resource job was not found
+          description: Error if private file was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+  /applications/{applicationId}/privateFiles/{privateFileId}/upload:
     post:
-      summary: Marks a Specific Resource Job Execution for Cancellation
+      operationId: privateFile.upload
+      summary: Uploads the Private File
       tags:
       - Application
       parameters:
@@ -4141,28 +3334,36 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: resourceJobId
+      - name: privateFileId
         in: path
-        description: ID associated with the resource job
+        description: ID associated with the private file
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        example: 575ec76c7ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: executionId
-        in: query
-        description: The ID of the execution to cancel
+      - name: privateFile
+        in: multipart
+        description: The content of the private file to upload
         required: true
-        example: 632e18632f59592e773a4153
         schema:
-          pattern: ^[A-Fa-f\d]{24}$
+          type: file
+      - name: urlTTL
+        in: query
+        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'.
+          If 0, no url will be returned.
+        required: false
+        example: 900
+        schema:
+          type: string
+          default: 900
       responses:
         '200':
-          description: If the execution was successfully marked for cancellation
+          description: Updated private file content
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/success'
+                $ref: '#/components/schemas/file'
         '400':
           description: Error if malformed request
           content:
@@ -4170,7 +3371,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if execution was not found
+          description: Error if file was not found
           content:
             application/json:
               schema:
@@ -4179,6 +3380,7 @@ paths:
       - BearerAuth: []
   /applications/{applicationId}/resource-jobs:
     get:
+      operationId: resourceJobs.get
       summary: Returns the Resource Jobs for an Application
       tags:
       - Application
@@ -4272,6 +3474,7 @@ paths:
       security:
       - BearerAuth: []
     post:
+      operationId: resourceJobs.post
       summary: Create a New Resource Job for an Application
       tags:
       - Application
@@ -4312,51 +3515,10 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /applications/{applicationId}/webhooks/{webhookId}:
-    get:
-      summary: Retrieves Information on a Webhook
-      tags:
-      - Application
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: webhookId
-        in: path
-        description: ID associated with the webhook
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: Webhook information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/webhook'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if webhook was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
+  /applications/{applicationId}/resource-jobs/{resourceJobId}:
     patch:
-      summary: Updates Information About a Webhook
+      operationId: resourceJob.patch
+      summary: Update a Resource Job
       tags:
       - Application
       parameters:
@@ -4368,28 +3530,28 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: webhookId
+      - name: resourceJobId
         in: path
-        description: ID associated with the webhook
+        description: ID associated with the resource job
         required: true
-        example: 575ed78e7ae143cd83dc4aab
+        example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Object containing new properties of the webhook
+        description: The new resource job configuration
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/webhookPatch'
+              $ref: '#/components/schemas/resourceJobPatch'
       responses:
-        '200':
-          description: Updated webhook information
+        '201':
+          description: Successfully updated resource job
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/webhook'
+                $ref: '#/components/schemas/resourceJob'
         '400':
           description: Error if malformed request
           content:
@@ -4397,7 +3559,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if webhook was not found
+          description: Error if resource job was not found
           content:
             application/json:
               schema:
@@ -4405,7 +3567,8 @@ paths:
       security:
       - BearerAuth: []
     delete:
-      summary: Deletes a Webhook
+      operationId: resourceJob.delete
+      summary: Deletes a Resource Job
       tags:
       - Application
       parameters:
@@ -4417,24 +3580,24 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: webhookId
+      - name: resourceJobId
         in: path
-        description: ID associated with the webhook
+        description: ID associated with the resource job
         required: true
-        example: 575ed78e7ae143cd83dc4aab
+        example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       - name: includeWorkflows
         in: query
-        description: If the workflows that utilize this webhook should also be deleted.
+        description: If the workflows that trigger from this resource job should also be deleted.
         required: false
         example: true
         schema:
           type: string
       responses:
         '200':
-          description: If webhook was successfully deleted
+          description: If resource job was successfully deleted
           content:
             application/json:
               schema:
@@ -4446,7 +3609,379 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if webhook was not found
+          description: Error if resource job was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/resource-jobs/{resourceJobId}/cancelExecution:
+    post:
+      operationId: resourceJob.cancelExecution
+      summary: Marks a Specific Resource Job Execution for Cancellation
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: resourceJobId
+        in: path
+        description: ID associated with the resource job
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: executionId
+        in: query
+        description: The ID of the execution to cancel
+        required: true
+        example: 632e18632f59592e773a4153
+        schema:
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If the execution was successfully marked for cancellation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if execution was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/resource-jobs/{resourceJobId}/logs:
+    get:
+      operationId: resourceJob.logs
+      summary: Retrieves Information on Resource Job Executions
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: resourceJobId
+        in: path
+        description: ID associated with the resource job
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: limit
+        in: query
+        description: Max log entries to return (ordered by time descending)
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 1
+      - name: since
+        in: query
+        description: Look for log entries since this time (ms since epoch)
+        required: false
+        example: 1465790400000
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resource job execution information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resourceJobExecutionLogs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if resource job was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/tokens:
+    get:
+      operationId: applicationApiTokens.get
+      summary: Returns the API Tokens for an Application
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+          - status
+          - id
+          - creationDate
+          - lastUpdated
+          - expirationDate
+          default: name
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: key
+        schema:
+          type: string
+          enum:
+          - name
+          - status
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my*token
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection of API tokens
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiTokens'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      operationId: applicationApiTokens.post
+      summary: Create a New API Token for an Application
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: API token information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/apiTokenPost'
+      responses:
+        '201':
+          description: The successfully created API token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/tokens/{apiTokenId}:
+    get:
+      operationId: applicationApiToken.get
+      summary: Retrieves Information on an API Token
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: apiTokenId
+        in: path
+        description: ID associated with the API token
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: API token information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if API token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      operationId: applicationApiToken.patch
+      summary: Updates Information About an API Token
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: apiTokenId
+        in: path
+        description: ID associated with the API token
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new properties of the API token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/apiTokenPatch'
+      responses:
+        '200':
+          description: Updated API token information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if API token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: applicationApiToken.delete
+      summary: Deletes an API Token
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: apiTokenId
+        in: path
+        description: ID associated with the API token
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If API token was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if API token was not found
           content:
             application/json:
               schema:
@@ -4455,6 +3990,7 @@ paths:
       - BearerAuth: []
   /applications/{applicationId}/webhooks:
     get:
+      operationId: webhooks.get
       summary: Returns the Webhooks for an Application
       tags:
       - Application
@@ -4545,6 +4081,7 @@ paths:
       security:
       - BearerAuth: []
     post:
+      operationId: webhooks.post
       summary: Create a New Webhook for an Application
       tags:
       - Application
@@ -4579,6 +4116,574 @@ paths:
                 $ref: '#/components/schemas/error'
         '404':
           description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/webhooks/{webhookId}:
+    get:
+      operationId: webhook.get
+      summary: Retrieves Information on a Webhook
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: webhookId
+        in: path
+        description: ID associated with the webhook
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Webhook information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if webhook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      operationId: webhook.patch
+      summary: Updates Information About a Webhook
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: webhookId
+        in: path
+        description: ID associated with the webhook
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new properties of the webhook
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webhookPatch'
+      responses:
+        '200':
+          description: Updated webhook information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if webhook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: webhook.delete
+      summary: Deletes a Webhook
+      tags:
+      - Application
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: webhookId
+        in: path
+        description: ID associated with the webhook
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: includeWorkflows
+        in: query
+        description: If the workflows that utilize this webhook should also be deleted.
+        required: false
+        example: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: If webhook was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if webhook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /dashboards:
+    get:
+      operationId: dashboards.get
+      summary: Returns the Dashboards the Current User Has Permission to See
+      tags:
+      - Application
+      parameters:
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - ownerId
+          - applicationId
+          - lastUpdated
+          default: name
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my * dashboard
+        schema:
+          type: string
+      - name: applicationId
+        in: query
+        description: If not provided, return all dashboards. If provided but blank, only return dashboards that are not linked
+          to applications. If provided and an id, only return dashboards linked to the given application id.
+        required: false
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^([A-Fa-f\d]{24}|)$
+      - name: orgId
+        in: query
+        description: If not provided, return all dashboards. If provided but blank, only return dashboards belonging to the
+          current user. If provided and an id, only return dashboards belonging to the given organization id.
+        required: false
+        example: 575ece7e7ae143cd83dc4a9c
+        schema:
+          type: string
+          pattern: ^([A-Fa-f\d]{24}|)$
+      responses:
+        '200':
+          description: Collection of dashboards
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dashboards'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      operationId: dashboards.post
+      summary: Create a New Dashboard
+      tags:
+      - Application
+      requestBody:
+        description: New dashboard information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dashboardPost'
+      responses:
+        '201':
+          description: Successfully created dashboard
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dashboard'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /dashboards/{dashboardId}:
+    get:
+      operationId: dashboard.get
+      summary: Retrieves Information on a Dashboard
+      tags:
+      - Application
+      parameters:
+      - name: dashboardId
+        in: path
+        description: ID of the associated dashboard
+        required: true
+        example: 575ece2b7ae143cd83dc4a9b
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: password
+        in: query
+        description: Password for password-protected dashboards
+        required: false
+        example: myPassword
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Dashboard information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dashboard'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if dashboard was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      operationId: dashboard.patch
+      summary: Updates Information About a Dashboard
+      tags:
+      - Application
+      parameters:
+      - name: dashboardId
+        in: path
+        description: ID of the associated dashboard
+        required: true
+        example: 575ece2b7ae143cd83dc4a9b
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new dashboard properties
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dashboardPatch'
+      responses:
+        '200':
+          description: Update dashboard information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dashboard'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if dashboard was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: dashboard.delete
+      summary: Deletes a Dashboard
+      tags:
+      - Application
+      parameters:
+      - name: dashboardId
+        in: path
+        description: ID of the associated dashboard
+        required: true
+        example: 575ece2b7ae143cd83dc4a9b
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If dashboard was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if dashboard was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      operationId: dashboard.sendReport
+      summary: Sends a Snapshot of a Dashboard
+      tags:
+      - Application
+      parameters:
+      - name: dashboardId
+        in: path
+        description: ID of the associated dashboard
+        required: true
+        example: 575ece2b7ae143cd83dc4a9b
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing report options
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dashboardSendReport'
+      responses:
+        '202':
+          description: If dashboard report was enqueued to be sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if dashboard was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /orgs/{orgId}/audit-logs:
+    get:
+      operationId: auditLogs.get
+      summary: Returns the Audit Logs for the Organization
+      tags:
+      - Application
+      parameters:
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ed6e87ae143cd83dc4aa8
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: creationDate
+        schema:
+          type: string
+          enum:
+          - creationDate
+          - responseStatus
+          - actorName
+          default: creationDate
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: start
+        in: query
+        description: Start of time range for audit log query
+        required: false
+        example: 1465790400000
+        schema:
+          type: string
+      - name: end
+        in: query
+        description: End of time range for audit log query
+        required: false
+        example: 1465790400000
+        schema:
+          type: string
+      - name: auditLogFilter
+        in: query
+        description: Filters for the audit log query
+        required: false
+      responses:
+        '200':
+          description: Collection of audit logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/auditLogs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /orgs/{orgId}/audit-logs/{auditLogId}:
+    get:
+      operationId: auditLog.get
+      summary: Retrieves Information on an Audit Log
+      tags:
+      - Application
+      parameters:
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ed6e87ae143cd83dc4aa8
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: auditLogId
+        in: path
+        description: ID associated with the audit log
+        required: true
+        example: 57955788124b37010084c053
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Audit log information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/auditLog'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if audit log was not found
           content:
             application/json:
               schema:
@@ -8593,4 +8698,5 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
+        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.

@@ -1,0 +1,84 @@
+generated: '2026-08-26'
+method: searched
+source: https://docs.losant.com/user-accounts/oauth-tokens/
+docs: https://docs.losant.com/user-accounts/oauth-tokens/
+discovery: https://api.losant.com/.well-known/oauth-authorization-server
+notes: |
+  Losant runs TWO distinct permission models and they are easy to confuse.
+  (1) OAuth 2.0 user scopes - the scopes a third-party application (an MCP client, for example) requests
+      during the consent flow. These are the seven scopes below, authoritative in the scopes_supported
+      field of the RFC 8414 metadata at https://api.losant.com/.well-known/oauth-authorization-server.
+  (2) API token scopes - the per-operation permissions baked into a User/Application/Instance API token
+      (all.User, all.Application, all.Device, all.User.cli, and per-operation names of the form
+      <resource>.<action>, e.g. device.get, devices.post). These are not OAuth scopes; they are captured in
+      token_scopes below and carried per operation as operationId in openapi/.
+  The OpenAPI files declare only http bearer security, so this file was NOT derivable from the specs -
+  derive-oauth-scopes.py found zero oauth2 schemes. It is written from the provider's published scope
+  reference plus the live authorization-server metadata.
+schemes:
+  - name: OAuth2
+    type: oauth2
+    source: https://api.losant.com/.well-known/oauth-authorization-server
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://accounts.losant.com/oauth
+        tokenUrl: https://api.losant.com/oauth/token
+        revocationUrl: https://api.losant.com/oauth/revoke
+        registrationUrl: https://api.losant.com/oauth/clients
+        pkce: [S256]
+        response_types: [code]
+        token_endpoint_auth_methods: [client_secret_basic, client_secret_post, none]
+scopes:
+  - scope: all.Application.read
+    description: Read-only access to all application data and sub-resources (devices, telemetry data, dashboards, workflows and more).
+    flows: [authorizationCode]
+  - scope: all.Application.bounded
+    description: Read and write access to all application data and sub-resources, excluding token management, org membership, resource transfer and credential changes.
+    flows: [authorizationCode]
+  - scope: only.Organization.read
+    description: Read-only access to organizations and a list of their applications, but no access to application sub-resources.
+    flows: [authorizationCode]
+  - scope: only.Organization.bounded
+    description: Read and write access to organizations and read access to listing their applications, but no access to application sub-resources.
+    flows: [authorizationCode]
+  - scope: all.Organization.read
+    description: Read-only access to organizations and all of their application data and sub-resources.
+    flows: [authorizationCode]
+  - scope: all.Organization.bounded
+    description: Read and write access to organizations and all of their application data and sub-resources.
+    flows: [authorizationCode]
+  - scope: only.User.read
+    description: Read-only access to the user profile (name, email address, sandbox usage).
+    flows: [authorizationCode]
+bounded_semantics:
+  description: |
+    A .bounded scope grants read and write access to the resources it covers but excludes a fixed set of
+    sensitive actions.
+  excluded_actions:
+    - managing API tokens
+    - managing organization members and invitations
+    - transferring resources
+    - changing account credentials
+  immutability: A token's scope cannot be changed after authorization; a new authorization flow is required to add scopes.
+  permission_cap: |
+    Beyond scope, every OAuth token carries a Default Maximum Client Role that caps the role it may assume
+    in each organization, with per-organization and per-application overrides. A token can never exceed the
+    permissions its owning user holds; if the user's role is reduced later, the token's effective
+    permissions are reduced with it.
+token_scopes:
+  description: |
+    API token (non-OAuth) scopes, published in the Bravado API schema at https://api.losant.com/ as the
+    `auth` value on each operation and as `authGroups`. Each operation carries a per-operation scope named
+    <resource>.<action>; wildcards (<resource>.*) and the named groups below are also accepted.
+  broad:
+    - {scope: all.User, description: 'Full access to everything the authenticating user can do.'}
+    - {scope: all.Application, description: 'Full access within one application; the default for application API tokens.'}
+    - {scope: all.Device, description: 'Device-scoped token issued by POST /auth/device; limited to the device (and its peers under the access key).'}
+    - {scope: all.User.cli, description: 'The exact permission set the Losant CLI needs; the "CLI developer" option in the UI.'}
+  groups_deprecated:
+    source: 'deprecatedAuthScopes in https://api.losant.com/'
+    scopes: [applications, dashboards, dashboards.read, devices, devices.read, devices.state, devices.command, events, flows, me, orgs, webhooks]
+  per_operation_example:
+    - {scope: device.get, grants: 'GET /applications/{applicationId}/devices/{deviceId}'}
+    - {scope: devices.post, grants: 'POST /applications/{applicationId}/devices'}
+    - {scope: data.timeSeriesQuery, grants: 'POST /applications/{applicationId}/data/time-series-query'}

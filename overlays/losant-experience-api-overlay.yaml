@@ -1,0 +1,128 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Losant Application Experience API
+  version: 1.0.0
+extends: openapi/losant-experience-api-openapi.yml
+x-generated: '2026-08-26'
+x-method: generated
+x-source: https://api.losant.com/ (Losant Bravado API schema, info.version 1.30.2)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      pass: local-v1
+      date: '2026-08-26'
+      operation-ids: added from the Losant Bravado schema at https://api.losant.com/ (resource.action identifiers, e.g. device.get)
+      paths: sub-path operations restored from the same schema; the prior revision collapsed operations such as device.payloadCountsBreakdown
+        onto their parent resource path
+- target: $.paths['/applications/{applicationId}/experience'].delete
+  update:
+    operationId: experience.delete
+- target: $.paths['/applications/{applicationId}/experience/bootstrap'].patch
+  update:
+    operationId: experience.bootstrap
+- target: $.paths['/applications/{applicationId}/experience/domains'].get
+  update:
+    operationId: experienceDomains.get
+- target: $.paths['/applications/{applicationId}/experience/domains'].post
+  update:
+    operationId: experienceDomains.post
+- target: $.paths['/applications/{applicationId}/experience/domains/{experienceDomainId}'].get
+  update:
+    operationId: experienceDomain.get
+- target: $.paths['/applications/{applicationId}/experience/domains/{experienceDomainId}'].patch
+  update:
+    operationId: experienceDomain.patch
+- target: $.paths['/applications/{applicationId}/experience/domains/{experienceDomainId}'].delete
+  update:
+    operationId: experienceDomain.delete
+- target: $.paths['/applications/{applicationId}/experience/endpoints'].post
+  update:
+    operationId: experienceEndpoints.post
+- target: $.paths['/applications/{applicationId}/experience/endpoints/stats'].get
+  update:
+    operationId: experienceEndpoints.stats
+- target: $.paths['/applications/{applicationId}/experience/endpoints/{experienceEndpointId}'].patch
+  update:
+    operationId: experienceEndpoint.patch
+- target: $.paths['/applications/{applicationId}/experience/endpoints/{experienceEndpointId}'].delete
+  update:
+    operationId: experienceEndpoint.delete
+- target: $.paths['/applications/{applicationId}/experience/endpoints/{experienceEndpointId}/linkedResources'].get
+  update:
+    operationId: experienceEndpoint.linkedResources
+- target: $.paths['/applications/{applicationId}/experience/groups'].get
+  update:
+    operationId: experienceGroups.get
+- target: $.paths['/applications/{applicationId}/experience/groups'].post
+  update:
+    operationId: experienceGroups.post
+- target: $.paths['/applications/{applicationId}/experience/groups/{experienceGroupId}'].get
+  update:
+    operationId: experienceGroup.get
+- target: $.paths['/applications/{applicationId}/experience/groups/{experienceGroupId}'].patch
+  update:
+    operationId: experienceGroup.patch
+- target: $.paths['/applications/{applicationId}/experience/groups/{experienceGroupId}'].delete
+  update:
+    operationId: experienceGroup.delete
+- target: $.paths['/applications/{applicationId}/experience/slugs'].get
+  update:
+    operationId: experienceSlugs.get
+- target: $.paths['/applications/{applicationId}/experience/slugs'].post
+  update:
+    operationId: experienceSlugs.post
+- target: $.paths['/applications/{applicationId}/experience/slugs/{experienceSlugId}'].get
+  update:
+    operationId: experienceSlug.get
+- target: $.paths['/applications/{applicationId}/experience/slugs/{experienceSlugId}'].patch
+  update:
+    operationId: experienceSlug.patch
+- target: $.paths['/applications/{applicationId}/experience/slugs/{experienceSlugId}'].delete
+  update:
+    operationId: experienceSlug.delete
+- target: $.paths['/applications/{applicationId}/experience/users'].get
+  update:
+    operationId: experienceUsers.get
+- target: $.paths['/applications/{applicationId}/experience/users'].post
+  update:
+    operationId: experienceUsers.post
+- target: $.paths['/applications/{applicationId}/experience/users/{experienceUserId}'].get
+  update:
+    operationId: experienceUser.get
+- target: $.paths['/applications/{applicationId}/experience/users/{experienceUserId}'].patch
+  update:
+    operationId: experienceUser.patch
+- target: $.paths['/applications/{applicationId}/experience/users/{experienceUserId}'].delete
+  update:
+    operationId: experienceUser.delete
+- target: $.paths['/applications/{applicationId}/experience/versions'].get
+  update:
+    operationId: experienceVersions.get
+- target: $.paths['/applications/{applicationId}/experience/versions'].post
+  update:
+    operationId: experienceVersions.post
+- target: $.paths['/applications/{applicationId}/experience/versions/{experienceVersionIdOrName}'].get
+  update:
+    operationId: experienceVersion.get
+- target: $.paths['/applications/{applicationId}/experience/versions/{experienceVersionIdOrName}'].patch
+  update:
+    operationId: experienceVersion.patch
+- target: $.paths['/applications/{applicationId}/experience/versions/{experienceVersionIdOrName}'].delete
+  update:
+    operationId: experienceVersion.delete
+- target: $.paths['/applications/{applicationId}/experience/views'].get
+  update:
+    operationId: experienceViews.get
+- target: $.paths['/applications/{applicationId}/experience/views'].post
+  update:
+    operationId: experienceViews.post
+- target: $.paths['/applications/{applicationId}/experience/views/{experienceViewId}'].patch
+  update:
+    operationId: experienceView.patch
+- target: $.paths['/applications/{applicationId}/experience/views/{experienceViewId}'].delete
+  update:
+    operationId: experienceView.delete
+- target: $.paths['/applications/{applicationId}/experience/views/{experienceViewId}/linkedResources'].get
+  update:
+    operationId: experienceView.linkedResources

@@ -1,0 +1,154 @@
+generated: '2026-08-26'
+method: searched
+source: |
+  https://docs.losant.com/rest-api/overview/, https://docs.losant.com/devices/overview/,
+  https://docs.losant.com/mqtt/overview/, https://api.losant.com/ (Bravado schema), openapi/*.yml
+cross_links:
+  errors: errors/losant-problem-types.yml
+  lifecycle: lifecycle/losant-lifecycle.yml
+  authentication: authentication/losant-authentication.yml
+  scopes: scopes/losant-scopes.yml
+  rate_limits: rate-limits/losant-rate-limits.yml
+content:
+  request: 'application/json; every request should set both Content-Type: application/json and Accept: application/json'
+  response: 'application/json for every response, including errors'
+  exceptions: ['multipart/form-data for File: Upload and Private File: Upload (bodies capped at 10MB; larger files go directly to the storage provider with the signed URL the API returns)']
+authentication:
+  style: bearer
+  header: 'Authorization: Bearer <token>'
+  token_kinds: [User API Token, Application API Token, Device Token, Instance API Token, User OAuth Token]
+  detail: authentication/losant-authentication.yml
+identifiers:
+  format: '24-character hexadecimal ObjectId'
+  pattern: '^[A-Fa-f\d]{24}$'
+  note: 'Every resource id in the API - applicationId, deviceId, flowId, dataTableId - matches this pattern, and the OpenAPI declares it on every path parameter. There are no typed key prefixes.'
+pagination:
+  style: page-number
+  request:
+    page: 'zero-based page index; default 0'
+    perPage: 'items per page; default 100'
+    sortField: 'field to sort by; per-resource enum (name, id, creationDate, lastUpdated, ...); default name'
+    sortDirection: 'asc | desc; default asc'
+    filterField: 'field to filter on'
+    filter: 'glob-supporting filter value applied to filterField'
+  response_fields: [count, items, page, perPage, sortField, sortDirection, totalCount]
+  note: 'Collection responses carry both `count` (items on this page) and `totalCount` (matching the query). No cursor or Link header is offered.'
+filtering:
+  simple: 'filterField + filter, with glob support (e.g. filter="my * device")'
+  advanced: 'a `query` query-parameter carrying a MongoDB-style JSON object which overrides filterField, filter and the resource-specific filters; schemas advancedDeviceQuery, advancedEventQuery, advancedFlowQuery and siblings are declared in the spec'
+  tag_filter: 'tagFilter - array of tag key/value pairs, on tag-bearing resources'
+field_shaping:
+  summaryInclude / summaryExclude: 'include or exclude named fields from summary responses on some resources'
+  tagsAsObject: 'return tags as an object map instead of an array'
+  attributesAsObject: 'return attributes as an object map instead of an array'
+  excludeConnectionInfo: 'omit device connection info from device listings'
+  queryDeleted: 'return recently deleted devices instead of live ones'
+hypermedia:
+  links: 'objects carry a _links map (self, parent collection, owning application) and a _type discriminator'
+  media_type: application/json
+  note: 'HAL-like shape without the application/hal+json media type - see conformance/losant-conformance.yml'
+concurrency:
+  etag: 'device (and other) objects return an _etag field'
+  conditional_requests: false
+  note: 'An _etag is returned in payloads but no If-Match / If-None-Match request header is documented or declared in the schema, so the value cannot currently be used for optimistic concurrency over HTTP.'
+idempotency:
+  supported: false
+  header: null
+  note: |
+    Losant publishes NO idempotency-key contract. There is no Idempotency-Key header in the docs and none
+    of the 375 operations in the Bravado schema declares one. Writes are PATCH-partial (naturally
+    idempotent for field updates) but POST creates are not - a retried create makes a second resource.
+    Agents must de-duplicate client-side, typically by filtering on a tag or name before creating.
+    No Idempotency pointer is emitted in apis.yml for this provider precisely because the contract is absent.
+versioning:
+  scheme: unversioned-url
+  detail: lifecycle/losant-lifecycle.yml
+request_tracing:
+  request_id_header: null
+  note: 'No X-Request-Id / correlation header is documented. Server-side traceability is through Application Audit Logs (auditLogs.get) and workflow/job logs (applicationJobLogs.get, resourceJob.logs, flow.errors).'
+error_envelope:
+  media_type: application/json
+  shape: '{"type": "<ErrorName>", "message": "<human readable>"}'
+  detail: errors/losant-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  status: '429 Too Many Requests'
+  note: |
+    Losant documents per-endpoint throttles in prose but publishes NO rate-limit response headers - no
+    X-RateLimit-*, no RateLimit-*, no documented Retry-After. An agent cannot read remaining budget from a
+    response; it can only observe the 429. On MQTT, exceeding the limit disconnects and bans the client.
+  detail: rate-limits/losant-rate-limits.yml
+special_headers:
+  - name: losantdomain
+    in: header
+    description: 'Domain scope of request (rarely needed) - the single global header parameter declared in the Bravado schema.'
+    source: https://api.losant.com/
+async_operations:
+  pattern: '202 Accepted returning a jobEnqueuedResult; long-running work (imports, clones, exports, bulk updates, archives) is enqueued and tracked as a Resource Job'
+  polling: 'resourceJobs.get / resourceJob.logs, applicationJobLogs.get'
+  cancel: 'resourceJob.cancelExecution, notebook.cancelExecution'
+  concurrency_limits: 'most bulk operations are limited to one concurrent call per application - see rate-limits/losant-rate-limits.yml'
+dry_run_mode:
+  supported: false
+  note: 'No dry-run, preview, or validate-only mode is offered on any REST write operation. Three partial facilities exist: instanceNotificationRule.evaluate evaluates a notification rule without sending it; the Losant CLI accepts --dry-run on its download and export commands (cli/losant-cli.yml); and the free Developer Sandbox is a whole-account rehearsal environment (sandbox/losant-sandbox.yml).'
+reversibility:
+  grade: verified
+  applicable: true
+  summary: |
+    Losant has a real write surface and one genuinely reversible destructive action with a published
+    window - device deletion. Most other deletes are immediate and permanent, and long-running jobs are
+    cancellable rather than reversible. Recorded per surface below; no window is asserted that the docs do
+    not state.
+  surfaces:
+    - action: 'Delete a device'
+      operation: device.delete
+      note: 'device.delete exists upstream in the Bravado schema; this repo''s OpenAPI does not yet capture it'
+      reversal: 'Restore a deleted device'
+      reversal_operation: devices.restore
+      window: '93 days from the moment the device is marked for deletion'
+      window_source: https://docs.losant.com/devices/overview/
+      grade: verified
+      detail: |
+        Deleted devices and their telemetry are retained and restorable for up to 93 days; restoring returns
+        the telemetry, re-enables MQTT connection, and re-deploys edge deployments once the device
+        reconnects. Deleted devices remain readable in the meantime via the devices list with queryDeleted.
+        Requires at least collaborator permission on the application.
+    - action: 'Delete a sandbox (Enterprise Instance)'
+      operation: instanceSandbox.delete
+      reversal: 'Undelete a sandbox'
+      reversal_operation: instanceSandbox.undelete
+      window: null
+      grade: documented
+      detail: 'An instance operator can undelete a sandbox, but no retention window is published for it.'
+    - action: 'Notebook execution'
+      operation: notebooks.post
+      reversal: 'Mark the execution for cancellation'
+      reversal_operation: notebook.cancelExecution
+      window: 'while the execution is still running'
+      window_source: https://docs.losant.com/rest-api/notebook/
+      grade: documented
+      detail: 'Cancellation stops in-flight work; it does not undo output already written.'
+    - action: 'Resource job execution'
+      operation: resourceJobs.post
+      reversal: 'Mark the job execution for cancellation'
+      reversal_operation: resourceJob.cancelExecution
+      window: 'while the execution is still running'
+      grade: documented
+    - action: 'Invite a member to an organization'
+      operation: org.inviteMember
+      reversal: 'Revoke the invitation'
+      reversal_operation: org.revokeInvite
+      window: 'until the invitation is accepted; invitations expire on their own and then return 410'
+      window_source: https://docs.losant.com/rest-api/org/
+      grade: documented
+      note: 'org.revokeInvite exists upstream; this repo''s OpenAPI does not yet capture it'
+  irreversible:
+    - {operation: device.removeData, note: 'removes device data for a time range - no restore path'}
+    - {operation: dataTableRows.truncate, note: 'empties a data table - no restore path'}
+    - {operation: application.delete, note: 'no documented restore; export first with application.export'}
+    - {operation: flowVersions.delete, note: 'no restore; version history is the only safety net'}
+    - {operation: experienceVersion.delete, note: 'no restore'}
+  agent_guidance: |
+    Before any delete other than a device, call the matching export operation (application.export,
+    data.export, events.export, dataTableRows.export) - export is the only rollback Losant offers for those
+    resources. Device deletion is safe to attempt because it is restorable for 93 days.

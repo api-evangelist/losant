@@ -1,0 +1,50 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Losant Application Workflow Engine API
+  version: 1.0.0
+extends: openapi/losant-workflow-engine-api-openapi.yml
+x-generated: '2026-08-26'
+x-method: generated
+x-source: https://api.losant.com/ (Losant Bravado API schema, info.version 1.30.2)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      pass: local-v1
+      date: '2026-08-26'
+      operation-ids: added from the Losant Bravado schema at https://api.losant.com/ (resource.action identifiers, e.g. device.get)
+      paths: sub-path operations restored from the same schema; the prior revision collapsed operations such as device.payloadCountsBreakdown
+        onto their parent resource path
+- target: $.paths['/applications/{applicationId}/flows/import'].post
+  update:
+    operationId: flows.import
+- target: $.paths['/applications/{applicationId}/flows/palette'].get
+  update:
+    operationId: flows.palette
+- target: $.paths['/applications/{applicationId}/flows/{flowId}/errors'].get
+  update:
+    operationId: flow.errors
+- target: $.paths['/applications/{applicationId}/flows/{flowId}/storage'].patch
+  update:
+    operationId: flow.setStorageEntry
+- target: $.paths['/applications/{applicationId}/flows/{flowId}/storage'].delete
+  update:
+    operationId: flow.clearStorageEntries
+- target: $.paths['/applications/{applicationId}/flows/{flowId}/versions'].get
+  update:
+    operationId: flowVersions.get
+- target: $.paths['/applications/{applicationId}/flows/{flowId}/versions/delete'].post
+  update:
+    operationId: flowVersions.delete
+- target: $.paths['/applications/{applicationId}/flows/{flowId}/versions/{flowVersionId}'].patch
+  update:
+    operationId: flowVersion.patch
+- target: $.paths['/applications/{applicationId}/flows/{flowId}/versions/{flowVersionId}'].delete
+  update:
+    operationId: flowVersion.delete
+- target: $.paths['/applications/{applicationId}/flows/{flowId}/versions/{flowVersionId}/errors'].get
+  update:
+    operationId: flowVersion.errors
+- target: $.paths['/applications/{applicationId}/flows/{flowId}/virtualButton'].post
+  update:
+    operationId: flow.pressVirtualButton

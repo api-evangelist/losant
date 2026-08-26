@@ -1,0 +1,315 @@
+generated: '2026-08-26'
+method: derived
+source: openapi/*.yml components.schemas + https://api.losant.com/ (Bravado definitions) + https://docs.losant.com/
+notes: 'Entity graph derived from the id-reference fields on the OpenAPI schemas. Losant is a strict hierarchy: an Organization
+  (or a user Sandbox) owns Applications, and an Application is the tenancy boundary for every other resource - devices,
+  data tables, workflows, experiences, dashboards, files, webhooks, integrations, credentials and deployments all carry
+  applicationId and none can be reached across applications. Every id is a 24-character hex ObjectId with no type prefix,
+  so an id alone does not tell an agent what it points at; the _type discriminator on each response object does.'
+identifiers:
+  format: 24-character hexadecimal ObjectId
+  pattern: ^[A-Fa-f\d]{24}$
+  prefixes: null
+  type_discriminator: _type field on every response object
+  links: _links map with self and parent hrefs
+hierarchy:
+- org (or user Sandbox)
+- application
+- <all application-scoped resources>
+entities:
+- name: application
+  title: Application
+  description: Schema for a single Application
+  fields: 19
+  schema: '#/components/schemas/application'
+- name: device
+  title: Device
+  description: Schema for a single Device
+  fields: 18
+  schema: '#/components/schemas/device'
+- name: deviceRecipe
+  title: Device Recipe
+  description: Schema for a single Device Recipe
+  fields: 16
+  schema: '#/components/schemas/deviceRecipe'
+- name: dataTable
+  title: Data Table
+  description: Schema for a single Data Table
+  fields: 8
+  schema: '#/components/schemas/dataTable'
+- name: dataTableRow
+  title: Data Table Row
+  description: Schema for a single Data Table Row
+  fields: 3
+  schema: '#/components/schemas/dataTableRow'
+- name: event
+  title: Event
+  description: Schema for a single Event
+  fields: 18
+  schema: '#/components/schemas/event'
+- name: flow
+  title: Workflow
+  description: Schema for a single Workflow
+  fields: 27
+  schema: '#/components/schemas/flow'
+- name: flowVersion
+  title: Workflow Version
+  description: Schema for a single Workflow Version
+  fields: 0
+  schema: '#/components/schemas/flowVersion'
+- name: webhook
+  title: Webhook
+  description: Schema for a single Webhook
+  fields: 18
+  schema: '#/components/schemas/webhook'
+- name: integration
+  title: Integration
+  description: Schema for a single Integration
+  fields: 17
+  schema: '#/components/schemas/integration'
+- name: dashboard
+  title: Dashboard
+  description: Schema for a single Dashboard
+  fields: 25
+  schema: '#/components/schemas/dashboard'
+- name: notebook
+  title: Notebook
+  description: Schema for a single Notebook
+  fields: 13
+  schema: '#/components/schemas/notebook'
+- name: file
+  title: File Schema
+  description: Schema for a single public or private file
+  fields: 16
+  schema: '#/components/schemas/file'
+- name: credential
+  title: Credential
+  description: Schema for a single Credential
+  fields: 28
+  schema: '#/components/schemas/credential'
+- name: resourceJob
+  title: Resource Job
+  description: Schema for a single resource job
+  fields: 19
+  schema: '#/components/schemas/resourceJob'
+- name: applicationKey
+  title: Application Key
+  description: Schema for a single Application Key
+  fields: 20
+  schema: '#/components/schemas/applicationKey'
+- name: apiToken
+  title: API Token
+  description: Schema for a single API Token
+  fields: 15
+  schema: '#/components/schemas/apiToken'
+- name: experienceUser
+  title: Experience User
+  description: Schema for a single Experience User
+  fields: 14
+  schema: '#/components/schemas/experienceUser'
+- name: experienceGroup
+  title: Experience Group
+  description: Schema for a single Experience Group
+  fields: 17
+  schema: '#/components/schemas/experienceGroup'
+- name: experienceEndpoint
+  title: Experience Endpoint
+  description: Schema for a single Experience Endpoint
+  fields: 19
+  schema: '#/components/schemas/experienceEndpoint'
+- name: experienceView
+  title: Experience View
+  description: Schema for a single Experience View
+  fields: 17
+  schema: '#/components/schemas/experienceView'
+- name: experienceVersion
+  title: Experience Version
+  description: Schema for a single Experience Version
+  fields: 19
+  schema: '#/components/schemas/experienceVersion'
+- name: experienceDomain
+  title: Experience Domain
+  description: Schema for a single Experience Domain
+  fields: 9
+  schema: '#/components/schemas/experienceDomain'
+- name: experienceSlug
+  title: Experience Slug
+  description: Schema for a single Experience Slug
+  fields: 7
+  schema: '#/components/schemas/experienceSlug'
+- name: edgeDeployment
+  title: Edge Deployment
+  description: Schema for a single deployment of an edge workflow to an edge device
+  fields: 17
+  schema: '#/components/schemas/edgeDeployment'
+- name: embeddedDeployment
+  title: Embedded Deployment
+  description: Schema for a single deployment of embedded workflows to embedded devices
+  fields: 13
+  schema: '#/components/schemas/embeddedDeployment'
+- name: org
+  title: Organization
+  description: Schema for a single Organization
+  fields: 21
+  schema: '#/components/schemas/org'
+- name: instance
+  title: Instance
+  description: Schema for a single Instance
+  fields: 11
+  schema: '#/components/schemas/instance'
+- name: applicationCertificate
+  title: Application Certificate
+  description: Schema for a single Application Certificate
+  fields: 14
+  schema: '#/components/schemas/applicationCertificate'
+- name: applicationCertificateAuthority
+  title: Application Certificate Authority
+  description: Schema for a single Application Certificate Authority
+  fields: 10
+  schema: '#/components/schemas/applicationCertificateAuthority'
+- name: auditLog
+  title: Audit Log
+  description: Schema for a single Audit Log entry
+  fields: 20
+  schema: '#/components/schemas/auditLog'
+relationships:
+- from: device
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: deviceRecipe
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: deviceRecipe
+  to: device
+  type: belongs_to
+  via: gatewayId
+- from: deviceRecipe
+  to: device
+  type: belongs_to
+  via: parentId
+- from: dataTable
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: event
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: event
+  to: device
+  type: belongs_to
+  via: deviceId
+- from: flow
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: webhook
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: integration
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: dashboard
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: notebook
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: file
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: credential
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: resourceJob
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: resourceJob
+  to: dataTable
+  type: belongs_to
+  via: dataTableId
+- from: applicationKey
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: experienceUser
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: experienceGroup
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: experienceGroup
+  to: device
+  type: belongs_to
+  via: parentId
+- from: experienceEndpoint
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: experienceView
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: experienceVersion
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: experienceDomain
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: experienceSlug
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: edgeDeployment
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: edgeDeployment
+  to: device
+  type: belongs_to
+  via: deviceId
+- from: edgeDeployment
+  to: flow
+  type: belongs_to
+  via: flowId
+- from: embeddedDeployment
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: embeddedDeployment
+  to: device
+  type: belongs_to
+  via: deviceId
+- from: applicationCertificate
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: applicationCertificateAuthority
+  to: application
+  type: belongs_to
+  via: applicationId
+- from: auditLog
+  to: org
+  type: belongs_to
+  via: orgId
+inverse_note: Each belongs_to above has an implied has_many on the parent (application has_many device via applicationId,
+  and so on); only the declared direction is recorded to avoid asserting cardinality the spec does not state.
+coverage:
+  schemas_in_repo: 206
+  core_entities_mapped: 31
+  relationships: 33
+  caveat: The repo's OpenAPI captures 237 of the 375 operations Losant publishes, so a few entities (notably the top-level
+    application and device list/get operations) are represented in components.schemas without their full operation set.

@@ -1,0 +1,71 @@
+generated: '2026-08-26'
+method: searched
+source: https://docs.losant.com/mqtt/overview/
+sources:
+  - https://docs.losant.com/mqtt/overview/
+  - https://docs.losant.com/applications/webhooks/
+  - https://docs.losant.com/applications/events/
+  - https://docs.losant.com/edge-compute/embedded-edge-agent/mqtt-specification/
+spec_type: none
+asyncapi_published: false
+asyncapi_note: |
+  Losant publishes NO AsyncAPI document. Probed 2026-08-26: https://api.losant.com/asyncapi.yaml -> 405
+  (the API host's not-served response), https://docs.losant.com/asyncapi.yaml -> 404. The event surface is
+  real and substantial but is documented in prose and in the MQTT specification pages, so it is captured
+  here as a catalog rather than fabricated as a spec.
+surfaces:
+  - kind: mqtt
+    name: Losant MQTT Broker
+    host: broker.losant.com
+    protocols: [mqtt, mqtts, ws, wss]
+    version: MQTT 3.1.1
+    docs: https://docs.losant.com/mqtt/overview/
+    authentication: 'Application access key as MQTT username and the access secret as password, or an X.509 client certificate; device tokens are scoped all.Device'
+    constraints:
+      - 'subscribe with QoS 0 only'
+      - 'publish with QoS 0 or QoS 1'
+      - 'retained messages not supported'
+      - 'CleanSession 0 not supported'
+      - 'maximum payload 256KB'
+    root_cas: ['DigiCert Global Root G2', 'DigiCert Global Root G5']
+    limits:
+      - {scope: topic, limit: 30, window: '15 seconds', note: 'about 2 messages/second per topic, applied per direction'}
+      - {scope: client-connection, limit: 300, window: '15 seconds', note: 'about 20 messages/second per connected client'}
+      - {scope: application, limit: 300, window: '15 seconds', metric: 'new client connections'}
+      - {scope: message, limit: '256KB', metric: 'payload size'}
+    enforcement: 'A client exceeding a message limit is banned from the broker for 30 seconds; a repeat violation within 15 minutes doubles the ban, up to a maximum of 1 hour. 15 minutes of compliant traffic resets the ban to 30 seconds.'
+    channels:
+      - {topic: 'losant/{deviceId}/state', direction: publish, publisher: device, description: 'Device state report. Payload {data: {attribute: value, ...}, time, flowVersion, meta}. Attribute keys must match the device''s declared attributes.'}
+      - {topic: 'losant/{deviceId}/command', direction: subscribe, publisher: platform, description: 'Command delivered to the device. Payload {name, payload, time}.'}
+    note: 'Any topic beginning with `losant` is a platform topic with a defined JSON payload; applications may also use arbitrary custom topics, which are surfaced to workflows through the MQTT Trigger and written with the MQTT Reply / MQTT Output nodes. Additional MQTT topic access beyond the device-specific topics is granted per access key.'
+  - kind: webhook-inbound
+    name: Application Webhooks
+    docs: https://docs.losant.com/applications/webhooks/
+    direction: inbound
+    description: |
+      Application-scoped HTTP and WebSocket endpoints that trigger workflows. Each webhook is assigned a
+      permanent URL (on https://triggers.losant.com) that never changes. HTTP webhooks accept any method
+      and an optional body, fire a Webhook Trigger, and reply 200 {"success": true} by default or a custom
+      reply from a Webhook Reply Node. WebSocket webhooks hold the connection open and address clients by
+      a persistent replyId.
+    managed_by: [webhooks.get, webhooks.post, webhook.get, webhook.patch, webhook.delete]
+    features:
+      - 'per-webhook authentication and request verification'
+      - 'binary body handling - integer array (default), binary string, UTF-8, base64 or hex'
+      - 'multipart file upload annotation'
+      - 'custom response body, status and headers via the Webhook Reply Node'
+      - 'a disabled webhook behaves as if it does not exist - HTTP replies 200 {"success": true}, WebSocket replies 404'
+  - kind: webhook-outbound
+    name: Workflow HTTP output
+    docs: https://docs.losant.com/workflows/overview/
+    direction: outbound
+    description: |
+      Losant does not ship a fixed catalog of outbound event types with a subscription API. Outbound
+      delivery is authored per application in the Visual Workflow Engine - an HTTP node, MQTT node, or one
+      of the dedicated output nodes (Email, Mailgun, Azure Event Hubs, Datadog, and others) sends the
+      payload wherever the builder chooses. There is therefore no provider-published outbound event type
+      list to catalog, and none is invented here.
+  - kind: events
+    name: Application Events
+    docs: https://docs.losant.com/applications/events/
+    description: 'Losant "Events" are stateful, severity-graded records inside an application (info/warning/error/critical, open/acknowledged/resolved), not a message-bus event stream. They are created and queried through the REST API (events.export, events.patch, events.mostRecentBySeverity, event.get, event.patch, event.delete) and are throttled to 15 creations per 15-second window per application.'

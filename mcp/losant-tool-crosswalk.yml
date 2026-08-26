@@ -1,0 +1,176 @@
+generated: '2026-08-26'
+method: derived
+source: mcp/losant-mcp.yml + openapi/*.yml (operationIds restored from the Losant Bravado schema at https://api.losant.com/)
+notes: |
+  The Losant MCP server is a THIN, GENERIC facade over the Platform REST API: three tools, each of which
+  fans out across many REST operations by (operation x resourceType) rather than exposing one tool per
+  operation. Binding is therefore one-to-many and mechanical - losant_query{operation:list,resourceType:X}
+  is the REST collection GET for X, and losant_query{operation:get,...} is the item GET. Confidence is
+  recorded per row against the fan-out, and the live tools/list is OAuth-gated so no live inputSchema was
+  observed (see surfaces.mcp).
+surfaces:
+  openapi:
+    files: openapi/*.yml
+    operations: 237
+    note: |
+      The repo's OpenAPI covers 237 operations. The provider's own Bravado schema at https://api.losant.com/
+      (info.version 1.30.2) publishes 375. The 138-operation shortfall is a gap in this repo's derived
+      OpenAPI, not in the provider's API - it is recorded here rather than papered over, and several
+      losant_query/losant_write resource types below bind to operations that exist upstream but are not yet
+      captured in openapi/ (marked binding: upstream-only).
+  graphql: null
+  mcp:
+    url: https://mcp.losant.com/mcp
+    gated: true
+    note: 'anonymous POST tools/list returns HTTP 401 with a RFC 9728 WWW-Authenticate challenge; tool names and parameters below are from the provider README/CHANGELOG'
+crosswalk:
+  - tool: losant_query
+    category: read
+    invocation: '{operation: list, resourceType: <type>}'
+    rest:
+      - dashboards.get
+      - devices.getCompositeState
+      - deviceRecipes.get
+      - dataTables.get
+      - dataTableRows.get
+      - webhooks.get
+      - integrations.get
+      - applicationDashboards.get
+      - notebooks.get
+      - flowVersions.get
+      - resourceJobs.get
+      - credentials.get
+      - files.get
+      - privateFiles.get
+      - experienceDomains.get
+      - experienceGroups.get
+      - experienceSlugs.get
+      - experienceUsers.get
+      - experienceVersions.get
+      - experienceViews.get
+      - applicationKeys.get
+    binding: rest
+    confidence: high
+    note: 'one tool call per resourceType maps to that resource collection GET; applications.get, devices.get, events.get, flows.get and applicationKeys list for some scopes exist upstream but are not in openapi/ yet'
+  - tool: losant_query
+    category: read
+    invocation: '{operation: get, resourceType: <type>, resourceId: <id>}'
+    rest:
+      - applicationDashboard.get
+      - dashboard.get
+      - deviceRecipe.get
+      - dataTable.get
+      - dataTableRow.get
+      - webhook.get
+      - integration.get
+      - event.get
+      - file.get
+      - privateFile.get
+      - experienceDomain.get
+      - experienceGroup.get
+      - experienceSlug.get
+      - experienceUser.get
+      - experienceVersion.get
+      - applicationKey.get
+    binding: rest
+    confidence: high
+    note: 'device.get, application.get, flow.get, notebook.get and credential.get exist upstream but are not in openapi/ yet'
+  - tool: losant_timeseries
+    category: read
+    invocation: 'time-series device data and state'
+    rest: []
+    binding: upstream-only
+    confidence: medium
+    note: |
+      Backed by the Data resource (data.timeSeriesQuery / data.lastValueQuery) and device state
+      (device.getState / device.getCompositeState) upstream. Only devices.getCompositeState and data.export
+      are present in openapi/; timeSeriesQuery and lastValueQuery are among the 138 operations this repo's
+      OpenAPI does not yet capture, though examples/losant-data-api-time-series-query-example.json documents
+      the payload.
+  - tool: losant_write
+    category: write
+    invocation: '{operation: createOne, resourceType: <type>, body: {...}}'
+    rest:
+      - deviceRecipes.post
+      - dataTables.post
+      - webhooks.post
+      - integrations.post
+      - resourceJobs.post
+      - applicationKeys.post
+      - credentials.post
+      - files.post
+      - privateFiles.post
+      - notebooks.post
+      - experienceDomains.post
+      - experienceEndpoints.post
+      - experienceGroups.post
+      - experienceSlugs.post
+      - experienceUsers.post
+      - experienceVersions.post
+      - experienceViews.post
+      - applicationDashboards.post
+    binding: rest
+    confidence: high
+    note: 'createOne is refused for event, application and applicationReadme; devices.post and dataTableRows.post exist upstream but are not in openapi/ yet'
+  - tool: losant_write
+    category: write
+    invocation: '{operation: updateOne, resourceType: <type>, resourceId: <id>, body: {...}}'
+    rest:
+      - device.patch
+      - deviceRecipe.patch
+      - dataTable.patch
+      - dataTableRow.patch
+      - webhook.patch
+      - integration.patch
+      - resourceJob.patch
+      - applicationKey.patch
+      - credential.patch
+      - file.patch
+      - privateFile.patch
+      - notebook.patch
+      - experienceDomain.patch
+      - experienceEndpoint.patch
+      - experienceGroup.patch
+      - experienceSlug.patch
+      - experienceUser.patch
+      - experienceVersion.patch
+      - experienceView.patch
+      - applicationDashboard.patch
+      - flowVersion.patch
+    binding: rest
+    confidence: high
+    note: 'PATCH is partial - omitted fields are left unchanged; application.patch and flow.patch exist upstream but are not in openapi/ yet'
+mcp_only:
+  - tool: losant_write
+    reason: |
+      The MCP server exposes authoring guides and JSON Schemas as MCP RESOURCES (losant://guides/...,
+      losant://schemas/{resourceType}Post, losant://authoring/flows/flow with 90 node specs and 35 trigger
+      specs). Those are server-side documentation composites with no REST equivalent - the REST API returns
+      no such authoring guide.
+rest_only:
+  - capability: Device telemetry ingestion
+    operations: [device.setConnectionStatus, device.removeData]
+    note: 'no MCP tool writes device state or sends commands; state ingestion is MQTT-first (broker.losant.com) and device.sendState/sendCommand are not exposed as tools'
+  - capability: Enterprise Instance administration
+    operations: [instances.get, instance.patch, instanceOrgs.get, instanceOrgs.post, instanceMembers.get, instanceApiTokens.post, instanceCustomNodes.get, instanceNotificationRules.get, instanceAuditLogs.get, instanceSandboxes.get]
+    note: 'the entire self-hosted/dedicated instance-manager surface has no MCP tool'
+  - capability: Auth, tokens and account
+    operations: [auth.authenticateUserSaml, auth.ssoDomain, userApiTokens.post, userApiToken.delete, orgs.get, orgs.post, org.inviteMember, me.transferResources]
+    note: 'deliberate - the MCP server authenticates via OAuth and does not re-expose credential issuance'
+  - capability: Application lifecycle and bulk data
+    operations: [application.import, applications.import, application.globals, data.export, events.export, embeddedDeployments.export, applicationJobLogs.get, auditLogs.get]
+  - capability: Certificates and X.509 device auth
+    operations: [applicationCertificates.get, applicationCertificates.post, applicationCertificate.patch, applicationCertificateAuthorities.get, applicationCertificateAuthorities.post]
+  - capability: Edge and embedded deployment control
+    operations: [edgeDeployments.get, edgeDeployments.replace, edgeDeployment.get, embeddedDeployments.get, embeddedDeployment.get]
+  - capability: Workflow execution control
+    operations: [flow.pressVirtualButton, flow.setStorageEntry, flow.clearStorageEntries, flow.errors, flowVersion.errors, flows.import, flows.palette]
+coverage:
+  tools_named: 3
+  tool_invocations_bound: 4
+  tools_bound_to_rest: 3
+  mcp_only: 1
+  rest_operations_total: 237
+  rest_operations_with_a_tool: 77
+  rest_operations_without_a_tool: 160
+  provider_operations_published_upstream: 375

@@ -2,54 +2,157 @@ specification: https://github.com/api-commons/rate-limits
 specVersion: '0.1'
 provider: losant
 providerName: Losant
+generated: '2026-08-26'
+method: searched
 sourceURL: https://docs.losant.com/rest-api/overview/
-asOf: '2026-05-25'
+asOf: '2026-08-26'
 notes: |
-  Losant does not publish a single canonical numeric per-second rate limit for the Platform API. The
-  following entries describe the rate-limiting surfaces that the platform exposes and that operators tune
-  per commercial agreement and per Enterprise Instance.
+  Losant publishes NO account-wide numeric request quota for the Platform API and NO rate-limit response
+  headers - there is no X-RateLimit-*, no RateLimit-*, and no documented Retry-After, so an agent cannot
+  read its remaining budget from a response and can only observe the 429. What Losant does publish, in the
+  "Throttles And Limits" section of the REST API overview and in the MQTT specification, is a precise
+  per-endpoint throttle table plus hard MQTT message limits. Those are recorded below verbatim.
+response_headers: []
+response_headers_note: 'None published. Confirmed against https://docs.losant.com/rest-api/overview/ and the MQTT specification.'
+exhausted_status: 429
 limits:
+- id: device-send-state
+  scope: device
+  surface: 'POST /applications/{applicationId}/devices/{deviceId}/state'
+  limit: 30
+  window: 15s
+  burst: 30
+  rate: '2 requests/second average'
+  enforcement: 429 Too Many Requests
+  description: 'Device: Send State. Matches the limit applied to state messages sent over MQTT.'
+- id: device-send-command
+  scope: device
+  surface: 'POST /applications/{applicationId}/devices/{deviceId}/command'
+  limit: 30
+  window: 15s
+  rate: '2 requests/second average'
+  enforcement: 429 Too Many Requests
+  description: 'Device: Send Command - shares the Send State throttle.'
+- id: device-set-connection-status
+  scope: device
+  surface: 'POST /applications/{applicationId}/devices/{deviceId}/setConnectionStatus'
+  operationId: device.setConnectionStatus
+  limit: 30
+  window: 15s
+  rate: '2 requests/second average'
+  enforcement: 429 Too Many Requests
+- id: application-mqtt-publish
+  scope: device
+  surface: 'Application: MQTT Publish Message'
+  limit: 30
+  window: 15s
+  rate: '2 requests/second average'
+  enforcement: 429 Too Many Requests
+- id: event-create
+  scope: application
+  surface: 'Event: Create'
+  limit: 15
+  window: 15s
+  rate: '1 creation/second average'
+  enforcement: 429 Too Many Requests
+  description: 'Matches the limit applied when events are created from a workflow.'
+- id: workflow-virtual-button
+  scope: virtual-button
+  surface: 'Workflow: Press Virtual Button'
+  operationId: flow.pressVirtualButton
+  limit: 100
+  window: 10s
+  rate: '10 requests/second average'
+  enforcement: 429 Too Many Requests
+- id: embedded-deployment-export
+  scope: application
+  surface: 'Embedded Deployment: Export'
+  operationId: embeddedDeployments.export
+  limit: 1
+  window: 5m
+  enforcement: 429 Too Many Requests
+- id: notebook-input-data-export
+  scope: notebook
+  surface: 'Notebook: Input Data Export'
+  limit: 1
+  window: 15m
+  enforcement: 429 Too Many Requests
+- id: single-concurrency-operations
+  scope: application
+  surface: 'long-running bulk operations'
+  limit: 1
+  window: concurrent
+  metric: concurrent calls
+  enforcement: 429 Too Many Requests
+  description: |
+    One concurrent call each, per the scope named: Application: Archive Data (per application),
+    Application: Backfill Archive Data (per application), Application: Export (per application),
+    Application: Full Data Tables Archive (per application), Application: Full Events Archive (per
+    application), Application: Clone and Applications: Import (per owner - sandbox or organization),
+    Application: Import (per application), Dashboard: Send Report (per dashboard), Data: Bulk Export by
+    Query (per application), Data Table: Data Export (per data table), Device: Data Export (per device),
+    Devices: Export (per application), Devices: Payload Counts (per application), Event: Export (per
+    application), Instance: Generate Report (per instance).
+- id: payload-size-caps
+  scope: request
+  surface: 'response and body size caps'
+  enforcement: 'request refused'
+  description: |
+    Data: Time Series Query returns at most 30MB per request. Data Table Rows: Get and Data Table Rows:
+    Query return at most 20MB per request. File: Upload and Private File: Upload multipart/form-data bodies
+    are capped at 10MB - larger files (to 5GB) are uploaded directly to the storage provider using the
+    signed URL and credentials the API returns.
+- id: mqtt-per-topic
+  scope: topic
+  surface: broker.losant.com
+  limit: 30
+  window: 15s
+  rate: '2 messages/second average, applied per direction'
+  enforcement: 'disconnect and 30-second ban, doubling per repeat violation within 15 minutes up to 1 hour'
+- id: mqtt-per-connection
+  scope: client-connection
+  surface: broker.losant.com
+  limit: 300
+  window: 15s
+  rate: '20 messages/second average'
+  enforcement: 'disconnect and escalating ban'
+- id: mqtt-new-connections
+  scope: application
+  surface: broker.losant.com
+  limit: 300
+  window: 15s
+  metric: new client connections
+  rate: '20 connections/second average'
+  enforcement: 'connection refused'
+- id: mqtt-message-size
+  scope: message
+  surface: broker.losant.com
+  limit: 262144
+  metric: bytes
+  description: '256KB maximum MQTT payload size.'
 - id: platform-api-default
   scope: account
   surface: https://api.losant.com
-  description: |
-    Multi-tenant cloud Platform API enforces fair-use throttling per account and per IP. Specific limits
-    are not publicly documented and are tuned by Losant for paying accounts.
   policy: fair-use
+  limit: null
+  description: |
+    Outside the per-endpoint throttles above, the multi-tenant cloud applies undocumented fair-use
+    throttling per account and per IP. Specific numbers are not published and are tuned by Losant for
+    paying accounts.
   enforcement: 429 Too Many Requests
-- id: mqtt-broker
-  scope: device
-  surface: broker.losant.com
-  description: |
-    Device MQTT broker enforces per-device connection, message-rate, and payload-size limits. Devices
-    exceeding the limit will be disconnected.
-  policy: per-device fair-use
-  enforcement: MQTT disconnect
-- id: webhooks
-  scope: application
-  surface: https://triggers.losant.com
-  description: |
-    Inbound webhook endpoints (and Experience endpoints) accept HTTP traffic into application workflows.
-    Sustained throughput is bounded by the workflow execution budget on the account/instance.
-  policy: workflow-run-budget bounded
-  enforcement: 429 / workflow drop
 - id: notebooks
   scope: account
   surface: notebooks
-  description: |
-    Notebook executions consume notebook minutes; concurrency and monthly notebook minutes are bounded by
-    plan/commercial agreement. Notebook errors and minute overage are surfaced via the Notebook API and
-    audit logs.
   policy: minute-quota
-  enforcement: notebook execution refused or queued
+  limit: null
+  description: 'Notebook executions consume notebook minutes; concurrency and monthly minutes are bounded by the commercial agreement. Usage is readable through notebook.notebookMinuteCounts, org.notebookMinuteCounts, instance.notebookMinuteCounts.'
+  enforcement: 'notebook execution refused or queued'
 - id: enterprise-instance-tunable
   scope: instance
-  surface: dedicated / self-hosted
-  description: |
-    On dedicated and self-hosted Enterprise Instances, rate-limit policies are configurable by the
-    customer/Losant operator at the instance level.
+  surface: 'dedicated / self-hosted Enterprise Instance'
   policy: operator-configurable
-  enforcement: per-instance configuration
+  limit: null
+  description: 'On dedicated and self-hosted instances, rate-limit policy is configurable at the instance level.'
 documentation:
 - https://docs.losant.com/rest-api/overview/
 - https://docs.losant.com/mqtt/overview/

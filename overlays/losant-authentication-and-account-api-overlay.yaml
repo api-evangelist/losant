@@ -1,0 +1,71 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Losant Application Authentication and Account API
+  version: 1.0.0
+extends: openapi/losant-authentication-and-account-api-openapi.yml
+x-generated: '2026-08-26'
+x-method: generated
+x-source: https://api.losant.com/ (Losant Bravado API schema, info.version 1.30.2)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      pass: local-v1
+      date: '2026-08-26'
+      operation-ids: added from the Losant Bravado schema at https://api.losant.com/ (resource.action identifiers, e.g. device.get)
+      paths: sub-path operations restored from the same schema; the prior revision collapsed operations such as device.payloadCountsBreakdown
+        onto their parent resource path
+- target: $.paths['/auth/ssoDomain'].get
+  update:
+    operationId: auth.ssoDomain
+- target: $.paths['/auth/user/saml'].post
+  update:
+    operationId: auth.authenticateUserSaml
+- target: $.paths['/invites'].get
+  update:
+    operationId: orgInvites.get
+- target: $.paths['/invites'].post
+  update:
+    operationId: orgInvites.post
+- target: $.paths['/me/invites'].get
+  update:
+    operationId: me.invites
+- target: $.paths['/me/invites/{inviteId}'].post
+  update:
+    operationId: me.respondToInvite
+- target: $.paths['/me/tokens'].get
+  update:
+    operationId: userApiTokens.get
+- target: $.paths['/me/tokens'].post
+  update:
+    operationId: userApiTokens.post
+- target: $.paths['/me/tokens/{apiTokenId}'].get
+  update:
+    operationId: userApiToken.get
+- target: $.paths['/me/tokens/{apiTokenId}'].patch
+  update:
+    operationId: userApiToken.patch
+- target: $.paths['/me/tokens/{apiTokenId}'].delete
+  update:
+    operationId: userApiToken.delete
+- target: $.paths['/me/transferResources'].patch
+  update:
+    operationId: me.transferResources
+- target: $.paths['/orgs'].get
+  update:
+    operationId: orgs.get
+- target: $.paths['/orgs'].post
+  update:
+    operationId: orgs.post
+- target: $.paths['/orgs/{orgId}/invites'].post
+  update:
+    operationId: org.inviteMember
+- target: $.paths['/orgs/{orgId}/member'].delete
+  update:
+    operationId: org.removeMember
+- target: $.paths['/orgs/{orgId}/notebookMinuteCounts'].get
+  update:
+    operationId: org.notebookMinuteCounts
+- target: $.paths['/orgs/{orgId}/transferResources'].patch
+  update:
+    operationId: org.transferResources

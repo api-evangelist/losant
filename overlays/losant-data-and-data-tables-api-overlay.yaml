@@ -1,0 +1,53 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Losant Application Data and Data Tables API
+  version: 1.0.0
+extends: openapi/losant-data-and-data-tables-api-openapi.yml
+x-generated: '2026-08-26'
+x-method: generated
+x-source: https://api.losant.com/ (Losant Bravado API schema, info.version 1.30.2)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      pass: local-v1
+      date: '2026-08-26'
+      operation-ids: added from the Losant Bravado schema at https://api.losant.com/ (resource.action identifiers, e.g. device.get)
+      paths: sub-path operations restored from the same schema; the prior revision collapsed operations such as device.payloadCountsBreakdown
+        onto their parent resource path
+- target: $.paths['/applications/{applicationId}/data-tables'].get
+  update:
+    operationId: dataTables.get
+- target: $.paths['/applications/{applicationId}/data-tables'].post
+  update:
+    operationId: dataTables.post
+- target: $.paths['/applications/{applicationId}/data-tables/{dataTableId}'].get
+  update:
+    operationId: dataTable.get
+- target: $.paths['/applications/{applicationId}/data-tables/{dataTableId}'].patch
+  update:
+    operationId: dataTable.patch
+- target: $.paths['/applications/{applicationId}/data-tables/{dataTableId}'].delete
+  update:
+    operationId: dataTable.delete
+- target: $.paths['/applications/{applicationId}/data-tables/{dataTableId}/column'].post
+  update:
+    operationId: dataTable.addColumn
+- target: $.paths['/applications/{applicationId}/data-tables/{dataTableId}/rows'].get
+  update:
+    operationId: dataTableRows.get
+- target: $.paths['/applications/{applicationId}/data-tables/{dataTableId}/rows/truncate'].post
+  update:
+    operationId: dataTableRows.truncate
+- target: $.paths['/applications/{applicationId}/data-tables/{dataTableId}/rows/{rowId}'].get
+  update:
+    operationId: dataTableRow.get
+- target: $.paths['/applications/{applicationId}/data-tables/{dataTableId}/rows/{rowId}'].patch
+  update:
+    operationId: dataTableRow.patch
+- target: $.paths['/applications/{applicationId}/data-tables/{dataTableId}/rows/{rowId}'].delete
+  update:
+    operationId: dataTableRow.delete
+- target: $.paths['/applications/{applicationId}/data/export'].post
+  update:
+    operationId: data.export

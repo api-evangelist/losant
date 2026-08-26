@@ -1,0 +1,1 @@
+{"resource":"https://mcp.losant.com/mcp","authorization_servers":["https://api.losant.com"],"bearer_methods_supported":["header"],"scopes_supported":["all.Application.read","all.Application.bounded","only.Organization.read","only.Organization.bounded","all.Organization.read","all.Organization.bounded","only.User.read"]}

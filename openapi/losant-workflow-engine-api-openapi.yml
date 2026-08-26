@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: Losant Application Workflow Engine API
   version: 1.29.4
-  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations, files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations,
+    files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant
+    Platform API (Bravado/Swagger 2) at https://api.losant.com/.
   contact:
     name: Losant Support
     url: https://www.losant.com/contact
@@ -21,9 +23,89 @@ tags:
 - name: Workflow Engine
   description: Workflow Engine resources on the Losant Platform.
 paths:
-  /applications/{applicationId}/flows/{flowId}/versions/{flowVersionId}:
+  /applications/{applicationId}/flows/import:
+    post:
+      operationId: flows.import
+      summary: Import a Set of Flows and Flow Versions
+      tags:
+      - Workflow Engine
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: New flow and flow version information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/flowsImportPost'
+      responses:
+        '201':
+          description: Successfully imported workflows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowsImportResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/flows/palette:
     get:
-      summary: Get Information About Errors That Occurred During Runs of This Workflow Version
+      operationId: flows.palette
+      summary: Gets Additional Nodes That Should Be Available in the Palette
+      tags:
+      - Workflow Engine
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: The additional nodes available in the palette
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paletteResponse'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/flows/{flowId}/errors:
+    get:
+      operationId: flow.errors
+      summary: Get Information About Errors That Occurred During Runs of This Workflow
       tags:
       - Workflow Engine
       parameters:
@@ -43,15 +125,6 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: flowVersionId
-        in: path
-        description: Version ID or version name associated with the flow version
-        required: true
-        example: 675ed18f7ae143cd83dc4bb7
-        schema:
-          type: string
-          minLength: 1
-          maxLength: 255
       - name: duration
         in: query
         description: Duration of time range in milliseconds
@@ -87,9 +160,18 @@ paths:
           - asc
           - desc
           default: desc
+      - name: flowVersion
+        in: query
+        description: Flow version name or ID. When not included, will be errors for all versions. Pass develop for just the
+          develop version.
+        required: false
+        example: develop
+        schema:
+          type: string
       - name: deviceId
         in: query
-        description: For edge workflows, the Device ID to return workflow errors for. When not included, will be errors for all device IDs.
+        description: For edge or embedded workflows, the Device ID for which to return workflow errors. When not included,
+          will be errors for all device IDs.
         required: false
         example: 575ed18f7ae143cd83dc4bb6
         schema:
@@ -109,15 +191,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if flow version was not found
+          description: Error if flow was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+  /applications/{applicationId}/flows/{flowId}/storage:
     patch:
-      summary: Updates Information About a Flow Version
+      operationId: flow.setStorageEntry
+      summary: Sets a Storage Value
       tags:
       - Workflow Engine
       parameters:
@@ -137,84 +221,16 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: flowVersionId
-        in: path
-        description: Version ID or version name associated with the flow version
-        required: true
-        example: 675ed18f7ae143cd83dc4bb7
-        schema:
-          type: string
-          minLength: 1
-          maxLength: 255
-      - name: includeCustomNodes
-        in: query
-        description: If the result of the request should also include the details of any custom nodes referenced by the returned workflows
-        required: false
-        example: true
-        schema:
-          type: string
-          default: false
       requestBody:
-        description: Object containing new properties of the flow version
+        description: Object containing storage entry
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/flowVersionPatch'
+              $ref: '#/components/schemas/flowStorageEntry'
       responses:
         '200':
-          description: Updated flow version information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/flowVersion'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if flow version was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes a Flow Version
-      tags:
-      - Workflow Engine
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: flowId
-        in: path
-        description: ID associated with the flow
-        required: true
-        example: 575ed18f7ae143cd83dc4aa6
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: flowVersionId
-        in: path
-        description: Version ID or version name associated with the flow version
-        required: true
-        example: 675ed18f7ae143cd83dc4bb7
-        schema:
-          type: string
-          minLength: 1
-          maxLength: 255
-      responses:
-        '200':
-          description: If flow version was successfully deleted
+          description: Value was successfully stored
           content:
             application/json:
               schema:
@@ -226,7 +242,50 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if flow version was not found
+          description: Error if flow was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: flow.clearStorageEntries
+      summary: Clear All Storage Entries
+      tags:
+      - Workflow Engine
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: flowId
+        in: path
+        description: ID associated with the flow
+        required: true
+        example: 575ed18f7ae143cd83dc4aa6
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: The current storage entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowStorageEntries'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow was not found
           content:
             application/json:
               schema:
@@ -235,6 +294,7 @@ paths:
       - BearerAuth: []
   /applications/{applicationId}/flows/{flowId}/versions:
     get:
+      operationId: flowVersions.get
       summary: Returns the Flow Versions for a Flow
       tags:
       - Workflow Engine
@@ -313,7 +373,8 @@ paths:
           type: string
       - name: includeCustomNodes
         in: query
-        description: If the result of the request should also include the details of any custom nodes referenced by the returned workflows
+        description: If the result of the request should also include the details of any custom nodes referenced by the returned
+          workflows
         required: false
         example: true
         schema:
@@ -346,7 +407,9 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+  /applications/{applicationId}/flows/{flowId}/versions/delete:
     post:
+      operationId: flowVersions.delete
       summary: Delete Flow Versions
       tags:
       - Workflow Engine
@@ -401,9 +464,10 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /applications/{applicationId}/flows/{flowId}:
-    get:
-      summary: Get Information About Errors That Occurred During Runs of This Workflow
+  /applications/{applicationId}/flows/{flowId}/versions/{flowVersionId}:
+    patch:
+      operationId: flowVersion.patch
+      summary: Updates Information About a Flow Version
       tags:
       - Workflow Engine
       parameters:
@@ -423,6 +487,136 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
+      - name: flowVersionId
+        in: path
+        description: Version ID or version name associated with the flow version
+        required: true
+        example: 675ed18f7ae143cd83dc4bb7
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - name: includeCustomNodes
+        in: query
+        description: If the result of the request should also include the details of any custom nodes referenced by the returned
+          workflows
+        required: false
+        example: true
+        schema:
+          type: string
+          default: false
+      requestBody:
+        description: Object containing new properties of the flow version
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/flowVersionPatch'
+      responses:
+        '200':
+          description: Updated flow version information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowVersion'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow version was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: flowVersion.delete
+      summary: Deletes a Flow Version
+      tags:
+      - Workflow Engine
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: flowId
+        in: path
+        description: ID associated with the flow
+        required: true
+        example: 575ed18f7ae143cd83dc4aa6
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: flowVersionId
+        in: path
+        description: Version ID or version name associated with the flow version
+        required: true
+        example: 675ed18f7ae143cd83dc4bb7
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      responses:
+        '200':
+          description: If flow version was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if flow version was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/flows/{flowId}/versions/{flowVersionId}/errors:
+    get:
+      operationId: flowVersion.errors
+      summary: Get Information About Errors That Occurred During Runs of This Workflow Version
+      tags:
+      - Workflow Engine
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: flowId
+        in: path
+        description: ID associated with the flow
+        required: true
+        example: 575ed18f7ae143cd83dc4aa6
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: flowVersionId
+        in: path
+        description: Version ID or version name associated with the flow version
+        required: true
+        example: 675ed18f7ae143cd83dc4bb7
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
       - name: duration
         in: query
         description: Duration of time range in milliseconds
@@ -458,16 +652,10 @@ paths:
           - asc
           - desc
           default: desc
-      - name: flowVersion
-        in: query
-        description: Flow version name or ID. When not included, will be errors for all versions. Pass develop for just the develop version.
-        required: false
-        example: develop
-        schema:
-          type: string
       - name: deviceId
         in: query
-        description: For edge or embedded workflows, the Device ID for which to return workflow errors. When not included, will be errors for all device IDs.
+        description: For edge workflows, the Device ID to return workflow errors for. When not included, will be errors for
+          all device IDs.
         required: false
         example: 575ed18f7ae143cd83dc4bb6
         schema:
@@ -487,105 +675,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if flow was not found
+          description: Error if flow version was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-    patch:
-      summary: Sets a Storage Value
-      tags:
-      - Workflow Engine
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: flowId
-        in: path
-        description: ID associated with the flow
-        required: true
-        example: 575ed18f7ae143cd83dc4aa6
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing storage entry
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/flowStorageEntry'
-      responses:
-        '200':
-          description: Value was successfully stored
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if flow was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Clear All Storage Entries
-      tags:
-      - Workflow Engine
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: flowId
-        in: path
-        description: ID associated with the flow
-        required: true
-        example: 575ed18f7ae143cd83dc4aa6
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: The current storage entries
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/flowStorageEntries'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if flow was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
+  /applications/{applicationId}/flows/{flowId}/virtualButton:
     post:
+      operationId: flow.pressVirtualButton
       summary: Presses the Specified Virtual Button on the Flow
       tags:
       - Workflow Engine
@@ -628,82 +727,6 @@ paths:
                 $ref: '#/components/schemas/error'
         '404':
           description: Error if flow was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/flows:
-    get:
-      summary: Gets Additional Nodes That Should Be Available in the Palette
-      tags:
-      - Workflow Engine
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: The additional nodes available in the palette
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/paletteResponse'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Import a Set of Flows and Flow Versions
-      tags:
-      - Workflow Engine
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: New flow and flow version information
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/flowsImportPost'
-      responses:
-        '201':
-          description: Successfully imported workflows
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/flowsImportResult'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if application was not found
           content:
             application/json:
               schema:
@@ -1422,4 +1445,5 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
+        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.

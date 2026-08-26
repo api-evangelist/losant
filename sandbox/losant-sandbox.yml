@@ -1,0 +1,49 @@
+generated: '2026-08-26'
+method: searched
+source: https://docs.losant.com/getting-started/walkthrough/
+sources:
+  - https://accounts.losant.com/create-account
+  - https://docs.losant.com/getting-started/walkthrough/
+  - https://docs.losant.com/mcp/overview/
+  - https://docs.losant.com/instance-manager/managing-sandbox-users/
+model:
+  type: free-tier-account
+  note: |
+    Losant does NOT run a separate test-vs-live environment. There is one platform, one base URL
+    (https://api.losant.com), one key format and no test-mode key prefix. What Losant calls a "Sandbox" is
+    a first-class product concept: every user account owns a personal Sandbox that holds the applications
+    they own outside an organization. Free self-serve signup makes that Sandbox the rehearsal environment.
+    Because there is no test mode, there are also no magic test values - no test card numbers, no test
+    identifiers, no simulated device ids. Nothing of that shape is published, so nothing of that shape is
+    recorded here.
+console:
+  url: https://app.losant.com/
+  signup: https://accounts.losant.com/create-account
+  signin: https://accounts.losant.com/signin
+  free: true
+  credit_card_required: false
+environments:
+  - {name: 'Multi-tenant cloud', api: 'https://api.losant.com', broker: 'broker.losant.com', triggers: 'https://triggers.losant.com'}
+  - {name: 'Dedicated / self-hosted Enterprise Instance', api: 'customer-specific host', note: 'the CLI and MCP server both accept a LOSANT_API_URL override to target it'}
+test_facilities:
+  - name: 'Personal Sandbox'
+    description: 'Every user account owns a Sandbox that holds personally-owned applications, separate from organization-owned applications. Instance operators can list and manage sandbox users on an Enterprise Instance (instanceSandboxes.get, instanceSandbox.delete, instanceSandbox.undelete).'
+  - name: 'Virtual Button workflow trigger'
+    description: 'A workflow trigger that fires on demand from the UI or via flow.pressVirtualButton, used to exercise a workflow without a real device. Throttled to 100 calls in a 10-second window per virtual button.'
+    operation: flow.pressVirtualButton
+    docs: https://docs.losant.com/workflows/triggers/virtual-button/
+  - name: 'Device: Force State / Force Connection Status'
+    description: 'Write state or connection status for a device from the UI or the API without the physical device being present.'
+    operation: device.setConnectionStatus
+    docs: https://docs.losant.com/devices/overview/
+  - name: 'Notification rule evaluation'
+    description: 'Evaluate an Enterprise Instance notification rule without dispatching it.'
+    operation: instanceNotificationRule.evaluate
+  - name: 'Application templates'
+    description: 'Prebuilt applications that can be imported to get a working solution with simulated data.'
+    docs: https://docs.losant.com/template-library/overview/
+  - name: 'Local MCP server'
+    description: 'Run the MCP server on localhost:3000 with a scoped User API Token instead of pointing an agent at the hosted OAuth server.'
+    docs: https://docs.losant.com/mcp/overview/
+test_values: []
+test_values_note: 'None published. Losant has no test-mode key prefix, no magic identifiers and no fixture/trigger tooling of the kind payment and comms APIs publish. This is a recorded absence, not an omission.'

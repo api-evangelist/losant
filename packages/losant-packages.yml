@@ -1,0 +1,124 @@
+generated: '2026-08-26'
+method: searched
+source: |
+  registry.npmjs.org, pypi.org/pypi/<pkg>/json, rubygems.org/api/v1/gems/<pkg>.json,
+  downloads.arduino.cc/libraries/library_index.json, hub.docker.com/v2/repositories/losant/losant-mcp-server,
+  https://docs.losant.com/rest-api/overview/, https://github.com/Losant
+notes: |
+  Losant publishes first-party clients in two families: REST clients for the Platform API (generated from
+  the Losant "bravado" API schema at https://api.losant.com/) and MQTT clients for device connectivity to
+  broker.losant.com. The REST family is actively maintained - losant-rest (npm) shipped 4.2.2 on
+  2026-08-25 and the Python/Ruby REST clients both shipped on 2026-07-22, tracking the live Platform API.
+  The MQTT family has decayed: the JavaScript MQTT client last published 5.0.0 in August 2021 and the
+  Python/Ruby MQTT clients last published in April 2024, while the platform itself shipped its most
+  recent update in August 2026.
+  The MCP server is NOT distributed on npm - it is distributed as source (GitHub) and as a Docker Hub
+  image, and the published image (1.0.0, 2026-06-05) trails the source CHANGELOG (1.1.0, 2026-08-25) by
+  a minor version, so a Docker-based install today does not get the losant_write tool.
+packages:
+  - language: javascript
+    registry: npm
+    name: losant-rest
+    url: https://www.npmjs.com/package/losant-rest
+    install: npm install losant-rest
+    repository: https://github.com/Losant/losant-rest-js
+    official: true
+    version: 4.2.2
+    published: '2026-08-25'
+    note: JavaScript/Node.js REST client for the Losant Platform API; the Losant web app itself is built on it.
+  - language: python
+    registry: pypi
+    name: losant-rest
+    url: https://pypi.org/project/losant-rest/
+    install: pip install losant-rest
+    repository: https://github.com/Losant/losant-rest-python
+    official: true
+    version: 2.2.1
+    published: '2026-07-22'
+  - language: ruby
+    registry: rubygems
+    name: losant_rest
+    url: https://rubygems.org/gems/losant_rest
+    install: gem install losant_rest
+    repository: https://github.com/Losant/losant-rest-ruby
+    official: true
+    version: 2.1.1
+    published: '2026-07-22'
+  - language: javascript
+    registry: npm
+    name: losant-mqtt
+    url: https://www.npmjs.com/package/losant-mqtt
+    install: npm install losant-mqtt
+    repository: https://github.com/Losant/losant-mqtt-js
+    official: true
+    version: 5.0.0
+    published: '2021-08-04'
+    note: Device MQTT client. Last published August 2021 - five years behind the platform.
+  - language: python
+    registry: pypi
+    name: losant-mqtt
+    url: https://pypi.org/project/losant-mqtt/
+    install: pip install losant-mqtt
+    repository: https://github.com/Losant/losant-mqtt-python
+    official: true
+    version: 1.2.1
+    published: '2024-04-10'
+  - language: ruby
+    registry: rubygems
+    name: losant_mqtt
+    url: https://rubygems.org/gems/losant_mqtt
+    install: gem install losant_mqtt
+    repository: https://github.com/Losant/losant-mqtt-ruby
+    official: true
+    version: 1.1.1
+    published: '2024-04-10'
+  - language: cpp
+    registry: arduino
+    name: losant-mqtt-arduino
+    url: https://github.com/Losant/losant-mqtt-arduino
+    install: Arduino Library Manager -> "Losant MQTT Arduino"
+    repository: https://github.com/Losant/losant-mqtt-arduino
+    official: true
+    version: 2.0.1
+    published: null
+    note: |
+      Version read from the Arduino Library Manager index (downloads.arduino.cc/libraries/library_index.json),
+      which carries no release date field; the repository has no GitHub Releases, so no publish date is
+      recoverable. Repo last pushed 2024-05-10.
+  - language: c
+    registry: github
+    name: losant-esp-idf-esp32
+    url: https://github.com/Losant/losant-esp-idf-esp32
+    install: git clone https://github.com/Losant/losant-esp-idf-esp32 (ESP-IDF component)
+    repository: https://github.com/Losant/losant-esp-idf-esp32
+    official: true
+    version: null
+    published: null
+    note: |
+      Source-only ESP-IDF component for the ESP32. No package registry, no GitHub Releases and no version
+      tag - a consumer cannot tell which build they are getting. Repo last pushed 2021-11-01.
+  - language: javascript
+    registry: npm
+    name: losant-cli
+    url: https://www.npmjs.com/package/losant-cli
+    install: npm install -g losant-cli
+    repository: https://github.com/Losant/losant-cli
+    official: true
+    version: 1.3.3
+    published: '2024-02-09'
+    note: |
+      First-party CLI (command surface captured in cli/losant-cli.yml). The published npm release is from
+      February 2024 even though the repository is actively pushed (2026-08-26).
+  - language: javascript
+    registry: docker
+    name: losant/losant-mcp-server
+    url: https://hub.docker.com/r/losant/losant-mcp-server
+    install: docker pull losant/losant-mcp-server:latest
+    repository: https://github.com/Losant/losant-mcp-server
+    official: true
+    version: 1.0.0
+    published: '2026-06-05'
+    note: |
+      Container distribution of the Losant MCP Server for local/self-hosted use. Tags published: latest, 1,
+      1.0, 1.0.0 - all 2026-06-05. The source CHANGELOG records 1.1.0 (losant_write tool) on 2026-08-25,
+      so the image lags the source. Not published to npm.

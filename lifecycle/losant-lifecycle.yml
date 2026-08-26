@@ -1,0 +1,55 @@
+generated: '2026-08-26'
+method: searched
+source: |
+  https://docs.losant.com/rest-api/overview/, https://api.losant.com/,
+  https://status.losant.com/, https://docs.losant.com/edge-compute/gateway-edge-agent/changelog/,
+  https://docs.losant.com/devices/overview/, https://www.losant.com/blog
+versioning:
+  scheme: unversioned-url
+  current: '1.30.2'
+  current_source: 'info.version in the Bravado API schema at https://api.losant.com/ (read 2026-08-26)'
+  docs: https://docs.losant.com/rest-api/overview/
+  note: |
+    The Platform API carries NO version segment in its URL - every operation is served directly from
+    https://api.losant.com/<resource>. The schema document carries a semver version that advances with the
+    platform, but a client cannot pin to it and there is no Accept-Version or date header. Changes are
+    delivered additively and announced in the "Platform Update" blog series.
+    Drift note: the OpenAPI in this repo was derived at platform version 1.29.4; live is 1.30.2.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  api_note: |
+    No public deprecation or sunset policy is published for the Platform API, and no operation in the
+    schema is flagged deprecated. The one deprecation signal Losant does publish is in the API token
+    permission model - `deprecatedAuthScopes` in the Bravado schema names twelve legacy group scopes
+    (applications, dashboards, dashboards.read, devices, devices.read, devices.state, devices.command,
+    events, flows, me, orgs, webhooks) that are superseded by per-operation <resource>.<action> scopes.
+  component_policy:
+    component: Gateway Edge Agent
+    url: https://docs.losant.com/edge-compute/gateway-edge-agent/changelog/
+    policy: 'each major version supported for a minimum of 5 years from initial release; all minor/patch versions within a major are backwards compatible; fixes ship as new versions rather than backports'
+    versions:
+      - {version: v2, status: Supported, end_of_life: 'Dec 2030 (minimum)'}
+      - {version: v1, status: 'End of Life', end_of_life: 'Dec 2025'}
+deprecated_operations: []
+sla:
+  url: https://www.losant.com/legal/terms-of-service
+  uptime_target: null
+  note: 'No public uptime SLA percentage is published; service levels are part of the enterprise commercial agreement (pricing is contact-sales - see plans/losant-plans-pricing.yml).'
+status_page:
+  url: https://status.losant.com/
+  provider: Atlassian Statuspage
+  components: [API, Broker]
+  feeds:
+    - https://status.losant.com/history.rss
+    - https://status.losant.com/history.atom
+  api:
+    - https://status.losant.com/api/v2/status.json
+    - https://status.losant.com/api/v2/summary.json
+  observed: '2026-08-26 - All Systems Operational; scheduled Broker maintenance posted for 2026-08-27 21:00-22:00 EDT'
+data_retention:
+  - resource: device
+    behavior: 'deleted devices and their telemetry are retained and restorable for 93 days, then removed'
+    source: https://docs.losant.com/devices/overview/
+changelog: changelog/losant-changelog.yml

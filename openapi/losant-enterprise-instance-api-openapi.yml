@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: Losant Application Enterprise Instance API
   version: 1.29.4
-  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations, files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations,
+    files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant
+    Platform API (Bravado/Swagger 2) at https://api.losant.com/.
   contact:
     name: Losant Support
     url: https://www.losant.com/contact
@@ -21,308 +23,9 @@ tags:
 - name: Enterprise Instance
   description: Enterprise Instance resources on the Losant Platform.
 paths:
-  /instances/{instanceId}/tokens/{apiTokenId}:
-    get:
-      summary: Retrieves Information on an API Token
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec7417ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: apiTokenId
-        in: path
-        description: ID associated with the API token
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: API token information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiToken'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if API token was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates Information About an API Token
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec7417ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: apiTokenId
-        in: path
-        description: ID associated with the API token
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new properties of the API token
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/apiTokenPatch'
-      responses:
-        '200':
-          description: Updated API token information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiToken'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if API token was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes an API Token
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec7417ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: apiTokenId
-        in: path
-        description: ID associated with the API token
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If API token was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if API token was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /instances/{instanceId}/tokens:
-    get:
-      summary: Returns the API Tokens for an Instance
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec7417ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortField
-        in: query
-        description: Field to sort the results by
-        required: false
-        example: name
-        schema:
-          type: string
-          enum:
-          - name
-          - status
-          - id
-          - creationDate
-          - lastUpdated
-          - expirationDate
-          default: name
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: asc
-      - name: page
-        in: query
-        description: Which page of results to return
-        required: false
-        example: 0
-        schema:
-          type: string
-          default: 0
-      - name: perPage
-        in: query
-        description: How many items to return per page
-        required: false
-        example: 10
-        schema:
-          type: string
-          default: 100
-      - name: filterField
-        in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
-        required: false
-        example: key
-        schema:
-          type: string
-          enum:
-          - name
-          - status
-      - name: filter
-        in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: my*token
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Collection of API tokens
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiToken'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Create a New API Token for an Instance
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec7417ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: API token information
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/apiTokenPost'
-      responses:
-        '201':
-          description: The successfully created API token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiToken'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /instance/{instanceId}/audit-logs/{instanceAuditLogId}:
-    get:
-      summary: Retrieves Information on an Instance Audit Log
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec7417ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: instanceAuditLogId
-        in: path
-        description: ID associated with the instance audit log
-        required: true
-        example: 57955788124b37010084c053
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: Instance audit log information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instanceAuditLog'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance audit log was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
   /instance/{instanceId}/audit-logs:
     get:
+      operationId: instanceAuditLogs.get
       summary: Returns the Audit Logs for the Instance
       tags:
       - Enterprise Instance
@@ -413,9 +116,10 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /instances/{instanceId}/nodes/{instanceCustomNodeId}:
+  /instance/{instanceId}/audit-logs/{instanceAuditLogId}:
     get:
-      summary: Get Information About Errors That Occurred During Runs of This Custom Node
+      operationId: instanceAuditLog.get
+      summary: Retrieves Information on an Instance Audit Log
       tags:
       - Enterprise Instance
       parameters:
@@ -427,56 +131,21 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: instanceCustomNodeId
+      - name: instanceAuditLogId
         in: path
-        description: ID associated with the Custom Node
+        description: ID associated with the instance audit log
         required: true
-        example: 575ec7417ae143cd83dc4a95
+        example: 57955788124b37010084c053
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: duration
-        in: query
-        description: Duration of time range in milliseconds
-        required: false
-        example: 86400000
-        schema:
-          type: string
-          default: 86400000
-      - name: end
-        in: query
-        description: End of time range in milliseconds since epoch
-        required: false
-        example: 0
-        schema:
-          type: string
-          default: 0
-      - name: limit
-        in: query
-        description: Maximum number of errors to return
-        required: false
-        example: 25
-        schema:
-          type: string
-          default: 25
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: desc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: desc
       responses:
         '200':
-          description: Custom Node error information
+          description: Instance audit log information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/flowErrors'
+                $ref: '#/components/schemas/instanceAuditLog'
         '400':
           description: Error if malformed request
           content:
@@ -484,7 +153,320 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if Custom Node was not found
+          description: Error if instance audit log was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances:
+    get:
+      operationId: instances.get
+      summary: Returns a Collection of Instances
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          default: name
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my * instance
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection of instances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instances'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}:
+    patch:
+      operationId: instance.patch
+      summary: Updates Information About an Instance
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Updated instance information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instancePatch'
+      responses:
+        '200':
+          description: The updated instance object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instance'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/generateReport:
+    post:
+      operationId: instance.generateReport
+      summary: Generates a CSV Report on Instance Stats
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing report configuration
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceReportOptionsPost'
+      responses:
+        '202':
+          description: If generation of report was successfully started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/members:
+    get:
+      operationId: instanceMembers.get
+      summary: Returns a Collection of Instance Members
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: role
+        schema:
+          type: string
+          enum:
+          - email
+          - role
+          default: email
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: email
+        schema:
+          type: string
+          enum:
+          - email
+          - role
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my * instance
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A collection of instance members
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceMembers'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      operationId: instanceMembers.post
+      summary: Creates a New Instance Member
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new member info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceMemberPost'
+      responses:
+        '200':
+          description: The newly created instance member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceMember'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/members/{userId}:
+    get:
+      operationId: instanceMember.get
+      summary: Returns an Instance Member
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: userId
+        in: path
+        description: ID associated with the instance member
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: A single instance member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceMember'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or member was not found
           content:
             application/json:
               schema:
@@ -492,7 +474,8 @@ paths:
       security:
       - BearerAuth: []
     patch:
-      summary: Updates Information About a Custom Node
+      operationId: instanceMember.patch
+      summary: Modifies the Role of an Instance Member
       tags:
       - Enterprise Instance
       parameters:
@@ -500,32 +483,32 @@ paths:
         in: path
         description: ID associated with the instance
         required: true
-        example: 575ec7417ae143cd83dc4a96
+        example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: instanceCustomNodeId
+      - name: userId
         in: path
-        description: ID associated with the Custom Node
+        description: ID associated with the instance member
         required: true
-        example: 575ec7417ae143cd83dc4a95
+        example: 575ec8687ae143cd83dc4a94
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Object containing new properties of the Custom Node
+        description: Object containing new member info
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/instanceCustomNodePatch'
+              $ref: '#/components/schemas/instanceMemberPatch'
       responses:
         '200':
-          description: Updated Custom Node information
+          description: The modified instance member
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/instanceCustomNode'
+                $ref: '#/components/schemas/instanceMemberPatch'
         '400':
           description: Error if malformed request
           content:
@@ -533,7 +516,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if Custom Node was not found
+          description: Error if instance or member was not found
           content:
             application/json:
               schema:
@@ -541,7 +524,8 @@ paths:
       security:
       - BearerAuth: []
     delete:
-      summary: Deletes a Custom Node
+      operationId: instanceMember.delete
+      summary: Deletes an Instance Member
       tags:
       - Enterprise Instance
       parameters:
@@ -549,21 +533,21 @@ paths:
         in: path
         description: ID associated with the instance
         required: true
-        example: 575ec7417ae143cd83dc4a96
+        example: 575ec8687ae143cd83dc4a97
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: instanceCustomNodeId
+      - name: userId
         in: path
-        description: ID associated with the Custom Node
+        description: ID associated with the instance member
         required: true
-        example: 575ec7417ae143cd83dc4a95
+        example: 575ec8687ae143cd83dc4a94
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
-          description: If Custom Node was successfully deleted
+          description: If member was successfully deleted
           content:
             application/json:
               schema:
@@ -575,7 +559,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if Custom Node was not found
+          description: Error if instance or member was not found
           content:
             application/json:
               schema:
@@ -584,6 +568,7 @@ paths:
       - BearerAuth: []
   /instances/{instanceId}/nodes:
     get:
+      operationId: instanceCustomNodes.get
       summary: Returns the Custom Nodes for an Instance
       tags:
       - Enterprise Instance
@@ -668,6 +653,7 @@ paths:
       security:
       - BearerAuth: []
     post:
+      operationId: instanceCustomNodes.post
       summary: Create a New Custom Node for an Instance
       tags:
       - Enterprise Instance
@@ -702,258 +688,10 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /instances/{instanceId}/members/{userId}:
-    get:
-      summary: Returns an Instance Member
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: userId
-        in: path
-        description: ID associated with the instance member
-        required: true
-        example: 575ec8687ae143cd83dc4a94
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: A single instance member
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instanceMember'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance or member was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
+  /instances/{instanceId}/nodes/{instanceCustomNodeId}:
     patch:
-      summary: Modifies the Role of an Instance Member
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: userId
-        in: path
-        description: ID associated with the instance member
-        required: true
-        example: 575ec8687ae143cd83dc4a94
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new member info
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/instanceMemberPatch'
-      responses:
-        '200':
-          description: The modified instance member
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instanceMemberPatch'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance or member was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes an Instance Member
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: userId
-        in: path
-        description: ID associated with the instance member
-        required: true
-        example: 575ec8687ae143cd83dc4a94
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If member was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance or member was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /instances/{instanceId}/members:
-    get:
-      summary: Returns a Collection of Instance Members
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortField
-        in: query
-        description: Field to sort the results by
-        required: false
-        example: role
-        schema:
-          type: string
-          enum:
-          - email
-          - role
-          default: email
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: asc
-      - name: filterField
-        in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
-        required: false
-        example: email
-        schema:
-          type: string
-          enum:
-          - email
-          - role
-      - name: filter
-        in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: my * instance
-        schema:
-          type: string
-      responses:
-        '200':
-          description: A collection of instance members
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instanceMembers'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Creates a New Instance Member
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new member info
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/instanceMemberPost'
-      responses:
-        '200':
-          description: The newly created instance member
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instanceMember'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /instances/{instanceId}/notification-rules/{notificationRuleId}:
-    get:
-      summary: Retrieves Information on Notification Rule Deliveries
+      operationId: instanceCustomNode.patch
+      summary: Updates Information About a Custom Node
       tags:
       - Enterprise Instance
       parameters:
@@ -965,36 +703,200 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: notificationRuleId
+      - name: instanceCustomNodeId
         in: path
-        description: ID associated with the notification rule
+        description: ID associated with the Custom Node
         required: true
         example: 575ec7417ae143cd83dc4a95
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: limit
-        in: query
-        description: Max log entries to return (ordered by time descending)
-        required: false
-        example: 10
+      requestBody:
+        description: Object containing new properties of the Custom Node
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceCustomNodePatch'
+      responses:
+        '200':
+          description: Updated Custom Node information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceCustomNode'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if Custom Node was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: instanceCustomNode.delete
+      summary: Deletes a Custom Node
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
         schema:
           type: string
-          default: 1
-      - name: since
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: instanceCustomNodeId
+        in: path
+        description: ID associated with the Custom Node
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If Custom Node was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if Custom Node was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/nodes/{instanceCustomNodeId}/errors:
+    get:
+      operationId: instanceCustomNode.errors
+      summary: Get Information About Errors That Occurred During Runs of This Custom Node
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: instanceCustomNodeId
+        in: path
+        description: ID associated with the Custom Node
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: duration
         in: query
-        description: Look for log entries since this time (ms since epoch)
+        description: Duration of time range in milliseconds
+        required: false
+        example: 86400000
+        schema:
+          type: string
+          default: 86400000
+      - name: end
+        in: query
+        description: End of time range in milliseconds since epoch
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of errors to return
+        required: false
+        example: 25
+        schema:
+          type: string
+          default: 25
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: desc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      responses:
+        '200':
+          description: Custom Node error information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowErrors'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if Custom Node was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/notebookMinuteCounts:
+    get:
+      operationId: instance.notebookMinuteCounts
+      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for This Instance
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: start
+        in: query
+        description: Start of range for notebook execution query (ms since epoch)
+        required: false
+        example: 0
+        schema:
+          type: string
+      - name: end
+        in: query
+        description: End of range for notebook execution query (ms since epoch)
         required: false
         example: 1465790400000
         schema:
           type: string
       responses:
         '200':
-          description: Notification delivery information
+          description: Notebook usage information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/notificationRuleDeliveryLogs'
+                $ref: '#/components/schemas/notebookMinuteCounts'
         '400':
           description: Error if malformed request
           content:
@@ -1002,147 +904,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if notification rule was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates Information About a Notification Rule
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec7417ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notificationRuleId
-        in: path
-        description: ID associated with the notification rule
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new properties of the notification rule
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/notificationRulePatch'
-      responses:
-        '200':
-          description: Updated notification rule information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/notificationRule'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if notification rule was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes a Notification Rule
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec7417ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notificationRuleId
-        in: path
-        description: ID associated with the notification rule
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If notification rule was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if notification rule was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Queues the Evaluation of a Notification Rule
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec7417ae143cd83dc4a96
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notificationRuleId
-        in: path
-        description: ID associated with the notification rule
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: The options for the evaluation
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/notificationRuleEvaluationOptions'
-      responses:
-        '202':
-          description: If the evaluation was successfully queued
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/jobEnqueuedResult'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if notification rule was not found
+          description: Error if instance was not found
           content:
             application/json:
               schema:
@@ -1151,6 +913,7 @@ paths:
       - BearerAuth: []
   /instances/{instanceId}/notification-rules:
     get:
+      operationId: instanceNotificationRules.get
       summary: Returns the Notification Rules for an Instance
       tags:
       - Enterprise Instance
@@ -1235,6 +998,7 @@ paths:
       security:
       - BearerAuth: []
     post:
+      operationId: instanceNotificationRules.post
       summary: Create a New Notification Rule for an Instance
       tags:
       - Enterprise Instance
@@ -1269,349 +1033,10 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /instances/{instanceId}/orgs/{orgId}/invites/{inviteId}:
-    get:
-      summary: Returns an Organization Invite
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: inviteId
-        in: path
-        description: ID associated with the organization invite
-        required: true
-        example: 575ec8687ae143cd83dc4a94
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: A single organization invite
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/orgInvite'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance, organization, or invite was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Revokes an Instance Org Invitation
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: inviteId
-        in: path
-        description: ID associated with the organization invite
-        required: true
-        example: 575ec8687ae143cd83dc4a94
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If an invite was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance, organization or invite was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Resend an Organization Invite with Modified Role Info
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: inviteId
-        in: path
-        description: ID associated with the organization invite
-        required: true
-        example: 575ec8687ae143cd83dc4a94
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing updated role info
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/orgRoleInfo'
-      responses:
-        '201':
-          description: The new org invite
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/orgInvite'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance, organization, or invite was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /instances/{instanceId}/orgs/{orgId}/invites:
-    get:
-      summary: Returns a Collection of Instance Organization Invites
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortField
-        in: query
-        description: Field to sort the results by
-        required: false
-        example: role
-        schema:
-          type: string
-          enum:
-          - email
-          - role
-          - inviteDate
-          default: inviteDate
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: desc
-      - name: filterField
-        in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
-        required: false
-        example: email
-        schema:
-          type: string
-          enum:
-          - email
-          - role
-      - name: filter
-        in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: my * instance
-        schema:
-          type: string
-      responses:
-        '200':
-          description: A collection of instance organization invitations
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/orgInviteCollection'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance or organization was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Invites a Member to an Instance Organization
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new invite info
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/orgInvitePost'
-      responses:
-        '201':
-          description: The new organization invite
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/orgInviteCollection'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance or organization was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /instances/{instanceId}/orgs/{orgId}/members/{userId}:
-    get:
-      summary: Returns an Organization Member
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: userId
-        in: path
-        description: ID associated with the organization member
-        required: true
-        example: 575ec8687ae143cd83dc4a94
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: A single organization member
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instanceOrgMember'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance, organization, or member was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
+  /instances/{instanceId}/notification-rules/{notificationRuleId}:
     patch:
-      summary: Modifies the Role of an Organization Member
+      operationId: instanceNotificationRule.patch
+      summary: Updates Information About a Notification Rule
       tags:
       - Enterprise Instance
       parameters:
@@ -1619,40 +1044,32 @@ paths:
         in: path
         description: ID associated with the instance
         required: true
-        example: 575ec8687ae143cd83dc4a95
+        example: 575ec7417ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
+      - name: notificationRuleId
         in: path
-        description: ID associated with the organization
+        description: ID associated with the notification rule
         required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: userId
-        in: path
-        description: ID associated with the organization member
-        required: true
-        example: 575ec8687ae143cd83dc4a94
+        example: 575ec7417ae143cd83dc4a95
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Object containing new member info
+        description: Object containing new properties of the notification rule
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/instanceOrgMemberPatch'
+              $ref: '#/components/schemas/notificationRulePatch'
       responses:
         '200':
-          description: The modified organization member
+          description: Updated notification rule information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/instanceOrgMember'
+                $ref: '#/components/schemas/notificationRule'
         '400':
           description: Error if malformed request
           content:
@@ -1660,7 +1077,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if organization or member was not found
+          description: Error if notification rule was not found
           content:
             application/json:
               schema:
@@ -1668,7 +1085,8 @@ paths:
       security:
       - BearerAuth: []
     delete:
-      summary: Deletes an Organization Member
+      operationId: instanceNotificationRule.delete
+      summary: Deletes a Notification Rule
       tags:
       - Enterprise Instance
       parameters:
@@ -1676,29 +1094,21 @@ paths:
         in: path
         description: ID associated with the instance
         required: true
-        example: 575ec8687ae143cd83dc4a95
+        example: 575ec7417ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
+      - name: notificationRuleId
         in: path
-        description: ID associated with the organization
+        description: ID associated with the notification rule
         required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: userId
-        in: path
-        description: ID associated with the organization member
-        required: true
-        example: 575ec8687ae143cd83dc4a94
+        example: 575ec7417ae143cd83dc4a95
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       responses:
         '200':
-          description: If member was successfully deleted
+          description: If notification rule was successfully deleted
           content:
             application/json:
               schema:
@@ -1710,97 +1120,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if organization or member was not found
+          description: Error if notification rule was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /instances/{instanceId}/orgs/{orgId}/members:
-    get:
-      summary: Returns a Collection of Instance Organization Members
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortField
-        in: query
-        description: Field to sort the results by
-        required: false
-        example: role
-        schema:
-          type: string
-          enum:
-          - email
-          - role
-          default: email
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: asc
-      - name: filterField
-        in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
-        required: false
-        example: email
-        schema:
-          type: string
-          enum:
-          - email
-          - role
-      - name: filter
-        in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: my * instance
-        schema:
-          type: string
-      responses:
-        '200':
-          description: A collection of instance organization members
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instanceOrgMembers'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
+  /instances/{instanceId}/notification-rules/{notificationRuleId}/evaluate:
     post:
-      summary: Creates a New Organization Member
+      operationId: instanceNotificationRule.evaluate
+      summary: Queues the Evaluation of a Notification Rule
       tags:
       - Enterprise Instance
       parameters:
@@ -1808,32 +1138,32 @@ paths:
         in: path
         description: ID associated with the instance
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        example: 575ec7417ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
+      - name: notificationRuleId
         in: path
-        description: ID associated with the organization
+        description: ID associated with the notification rule
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        example: 575ec7417ae143cd83dc4a95
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Object containing new member info
+        description: The options for the evaluation
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/instanceOrgMemberPost'
+              $ref: '#/components/schemas/notificationRuleEvaluationOptions'
       responses:
-        '200':
-          description: The newly created instance member
+        '202':
+          description: If the evaluation was successfully queued
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/instanceOrgMember'
+                $ref: '#/components/schemas/jobEnqueuedResult'
         '400':
           description: Error if malformed request
           content:
@@ -1841,16 +1171,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if instance was not found
+          description: Error if notification rule was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /instances/{instanceId}/orgs/{orgId}:
+  /instances/{instanceId}/notification-rules/{notificationRuleId}/logs:
     get:
-      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for This Organization
+      operationId: instanceNotificationRule.logs
+      summary: Retrieves Information on Notification Rule Deliveries
       tags:
       - Enterprise Instance
       parameters:
@@ -1858,39 +1189,40 @@ paths:
         in: path
         description: ID associated with the instance
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        example: 575ec7417ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
+      - name: notificationRuleId
         in: path
-        description: ID associated with the organization
+        description: ID associated with the notification rule
         required: true
-        example: 575ed6e87ae143cd83dc4aa8
+        example: 575ec7417ae143cd83dc4a95
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: start
+      - name: limit
         in: query
-        description: Start of range for notebook execution query (ms since epoch)
+        description: Max log entries to return (ordered by time descending)
         required: false
-        example: 0
+        example: 10
         schema:
           type: string
-      - name: end
+          default: 1
+      - name: since
         in: query
-        description: End of range for notebook execution query (ms since epoch)
+        description: Look for log entries since this time (ms since epoch)
         required: false
         example: 1465790400000
         schema:
           type: string
       responses:
         '200':
-          description: Notebook usage information
+          description: Notification delivery information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/notebookMinuteCounts'
+                $ref: '#/components/schemas/notificationRuleDeliveryLogs'
         '400':
           description: Error if malformed request
           content:
@@ -1898,105 +1230,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if instance or organization was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates Information About an Organization
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ed6e87ae143cd83dc4aa8
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: summaryInclude
-        in: query
-        description: Comma-separated list of summary fields to include in org summary
-        required: false
-        example: payloadCount
-        schema:
-          type: string
-      requestBody:
-        description: Object containing new organization properties
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/instanceOrgPatch'
-      responses:
-        '200':
-          description: Updated organization information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instanceOrg'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance or organization was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes an Organization
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ed6e87ae143cd83dc4aa8
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If organization was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if instance or organization was not found
+          description: Error if notification rule was not found
           content:
             application/json:
               schema:
@@ -2005,6 +1239,7 @@ paths:
       - BearerAuth: []
   /instances/{instanceId}/orgs:
     get:
+      operationId: instanceOrgs.get
       summary: Returns the Organizations Associated with the Current Instance
       tags:
       - Enterprise Instance
@@ -2102,6 +1337,7 @@ paths:
       security:
       - BearerAuth: []
     post:
+      operationId: instanceOrgs.post
       summary: Create a New Organization
       tags:
       - Enterprise Instance
@@ -2143,9 +1379,10 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /instances/{instanceId}/sandboxes/{instanceSandboxId}:
-    get:
-      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for All Applications the Sandbox User Owns
+  /instances/{instanceId}/orgs/{orgId}:
+    patch:
+      operationId: instanceOrg.patch
+      summary: Updates Information About an Organization
       tags:
       - Enterprise Instance
       parameters:
@@ -2157,11 +1394,701 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: instanceSandboxId
+      - name: orgId
         in: path
-        description: ID associated with the sandbox user
+        description: ID associated with the organization
+        required: true
+        example: 575ed6e87ae143cd83dc4aa8
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: summaryInclude
+        in: query
+        description: Comma-separated list of summary fields to include in org summary
+        required: false
+        example: payloadCount
+        schema:
+          type: string
+      requestBody:
+        description: Object containing new organization properties
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceOrgPatch'
+      responses:
+        '200':
+          description: Updated organization information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrg'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: instanceOrg.delete
+      summary: Deletes an Organization
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
         required: true
         example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ed6e87ae143cd83dc4aa8
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If organization was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/orgs/{orgId}/invites:
+    get:
+      operationId: instanceOrgInvites.get
+      summary: Returns a Collection of Instance Organization Invites
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: role
+        schema:
+          type: string
+          enum:
+          - email
+          - role
+          - inviteDate
+          default: inviteDate
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: email
+        schema:
+          type: string
+          enum:
+          - email
+          - role
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my * instance
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A collection of instance organization invitations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInviteCollection'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      operationId: instanceOrgInvites.post
+      summary: Invites a Member to an Instance Organization
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new invite info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgInvitePost'
+      responses:
+        '201':
+          description: The new organization invite
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInviteCollection'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/orgs/{orgId}/invites/{inviteId}:
+    get:
+      operationId: instanceOrgInvite.get
+      summary: Returns an Organization Invite
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: inviteId
+        in: path
+        description: ID associated with the organization invite
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: A single organization invite
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInvite'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance, organization, or invite was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: instanceOrgInvite.delete
+      summary: Revokes an Instance Org Invitation
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: inviteId
+        in: path
+        description: ID associated with the organization invite
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If an invite was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance, organization or invite was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      operationId: instanceOrgInvite.resendInvite
+      summary: Resend an Organization Invite with Modified Role Info
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: inviteId
+        in: path
+        description: ID associated with the organization invite
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing updated role info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgRoleInfo'
+      responses:
+        '201':
+          description: The new org invite
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInvite'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance, organization, or invite was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/orgs/{orgId}/members:
+    get:
+      operationId: instanceOrgMembers.get
+      summary: Returns a Collection of Instance Organization Members
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: role
+        schema:
+          type: string
+          enum:
+          - email
+          - role
+          default: email
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: email
+        schema:
+          type: string
+          enum:
+          - email
+          - role
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my * instance
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A collection of instance organization members
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgMembers'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      operationId: instanceOrgMembers.post
+      summary: Creates a New Organization Member
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new member info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceOrgMemberPost'
+      responses:
+        '200':
+          description: The newly created instance member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgMember'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/orgs/{orgId}/members/{userId}:
+    get:
+      operationId: instanceOrgMember.get
+      summary: Returns an Organization Member
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: userId
+        in: path
+        description: ID associated with the organization member
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: A single organization member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgMember'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance, organization, or member was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      operationId: instanceOrgMember.patch
+      summary: Modifies the Role of an Organization Member
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: userId
+        in: path
+        description: ID associated with the organization member
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new member info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceOrgMemberPatch'
+      responses:
+        '200':
+          description: The modified organization member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgMember'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization or member was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: instanceOrgMember.delete
+      summary: Deletes an Organization Member
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: userId
+        in: path
+        description: ID associated with the organization member
+        required: true
+        example: 575ec8687ae143cd83dc4a94
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If member was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization or member was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/orgs/{orgId}/notebookMinuteCounts:
+    get:
+      operationId: instanceOrg.notebookMinuteCounts
+      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for This Organization
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ed6e87ae143cd83dc4aa8
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
@@ -2193,105 +2120,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if sandbox or instance was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes a Sandbox User Account
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: instanceSandboxId
-        in: path
-        description: ID associated with the sandbox user
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If a sandbox was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if sandbox or instance was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Restores a Sandbox User Account
-      tags:
-      - Enterprise Instance
-      parameters:
-      - name: instanceId
-        in: path
-        description: ID associated with the instance
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: instanceSandboxId
-        in: path
-        description: ID associated with the sandbox user
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: summaryExclude
-        in: query
-        description: Comma-separated list of summary fields to exclude from user summary
-        required: false
-        example: payloadCount
-        schema:
-          type: string
-      - name: summaryInclude
-        in: query
-        description: Comma-separated list of summary fields to include in user summary
-        required: false
-        example: payloadCount
-        schema:
-          type: string
-      responses:
-        '200':
-          description: A single restored sandbox user
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instanceSandbox'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if sandbox or instance was not found
+          description: Error if instance or organization was not found
           content:
             application/json:
               schema:
@@ -2300,6 +2129,7 @@ paths:
       - BearerAuth: []
   /instances/{instanceId}/sandboxes:
     get:
+      operationId: instanceSandboxes.get
       summary: Returns a Collection of Instance Sandboxes
       tags:
       - Enterprise Instance
@@ -2419,15 +2249,69 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /instances/{instanceId}:
-    get:
-      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for This Instance
+  /instances/{instanceId}/sandboxes/{instanceSandboxId}:
+    delete:
+      operationId: instanceSandbox.delete
+      summary: Deletes a Sandbox User Account
       tags:
       - Enterprise Instance
       parameters:
       - name: instanceId
         in: path
         description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: instanceSandboxId
+        in: path
+        description: ID associated with the sandbox user
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If a sandbox was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if sandbox or instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/sandboxes/{instanceSandboxId}/notebookMinuteCounts:
+    get:
+      operationId: instanceSandbox.notebookMinuteCounts
+      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for All Applications the Sandbox User
+        Owns
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: instanceSandboxId
+        in: path
+        description: ID associated with the sandbox user
         required: true
         example: 575ec8687ae143cd83dc4a97
         schema:
@@ -2461,15 +2345,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if instance was not found
+          description: Error if sandbox or instance was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+  /instances/{instanceId}/sandboxes/{instanceSandboxId}/undelete:
     patch:
-      summary: Updates Information About an Instance
+      operationId: instanceSandbox.undelete
+      summary: Restores a Sandbox User Account
       tags:
       - Enterprise Instance
       parameters:
@@ -2481,30 +2367,53 @@ paths:
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Updated instance information
+      - name: instanceSandboxId
+        in: path
+        description: ID associated with the sandbox user
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/instancePatch'
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: summaryExclude
+        in: query
+        description: Comma-separated list of summary fields to exclude from user summary
+        required: false
+        example: payloadCount
+        schema:
+          type: string
+      - name: summaryInclude
+        in: query
+        description: Comma-separated list of summary fields to include in user summary
+        required: false
+        example: payloadCount
+        schema:
+          type: string
       responses:
         '200':
-          description: The updated instance object
+          description: A single restored sandbox user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/instance'
+                $ref: '#/components/schemas/instanceSandbox'
         '400':
           description: Error if malformed request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+        '404':
+          description: Error if sandbox or instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-    post:
-      summary: Generates a CSV Report on Instance Stats
+  /instances/{instanceId}/tokens:
+    get:
+      operationId: instanceApiTokens.get
+      summary: Returns the API Tokens for an Instance
       tags:
       - Enterprise Instance
       parameters:
@@ -2512,38 +2421,10 @@ paths:
         in: path
         description: ID associated with the instance
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        example: 575ec7417ae143cd83dc4a96
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing report configuration
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/instanceReportOptionsPost'
-      responses:
-        '202':
-          description: If generation of report was successfully started
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/jobEnqueuedResult'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /instances:
-    get:
-      summary: Returns a Collection of Instances
-      tags:
-      - Enterprise Instance
-      parameters:
       - name: sortField
         in: query
         description: Field to sort the results by
@@ -2553,9 +2434,11 @@ paths:
           type: string
           enum:
           - name
+          - status
           - id
           - creationDate
           - lastUpdated
+          - expirationDate
           default: name
       - name: sortDirection
         in: query
@@ -2588,27 +2471,201 @@ paths:
         in: query
         description: Field to filter the results by. Blank or not provided means no filtering.
         required: false
-        example: name
+        example: key
         schema:
           type: string
           enum:
           - name
+          - status
       - name: filter
         in: query
         description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
         required: false
-        example: my * instance
+        example: my*token
         schema:
           type: string
       responses:
         '200':
-          description: Collection of instances
+          description: Collection of API tokens
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/instances'
+                $ref: '#/components/schemas/apiToken'
         '400':
           description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      operationId: instanceApiTokens.post
+      summary: Create a New API Token for an Instance
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: API token information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/apiTokenPost'
+      responses:
+        '201':
+          description: The successfully created API token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /instances/{instanceId}/tokens/{apiTokenId}:
+    get:
+      operationId: instanceApiToken.get
+      summary: Retrieves Information on an API Token
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: apiTokenId
+        in: path
+        description: ID associated with the API token
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: API token information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if API token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      operationId: instanceApiToken.patch
+      summary: Updates Information About an API Token
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: apiTokenId
+        in: path
+        description: ID associated with the API token
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new properties of the API token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/apiTokenPatch'
+      responses:
+        '200':
+          description: Updated API token information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if API token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: instanceApiToken.delete
+      summary: Deletes an API Token
+      tags:
+      - Enterprise Instance
+      parameters:
+      - name: instanceId
+        in: path
+        description: ID associated with the instance
+        required: true
+        example: 575ec7417ae143cd83dc4a96
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: apiTokenId
+        in: path
+        description: ID associated with the API token
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If API token was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if API token was not found
           content:
             application/json:
               schema:
@@ -4373,4 +4430,5 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
+        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.

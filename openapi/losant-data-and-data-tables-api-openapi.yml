@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: Losant Application Data and Data Tables API
   version: 1.29.4
-  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations, files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations,
+    files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant
+    Platform API (Bravado/Swagger 2) at https://api.losant.com/.
   contact:
     name: Losant Support
     url: https://www.losant.com/contact
@@ -21,475 +23,9 @@ tags:
 - name: Data and Data Tables
   description: Data and Data Tables resources on the Losant Platform.
 paths:
-  /applications/{applicationId}/data-tables/{dataTableId}/rows/{rowId}:
-    get:
-      summary: Retrieves the Data Table Row
-      tags:
-      - Data and Data Tables
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: dataTableId
-        in: path
-        description: ID associated with the data table
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: rowId
-        in: path
-        description: ID associated with the data table row
-        required: true
-        example: 596f832b128eda5cfe765443
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: Data table row information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dataTableRow'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if data table row was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates the Data Table Row
-      tags:
-      - Data and Data Tables
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: dataTableId
-        in: path
-        description: ID associated with the data table
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: rowId
-        in: path
-        description: ID associated with the data table row
-        required: true
-        example: 596f832b128eda5cfe765443
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing updated properties for the data table row
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/dataTableRowInsertUpdate'
-      responses:
-        '200':
-          description: Updated data table row information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dataTableRow'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if data table row was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes a Data Table Row
-      tags:
-      - Data and Data Tables
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: dataTableId
-        in: path
-        description: ID associated with the data table
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: rowId
-        in: path
-        description: ID associated with the data table row
-        required: true
-        example: 596f832b128eda5cfe765443
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If data table row was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if data table row was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/data-tables/{dataTableId}/rows:
-    get:
-      summary: Returns the Rows for a Data Table
-      tags:
-      - Data and Data Tables
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: dataTableId
-        in: path
-        description: ID associated with the data table
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: sortColumn
-        in: query
-        description: Column to sort the rows by
-        required: false
-        example: myColumnName
-        schema:
-          type: string
-      - name: sortDirection
-        in: query
-        description: Direction to sort the rows by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: asc
-      - name: limit
-        in: query
-        description: How many rows to return
-        required: false
-        example: 0
-        schema:
-          type: string
-          default: 1000
-      - name: offset
-        in: query
-        description: How many rows to skip
-        required: false
-        example: 0
-        schema:
-          type: string
-          default: 0
-      - name: includeFields
-        in: query
-        description: Comma-separated list of fields to include in resulting rows. When not provided, returns all fields.
-        required: false
-        example: id,createdAt
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Collection of data table rows
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dataTableRows'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if data table was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Delete All Data in the Data Table
-      tags:
-      - Data and Data Tables
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: dataTableId
-        in: path
-        description: ID associated with the data table
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If request successfully deleted **all** rows in the data table, this will **not** send workflow data table deletion triggers
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if data table was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/data-tables/{dataTableId}:
-    get:
-      summary: Retrieves Information on a Data Table
-      tags:
-      - Data and Data Tables
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: dataTableId
-        in: path
-        description: ID associated with the data table
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: Data table information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dataTable'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if data table was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    patch:
-      summary: Updates Information About a Data Table
-      tags:
-      - Data and Data Tables
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: dataTableId
-        in: path
-        description: ID associated with the data table
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing updated properties of the data table
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/dataTablePatch'
-      responses:
-        '200':
-          description: Updated data table information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dataTable'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if data table was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      summary: Adds a New Column to This Data Table
-      tags:
-      - Data and Data Tables
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: dataTableId
-        in: path
-        description: ID associated with the data table
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing the new column properties
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/dataTableColumn'
-      responses:
-        '200':
-          description: Updated data table information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/dataTable'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if data table was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      summary: Deletes a Data Table
-      tags:
-      - Data and Data Tables
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: dataTableId
-        in: path
-        description: ID associated with the data table
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If data table was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if data table was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
   /applications/{applicationId}/data-tables:
     get:
+      operationId: dataTables.get
       summary: Returns the Data Tables for an Application
       tags:
       - Data and Data Tables
@@ -580,6 +116,7 @@ paths:
       security:
       - BearerAuth: []
     post:
+      operationId: dataTables.post
       summary: Create a New Data Table for an Application
       tags:
       - Data and Data Tables
@@ -620,8 +157,488 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /applications/{applicationId}/data:
+  /applications/{applicationId}/data-tables/{dataTableId}:
+    get:
+      operationId: dataTable.get
+      summary: Retrieves Information on a Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Data table information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      operationId: dataTable.patch
+      summary: Updates Information About a Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing updated properties of the data table
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTablePatch'
+      responses:
+        '200':
+          description: Updated data table information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: dataTable.delete
+      summary: Deletes a Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If data table was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/data-tables/{dataTableId}/column:
     post:
+      operationId: dataTable.addColumn
+      summary: Adds a New Column to This Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing the new column properties
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTableColumn'
+      responses:
+        '200':
+          description: Updated data table information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/data-tables/{dataTableId}/rows:
+    get:
+      operationId: dataTableRows.get
+      summary: Returns the Rows for a Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: sortColumn
+        in: query
+        description: Column to sort the rows by
+        required: false
+        example: myColumnName
+        schema:
+          type: string
+      - name: sortDirection
+        in: query
+        description: Direction to sort the rows by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: limit
+        in: query
+        description: How many rows to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 1000
+      - name: offset
+        in: query
+        description: How many rows to skip
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: includeFields
+        in: query
+        description: Comma-separated list of fields to include in resulting rows. When not provided, returns all fields.
+        required: false
+        example: id,createdAt
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection of data table rows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRows'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/data-tables/{dataTableId}/rows/truncate:
+    post:
+      operationId: dataTableRows.truncate
+      summary: Delete All Data in the Data Table
+      tags:
+      - Data and Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If request successfully deleted **all** rows in the data table, this will **not** send workflow data
+            table deletion triggers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/data-tables/{dataTableId}/rows/{rowId}:
+    get:
+      operationId: dataTableRow.get
+      summary: Retrieves the Data Table Row
+      tags:
+      - Data and Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: rowId
+        in: path
+        description: ID associated with the data table row
+        required: true
+        example: 596f832b128eda5cfe765443
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: Data table row information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRow'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table row was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      operationId: dataTableRow.patch
+      summary: Updates the Data Table Row
+      tags:
+      - Data and Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: rowId
+        in: path
+        description: ID associated with the data table row
+        required: true
+        example: 596f832b128eda5cfe765443
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing updated properties for the data table row
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTableRowInsertUpdate'
+      responses:
+        '200':
+          description: Updated data table row information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRow'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table row was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      operationId: dataTableRow.delete
+      summary: Deletes a Data Table Row
+      tags:
+      - Data and Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: dataTableId
+        in: path
+        description: ID associated with the data table
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: rowId
+        in: path
+        description: ID associated with the data table row
+        required: true
+        example: 596f832b128eda5cfe765443
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If data table row was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table row was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /applications/{applicationId}/data/export:
+    post:
+      operationId: data.export
       summary: Creates a CSV File from a Query of Devices and Attributes Over a Time Range.
       tags:
       - Data and Data Tables
@@ -957,4 +974,5 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
+        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.

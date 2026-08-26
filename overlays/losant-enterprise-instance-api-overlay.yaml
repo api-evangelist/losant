@@ -1,0 +1,155 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Losant Application Enterprise Instance API
+  version: 1.0.0
+extends: openapi/losant-enterprise-instance-api-openapi.yml
+x-generated: '2026-08-26'
+x-method: generated
+x-source: https://api.losant.com/ (Losant Bravado API schema, info.version 1.30.2)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      pass: local-v1
+      date: '2026-08-26'
+      operation-ids: added from the Losant Bravado schema at https://api.losant.com/ (resource.action identifiers, e.g. device.get)
+      paths: sub-path operations restored from the same schema; the prior revision collapsed operations such as device.payloadCountsBreakdown
+        onto their parent resource path
+- target: $.paths['/instance/{instanceId}/audit-logs'].get
+  update:
+    operationId: instanceAuditLogs.get
+- target: $.paths['/instance/{instanceId}/audit-logs/{instanceAuditLogId}'].get
+  update:
+    operationId: instanceAuditLog.get
+- target: $.paths['/instances'].get
+  update:
+    operationId: instances.get
+- target: $.paths['/instances/{instanceId}'].patch
+  update:
+    operationId: instance.patch
+- target: $.paths['/instances/{instanceId}/generateReport'].post
+  update:
+    operationId: instance.generateReport
+- target: $.paths['/instances/{instanceId}/members'].get
+  update:
+    operationId: instanceMembers.get
+- target: $.paths['/instances/{instanceId}/members'].post
+  update:
+    operationId: instanceMembers.post
+- target: $.paths['/instances/{instanceId}/members/{userId}'].get
+  update:
+    operationId: instanceMember.get
+- target: $.paths['/instances/{instanceId}/members/{userId}'].patch
+  update:
+    operationId: instanceMember.patch
+- target: $.paths['/instances/{instanceId}/members/{userId}'].delete
+  update:
+    operationId: instanceMember.delete
+- target: $.paths['/instances/{instanceId}/nodes'].get
+  update:
+    operationId: instanceCustomNodes.get
+- target: $.paths['/instances/{instanceId}/nodes'].post
+  update:
+    operationId: instanceCustomNodes.post
+- target: $.paths['/instances/{instanceId}/nodes/{instanceCustomNodeId}'].patch
+  update:
+    operationId: instanceCustomNode.patch
+- target: $.paths['/instances/{instanceId}/nodes/{instanceCustomNodeId}'].delete
+  update:
+    operationId: instanceCustomNode.delete
+- target: $.paths['/instances/{instanceId}/nodes/{instanceCustomNodeId}/errors'].get
+  update:
+    operationId: instanceCustomNode.errors
+- target: $.paths['/instances/{instanceId}/notebookMinuteCounts'].get
+  update:
+    operationId: instance.notebookMinuteCounts
+- target: $.paths['/instances/{instanceId}/notification-rules'].get
+  update:
+    operationId: instanceNotificationRules.get
+- target: $.paths['/instances/{instanceId}/notification-rules'].post
+  update:
+    operationId: instanceNotificationRules.post
+- target: $.paths['/instances/{instanceId}/notification-rules/{notificationRuleId}'].patch
+  update:
+    operationId: instanceNotificationRule.patch
+- target: $.paths['/instances/{instanceId}/notification-rules/{notificationRuleId}'].delete
+  update:
+    operationId: instanceNotificationRule.delete
+- target: $.paths['/instances/{instanceId}/notification-rules/{notificationRuleId}/evaluate'].post
+  update:
+    operationId: instanceNotificationRule.evaluate
+- target: $.paths['/instances/{instanceId}/notification-rules/{notificationRuleId}/logs'].get
+  update:
+    operationId: instanceNotificationRule.logs
+- target: $.paths['/instances/{instanceId}/orgs'].get
+  update:
+    operationId: instanceOrgs.get
+- target: $.paths['/instances/{instanceId}/orgs'].post
+  update:
+    operationId: instanceOrgs.post
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}'].patch
+  update:
+    operationId: instanceOrg.patch
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}'].delete
+  update:
+    operationId: instanceOrg.delete
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/invites'].get
+  update:
+    operationId: instanceOrgInvites.get
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/invites'].post
+  update:
+    operationId: instanceOrgInvites.post
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/invites/{inviteId}'].get
+  update:
+    operationId: instanceOrgInvite.get
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/invites/{inviteId}'].delete
+  update:
+    operationId: instanceOrgInvite.delete
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/invites/{inviteId}'].post
+  update:
+    operationId: instanceOrgInvite.resendInvite
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/members'].get
+  update:
+    operationId: instanceOrgMembers.get
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/members'].post
+  update:
+    operationId: instanceOrgMembers.post
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/members/{userId}'].get
+  update:
+    operationId: instanceOrgMember.get
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/members/{userId}'].patch
+  update:
+    operationId: instanceOrgMember.patch
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/members/{userId}'].delete
+  update:
+    operationId: instanceOrgMember.delete
+- target: $.paths['/instances/{instanceId}/orgs/{orgId}/notebookMinuteCounts'].get
+  update:
+    operationId: instanceOrg.notebookMinuteCounts
+- target: $.paths['/instances/{instanceId}/sandboxes'].get
+  update:
+    operationId: instanceSandboxes.get
+- target: $.paths['/instances/{instanceId}/sandboxes/{instanceSandboxId}'].delete
+  update:
+    operationId: instanceSandbox.delete
+- target: $.paths['/instances/{instanceId}/sandboxes/{instanceSandboxId}/notebookMinuteCounts'].get
+  update:
+    operationId: instanceSandbox.notebookMinuteCounts
+- target: $.paths['/instances/{instanceId}/sandboxes/{instanceSandboxId}/undelete'].patch
+  update:
+    operationId: instanceSandbox.undelete
+- target: $.paths['/instances/{instanceId}/tokens'].get
+  update:
+    operationId: instanceApiTokens.get
+- target: $.paths['/instances/{instanceId}/tokens'].post
+  update:
+    operationId: instanceApiTokens.post
+- target: $.paths['/instances/{instanceId}/tokens/{apiTokenId}'].get
+  update:
+    operationId: instanceApiToken.get
+- target: $.paths['/instances/{instanceId}/tokens/{apiTokenId}'].patch
+  update:
+    operationId: instanceApiToken.patch
+- target: $.paths['/instances/{instanceId}/tokens/{apiTokenId}'].delete
+  update:
+    operationId: instanceApiToken.delete

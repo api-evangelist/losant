@@ -1,0 +1,84 @@
+generated: '2026-08-26'
+method: searched
+status: published
+source: https://docs.losant.com/mcp/overview/
+sources:
+  - https://docs.losant.com/mcp/overview/
+  - https://github.com/Losant/losant-mcp-server
+  - https://www.losant.com/blog/introducing-the-losant-mcp-server
+  - https://mcp.losant.com/.well-known/oauth-protected-resource
+deployment:
+  mode: both
+  endpoint: https://mcp.losant.com/mcp
+  install: docker pull losant/losant-mcp-server:latest
+  package: https://github.com/Losant/losant-mcp-server
+  auth: oauth
+  verified: probed
+server:
+  name: losant
+  title: Losant
+  transport: http
+  url: https://mcp.losant.com/mcp
+  repository: https://github.com/Losant/losant-mcp-server
+  license: MIT
+  container: losant/losant-mcp-server
+  local_url: http://localhost:3000/mcp
+  health: https://mcp.losant.com/healthz
+  released: '2026-06-04'
+authorization:
+  model: OAuth 2.0 (RFC 6750 bearer, RFC 8707 resource indicators, RFC 9728 protected-resource metadata)
+  protected_resource_metadata: https://mcp.losant.com/.well-known/oauth-protected-resource
+  authorization_server: https://api.losant.com
+  authorization_endpoint: https://accounts.losant.com/oauth
+  token_endpoint: https://api.losant.com/oauth/token
+  dynamic_client_registration: https://api.losant.com/oauth/clients
+  pkce: S256
+  scopes: scopes/losant-scopes.yml
+  local_mode_auth: Losant User API Token via the LOSANT_API_TOKEN environment variable
+x-evidence:
+  - {url: 'https://mcp.losant.com/mcp', method: GET, http_status: 405, note: 'Method Not Allowed - Use POST'}
+  - {url: 'https://mcp.losant.com/mcp', method: 'POST tools/list', http_status: 401, note: 'WWW-Authenticate: Bearer realm="mcp", resource_metadata="https://mcp.losant.com/.well-known/oauth-protected-resource" - the live tool schemas require an authenticated OAuth token'}
+  - {url: 'https://mcp.losant.com/.well-known/oauth-protected-resource', http_status: 200}
+  - {url: 'https://mcp.losant.com/healthz', http_status: 200, note: '{"ok":true,"server":"losant-mcp-server"}'}
+tools_source: |
+  tools/list is OAuth-gated (HTTP 401 anonymously), so the tool set below is taken verbatim from the
+  provider's own README and CHANGELOG rather than from live introspection. Names, parameters and
+  supported resource types are published; the exact JSON Schema for each input requires an
+  authenticated tools/list call.
+tools:
+  - name: losant_query
+    description: Query Losant resources - applications, devices, flows, data tables, events and more.
+    parameters: [operation, resourceType, applicationId, parentResourceId, resourceId, page, perPage, filterField, filter, sortField, sortDirection, query]
+    operations: [list, get]
+    resource_types: [application, event, device, applicationKey, deviceRecipe, dataTable, webhook, integration, applicationDashboard, notebook, flow, resourceJob, credential, file, privateFile, experienceDomain, experienceEndpoint, experienceGroup, experienceSlug, experienceUser, experienceVersion, experienceView, flowVersion, dataTableRow]
+    since: 1.0.0
+  - name: losant_timeseries
+    description: Retrieve time-series device data and state.
+    since: 1.0.0
+  - name: losant_write
+    description: Create or update Losant resources (createOne = POST, updateOne = PATCH; PATCH is partial).
+    parameters: [operation, resourceType, applicationId, resourceId, parentResourceId, body]
+    operations: [createOne, updateOne]
+    resource_types: [device, deviceRecipe, dataTable, dataTableRow, webhook, integration, resourceJob, applicationKey, credential, file, privateFile, notebook, experienceDomain, experienceEndpoint, experienceGroup, experienceSlug, experienceUser, experienceVersion, experienceView, application, applicationReadme]
+    since: 1.1.0
+    notes:
+      - createOne is not supported for event, application or applicationReadme.
+      - applicationKey returns the key and secret on createOne only.
+resources:
+  - uri: losant://guides/losant-write-tool
+    description: Authoring guide the write tool tells the agent to read first.
+  - uri: 'losant://schemas/{resourceType}Post'
+    description: JSON Schema for the create body of a resource type.
+  - uri: 'losant://schemas/{resourceType}Patch'
+    description: JSON Schema for the update body of a resource type.
+  - uri: losant://authoring/flows/flow
+    description: Flow authoring guide - 90 node specs and 35 trigger specs (1.1.0).
+  - uri: losant://authoring/dashboards/dashboard
+    description: Dashboard authoring guide with block-level specs (1.1.0).
+  - uri: losant://authoring/experiences/experience-view
+  - uri: losant://authoring/experiences/experience-endpoint
+notes: |
+  Losant ships BOTH agent surfaces: a hosted remote server an MCP client can POST to today
+  (https://mcp.losant.com/mcp, OAuth-gated) and a self-hostable server (Docker image or source, Node >= 24)
+  that authenticates with a single User API Token. The Docker Hub image is still at 1.0.0 (2026-06-05)
+  while the source is at 1.1.0 (2026-08-25), so a container install today does not include losant_write.

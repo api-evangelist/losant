@@ -1,26 +1,80 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/losant-application-api-openapi.yml, openapi/losant-auth-api-openapi.yml, openapi/losant-data-api-openapi.yml,
-  openapi/losant-device-api-openapi.yml, openapi/losant-edge-api-openapi.yml, openapi/losant-experience-api-openapi.yml,
-  openapi/losant-instance-api-openapi.yml, openapi/losant-notebook-api-openapi.yml, openapi/losant-workflow-api-openapi.yml
+generated: '2026-08-26'
+method: searched
+source: 'https://docs.losant.com/rest-api/overview/ + https://docs.losant.com/user-accounts/oauth-tokens/ + https://api.losant.com/.well-known/oauth-authorization-server
+  (derived baseline: openapi/*.yml)'
 summary:
   types:
   - http
+  - oauth2
+  http_schemes:
+  - bearer
+  oauth2_flows:
+  - authorizationCode
+  note: The OpenAPI files declare only the http bearer scheme. OAuth 2.0 is real but lives outside the specs - it
+    is published in the RFC 8414 authorization-server metadata and used by the hosted MCP server.
 schemes:
 - name: BearerAuth
   type: http
   scheme: bearer
   bearerFormat: JWT
-  description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST
-    /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens
-    and pass it in the Authorization header as `Bearer <token>`.
+  description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
+    POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer
+    <token>`.
   sources:
   - openapi/losant-application-api-openapi.yml
-  - openapi/losant-auth-api-openapi.yml
-  - openapi/losant-data-api-openapi.yml
+  - openapi/losant-authentication-and-account-api-openapi.yml
+  - openapi/losant-data-and-data-tables-api-openapi.yml
   - openapi/losant-device-api-openapi.yml
-  - openapi/losant-edge-api-openapi.yml
+  - openapi/losant-edge-and-embedded-compute-api-openapi.yml
+  - openapi/losant-enterprise-instance-api-openapi.yml
   - openapi/losant-experience-api-openapi.yml
-  - openapi/losant-instance-api-openapi.yml
-  - openapi/losant-notebook-api-openapi.yml
-  - openapi/losant-workflow-api-openapi.yml
+  - openapi/losant-notebooks-api-openapi.yml
+  - openapi/losant-workflow-engine-api-openapi.yml
+- name: OAuth2
+  type: oauth2
+  description: OAuth 2.0 authorization code with PKCE (S256) for third-party applications acting on a user's behalf;
+    the flow behind the hosted MCP server at https://mcp.losant.com/mcp. Dynamic client registration is supported
+    at https://api.losant.com/oauth/clients.
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.losant.com/oauth
+    tokenUrl: https://api.losant.com/oauth/token
+    revocationUrl: https://api.losant.com/oauth/revoke
+    scopes_count: 7
+    pkce: S256
+  sources:
+  - https://api.losant.com/.well-known/oauth-authorization-server
+  - https://docs.losant.com/user-accounts/oauth-tokens/
+docs: https://docs.losant.com/rest-api/overview/
+token_types:
+- name: User API Token
+  obtained_via: POST /auth/user or userApiTokens.post (POST /me/tokens)
+  scope: all.User by default; narrowable per-operation
+  docs: https://docs.losant.com/user-accounts/user-tokens/
+- name: Application API Token
+  obtained_via: applicationApiTokens.post (POST /applications/{applicationId}/tokens)
+  scope: all.Application by default; cannot leave the application
+  docs: https://docs.losant.com/applications/application-tokens/
+- name: Device Token
+  obtained_via: POST /auth/device with deviceId + application key/secret
+  scope: all.Device
+  docs: https://docs.losant.com/rest-api/auth/
+- name: Instance API Token
+  obtained_via: instanceApiTokens.post (POST /instances/{instanceId}/tokens)
+  scope: instance administration
+  docs: https://docs.losant.com/instance-manager/instance-tokens/
+- name: User OAuth Token
+  obtained_via: OAuth 2.0 authorization code flow with user consent
+  scope: one or more of the seven OAuth scopes
+  docs: https://docs.losant.com/user-accounts/oauth-tokens/
+transport:
+  header: 'Authorization: Bearer <token>'
+  mqtt: Devices authenticate to broker.losant.com with an application key as MQTT username and the secret as password,
+    or with an X.509 client certificate.
+mfa:
+  supported: true
+  standard: RFC 6238 TOTP
+  source: https://docs.losant.com/references/security/
+token_storage: Losant does not store issued API tokens; scope is encrypted into the token itself and verified server-side,
+  so a lost token cannot be recovered - only revoked.
+scopes_artifact: scopes/losant-scopes.yml
