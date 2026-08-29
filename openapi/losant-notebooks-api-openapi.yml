@@ -1,10 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Losant Application Notebooks API
+  title: Losant Notebooks API
   version: 1.29.4
-  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations,
-    files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant
-    Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  description: Trigger and manage Jupyter-style Losant Notebook executions for batch analytics, ML, and reporting against historical IoT data. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
   contact:
     name: Losant Support
     url: https://www.losant.com/contact
@@ -23,9 +21,205 @@ tags:
 - name: Notebooks
   description: Notebooks resources on the Losant Platform.
 paths:
+  /applications/{applicationId}/notebooks/{notebookId}:
+    get:
+      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for This Notebook
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: notebookId
+        in: path
+        description: ID associated with the notebook
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: start
+        in: query
+        description: Start of range for notebook execution query (ms since epoch)
+        required: false
+        example: 0
+        schema:
+          type: string
+      - name: end
+        in: query
+        description: End of range for notebook execution query (ms since epoch)
+        required: false
+        example: 1465790400000
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Notebook usage information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebookMinuteCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Updates Information About a Notebook
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: notebookId
+        in: path
+        description: ID associated with the notebook
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new properties of the notebook
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/notebookPatch'
+      responses:
+        '200':
+          description: Updated notebook information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebook'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes a Notebook
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: notebookId
+        in: path
+        description: ID associated with the notebook
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If notebook was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Marks a Specific Notebook Execution for Cancellation
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        description: ID associated with the application
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: notebookId
+        in: path
+        description: ID associated with the notebook
+        required: true
+        example: 575ed78e7ae143cd83dc4aab
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: executionId
+        in: query
+        description: The ID of the execution to cancel
+        required: true
+        example: 632e18632f59592e773a4153
+        schema:
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If the execution was successfully marked for cancellation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if execution was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
   /applications/{applicationId}/notebooks:
     get:
-      operationId: notebooks.get
       summary: Returns the Notebooks for an Application
       tags:
       - Notebooks
@@ -117,7 +311,6 @@ paths:
       security:
       - BearerAuth: []
     post:
-      operationId: notebooks.post
       summary: Create a New Notebook for an Application
       tags:
       - Notebooks
@@ -152,209 +345,6 @@ paths:
                 $ref: '#/components/schemas/error'
         '404':
           description: Error if application was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/notebooks/{notebookId}:
-    patch:
-      operationId: notebook.patch
-      summary: Updates Information About a Notebook
-      tags:
-      - Notebooks
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notebookId
-        in: path
-        description: ID associated with the notebook
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new properties of the notebook
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/notebookPatch'
-      responses:
-        '200':
-          description: Updated notebook information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/notebook'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if notebook was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      operationId: notebook.delete
-      summary: Deletes a Notebook
-      tags:
-      - Notebooks
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notebookId
-        in: path
-        description: ID associated with the notebook
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If notebook was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if notebook was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/notebooks/{notebookId}/cancelExecution:
-    post:
-      operationId: notebook.cancelExecution
-      summary: Marks a Specific Notebook Execution for Cancellation
-      tags:
-      - Notebooks
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notebookId
-        in: path
-        description: ID associated with the notebook
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: executionId
-        in: query
-        description: The ID of the execution to cancel
-        required: true
-        example: 632e18632f59592e773a4153
-        schema:
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If the execution was successfully marked for cancellation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if execution was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /applications/{applicationId}/notebooks/{notebookId}/notebookMinuteCounts:
-    get:
-      operationId: notebook.notebookMinuteCounts
-      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for This Notebook
-      tags:
-      - Notebooks
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notebookId
-        in: path
-        description: ID associated with the notebook
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: start
-        in: query
-        description: Start of range for notebook execution query (ms since epoch)
-        required: false
-        example: 0
-        schema:
-          type: string
-      - name: end
-        in: query
-        description: End of range for notebook execution query (ms since epoch)
-        required: false
-        example: 1465790400000
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Notebook usage information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/notebookMinuteCounts'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if notebook was not found
           content:
             application/json:
               schema:
@@ -659,6 +649,75 @@ components:
             errorsThisPeriod:
               type: number
           additionalProperties: false
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                $ref: '#/components/schemas/common/date'
+              minutes:
+                type: integer
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+    notebookPatch:
+      title: Notebook Patch
+      description: Schema for the body of a Notebook modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/reqMedStr'
+        description:
+          $ref: '#/components/schemas/common/description'
+        inputs:
+          $ref: '#/components/schemas/notebook/properties/inputs'
+        outputs:
+          $ref: '#/components/schemas/notebook/properties/outputs'
+        imageVersion:
+          $ref: '#/components/schemas/common/notebookImageVersion'
+      additionalProperties: false
+    notebookPost:
+      title: Notebook Post
+      description: Schema for the body of an Notebook creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/reqMedStr'
+        description:
+          $ref: '#/components/schemas/common/description'
+        imageVersion:
+          $ref: '#/components/schemas/common/notebookImageVersion'
+        inputs:
+          $ref: '#/components/schemas/notebook/properties/inputs'
+        outputs:
+          $ref: '#/components/schemas/notebook/properties/outputs'
+      additionalProperties: false
+      required:
+      - name
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
     notebooks:
       title: Notebooks
       description: Schema for a collection of Notebooks
@@ -686,66 +745,6 @@ components:
           $ref: '#/components/schemas/common/sortDirection'
         applicationId:
           $ref: '#/components/schemas/common/objectId'
-    notebookPost:
-      title: Notebook Post
-      description: Schema for the body of an Notebook creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/reqMedStr'
-        description:
-          $ref: '#/components/schemas/common/description'
-        imageVersion:
-          $ref: '#/components/schemas/common/notebookImageVersion'
-        inputs:
-          $ref: '#/components/schemas/notebook/properties/inputs'
-        outputs:
-          $ref: '#/components/schemas/notebook/properties/outputs'
-      additionalProperties: false
-      required:
-      - name
-    notebookPatch:
-      title: Notebook Patch
-      description: Schema for the body of a Notebook modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/reqMedStr'
-        description:
-          $ref: '#/components/schemas/common/description'
-        inputs:
-          $ref: '#/components/schemas/notebook/properties/inputs'
-        outputs:
-          $ref: '#/components/schemas/notebook/properties/outputs'
-        imageVersion:
-          $ref: '#/components/schemas/common/notebookImageVersion'
-      additionalProperties: false
-    notebookMinuteCounts:
-      title: Notebook Minute Counts
-      description: Schema for the result of a notebook minute counts request
-      type: object
-      properties:
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        counts:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              minutes:
-                type: integer
-              completed:
-                type: integer
-              canceled:
-                type: integer
-              errored:
-                type: integer
-              timeout:
-                type: integer
     success:
       title: Success
       description: Schema for reporting a successful operation
@@ -755,19 +754,9 @@ components:
           type: boolean
           enum:
           - true
-    error:
-      title: Error
-      description: Schema for errors returned by the API
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
-        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.

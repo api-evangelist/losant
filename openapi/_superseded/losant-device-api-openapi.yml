@@ -1,10 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Losant Application Device API
   version: 1.29.4
-  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations,
-    files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant
-    Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations, files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
   contact:
     name: Losant Support
     url: https://www.losant.com/contact
@@ -1148,65 +1146,22 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    deviceRecipes:
-      title: Device Recipes
-      description: Schema for a collection of Device Recipes
+    devicesExportPayloadCountPost:
+      title: Devices Payload Count Export Post
+      description: Schema for the body of a device payload count export request
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/deviceRecipe'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-    compositeDevicesState:
-      title: Devices Composite State
-      description: Schema for a collection of Composite Device State
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                $ref: '#/components/schemas/common/objectId'
-              name:
-                $ref: '#/components/schemas/common/name'
-              compositeState:
-                $ref: '#/components/schemas/compositeDeviceState'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
+        email:
+          $ref: '#/components/schemas/common/email'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
         query:
-          type: object
+          $ref: '#/components/schemas/advancedDeviceQuery'
+        start:
+          type: number
+        end:
+          type: number
+      additionalProperties: false
     device:
       title: Device
       description: Schema for a single Device
@@ -1256,6 +1211,329 @@ components:
           $ref: '#/components/schemas/common/systemInterval'
         keepDuplicates:
           type: boolean
+    deviceAttributePatch:
+      title: Device Attribute Patch
+      description: Schema for the body of a Device Attribute modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/name'
+        contentType:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/contentType'
+        description:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/description'
+        attributeTags:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/attributeTags'
+        system:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/system'
+      additionalProperties: false
+    devicesUpdated:
+      title: Devices Updated
+      description: Schema for response of devices updated if under 100 devices queried
+      type: object
+      properties:
+        updated:
+          type: number
+        failed:
+          type: number
+        skipped:
+          type: number
+        logLink:
+          type: string
+    payloadCountsBreakdown:
+      title: Payload Counts Breakdown
+      description: Schema for the result of a payload counts breakdown request
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                $ref: '#/components/schemas/common/date'
+              value:
+                type: integer
+    devicePatch:
+      title: Device Patch
+      description: Schema for the body of a Device modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        tags:
+          $ref: '#/components/schemas/common/tagsRequired'
+        attributes:
+          $ref: '#/components/schemas/common/deviceAttributesInternal'
+        deviceClass:
+          $ref: '#/components/schemas/common/deviceClass'
+        gatewayId:
+          $ref: '#/components/schemas/common/objectId'
+        parentId:
+          $ref: '#/components/schemas/common/objectIdOrNull'
+        systemInterval:
+          $ref: '#/components/schemas/common/systemInterval'
+        keepDuplicates:
+          type: boolean
+      additionalProperties: false
+    deviceRecipePatch:
+      title: Device Recipe Patch
+      description: Schema for the body of a Device Recipe modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        deviceName:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        deviceDescription:
+          $ref: '#/components/schemas/common/description'
+        tags:
+          $ref: '#/components/schemas/common/tagsRequired'
+        attributes:
+          $ref: '#/components/schemas/common/deviceAttributesInternal'
+        deviceClass:
+          $ref: '#/components/schemas/common/deviceClass'
+        gatewayId:
+          $ref: '#/components/schemas/common/objectIdOrNull'
+        parentId:
+          $ref: '#/components/schemas/common/objectIdOrNull'
+        systemInterval:
+          $ref: '#/components/schemas/common/systemInterval'
+        keepDuplicates:
+          type: boolean
+      additionalProperties: false
+    deviceConnectionStatus:
+      title: Device Connection Status
+      description: Schema for the body of a request to set a device's connection status
+      oneOf:
+      - title: Device Connected
+        description: Schema for marking a device as connected
+        type: object
+        properties:
+          status:
+            type: string
+            enum:
+            - connected
+          connectedAt:
+            $ref: '#/components/schemas/common/timeFormats'
+          ipAddress:
+            type: string
+            minLength: 2
+            maxLength: 39
+        required:
+        - status
+        additionalProperties: false
+      - title: Device Disconnected
+        description: Schema for marking a device as disconnected
+        type: object
+        properties:
+          status:
+            type: string
+            enum:
+            - disconnected
+          connectedAt:
+            $ref: '#/components/schemas/common/timeFormats'
+          disconnectedAt:
+            $ref: '#/components/schemas/common/timeFormats'
+          disconnectReason:
+            $ref: '#/components/schemas/common/optMedStr'
+          messagesFromClient:
+            type: integer
+            minimum: 0
+            maximum: 2147483647
+          messagesToClient:
+            type: integer
+            minimum: 0
+            maximum: 2147483647
+          ipAddress:
+            type: string
+            minLength: 2
+            maxLength: 39
+        required:
+        - status
+        additionalProperties: false
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    deviceRecipes:
+      title: Device Recipes
+      description: Schema for a collection of Device Recipes
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/deviceRecipe'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    deviceAttribute:
+      title: Device Attribute
+      description: Schema for a single Device Attribute
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/name'
+        dataType:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/dataType'
+        contentType:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/contentType'
+        description:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/description'
+        attributeTags:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/attributeTags'
+        system:
+          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/system'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    devicesPatch:
+      title: Devices Patch
+      description: Schema for the body of a Devices modification request
+      type: object
+      properties:
+        updateFields:
+          $ref: '#/components/schemas/devicePatch'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        query:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+        updateOperations:
+          $ref: '#/components/schemas/common/deviceUpdateOperations'
+        email:
+          $ref: '#/components/schemas/common/email'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+      additionalProperties: false
+      required: []
+    deviceAttributes:
+      title: Device Attributes
+      description: Schema for a collection of Device Attributes
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/deviceAttribute'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+    deviceRecipeBulkCreatePost:
+      title: Device Recipe Bulk Create Post
+      description: Schema for the body of a bulk Device creation request
+      type: object
+      properties:
+        csv:
+          type: string
+        count:
+          type: integer
+        nameColumn:
+          type: string
+          maxLength: 255
+        descriptionColumn:
+          type: string
+          maxLength: 255
+        gatewayIdColumn:
+          type: string
+          maxLength: 255
+        parentIdColumn:
+          type: string
+          maxLength: 255
+        makeUniqueKeySecret:
+          type: boolean
+        email:
+          $ref: '#/components/schemas/common/email'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+        gatewayId:
+          $ref: '#/components/schemas/common/objectId'
+        parentId:
+          $ref: '#/components/schemas/common/objectIdOrNull'
+      additionalProperties: false
+    compositeDeviceState:
+      title: Composite Device State
+      description: Schema for a composite Device state
+      type: object
+      patternProperties:
+        ^[0-9a-zA-Z_-]{1,255}$:
+          type: object
+          properties:
+            value:
+              type:
+              - number
+              - string
+              - boolean
+            time:
+              $ref: '#/components/schemas/common/timeFormats'
+      additionalProperties: false
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
+        success:
+          type: boolean
+          enum:
+          - true
     advancedDeviceQuery:
       title: Advanced Device Query
       description: Schema for advanced device queries
@@ -1309,272 +1587,38 @@ components:
         connectionStatus:
           $ref: '#/components/schemas/common/advancedValueQuery'
       additionalProperties: false
-    deviceAttributes:
-      title: Device Attributes
-      description: Schema for a collection of Device Attributes
+    compositeDevicesState:
+      title: Devices Composite State
+      description: Schema for a collection of Composite Device State
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/deviceAttribute'
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/common/objectId'
+              name:
+                $ref: '#/components/schemas/common/name'
+              compositeState:
+                $ref: '#/components/schemas/compositeDeviceState'
         count:
           type: integer
         totalCount:
           type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
+        perPage:
+          type: integer
+        page:
+          type: integer
         sortField:
           type: string
         sortDirection:
           $ref: '#/components/schemas/common/sortDirection'
         applicationId:
           $ref: '#/components/schemas/common/objectId'
-        deviceId:
-          $ref: '#/components/schemas/common/objectId'
-    payloadCountsBreakdown:
-      title: Payload Counts Breakdown
-      description: Schema for the result of a payload counts breakdown request
-      type: object
-      properties:
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        counts:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              value:
-                type: integer
-    deviceRecipePatch:
-      title: Device Recipe Patch
-      description: Schema for the body of a Device Recipe modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        deviceName:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        deviceDescription:
-          $ref: '#/components/schemas/common/description'
-        tags:
-          $ref: '#/components/schemas/common/tagsRequired'
-        attributes:
-          $ref: '#/components/schemas/common/deviceAttributesInternal'
-        deviceClass:
-          $ref: '#/components/schemas/common/deviceClass'
-        gatewayId:
-          $ref: '#/components/schemas/common/objectIdOrNull'
-        parentId:
-          $ref: '#/components/schemas/common/objectIdOrNull'
-        systemInterval:
-          $ref: '#/components/schemas/common/systemInterval'
-        keepDuplicates:
-          type: boolean
-      additionalProperties: false
-    deviceRecipeBulkCreatePost:
-      title: Device Recipe Bulk Create Post
-      description: Schema for the body of a bulk Device creation request
-      type: object
-      properties:
-        csv:
-          type: string
-        count:
-          type: integer
-        nameColumn:
-          type: string
-          maxLength: 255
-        descriptionColumn:
-          type: string
-          maxLength: 255
-        gatewayIdColumn:
-          type: string
-          maxLength: 255
-        parentIdColumn:
-          type: string
-          maxLength: 255
-        makeUniqueKeySecret:
-          type: boolean
-        email:
-          $ref: '#/components/schemas/common/email'
-        callbackUrl:
-          $ref: '#/components/schemas/common/url'
-        gatewayId:
-          $ref: '#/components/schemas/common/objectId'
-        parentId:
-          $ref: '#/components/schemas/common/objectIdOrNull'
-      additionalProperties: false
-    deviceConnectionStatus:
-      title: Device Connection Status
-      description: Schema for the body of a request to set a device's connection status
-      oneOf:
-      - title: Device Connected
-        description: Schema for marking a device as connected
-        type: object
-        properties:
-          status:
-            type: string
-            enum:
-            - connected
-          connectedAt:
-            $ref: '#/components/schemas/common/timeFormats'
-          ipAddress:
-            type: string
-            minLength: 2
-            maxLength: 39
-        required:
-        - status
-        additionalProperties: false
-      - title: Device Disconnected
-        description: Schema for marking a device as disconnected
-        type: object
-        properties:
-          status:
-            type: string
-            enum:
-            - disconnected
-          connectedAt:
-            $ref: '#/components/schemas/common/timeFormats'
-          disconnectedAt:
-            $ref: '#/components/schemas/common/timeFormats'
-          disconnectReason:
-            $ref: '#/components/schemas/common/optMedStr'
-          messagesFromClient:
-            type: integer
-            minimum: 0
-            maximum: 2147483647
-          messagesToClient:
-            type: integer
-            minimum: 0
-            maximum: 2147483647
-          ipAddress:
-            type: string
-            minLength: 2
-            maxLength: 39
-        required:
-        - status
-        additionalProperties: false
-    deviceAttribute:
-      title: Device Attribute
-      description: Schema for a single Device Attribute
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/name'
-        dataType:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/dataType'
-        contentType:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/contentType'
-        description:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/description'
-        attributeTags:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/attributeTags'
-        system:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/system'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        deviceId:
-          $ref: '#/components/schemas/common/objectId'
-    deviceAttributePatch:
-      title: Device Attribute Patch
-      description: Schema for the body of a Device Attribute modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/name'
-        contentType:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/contentType'
-        description:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/description'
-        attributeTags:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/attributeTags'
-        system:
-          $ref: '#/components/schemas/common/deviceAttributeInternal/properties/system'
-      additionalProperties: false
-    deviceRecipePost:
-      title: Device Recipe Post
-      description: Schema for the body of a Device Recipe creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        deviceName:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        deviceDescription:
-          $ref: '#/components/schemas/common/description'
-        tags:
-          $ref: '#/components/schemas/common/tagsRequired'
-        attributes:
-          $ref: '#/components/schemas/common/deviceAttributesInternal'
-        deviceClass:
-          $ref: '#/components/schemas/common/deviceClass'
-        gatewayId:
-          $ref: '#/components/schemas/common/objectId'
-        parentId:
-          $ref: '#/components/schemas/common/objectIdOrNull'
-        systemInterval:
-          $ref: '#/components/schemas/common/systemInterval'
-        keepDuplicates:
-          type: boolean
-      additionalProperties: false
-      required:
-      - name
-    devicesUpdated:
-      title: Devices Updated
-      description: Schema for response of devices updated if under 100 devices queried
-      type: object
-      properties:
-        updated:
-          type: number
-        failed:
-          type: number
-        skipped:
-          type: number
-        logLink:
-          type: string
-    success:
-      title: Success
-      description: Schema for reporting a successful operation
-      type: object
-      properties:
-        success:
-          type: boolean
-          enum:
-          - true
-    devicePatch:
-      title: Device Patch
-      description: Schema for the body of a Device modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        tags:
-          $ref: '#/components/schemas/common/tagsRequired'
-        attributes:
-          $ref: '#/components/schemas/common/deviceAttributesInternal'
-        deviceClass:
-          $ref: '#/components/schemas/common/deviceClass'
-        gatewayId:
-          $ref: '#/components/schemas/common/objectId'
-        parentId:
-          $ref: '#/components/schemas/common/objectIdOrNull'
-        systemInterval:
-          $ref: '#/components/schemas/common/systemInterval'
-        keepDuplicates:
-          type: boolean
-      additionalProperties: false
+        query:
+          type: object
     deviceRecipe:
       title: Device Recipe
       description: Schema for a single Device Recipe
@@ -1612,50 +1656,6 @@ components:
           $ref: '#/components/schemas/common/systemInterval'
         keepDuplicates:
           type: boolean
-    devicesPatch:
-      title: Devices Patch
-      description: Schema for the body of a Devices modification request
-      type: object
-      properties:
-        updateFields:
-          $ref: '#/components/schemas/devicePatch'
-        deviceIds:
-          $ref: '#/components/schemas/common/objectIds'
-        query:
-          $ref: '#/components/schemas/advancedDeviceQuery'
-        updateOperations:
-          $ref: '#/components/schemas/common/deviceUpdateOperations'
-        email:
-          $ref: '#/components/schemas/common/email'
-        callbackUrl:
-          $ref: '#/components/schemas/common/url'
-      additionalProperties: false
-      required: []
-    compositeDeviceState:
-      title: Composite Device State
-      description: Schema for a composite Device state
-      type: object
-      patternProperties:
-        ^[0-9a-zA-Z_-]{1,255}$:
-          type: object
-          properties:
-            value:
-              type:
-              - number
-              - string
-              - boolean
-            time:
-              $ref: '#/components/schemas/common/timeFormats'
-      additionalProperties: false
-    error:
-      title: Error
-      description: Schema for errors returned by the API
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
     deviceAttributePost:
       title: Device Attribute Post
       description: Schema for the body of a Device Attribute creation request
@@ -1677,6 +1677,36 @@ components:
       - name
       - dataType
       additionalProperties: false
+    deviceRecipePost:
+      title: Device Recipe Post
+      description: Schema for the body of a Device Recipe creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        deviceName:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        deviceDescription:
+          $ref: '#/components/schemas/common/description'
+        tags:
+          $ref: '#/components/schemas/common/tagsRequired'
+        attributes:
+          $ref: '#/components/schemas/common/deviceAttributesInternal'
+        deviceClass:
+          $ref: '#/components/schemas/common/deviceClass'
+        gatewayId:
+          $ref: '#/components/schemas/common/objectId'
+        parentId:
+          $ref: '#/components/schemas/common/objectIdOrNull'
+        systemInterval:
+          $ref: '#/components/schemas/common/systemInterval'
+        keepDuplicates:
+          type: boolean
+      additionalProperties: false
+      required:
+      - name
     deviceRecipeBulkCreate:
       title: Device Recipe Bulk Create
       description: Schema for the result of a bulk Device creation request
@@ -1688,42 +1718,9 @@ components:
           type: number
         csvResult:
           type: string
-    devicesExportPayloadCountPost:
-      title: Devices Payload Count Export Post
-      description: Schema for the body of a device payload count export request
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/common/email'
-        callbackUrl:
-          $ref: '#/components/schemas/common/url'
-        query:
-          $ref: '#/components/schemas/advancedDeviceQuery'
-        start:
-          type: number
-        end:
-          type: number
-      additionalProperties: false
-    jobEnqueuedResult:
-      title: Job Enqueued API Result
-      description: Schema for the result of a job being queued
-      type: object
-      properties:
-        jobQueued:
-          type: boolean
-          enum:
-          - true
-        jobId:
-          type: string
-          maxLength: 21
-        success:
-          type: boolean
-          enum:
-          - true
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
-        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.

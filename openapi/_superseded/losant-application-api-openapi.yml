@@ -1,10 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Losant Application API
   version: 1.29.4
-  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations,
-    files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant
-    Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations, files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
   contact:
     name: Losant Support
     url: https://www.losant.com/contact
@@ -135,8 +133,7 @@ paths:
           type: string
       - name: email
         in: multipart
-        description: Email address to notify the user when the job to import the application has completed or errored, defaults
-          to the email address of the user making the request
+        description: Email address to notify the user when the job to import the application has completed or errored, defaults to the email address of the user making the request
         required: false
         example: email@example.com
         schema:
@@ -276,8 +273,7 @@ paths:
           type: string
       - name: orgId
         in: query
-        description: If not provided, return all applications. If provided but blank, only return applications belonging to
-          the current user. If provided and an id, only return applications belonging to the given organization id.
+        description: If not provided, return all applications. If provided but blank, only return applications belonging to the current user. If provided and an id, only return applications belonging to the given organization id.
         required: false
         example: 575ecdf07ae143cd83dc4a9a
         schema:
@@ -1148,8 +1144,7 @@ paths:
           pattern: ^[A-Fa-f\d]{24}$
       - name: includeCustomNodes
         in: query
-        description: If the result of the request should also include the details of any custom nodes referenced by returned
-          workflows
+        description: If the result of the request should also include the details of any custom nodes referenced by returned workflows
         required: false
         example: true
         schema:
@@ -2227,8 +2222,7 @@ paths:
           type: file
       - name: email
         in: multipart
-        description: Email address to notify the user when the job to import the application resources has completed or errored,
-          defaults to the email address of the user making the request
+        description: Email address to notify the user when the job to import the application resources has completed or errored, defaults to the email address of the user making the request
         required: false
         example: email@example.com
         schema:
@@ -3103,8 +3097,7 @@ paths:
           type: string
       - name: urlTTL
         in: query
-        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'.
-          If 0, no url will be returned.
+        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'. If 0, no url will be returned.
         required: false
         example: 900
         schema:
@@ -3198,8 +3191,7 @@ paths:
           pattern: ^[A-Fa-f\d]{24}$
       - name: urlTTL
         in: query
-        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'.
-          If 0, no url will be returned.
+        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'. If 0, no url will be returned.
         required: false
         example: 900
         schema:
@@ -3350,8 +3342,7 @@ paths:
           type: file
       - name: urlTTL
         in: query
-        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'.
-          If 0, no url will be returned.
+        description: Time in seconds that the private file url will be valid for. Only applies to private files of type 'file'. If 0, no url will be returned.
         required: false
         example: 900
         schema:
@@ -4333,8 +4324,7 @@ paths:
           type: string
       - name: applicationId
         in: query
-        description: If not provided, return all dashboards. If provided but blank, only return dashboards that are not linked
-          to applications. If provided and an id, only return dashboards linked to the given application id.
+        description: If not provided, return all dashboards. If provided but blank, only return dashboards that are not linked to applications. If provided and an id, only return dashboards linked to the given application id.
         required: false
         example: 575ec8687ae143cd83dc4a97
         schema:
@@ -4342,8 +4332,7 @@ paths:
           pattern: ^([A-Fa-f\d]{24}|)$
       - name: orgId
         in: query
-        description: If not provided, return all dashboards. If provided but blank, only return dashboards belonging to the
-          current user. If provided and an id, only return dashboards belonging to the given organization id.
+        description: If not provided, return all dashboards. If provided but blank, only return dashboards belonging to the current user. If provided and an id, only return dashboards belonging to the given organization id.
         required: false
         example: 575ece7e7ae143cd83dc4a9c
         schema:
@@ -4692,1511 +4681,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    flow:
-      title: Workflow
-      description: Schema for a single Workflow
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        flowId:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        createdById:
-          $ref: '#/components/schemas/common/objectId'
-        createdByType:
-          $ref: '#/components/schemas/common/expSourceType'
-        lastUpdatedById:
-          $ref: '#/components/schemas/common/objectId'
-        lastUpdatedByType:
-          $ref: '#/components/schemas/common/expSourceType'
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        shortDescription:
-          $ref: '#/components/schemas/common/shortString'
-        iconData:
-          $ref: '#/components/schemas/common/imageDataUri'
-        docsUrl:
-          $ref: '#/components/schemas/common/shortString'
-        category:
-          type: string
-          enum:
-          - data
-          - experience
-          - logic
-          - output
-          - debug
-        enabled:
-          type: boolean
-        defaultVersionId:
-          $ref: '#/components/schemas/common/objectId'
-        minimumAgentVersion:
-          $ref: '#/components/schemas/common/version'
-        flowClass:
-          type: string
-          enum:
-          - cloud
-          - edge
-          - embedded
-          - experience
-          - customNode
-        triggers:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/common/triggers/appFile'
-            - $ref: '#/components/schemas/common/triggers/basic'
-            - $ref: '#/components/schemas/common/triggers/beckhoff'
-            - $ref: '#/components/schemas/common/triggers/dataTable'
-            - $ref: '#/components/schemas/common/triggers/integration'
-            - $ref: '#/components/schemas/common/triggers/deviceIdsTags'
-            - $ref: '#/components/schemas/common/triggers/deviceIdsTagsInactivity'
-            - $ref: '#/components/schemas/common/triggers/direct'
-            - $ref: '#/components/schemas/common/triggers/endpoint'
-            - $ref: '#/components/schemas/common/triggers/event'
-            - $ref: '#/components/schemas/common/triggers/fileTail'
-            - $ref: '#/components/schemas/common/triggers/fileWatch'
-            - $ref: '#/components/schemas/common/triggers/flowError'
-            - $ref: '#/components/schemas/common/triggers/mqttTopic'
-            - $ref: '#/components/schemas/common/triggers/onSync'
-            - $ref: '#/components/schemas/common/triggers/opcua'
-            - $ref: '#/components/schemas/common/triggers/redis'
-            - $ref: '#/components/schemas/common/triggers/request'
-            - $ref: '#/components/schemas/common/triggers/serial'
-            - $ref: '#/components/schemas/common/triggers/snmpTrap'
-            - $ref: '#/components/schemas/common/triggers/timer'
-            - $ref: '#/components/schemas/common/triggers/virtualButton'
-        nodes:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                $ref: '#/components/schemas/common/optMedStr'
-              type:
-                $ref: '#/components/schemas/common/reqMedStr'
-              config:
-                type: object
-              meta:
-                type: object
-              outputIds:
-                $ref: '#/components/schemas/common/outputIds'
-            additionalProperties: false
-            required:
-            - type
-        customNodeConfig:
-          type: object
-          properties:
-            outputCount:
-              type: number
-              enum:
-              - 1
-              - 2
-            resultMode:
-              type: string
-              enum:
-              - optional
-              - required
-              - none
-            resultDescription:
-              $ref: '#/components/schemas/common/description'
-            fields:
-              type: array
-              maxItems: 100
-              items:
-                $ref: '#/components/schemas/common/customNodeFieldConfig'
-          additionalProperties: false
-          required:
-          - outputCount
-          - resultMode
-          - fields
-        customNodeSupports:
-          type: array
-          maxItems: 1
-          items:
-            type: string
-            enum:
-            - cloud
-            - edge
-        customNodeUseCount:
-          type: number
-        globals:
-          $ref: '#/components/schemas/common/globals'
-        deletedInDevelop:
-          type: boolean
-        stats:
-          type: object
-          properties:
-            runCount:
-              type: number
-            errorCount:
-              type: number
-            byVersion:
-              type: object
-              patternProperties:
-                .*:
-                  type: object
-                  properties:
-                    runCount:
-                      type: number
-                    errorCount:
-                      type: number
-    apiTokenPatch:
-      title: API Token Patch
-      description: Schema for the body of an API Token modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        status:
-          $ref: '#/components/schemas/apiToken/properties/status'
-      additionalProperties: false
-    applicationImportExecutions:
-      title: Application Import Executions
-      description: Schema for a list Application import executions
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/common/objectId'
-          importSourceType:
-            type: string
-            enum:
-            - importBundle
-            - importUrl
-            - fromApplication
-            - repository
-          importExecutionId:
-            $ref: '#/components/schemas/common/objectId'
-          applicationId:
-            $ref: '#/components/schemas/common/objectId'
-          fromApplicationId:
-            $ref: '#/components/schemas/common/objectId'
-          runQueuedAt:
-            $ref: '#/components/schemas/common/date'
-          runStartedAt:
-            $ref: '#/components/schemas/common/date'
-          runCompletedAt:
-            $ref: '#/components/schemas/common/date'
-          status:
-            type: string
-            enum:
-            - queued
-            - inProgress
-            - completed
-            - errored
-            - failed
-          dryRun:
-            type: boolean
-          conflictBehavior:
-            $ref: '#/components/schemas/importIntoApplicationOptions/properties/conflictBehavior'
-          callbackUrl:
-            $ref: '#/components/schemas/common/url'
-          email:
-            $ref: '#/components/schemas/common/email'
-          include:
-            $ref: '#/components/schemas/importIntoApplicationOptions/properties/include'
-          jobId:
-            $ref: '#/components/schemas/jobEnqueuedResult/properties/jobId'
-          sourceId:
-            $ref: '#/components/schemas/common/objectId'
-          sourceType:
-            $ref: '#/components/schemas/common/sourceType'
-          error:
-            type: object
-            properties:
-              name:
-                type: string
-              message:
-                type: string
-          dryRunResults:
-            type: object
-            properties:
-              limitErrors:
-                $ref: '#/components/schemas/importIntoApplicationOptions/properties/include'
-              url:
-                $ref: '#/components/schemas/common/url'
-          validationErrors:
-            $ref: '#/components/schemas/validationErrors/properties/validationErrors'
-          importedFileUrl:
-            $ref: '#/components/schemas/common/url'
-          importUrl:
-            $ref: '#/components/schemas/common/url'
-          credentialName:
-            type: string
-          repo:
-            type: object
-            properties:
-              branch:
-                type: string
-                maxLength: 255
-              directory:
-                type: string
-                maxLength: 1024
-    credentialPost:
-      title: Credential Post
-      description: Schema for a Credential creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        enabled:
-          type: boolean
-        type:
-          $ref: '#/components/schemas/credential/properties/type'
-        awsConfig:
-          type: object
-          properties:
-            accessKeyId:
-              $ref: '#/components/schemas/credential/properties/awsConfig/properties/accessKeyId'
-            secretAccessKey:
-              type: string
-              minLength: 4
-              maxLength: 128
-            region:
-              $ref: '#/components/schemas/credential/properties/awsConfig/properties/region'
-          additionalProperties: false
-          required:
-          - accessKeyId
-          - secretAccessKey
-          - region
-        azureConfig:
-          type: object
-          properties:
-            account:
-              $ref: '#/components/schemas/credential/properties/azureConfig/properties/account'
-            accountKey:
-              type: string
-              minLength: 4
-              maxLength: 128
-          additionalProperties: false
-          required:
-          - accountKey
-        gcpConfig:
-          type: object
-          properties:
-            keyJson:
-              $ref: '#/components/schemas/credential/properties/gcpConfig/properties/keyMetaJson'
-          additionalProperties: false
-          required:
-          - keyJson
-        httpConfig:
-          type: object
-          properties:
-            uriMatch:
-              $ref: '#/components/schemas/credential/properties/httpConfig/properties/uriMatch'
-            authMethod:
-              $ref: '#/components/schemas/credential/properties/httpConfig/properties/authMethod'
-            publicValue:
-              $ref: '#/components/schemas/credential/properties/httpConfig/properties/publicValue'
-            secretValue:
-              type: string
-              maxLength: 8196
-          additionalProperties: false
-          required:
-          - uriMatch
-          - authMethod
-          - secretValue
-        sendgridConfig:
-          type: object
-          properties:
-            apiKey:
-              type: string
-              minLength: 4
-              maxLength: 128
-          additionalProperties: false
-          required:
-          - apiKey
-        twilioConfig:
-          type: object
-          properties:
-            accountSid:
-              $ref: '#/components/schemas/credential/properties/twilioConfig/properties/accountSid'
-            apiKeySid:
-              $ref: '#/components/schemas/credential/properties/twilioConfig/properties/apiKeySid'
-            apiKeySecret:
-              type: string
-              minLength: 4
-              maxLength: 128
-          additionalProperties: false
-          required:
-          - accountSid
-          - apiKeySid
-          - apiKeySecret
-        logglyConfig:
-          type: object
-          properties:
-            customerToken:
-              type: string
-              minLength: 1
-              maxLength: 128
-          additionalProperties: false
-          required:
-          - customerToken
-        jwtConfig:
-          type: object
-          properties:
-            issuer:
-              $ref: '#/components/schemas/credential/properties/jwtConfig/properties/issuer'
-            algorithm:
-              $ref: '#/components/schemas/credential/properties/jwtConfig/properties/algorithm'
-            secret:
-              type: string
-              minLength: 1
-              maxLength: 4096
-          additionalProperties: false
-          required:
-          - algorithm
-          - secret
-        whatsappConfig:
-          type: object
-          properties:
-            accessToken:
-              type: string
-              minLength: 1
-              maxLength: 1024
-            fromNumberId:
-              $ref: '#/components/schemas/credential/properties/whatsappConfig/properties/fromNumberId'
-          additionalProperties: false
-          required:
-          - accessToken
-          - fromNumberId
-        sqlConfig:
-          type: object
-          properties:
-            system:
-              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/system'
-            host:
-              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/host'
-            port:
-              oneOf:
-              - $ref: '#/components/schemas/credential/properties/sqlConfig/properties/port'
-              - type: 'null'
-            username:
-              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/username'
-            password:
-              type: string
-              minLength: 1
-              maxLength: 256
-            secureConnection:
-              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/secureConnection'
-            caCertificate:
-              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/caCertificate'
-            disableSSLVerification:
-              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/disableSSLVerification'
-          additionalProperties: false
-          required:
-          - system
-          - host
-          - username
-          - password
-        mongodbConfig:
-          type: object
-          properties:
-            connectionUri:
-              type: string
-              minLength: 1
-              maxLength: 2048
-          additionalProperties: false
-          required:
-          - connectionUri
-        mailgunConfig:
-          type: object
-          properties:
-            apiKey:
-              type: string
-              minLength: 4
-              maxLength: 128
-          additionalProperties: false
-          required:
-          - apiKey
-        snowflakeConfig:
-          type: object
-          properties:
-            host:
-              $ref: '#/components/schemas/credential/properties/snowflakeConfig/properties/host'
-            username:
-              $ref: '#/components/schemas/credential/properties/snowflakeConfig/properties/username'
-            privateKey:
-              type: string
-              maxLength: 8196
-            generatePrivateKey:
-              type: boolean
-          additionalProperties: false
-          anyOf:
-          - required:
-            - host
-            - username
-            - privateKey
-          - required:
-            - host
-            - username
-            - generatePrivateKey
-        gitConfig:
-          type: object
-          properties:
-            type:
-              $ref: '#/components/schemas/credential/properties/gitConfig/properties/type'
-            cloneUrl:
-              $ref: '#/components/schemas/credential/properties/gitConfig/properties/cloneUrl'
-            username:
-              $ref: '#/components/schemas/credential/properties/gitConfig/properties/username'
-            committerName:
-              $ref: '#/components/schemas/credential/properties/gitConfig/properties/committerName'
-            committerEmail:
-              $ref: '#/components/schemas/credential/properties/gitConfig/properties/committerEmail'
-            generatePrivateKey:
-              type: boolean
-            secretValue:
-              type: string
-              maxLength: 8196
-          additionalProperties: false
-          anyOf:
-          - required:
-            - type
-            - cloneUrl
-            - generatePrivateKey
-          - required:
-            - type
-            - cloneUrl
-        datadogConfig:
-          type: object
-          properties:
-            secretValue:
-              type: string
-              maxLength: 256
-            site:
-              $ref: '#/components/schemas/credential/properties/datadogConfig/properties/site'
-          additionalProperties: false
-          required:
-          - secretValue
-        certificateKeyPairConfig:
-          type: object
-          properties:
-            certificate:
-              $ref: '#/components/schemas/credential/properties/certificateKeyPairConfig/properties/certificate'
-            privateKey:
-              type: string
-              maxLength: 8196
-          additionalProperties: false
-          required:
-          - certificate
-          - privateKey
-      additionalProperties: false
-      required:
-      - name
-      - type
-    credential:
-      title: Credential
-      description: Schema for a single Credential
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        createdById:
-          $ref: '#/components/schemas/common/objectId'
-        createdByType:
-          $ref: '#/components/schemas/common/expSourceType'
-        lastUpdatedById:
-          $ref: '#/components/schemas/common/objectId'
-        lastUpdatedByType:
-          $ref: '#/components/schemas/common/expSourceType'
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        enabled:
-          type: boolean
-        type:
-          type: string
-          enum:
-          - aws
-          - azure
-          - gcp
-          - http
-          - sendgrid
-          - twilio
-          - loggly
-          - jwt
-          - whatsapp
-          - sql
-          - mongodb
-          - mailgun
-          - snowflake
-          - git
-          - datadog
-          - certificateKeyPair
-        awsConfig:
-          type: object
-          properties:
-            accessKeyId:
-              type: string
-              minLength: 16
-              maxLength: 128
-            region:
-              type: string
-              minLength: 1
-              maxLength: 128
-          additionalProperties: false
-          required:
-          - accessKeyId
-          - region
-        azureConfig:
-          type: object
-          properties:
-            account:
-              type: string
-              maxLength: 128
-          additionalProperties: false
-        gcpConfig:
-          type: object
-          properties:
-            keyMetaJson:
-              type: string
-              minLength: 1
-              maxLength: 8192
-          additionalProperties: false
-          required:
-          - keyMetaJson
-        httpConfig:
-          type: object
-          properties:
-            uriMatch:
-              type: string
-              minLength: 8
-              maxLength: 1024
-            authMethod:
-              type: string
-              enum:
-              - header
-              - queryParam
-              - basicAuth
-              - clientCertificate
-            publicValue:
-              type: string
-              maxLength: 8196
-          additionalProperties: false
-          required:
-          - uriMatch
-          - authMethod
-          - publicValue
-        sendgridConfig:
-          type: object
-          properties: {}
-          additionalProperties: false
-        twilioConfig:
-          type: object
-          properties:
-            accountSid:
-              type: string
-              minLength: 4
-              maxLength: 128
-            apiKeySid:
-              type: string
-              minLength: 4
-              maxLength: 128
-          additionalProperties: false
-          required:
-          - accountSid
-          - apiKeySid
-        logglyConfig:
-          type: object
-          properties: {}
-          additionalProperties: false
-        jwtConfig:
-          type: object
-          properties:
-            issuer:
-              type: string
-              maxLength: 1024
-            algorithm:
-              type: string
-              enum:
-              - HS256
-              - HS384
-              - HS512
-              - RS256
-              - RS384
-              - RS512
-              - ES256
-              - ES384
-              - ES512
-          additionalProperties: false
-          required:
-          - algorithm
-        whatsappConfig:
-          type: object
-          properties:
-            fromNumberId:
-              type: string
-              minLength: 1
-              maxLength: 128
-          additionalProperties: false
-          required:
-          - fromNumberId
-        sqlConfig:
-          type: object
-          properties:
-            system:
-              type: string
-              enum:
-              - mssql
-              - mysql
-              - pg
-            host:
-              type: string
-              minLength: 1
-              maxLength: 256
-            port:
-              type: integer
-              minimum: 1
-              maximum: 65535
-            username:
-              type: string
-              minLength: 1
-              maxLength: 256
-            secureConnection:
-              type: boolean
-            caCertificate:
-              type: string
-              maxLength: 8196
-            disableSSLVerification:
-              type: boolean
-          additionalProperties: false
-          required:
-          - system
-          - host
-          - username
-        mongodbConfig:
-          type: object
-          properties: {}
-          additionalProperties: false
-        mailgunConfig:
-          type: object
-          properties: {}
-          additionalProperties: false
-        snowflakeConfig:
-          type: object
-          properties:
-            host:
-              type: string
-              minLength: 1
-              maxLength: 128
-            username:
-              type: string
-              minLength: 1
-              maxLength: 128
-            publicKey:
-              type: string
-              minLength: 1
-              maxLength: 8192
-          required:
-          - host
-          - username
-          - publicKey
-          additionalProperties: false
-        gitConfig:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - ssh-key
-              - http-password
-            cloneUrl:
-              type: string
-              minLength: 5
-              maxLength: 1024
-            publicKey:
-              type: string
-              maxLength: 8192
-            username:
-              type: string
-              maxLength: 128
-            committerName:
-              type: string
-              maxLength: 128
-            committerEmail:
-              type: string
-              maxLength: 128
-          required:
-          - type
-          - cloneUrl
-          additionalProperties: false
-        datadogConfig:
-          type: object
-          properties:
-            site:
-              type: string
-              minLength: 1
-              maxLength: 128
-          additionalProperties: false
-        certificateKeyPairConfig:
-          type: object
-          properties:
-            certificate:
-              type: string
-              maxLength: 8192
-            info:
-              $ref: '#/components/schemas/common/certificateInfo'
-          additionalProperties: false
-      additionalProperties: false
-      required:
-      - name
-      - type
-    auditLog:
-      title: Audit Log
-      description: Schema for a single Audit Log entry
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        auditLogId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
-        primaryTargetId:
-          $ref: '#/components/schemas/common/objectId'
-        primaryTargetType:
-          type: string
-          enum:
-          - Application
-          - Dashboard
-          - OrgInvite
-        primaryTargetName:
-          $ref: '#/components/schemas/common/optMedStr'
-        secondaryTargetId:
-          $ref: '#/components/schemas/common/objectId'
-        secondaryTargetType:
-          type: string
-          enum:
-          - ApiToken
-          - ApplicationCertificateAuthority
-          - ApplicationCertificate
-          - ApplicationKey
-          - Credential
-          - Dashboard
-          - DataTable
-          - Device
-          - DeviceRecipe
-          - Event
-          - ExperienceDomain
-          - ExperienceEndpoint
-          - ExperienceGroup
-          - ExperienceSlug
-          - ExperienceUser
-          - ExperienceVersion
-          - ExperienceView
-          - File
-          - Flow
-          - Integration
-          - Notebook
-          - PrivateFile
-          - ResourceJob
-          - Webhook
-        secondaryTargetName:
-          $ref: '#/components/schemas/common/optMedStr'
-        actorId:
-          $ref: '#/components/schemas/common/objectId'
-        actorType:
-          type: string
-          enum:
-          - Application
-          - Device
-          - Flow
-          - User
-          - ApiToken
-        actorName:
-          $ref: '#/components/schemas/common/optMedStr'
-        requestResource:
-          $ref: '#/components/schemas/common/optMedStr'
-        requestAction:
-          $ref: '#/components/schemas/common/optMedStr'
-        requestQueryParams:
-          type: object
-        requestBody:
-          type: object
-        requestPathParams:
-          type: object
-        responseBody:
-          type: object
-        responseStatus:
-          $ref: '#/components/schemas/common/responseCode'
-    file:
-      title: File Schema
-      description: Schema for a single public or private file
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        authorId:
-          $ref: '#/components/schemas/common/objectId'
-        authorType:
-          $ref: '#/components/schemas/common/sourceType'
-        status:
-          type: string
-          enum:
-          - pending
-          - moving
-          - deleting
-          - completed
-        name:
-          type: string
-          minLength: 1
-          maxLength: 1024
-        parentDirectory:
-          type: string
-          maxLength: 1024
-        type:
-          type: string
-          enum:
-          - file
-          - directory
-        fileSize:
-          type: number
-        s3etag:
-          type: string
-        contentType:
-          type: string
-          maxLength: 1024
-        fileDimensions:
-          type: object
-          properties:
-            width:
-              type: number
-            height:
-              type: number
-        moveIntoId:
-          $ref: '#/components/schemas/common/objectId'
-        url:
-          type: string
-    credentials:
-      title: Credentials
-      description: Schema for a collection of Credentials
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/credential'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-    resourceJobPatch:
-      title: Resource Job Patch
-      description: Schema for a resource job update
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        dataTableId:
-          $ref: '#/components/schemas/common/templateOrObjectId'
-        queryJson:
-          $ref: '#/components/schemas/resourceJob/properties/queryJson'
-        maxIterationConcurrency:
-          $ref: '#/components/schemas/resourceJob/properties/maxIterationConcurrency'
-        iterationDelay:
-          $ref: '#/components/schemas/resourceJob/properties/iterationDelay'
-        iterationTimeout:
-          $ref: '#/components/schemas/resourceJob/properties/iterationTimeout'
-        defaultContext:
-          $ref: '#/components/schemas/resourceJob/properties/defaultContext'
-        retryOnTimeout:
-          $ref: '#/components/schemas/resourceJob/properties/retryOnTimeout'
-        retryOnFailure:
-          $ref: '#/components/schemas/resourceJob/properties/retryOnFailure'
-        maxIterationRetries:
-          $ref: '#/components/schemas/resourceJob/properties/maxIterationRetries'
-        retryDelay:
-          $ref: '#/components/schemas/resourceJob/properties/retryDelay'
-      additionalProperties: false
-    integration:
-      title: Integration
-      description: Schema for a single Integration
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        integrationId:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        name:
-          $ref: '#/components/schemas/common/name'
-        credentialName:
-          $ref: '#/components/schemas/common/name'
-        integrationType:
-          type: string
-          enum:
-          - azureEventHub
-          - googlePubSub
-          - mqtt
-          - particle
-          - sqs
-          - websocket
-        enabled:
-          type: boolean
-        topics:
-          type: array
-          items:
-            $ref: '#/components/schemas/common/reqMedStr'
-          uniqueItems: true
-        azureEventHubConfig:
-          type: object
-          properties:
-            hubName:
-              type: string
-              maxLength: 256
-              minLength: 1
-            hostName:
-              type: string
-              maxLength: 256
-              minLength: 1
-            consumerGroup:
-              type: string
-              maxLength: 256
-              minLength: 1
-            connectionString:
-              $ref: '#/components/schemas/common/reqMedStr'
-          additionalProperties: false
-          oneOf:
-          - required:
-            - hubName
-            - consumerGroup
-            - connectionString
-          - required:
-            - hubName
-            - consumerGroup
-            - hostName
-        googlePubSubConfig:
-          type: object
-          properties:
-            projectId:
-              type: string
-              maxLength: 255
-              minLength: 1
-            keyJson:
-              type: string
-              maxLength: 32767
-              minLength: 4
-          additionalProperties: false
-        mqttConfig:
-          type: object
-          properties:
-            clientId:
-              $ref: '#/components/schemas/common/reqMedStr'
-            username:
-              $ref: '#/components/schemas/common/reqMedStr'
-            password:
-              $ref: '#/components/schemas/common/reqMedStr'
-            clean:
-              type: boolean
-            port:
-              type: number
-              minimum: 1
-              maximum: 65535
-            protocol:
-              type: string
-              enum:
-              - mqtt
-              - mqtts
-              - ws
-              - wss
-            host:
-              $ref: '#/components/schemas/common/reqMedStr'
-            privateKey:
-              $ref: '#/components/schemas/common/certificate'
-            certificate:
-              $ref: '#/components/schemas/common/certificate'
-            caCertificate:
-              $ref: '#/components/schemas/common/certificate'
-            disableSSLVerification:
-              type: boolean
-            protocolVersion:
-              type: string
-              enum:
-              - 3.1.1
-              - '5'
-          additionalProperties: false
-          required:
-          - port
-          - protocol
-          - host
-        particleConfig:
-          type: object
-          properties:
-            accessToken:
-              $ref: '#/components/schemas/common/reqMedStr'
-            productSlugOrId:
-              $ref: '#/components/schemas/common/reqMedStr'
-            orgSlugOrId:
-              $ref: '#/components/schemas/common/reqMedStr'
-            deviceNameOrId:
-              $ref: '#/components/schemas/common/reqMedStr'
-          additionalProperties: false
-          required:
-          - accessToken
-        sqsConfig:
-          type: object
-          properties:
-            accessKeyId:
-              type: string
-              min: 4
-              max: 128
-            secretAccessKey:
-              type: string
-              min: 4
-              max: 128
-            region:
-              type: string
-              min: 4
-              max: 128
-            queueUrl:
-              type: string
-              min: 1
-              max: 256
-          additionalProperties: false
-          required:
-          - queueUrl
-        websocketConfig:
-          type: object
-          properties:
-            url:
-              $ref: '#/components/schemas/common/reqMedStr'
-            disableSSLVerification:
-              type: boolean
-            username:
-              $ref: '#/components/schemas/common/reqMedStr'
-            password:
-              $ref: '#/components/schemas/common/reqMedStr'
-            privateKey:
-              $ref: '#/components/schemas/common/certificate'
-            certificate:
-              $ref: '#/components/schemas/common/certificate'
-            caCertificate:
-              $ref: '#/components/schemas/common/certificate'
-            headers:
-              type: array
-              maxItems: 50
-              items:
-                type: object
-                properties:
-                  headerKey:
-                    $ref: '#/components/schemas/common/reqMedStr'
-                  headerValue:
-                    $ref: '#/components/schemas/common/reqMedStr'
-                additionalProperties: false
-                required:
-                - headerKey
-                - headerValue
-          additionalProperties: false
-          required:
-          - url
-        status:
-          lastKeepAlive:
-            type:
-            - number
-          nextAttempt:
-            type:
-            - number
-          connectInfo:
-            type: object
-            properties:
-              ts:
-                type:
-                - number
-                - 'null'
-          disconnectInfo:
-            type: object
-            properties:
-              ts:
-                type:
-                - number
-                - 'null'
-              error:
-                type: string
-    resourceJob:
-      title: Resource Job
-      description: Schema for a single resource job
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        resourceJobId:
-          $ref: '#/components/schemas/common/objectId'
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        dataTableId:
-          $ref: '#/components/schemas/common/templateOrObjectId'
-        queryJson:
-          type: string
-          maxLength: 8192
-        resourceType:
-          type: string
-          enum:
-          - dataTableRow
-          - device
-          - experienceGroup
-          - experienceUser
-        maxIterationConcurrency:
-          type: integer
-          enum:
-          - 1
-          - 10
-        iterationDelay:
-          type: integer
-          min: 0
-          max: 60000
-        iterationTimeout:
-          type: integer
-          min: 60000
-          max: 900000
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        lastExecutionRequested:
-          $ref: '#/components/schemas/common/date'
-        defaultContext:
-          type: string
-          maxLength: 32767
-        retryOnTimeout:
-          type: boolean
-        retryOnFailure:
-          type: boolean
-        maxIterationRetries:
-          type: integer
-          min: 1
-          max: 5
-        retryDelay:
-          type: integer
-          min: 0
-          max: 30000
-      additionalProperties: false
-    applicationCreationByTemplateResult:
-      title: Application Creation By Template Result
-      description: Schema for creating an application by template result
-      type: object
-      properties:
-        application:
-          $ref: '#/components/schemas/application'
-        validationErrors:
-          $ref: '#/components/schemas/validationErrors/properties/validationErrors'
-      additionalProperties: false
-    webhooks:
-      title: Webhooks
-      description: Schema for a collection of Webhooks
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/webhook'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-    flows:
-      title: Workflows
-      description: Schema for a collection of Workflows
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/flow'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        flowClass:
-          type: string
-          enum:
-          - cloud
-          - edge
-          - embedded
-          - experience
-          - customNode
-    dashboardPost:
-      title: Dashboard Post
-      description: Schema for the body of a Dashboard creation request
-      type: object
-      properties:
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        name:
-          $ref: '#/components/schemas/common/name'
-        blocks:
-          $ref: '#/components/schemas/dashboard/properties/blocks'
-        description:
-          $ref: '#/components/schemas/common/description'
-        refreshRate:
-          $ref: '#/components/schemas/dashboard/properties/refreshRate'
-        duration:
-          $ref: '#/components/schemas/dashboard/properties/duration'
-        resolution:
-          $ref: '#/components/schemas/dashboard/properties/resolution'
-        defaultTheme:
-          $ref: '#/components/schemas/dashboard/properties/defaultTheme'
-        reportConfigs:
-          $ref: '#/components/schemas/dashboard/properties/reportConfigs'
-        public:
-          type: boolean
-        password:
-          oneOf:
-          - $ref: '#/components/schemas/common/userPassword'
-          - type: 'null'
-        contextConfiguration:
-          $ref: '#/components/schemas/dashboard/properties/contextConfiguration'
-      additionalProperties: false
-      required:
-      - name
-    fileUploadPostResponse:
-      title: File Upload Post Response
-      description: Schema with the information needed to upload public or private file contents
-      allOf:
-      - $ref: '#/components/schemas/file'
-      - type: object
-        properties:
-          upload:
-            $ref: '#/components/schemas/common/upload'
-    applicationGlobalPatch:
-      title: Application Global Patch
-      description: Schema for the body of an Application Global modification request
-      type: array
-      maxItems: 100
-      items:
-        type: object
-        properties:
-          key:
-            $ref: '#/components/schemas/common/key'
-          json:
-            type:
-            - string
-            - 'null'
-            minLength: 1
-            maxLength: 32767
-          cloudOnly:
-            type: boolean
-          description:
-            $ref: '#/components/schemas/common/shortString'
-        additionalProperties: false
-        required:
-        - key
-    resourceJobs:
-      title: Resource Jobs
-      description: Schema for a collection of Resource Jobs
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/resourceJob'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-    integrationPatch:
-      title: Integration Patch
-      description: Schema for the body of an Integration modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        enabled:
-          type: boolean
-        topics:
-          $ref: '#/components/schemas/integration/properties/topics'
-        credentialName:
-          oneOf:
-          - $ref: '#/components/schemas/common/name'
-          - type: 'null'
-        azureEventHubConfig:
-          $ref: '#/components/schemas/integration/properties/azureEventHubConfig'
-        googlePubSubConfig:
-          $ref: '#/components/schemas/integration/properties/googlePubSubConfig'
-        mqttConfig:
-          $ref: '#/components/schemas/integration/properties/mqttConfig'
-        particleConfig:
-          $ref: '#/components/schemas/integration/properties/particleConfig'
-        sqsConfig:
-          $ref: '#/components/schemas/integration/properties/sqsConfig'
-        websocketConfig:
-          $ref: '#/components/schemas/integration/properties/websocketConfig'
-      additionalProperties: false
-    dashboardSendReport:
-      title: Dashboard Send Report
-      description: Schema for the body of a Dashboard report request
-      type: object
-      properties:
-        toEmail:
-          type: array
-          minItems: 1
-          maxItems: 10
-          items:
-            $ref: '#/components/schemas/common/email'
-        callbackUrl:
-          $ref: '#/components/schemas/common/url'
-        subject:
-          type: string
-          maxLength: 255
-        message:
-          type: string
-          maxLength: 32767
-        theme:
-          type: string
-          enum:
-          - dark
-          - light
-        time:
-          type: number
-        timezone:
-          type: string
-          maxLength: 255
-        locale:
-          type: string
-          maxLength: 5
-        ctx:
-          $ref: '#/components/schemas/dashboardContextInstance'
-        branded:
-          type: boolean
-      anyOf:
-      - required:
-        - toEmail
-      - required:
-        - callbackUrl
-      additionalProperties: false
-    eventPlusNewCount:
-      title: Event Plus New Count
-      description: Schema for an event plus a count of new events
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/event'
-        newCount:
-          type: integer
-    applicationKeys:
-      title: Application Keys
-      description: Schema for a collection of Application Keys
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/applicationKey'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
     dashboard:
       title: Dashboard
       description: Schema for a single Dashboard
@@ -6501,182 +4985,68 @@ components:
               - defaultValue
               additionalProperties: false
           maxItems: 100
-    dashboards:
-      title: Dashboards
-      description: Schema for a collection of Dashboards
+    resourceJob:
+      title: Resource Job
+      description: Schema for a single resource job
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/dashboard'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        orgId:
+        id:
           $ref: '#/components/schemas/common/objectId'
-        applicationId:
+        resourceJobId:
           $ref: '#/components/schemas/common/objectId'
-    applicationDashboardPost:
-      title: Application Dashboard Post
-      description: Schema for the body of an Application scoped Dashboard creation request
-      type: object
-      properties:
         name:
           $ref: '#/components/schemas/common/name'
-        blocks:
-          $ref: '#/components/schemas/dashboard/properties/blocks'
         description:
           $ref: '#/components/schemas/common/description'
-        refreshRate:
-          $ref: '#/components/schemas/dashboard/properties/refreshRate'
-        duration:
-          $ref: '#/components/schemas/dashboard/properties/duration'
-        resolution:
-          $ref: '#/components/schemas/dashboard/properties/resolution'
-        defaultTheme:
-          $ref: '#/components/schemas/dashboard/properties/defaultTheme'
-        reportConfigs:
-          $ref: '#/components/schemas/dashboard/properties/reportConfigs'
-        public:
-          type: boolean
-        password:
-          type:
-          - string
-          - 'null'
-        contextConfiguration:
-          $ref: '#/components/schemas/dashboard/properties/contextConfiguration'
-      additionalProperties: false
-      required:
-      - name
-    filePatch:
-      title: File Patch
-      description: Schema to patch a public or private file
-      type: object
-      properties:
-        fileSize:
-          type: number
-        contentType:
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        dataTableId:
+          $ref: '#/components/schemas/common/templateOrObjectId'
+        queryJson:
           type: string
-          maxLength: 1024
-        fileDimensions:
-          type: object
-          properties:
-            width:
-              type: number
-            height:
-              type: number
-    applicationCertificatePost:
-      title: Application Certificate Post
-      description: Schema for the body of an Application Certificate creation request
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/common/status'
-        description:
-          $ref: '#/components/schemas/common/description'
-        deviceIds:
-          $ref: '#/components/schemas/common/objectIds'
-        deviceTags:
-          $ref: '#/components/schemas/common/tagsOptional'
-        certificate:
-          $ref: '#/components/schemas/common/certificateString'
-        filterType:
-          $ref: '#/components/schemas/common/authFilterType'
-        pubTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-        subTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-      required:
-      - certificate
-      additionalProperties: false
-    validationErrors:
-      title: Validation Error
-      description: Schema for validation errors returned by the API
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
-        validationErrors:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-              name:
-                type: string
-              id:
-                type: string
-              message:
-                type: string
-    filePost:
-      title: File Post
-      description: Schema to create a single public or private file or directory
-      type: object
-      properties:
-        name:
-          type: string
-          minLength: 1
-          maxLength: 1024
-        parentDirectory:
-          type: string
-          maxLength: 1024
-        type:
+          maxLength: 8192
+        resourceType:
           type: string
           enum:
-          - file
-          - directory
-        fileSize:
-          type: number
-        contentType:
+          - dataTableRow
+          - device
+          - experienceGroup
+          - experienceUser
+        maxIterationConcurrency:
+          type: integer
+          enum:
+          - 1
+          - 10
+        iterationDelay:
+          type: integer
+          min: 0
+          max: 60000
+        iterationTimeout:
+          type: integer
+          min: 60000
+          max: 900000
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        lastExecutionRequested:
+          $ref: '#/components/schemas/common/date'
+        defaultContext:
           type: string
-          maxLength: 1024
-        fileDimensions:
-          type: object
-          properties:
-            width:
-              type: number
-            height:
-              type: number
-          additionalProperties: false
+          maxLength: 32767
+        retryOnTimeout:
+          type: boolean
+        retryOnFailure:
+          type: boolean
+        maxIterationRetries:
+          type: integer
+          min: 1
+          max: 5
+        retryDelay:
+          type: integer
+          min: 0
+          max: 30000
       additionalProperties: false
-      required:
-      - name
-      - type
-    payloadCountsBreakdown:
-      title: Payload Counts Breakdown
-      description: Schema for the result of a payload counts breakdown request
-      type: object
-      properties:
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        counts:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              value:
-                type: integer
     applicationJobLog:
       title: Application Job Log
       description: Schema for a single Application Job Log
@@ -6823,6 +5193,1040 @@ components:
             type: number
           eeaBundleVersion:
             type: string
+    validationErrors:
+      title: Validation Error
+      description: Schema for validation errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              name:
+                type: string
+              id:
+                type: string
+              message:
+                type: string
+    credential:
+      title: Credential
+      description: Schema for a single Credential
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        enabled:
+          type: boolean
+        type:
+          type: string
+          enum:
+          - aws
+          - azure
+          - gcp
+          - http
+          - sendgrid
+          - twilio
+          - loggly
+          - jwt
+          - whatsapp
+          - sql
+          - mongodb
+          - mailgun
+          - snowflake
+          - git
+          - datadog
+          - certificateKeyPair
+        awsConfig:
+          type: object
+          properties:
+            accessKeyId:
+              type: string
+              minLength: 16
+              maxLength: 128
+            region:
+              type: string
+              minLength: 1
+              maxLength: 128
+          additionalProperties: false
+          required:
+          - accessKeyId
+          - region
+        azureConfig:
+          type: object
+          properties:
+            account:
+              type: string
+              maxLength: 128
+          additionalProperties: false
+        gcpConfig:
+          type: object
+          properties:
+            keyMetaJson:
+              type: string
+              minLength: 1
+              maxLength: 8192
+          additionalProperties: false
+          required:
+          - keyMetaJson
+        httpConfig:
+          type: object
+          properties:
+            uriMatch:
+              type: string
+              minLength: 8
+              maxLength: 1024
+            authMethod:
+              type: string
+              enum:
+              - header
+              - queryParam
+              - basicAuth
+              - clientCertificate
+            publicValue:
+              type: string
+              maxLength: 8196
+          additionalProperties: false
+          required:
+          - uriMatch
+          - authMethod
+          - publicValue
+        sendgridConfig:
+          type: object
+          properties: {}
+          additionalProperties: false
+        twilioConfig:
+          type: object
+          properties:
+            accountSid:
+              type: string
+              minLength: 4
+              maxLength: 128
+            apiKeySid:
+              type: string
+              minLength: 4
+              maxLength: 128
+          additionalProperties: false
+          required:
+          - accountSid
+          - apiKeySid
+        logglyConfig:
+          type: object
+          properties: {}
+          additionalProperties: false
+        jwtConfig:
+          type: object
+          properties:
+            issuer:
+              type: string
+              maxLength: 1024
+            algorithm:
+              type: string
+              enum:
+              - HS256
+              - HS384
+              - HS512
+              - RS256
+              - RS384
+              - RS512
+              - ES256
+              - ES384
+              - ES512
+          additionalProperties: false
+          required:
+          - algorithm
+        whatsappConfig:
+          type: object
+          properties:
+            fromNumberId:
+              type: string
+              minLength: 1
+              maxLength: 128
+          additionalProperties: false
+          required:
+          - fromNumberId
+        sqlConfig:
+          type: object
+          properties:
+            system:
+              type: string
+              enum:
+              - mssql
+              - mysql
+              - pg
+            host:
+              type: string
+              minLength: 1
+              maxLength: 256
+            port:
+              type: integer
+              minimum: 1
+              maximum: 65535
+            username:
+              type: string
+              minLength: 1
+              maxLength: 256
+            secureConnection:
+              type: boolean
+            caCertificate:
+              type: string
+              maxLength: 8196
+            disableSSLVerification:
+              type: boolean
+          additionalProperties: false
+          required:
+          - system
+          - host
+          - username
+        mongodbConfig:
+          type: object
+          properties: {}
+          additionalProperties: false
+        mailgunConfig:
+          type: object
+          properties: {}
+          additionalProperties: false
+        snowflakeConfig:
+          type: object
+          properties:
+            host:
+              type: string
+              minLength: 1
+              maxLength: 128
+            username:
+              type: string
+              minLength: 1
+              maxLength: 128
+            publicKey:
+              type: string
+              minLength: 1
+              maxLength: 8192
+          required:
+          - host
+          - username
+          - publicKey
+          additionalProperties: false
+        gitConfig:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - ssh-key
+              - http-password
+            cloneUrl:
+              type: string
+              minLength: 5
+              maxLength: 1024
+            publicKey:
+              type: string
+              maxLength: 8192
+            username:
+              type: string
+              maxLength: 128
+            committerName:
+              type: string
+              maxLength: 128
+            committerEmail:
+              type: string
+              maxLength: 128
+          required:
+          - type
+          - cloneUrl
+          additionalProperties: false
+        datadogConfig:
+          type: object
+          properties:
+            site:
+              type: string
+              minLength: 1
+              maxLength: 128
+          additionalProperties: false
+        certificateKeyPairConfig:
+          type: object
+          properties:
+            certificate:
+              type: string
+              maxLength: 8192
+            info:
+              $ref: '#/components/schemas/common/certificateInfo'
+          additionalProperties: false
+      additionalProperties: false
+      required:
+      - name
+      - type
+    applicationJobLogs:
+      title: Application Job Logs
+      description: Schema for a collection of Application Job Logs
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/applicationJobLog'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        query:
+          type: object
+        perPage:
+          type: integer
+        page:
+          type: integer
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    credentialPost:
+      title: Credential Post
+      description: Schema for a Credential creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        enabled:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/credential/properties/type'
+        awsConfig:
+          type: object
+          properties:
+            accessKeyId:
+              $ref: '#/components/schemas/credential/properties/awsConfig/properties/accessKeyId'
+            secretAccessKey:
+              type: string
+              minLength: 4
+              maxLength: 128
+            region:
+              $ref: '#/components/schemas/credential/properties/awsConfig/properties/region'
+          additionalProperties: false
+          required:
+          - accessKeyId
+          - secretAccessKey
+          - region
+        azureConfig:
+          type: object
+          properties:
+            account:
+              $ref: '#/components/schemas/credential/properties/azureConfig/properties/account'
+            accountKey:
+              type: string
+              minLength: 4
+              maxLength: 128
+          additionalProperties: false
+          required:
+          - accountKey
+        gcpConfig:
+          type: object
+          properties:
+            keyJson:
+              $ref: '#/components/schemas/credential/properties/gcpConfig/properties/keyMetaJson'
+          additionalProperties: false
+          required:
+          - keyJson
+        httpConfig:
+          type: object
+          properties:
+            uriMatch:
+              $ref: '#/components/schemas/credential/properties/httpConfig/properties/uriMatch'
+            authMethod:
+              $ref: '#/components/schemas/credential/properties/httpConfig/properties/authMethod'
+            publicValue:
+              $ref: '#/components/schemas/credential/properties/httpConfig/properties/publicValue'
+            secretValue:
+              type: string
+              maxLength: 8196
+          additionalProperties: false
+          required:
+          - uriMatch
+          - authMethod
+          - secretValue
+        sendgridConfig:
+          type: object
+          properties:
+            apiKey:
+              type: string
+              minLength: 4
+              maxLength: 128
+          additionalProperties: false
+          required:
+          - apiKey
+        twilioConfig:
+          type: object
+          properties:
+            accountSid:
+              $ref: '#/components/schemas/credential/properties/twilioConfig/properties/accountSid'
+            apiKeySid:
+              $ref: '#/components/schemas/credential/properties/twilioConfig/properties/apiKeySid'
+            apiKeySecret:
+              type: string
+              minLength: 4
+              maxLength: 128
+          additionalProperties: false
+          required:
+          - accountSid
+          - apiKeySid
+          - apiKeySecret
+        logglyConfig:
+          type: object
+          properties:
+            customerToken:
+              type: string
+              minLength: 1
+              maxLength: 128
+          additionalProperties: false
+          required:
+          - customerToken
+        jwtConfig:
+          type: object
+          properties:
+            issuer:
+              $ref: '#/components/schemas/credential/properties/jwtConfig/properties/issuer'
+            algorithm:
+              $ref: '#/components/schemas/credential/properties/jwtConfig/properties/algorithm'
+            secret:
+              type: string
+              minLength: 1
+              maxLength: 4096
+          additionalProperties: false
+          required:
+          - algorithm
+          - secret
+        whatsappConfig:
+          type: object
+          properties:
+            accessToken:
+              type: string
+              minLength: 1
+              maxLength: 1024
+            fromNumberId:
+              $ref: '#/components/schemas/credential/properties/whatsappConfig/properties/fromNumberId'
+          additionalProperties: false
+          required:
+          - accessToken
+          - fromNumberId
+        sqlConfig:
+          type: object
+          properties:
+            system:
+              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/system'
+            host:
+              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/host'
+            port:
+              oneOf:
+              - $ref: '#/components/schemas/credential/properties/sqlConfig/properties/port'
+              - type: 'null'
+            username:
+              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/username'
+            password:
+              type: string
+              minLength: 1
+              maxLength: 256
+            secureConnection:
+              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/secureConnection'
+            caCertificate:
+              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/caCertificate'
+            disableSSLVerification:
+              $ref: '#/components/schemas/credential/properties/sqlConfig/properties/disableSSLVerification'
+          additionalProperties: false
+          required:
+          - system
+          - host
+          - username
+          - password
+        mongodbConfig:
+          type: object
+          properties:
+            connectionUri:
+              type: string
+              minLength: 1
+              maxLength: 2048
+          additionalProperties: false
+          required:
+          - connectionUri
+        mailgunConfig:
+          type: object
+          properties:
+            apiKey:
+              type: string
+              minLength: 4
+              maxLength: 128
+          additionalProperties: false
+          required:
+          - apiKey
+        snowflakeConfig:
+          type: object
+          properties:
+            host:
+              $ref: '#/components/schemas/credential/properties/snowflakeConfig/properties/host'
+            username:
+              $ref: '#/components/schemas/credential/properties/snowflakeConfig/properties/username'
+            privateKey:
+              type: string
+              maxLength: 8196
+            generatePrivateKey:
+              type: boolean
+          additionalProperties: false
+          anyOf:
+          - required:
+            - host
+            - username
+            - privateKey
+          - required:
+            - host
+            - username
+            - generatePrivateKey
+        gitConfig:
+          type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/credential/properties/gitConfig/properties/type'
+            cloneUrl:
+              $ref: '#/components/schemas/credential/properties/gitConfig/properties/cloneUrl'
+            username:
+              $ref: '#/components/schemas/credential/properties/gitConfig/properties/username'
+            committerName:
+              $ref: '#/components/schemas/credential/properties/gitConfig/properties/committerName'
+            committerEmail:
+              $ref: '#/components/schemas/credential/properties/gitConfig/properties/committerEmail'
+            generatePrivateKey:
+              type: boolean
+            secretValue:
+              type: string
+              maxLength: 8196
+          additionalProperties: false
+          anyOf:
+          - required:
+            - type
+            - cloneUrl
+            - generatePrivateKey
+          - required:
+            - type
+            - cloneUrl
+        datadogConfig:
+          type: object
+          properties:
+            secretValue:
+              type: string
+              maxLength: 256
+            site:
+              $ref: '#/components/schemas/credential/properties/datadogConfig/properties/site'
+          additionalProperties: false
+          required:
+          - secretValue
+        certificateKeyPairConfig:
+          type: object
+          properties:
+            certificate:
+              $ref: '#/components/schemas/credential/properties/certificateKeyPairConfig/properties/certificate'
+            privateKey:
+              type: string
+              maxLength: 8196
+          additionalProperties: false
+          required:
+          - certificate
+          - privateKey
+      additionalProperties: false
+      required:
+      - name
+      - type
+    integration:
+      title: Integration
+      description: Schema for a single Integration
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        integrationId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        name:
+          $ref: '#/components/schemas/common/name'
+        credentialName:
+          $ref: '#/components/schemas/common/name'
+        integrationType:
+          type: string
+          enum:
+          - azureEventHub
+          - googlePubSub
+          - mqtt
+          - particle
+          - sqs
+          - websocket
+        enabled:
+          type: boolean
+        topics:
+          type: array
+          items:
+            $ref: '#/components/schemas/common/reqMedStr'
+          uniqueItems: true
+        azureEventHubConfig:
+          type: object
+          properties:
+            hubName:
+              type: string
+              maxLength: 256
+              minLength: 1
+            hostName:
+              type: string
+              maxLength: 256
+              minLength: 1
+            consumerGroup:
+              type: string
+              maxLength: 256
+              minLength: 1
+            connectionString:
+              $ref: '#/components/schemas/common/reqMedStr'
+          additionalProperties: false
+          oneOf:
+          - required:
+            - hubName
+            - consumerGroup
+            - connectionString
+          - required:
+            - hubName
+            - consumerGroup
+            - hostName
+        googlePubSubConfig:
+          type: object
+          properties:
+            projectId:
+              type: string
+              maxLength: 255
+              minLength: 1
+            keyJson:
+              type: string
+              maxLength: 32767
+              minLength: 4
+          additionalProperties: false
+        mqttConfig:
+          type: object
+          properties:
+            clientId:
+              $ref: '#/components/schemas/common/reqMedStr'
+            username:
+              $ref: '#/components/schemas/common/reqMedStr'
+            password:
+              $ref: '#/components/schemas/common/reqMedStr'
+            clean:
+              type: boolean
+            port:
+              type: number
+              minimum: 1
+              maximum: 65535
+            protocol:
+              type: string
+              enum:
+              - mqtt
+              - mqtts
+              - ws
+              - wss
+            host:
+              $ref: '#/components/schemas/common/reqMedStr'
+            privateKey:
+              $ref: '#/components/schemas/common/certificate'
+            certificate:
+              $ref: '#/components/schemas/common/certificate'
+            caCertificate:
+              $ref: '#/components/schemas/common/certificate'
+            disableSSLVerification:
+              type: boolean
+            protocolVersion:
+              type: string
+              enum:
+              - 3.1.1
+              - '5'
+          additionalProperties: false
+          required:
+          - port
+          - protocol
+          - host
+        particleConfig:
+          type: object
+          properties:
+            accessToken:
+              $ref: '#/components/schemas/common/reqMedStr'
+            productSlugOrId:
+              $ref: '#/components/schemas/common/reqMedStr'
+            orgSlugOrId:
+              $ref: '#/components/schemas/common/reqMedStr'
+            deviceNameOrId:
+              $ref: '#/components/schemas/common/reqMedStr'
+          additionalProperties: false
+          required:
+          - accessToken
+        sqsConfig:
+          type: object
+          properties:
+            accessKeyId:
+              type: string
+              min: 4
+              max: 128
+            secretAccessKey:
+              type: string
+              min: 4
+              max: 128
+            region:
+              type: string
+              min: 4
+              max: 128
+            queueUrl:
+              type: string
+              min: 1
+              max: 256
+          additionalProperties: false
+          required:
+          - queueUrl
+        websocketConfig:
+          type: object
+          properties:
+            url:
+              $ref: '#/components/schemas/common/reqMedStr'
+            disableSSLVerification:
+              type: boolean
+            username:
+              $ref: '#/components/schemas/common/reqMedStr'
+            password:
+              $ref: '#/components/schemas/common/reqMedStr'
+            privateKey:
+              $ref: '#/components/schemas/common/certificate'
+            certificate:
+              $ref: '#/components/schemas/common/certificate'
+            caCertificate:
+              $ref: '#/components/schemas/common/certificate'
+            headers:
+              type: array
+              maxItems: 50
+              items:
+                type: object
+                properties:
+                  headerKey:
+                    $ref: '#/components/schemas/common/reqMedStr'
+                  headerValue:
+                    $ref: '#/components/schemas/common/reqMedStr'
+                additionalProperties: false
+                required:
+                - headerKey
+                - headerValue
+          additionalProperties: false
+          required:
+          - url
+        status:
+          lastKeepAlive:
+            type:
+            - number
+          nextAttempt:
+            type:
+            - number
+          connectInfo:
+            type: object
+            properties:
+              ts:
+                type:
+                - number
+                - 'null'
+          disconnectInfo:
+            type: object
+            properties:
+              ts:
+                type:
+                - number
+                - 'null'
+              error:
+                type: string
+    flow:
+      title: Workflow
+      description: Schema for a single Workflow
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        shortDescription:
+          $ref: '#/components/schemas/common/shortString'
+        iconData:
+          $ref: '#/components/schemas/common/imageDataUri'
+        docsUrl:
+          $ref: '#/components/schemas/common/shortString'
+        category:
+          type: string
+          enum:
+          - data
+          - experience
+          - logic
+          - output
+          - debug
+        enabled:
+          type: boolean
+        defaultVersionId:
+          $ref: '#/components/schemas/common/objectId'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        flowClass:
+          type: string
+          enum:
+          - cloud
+          - edge
+          - embedded
+          - experience
+          - customNode
+        triggers:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/common/triggers/appFile'
+            - $ref: '#/components/schemas/common/triggers/basic'
+            - $ref: '#/components/schemas/common/triggers/beckhoff'
+            - $ref: '#/components/schemas/common/triggers/dataTable'
+            - $ref: '#/components/schemas/common/triggers/integration'
+            - $ref: '#/components/schemas/common/triggers/deviceIdsTags'
+            - $ref: '#/components/schemas/common/triggers/deviceIdsTagsInactivity'
+            - $ref: '#/components/schemas/common/triggers/direct'
+            - $ref: '#/components/schemas/common/triggers/endpoint'
+            - $ref: '#/components/schemas/common/triggers/event'
+            - $ref: '#/components/schemas/common/triggers/fileTail'
+            - $ref: '#/components/schemas/common/triggers/fileWatch'
+            - $ref: '#/components/schemas/common/triggers/flowError'
+            - $ref: '#/components/schemas/common/triggers/mqttTopic'
+            - $ref: '#/components/schemas/common/triggers/onSync'
+            - $ref: '#/components/schemas/common/triggers/opcua'
+            - $ref: '#/components/schemas/common/triggers/redis'
+            - $ref: '#/components/schemas/common/triggers/request'
+            - $ref: '#/components/schemas/common/triggers/serial'
+            - $ref: '#/components/schemas/common/triggers/snmpTrap'
+            - $ref: '#/components/schemas/common/triggers/timer'
+            - $ref: '#/components/schemas/common/triggers/virtualButton'
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/common/optMedStr'
+              type:
+                $ref: '#/components/schemas/common/reqMedStr'
+              config:
+                type: object
+              meta:
+                type: object
+              outputIds:
+                $ref: '#/components/schemas/common/outputIds'
+            additionalProperties: false
+            required:
+            - type
+        customNodeConfig:
+          type: object
+          properties:
+            outputCount:
+              type: number
+              enum:
+              - 1
+              - 2
+            resultMode:
+              type: string
+              enum:
+              - optional
+              - required
+              - none
+            resultDescription:
+              $ref: '#/components/schemas/common/description'
+            fields:
+              type: array
+              maxItems: 100
+              items:
+                $ref: '#/components/schemas/common/customNodeFieldConfig'
+          additionalProperties: false
+          required:
+          - outputCount
+          - resultMode
+          - fields
+        customNodeSupports:
+          type: array
+          maxItems: 1
+          items:
+            type: string
+            enum:
+            - cloud
+            - edge
+        customNodeUseCount:
+          type: number
+        globals:
+          $ref: '#/components/schemas/common/globals'
+        deletedInDevelop:
+          type: boolean
+        stats:
+          type: object
+          properties:
+            runCount:
+              type: number
+            errorCount:
+              type: number
+            byVersion:
+              type: object
+              patternProperties:
+                .*:
+                  type: object
+                  properties:
+                    runCount:
+                      type: number
+                    errorCount:
+                      type: number
+    eventsExport:
+      title: Event Export Options
+      description: Export options for events
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+        query:
+          $ref: '#/components/schemas/advancedEventQuery'
+        format:
+          type: string
+          enum:
+          - csv
+          - json
+          default: csv
+        excludeUpdates:
+          type: boolean
+          default: false
+      additionalProperties: false
+    applicationCertificateAuthorities:
+      title: Application Certificate Authorities
+      description: Schema for a collection of Application Certificate Authorities
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/applicationCertificateAuthority'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    eventPlusNewCount:
+      title: Event Plus New Count
+      description: Schema for an event plus a count of new events
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/event'
+        newCount:
+          type: integer
+    applicationCreationByTemplateResult:
+      title: Application Creation By Template Result
+      description: Schema for creating an application by template result
+      type: object
+      properties:
+        application:
+          $ref: '#/components/schemas/application'
+        validationErrors:
+          $ref: '#/components/schemas/validationErrors/properties/validationErrors'
+      additionalProperties: false
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    applicationCertificates:
+      title: Application Certificates
+      description: Schema for a collection of Application Certificates
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/applicationCertificate'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
     event:
       title: Event
       description: Schema for a single Event
@@ -6927,82 +6331,74 @@ components:
                         $ref: '#/components/schemas/common/name'
                       new:
                         $ref: '#/components/schemas/common/name'
-    resourceJobExecutionLogs:
-      title: Resource Job Execution Logs
-      description: Schema for a set of Resource Job execution logs
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/common/objectId'
-          applicationId:
-            $ref: '#/components/schemas/common/objectId'
-          resourceJobExecutionId:
-            $ref: '#/components/schemas/common/objectId'
-          resourceJobId:
-            $ref: '#/components/schemas/common/objectId'
-          accumulator:
+    templateKeywords:
+      title: Template Keywords
+      description: Schema for a collection of template keywords
+      properties:
+        keywords:
+          $ref: '#/components/schemas/common/keys'
+      additionalProperties: false
+    applicationKey:
+      title: Application Key
+      description: Schema for a single Application Key
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        applicationKeyId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        key:
+          type: string
+        status:
+          $ref: '#/components/schemas/common/status'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        filterType:
+          $ref: '#/components/schemas/common/authFilterType'
+        pubTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+        subTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+        addressFilterType:
+          $ref: '#/components/schemas/common/filterType'
+        addresses:
+          type: array
+          maxItems: 100
+          items:
             type: string
-            maxLength: 256
-          status:
-            type: string
-            enum:
-            - inProgress
-            - completed
-            - erroring
-            - errored
-            - canceling
-            - canceled
-          queryJson:
-            type: string
-            maxLength: 8192
-          resourceType:
-            $ref: '#/components/schemas/resourceJob/properties/resourceType'
-          sourceType:
-            $ref: '#/components/schemas/common/sourceType'
-          sourceId:
-            $ref: '#/components/schemas/common/objectId'
-          cancelSourceType:
-            $ref: '#/components/schemas/common/sourceType'
-          cancelSourceId:
-            $ref: '#/components/schemas/common/objectId'
-          runStartedAt:
-            $ref: '#/components/schemas/common/date'
-          runCompletedAt:
-            $ref: '#/components/schemas/common/date'
-          executionReportUrl:
-            type: string
-          templateContext:
-            type: string
-            maxLength: 32767
-          iterationDelay:
-            $ref: '#/components/schemas/resourceJob/properties/iterationDelay'
-          iterationTimeout:
-            $ref: '#/components/schemas/resourceJob/properties/iterationTimeout'
-          maxIterationConcurrency:
-            $ref: '#/components/schemas/resourceJob/properties/maxIterationConcurrency'
-          executionSummary:
-            type: object
-            properties:
-              succeeded:
-                type: number
-              failed:
-                type: number
-              timedOut:
-                type: number
-              inProgress:
-                type: number
-              remaining:
-                type: number
-        retryOnTimeout:
-          $ref: '#/definitions/resourceJob/properties/retryOnTimeout'
-        retryOnFailure:
-          $ref: '#/definitions/resourceJob/properties/retryOnFailure'
-        maxIterationRetries:
-          $ref: '#/definitions/resourceJob/properties/maxIterationRetries'
-        retryDelay:
-          $ref: '#/definitions/resourceJob/properties/retryDelay'
+            maxLength: 48
+    apiTokenPatch:
+      title: API Token Patch
+      description: Schema for the body of an API Token modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        status:
+          $ref: '#/components/schemas/apiToken/properties/status'
+      additionalProperties: false
     webhook:
       title: Webhook
       description: Schema for a single Webhook
@@ -7059,237 +6455,11 @@ components:
           type: boolean
         enabled:
           type: boolean
-    applicationCertificatePatch:
-      title: Application Certificate Patch
-      description: Schema for the body of an Application Certificate modification request
+    applicationKeyPost:
+      title: Application Key Post
+      description: Schema for the body of an Application Key creation request
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/common/status'
-        description:
-          $ref: '#/components/schemas/common/description'
-        certificate:
-          $ref: '#/components/schemas/common/certificateString'
-        filterType:
-          $ref: '#/components/schemas/common/authFilterType'
-        pubTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-        subTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-      additionalProperties: false
-    applicationCertificate:
-      title: Application Certificate
-      description: Schema for a single Application Certificate
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        applicationCertificateId:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        status:
-          $ref: '#/components/schemas/common/status'
-        description:
-          $ref: '#/components/schemas/common/description'
-        deviceIds:
-          $ref: '#/components/schemas/common/objectIds'
-        deviceTags:
-          $ref: '#/components/schemas/common/tagsOptional'
-        certificateInfo:
-          $ref: '#/components/schemas/common/certificateInfo'
-        certificate:
-          $ref: '#/components/schemas/common/certificateString'
-        filterType:
-          $ref: '#/components/schemas/common/authFilterType'
-        pubTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-        subTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-    periodSummaries:
-      title: Application Period Summaries
-      description: Schema for a collection of Application Period Summaries
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                $ref: '#/components/schemas/common/name'
-              id:
-                $ref: '#/components/schemas/common/objectId'
-              applicationId:
-                $ref: '#/components/schemas/common/objectId'
-              summary:
-                type: object
-                properties:
-                  deviceCounts:
-                    $ref: '#/components/schemas/deviceCounts'
-                  notebookMinuteCounts:
-                    $ref: '#/components/schemas/notebookMinuteCounts'
-                  payloadCounts:
-                    $ref: '#/components/schemas/payloadCountsBreakdown'
-            additionalProperties: false
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-    applicationKey:
-      title: Application Key
-      description: Schema for a single Application Key
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        applicationKeyId:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        createdById:
-          $ref: '#/components/schemas/common/objectId'
-        createdByType:
-          $ref: '#/components/schemas/common/expSourceType'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        lastUpdatedById:
-          $ref: '#/components/schemas/common/objectId'
-        lastUpdatedByType:
-          $ref: '#/components/schemas/common/expSourceType'
-        key:
-          type: string
-        status:
-          $ref: '#/components/schemas/common/status'
-        deviceIds:
-          $ref: '#/components/schemas/common/objectIds'
-        deviceTags:
-          $ref: '#/components/schemas/common/tagsOptional'
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        filterType:
-          $ref: '#/components/schemas/common/authFilterType'
-        pubTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-        subTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-        addressFilterType:
-          $ref: '#/components/schemas/common/filterType'
-        addresses:
-          type: array
-          maxItems: 100
-          items:
-            type: string
-            maxLength: 48
-    deviceCounts:
-      title: Device Counts
-      description: Schema for the result of a device counts request
-      type: object
-      properties:
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        counts:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              created:
-                type: integer
-              deleted:
-                type: integer
-              total:
-                type: integer
-    applicationCertificateAuthorityPost:
-      title: Application Certificate Authority Post
-      description: Schema for the body of an Application Certificate Authority creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        status:
-          $ref: '#/components/schemas/common/status'
-        description:
-          $ref: '#/components/schemas/common/description'
-        caBundle:
-          $ref: '#/components/schemas/common/certificateString'
-      required:
-      - name
-      - caBundle
-      additionalProperties: false
-    eventsExport:
-      title: Event Export Options
-      description: Export options for events
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/common/email'
-        callbackUrl:
-          $ref: '#/components/schemas/common/url'
-        query:
-          $ref: '#/components/schemas/advancedEventQuery'
-        format:
-          type: string
-          enum:
-          - csv
-          - json
-          default: csv
-        excludeUpdates:
-          type: boolean
-          default: false
-      additionalProperties: false
-    applicationKeyPostResponse:
-      title: Application Key Post Response
-      description: Schema for a response of Application Key creation
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        applicationKeyId:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        createdById:
-          $ref: '#/components/schemas/common/objectId'
-        createdByType:
-          $ref: '#/components/schemas/common/expSourceType'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        lastUpdatedById:
-          $ref: '#/components/schemas/common/objectId'
-        lastUpdatedByType:
-          $ref: '#/components/schemas/common/expSourceType'
-        key:
-          type: string
-        status:
-          $ref: '#/components/schemas/common/status'
-        secret:
-          type: string
         deviceIds:
           $ref: '#/components/schemas/common/objectIds'
         deviceTags:
@@ -7308,17 +6478,6 @@ components:
           $ref: '#/components/schemas/common/filterType'
         addresses:
           $ref: '#/components/schemas/applicationKey/properties/addresses'
-    credentialLinkedResources:
-      title: Credential Linked Resources
-      description: The body of an credential linked resources response
-      type: object
-      properties:
-        integrations:
-          $ref: '#/components/schemas/integrations'
-        flows:
-          $ref: '#/components/schemas/flows'
-        flowVersions:
-          $ref: '#/components/schemas/flowVersions'
       additionalProperties: false
     notebookMinuteCounts:
       title: Notebook Minute Counts
@@ -7346,39 +6505,83 @@ components:
                 type: integer
               timeout:
                 type: integer
-    webhookPost:
-      title: Webhook Post
-      description: Schema for the body of a Webhook creation request
+    file:
+      title: File Schema
+      description: Schema for a single public or private file
       type: object
       properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        authorId:
+          $ref: '#/components/schemas/common/objectId'
+        authorType:
+          $ref: '#/components/schemas/common/sourceType'
+        status:
+          type: string
+          enum:
+          - pending
+          - moving
+          - deleting
+          - completed
         name:
-          $ref: '#/components/schemas/common/name'
+          type: string
+          minLength: 1
+          maxLength: 1024
+        parentDirectory:
+          type: string
+          maxLength: 1024
+        type:
+          type: string
+          enum:
+          - file
+          - directory
+        fileSize:
+          type: number
+        s3etag:
+          type: string
+        contentType:
+          type: string
+          maxLength: 1024
+        fileDimensions:
+          type: object
+          properties:
+            width:
+              type: number
+            height:
+              type: number
+        moveIntoId:
+          $ref: '#/components/schemas/common/objectId'
+        url:
+          type: string
+    applicationKeyPatch:
+      title: Application Key Patch
+      description: Schema for the body of an Application Key modification request
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/common/status'
+        name:
+          oneOf:
+          - $ref: '#/components/schemas/common/name'
+          - type: 'null'
         description:
           $ref: '#/components/schemas/common/description'
-        responseCode:
-          $ref: '#/components/schemas/common/responseCode'
-        verificationType:
-          $ref: '#/components/schemas/webhook/properties/verificationType'
-        verificationCode:
-          $ref: '#/components/schemas/webhook/properties/verificationCode'
-        waitForReply:
-          type: boolean
-        basicAuthUsername:
-          type: string
-          maxLength: 255
-        basicAuthPassword:
-          type: string
-          maxLength: 255
-        isWebsocket:
-          type: boolean
-        castBuffersAs:
-          $ref: '#/components/schemas/webhook/properties/castBuffersAs'
-        annotateMultipart:
-          $ref: '#/components/schemas/webhook/properties/annotateMultipart'
-        enabled:
-          type: boolean
-      required:
-      - name
+        filterType:
+          $ref: '#/components/schemas/common/authFilterType'
+        pubTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+        subTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+        addressFilterType:
+          $ref: '#/components/schemas/common/filterType'
+        addresses:
+          $ref: '#/components/schemas/applicationKey/properties/addresses'
       additionalProperties: false
     credentialPatch:
       title: Credential Patch
@@ -7546,292 +6749,89 @@ components:
               $ref: '#/components/schemas/credentialPost/properties/certificateKeyPairConfig/properties/privateKey'
           additionalProperties: false
       additionalProperties: false
-    advancedEventQuery:
-      title: Advanced Event Query
-      description: Schema for advanced event queries
+    applicationCertificatePost:
+      title: Application Certificate Post
+      description: Schema for the body of an Application Certificate creation request
       type: object
       properties:
-        $and:
-          type: array
-          items:
-            $ref: '#/components/schemas/advancedEventQuery'
-          maxItems: 100
-        $or:
-          type: array
-          items:
-            $ref: '#/components/schemas/advancedEventQuery'
-          maxItems: 100
-        $nor:
-          type: array
-          items:
-            $ref: '#/components/schemas/advancedEventQuery'
-          maxItems: 100
-        id:
-          $ref: '#/components/schemas/common/advancedValueQuery'
-        creationDate:
-          $ref: '#/components/schemas/common/advancedValueQuery'
-        lastUpdated:
-          $ref: '#/components/schemas/common/advancedValueQuery'
-        sourceId:
-          $ref: '#/components/schemas/common/advancedValueQuery'
-        sourceType:
-          $ref: '#/components/schemas/common/advancedValueQuery'
-        level:
-          $ref: '#/components/schemas/common/advancedValueQuery'
-        state:
-          $ref: '#/components/schemas/common/advancedValueQuery'
-        subject:
-          $ref: '#/components/schemas/common/advancedValueQuery'
-        deviceId:
-          $ref: '#/components/schemas/common/advancedValueQuery'
-        experienceUserId:
-          $ref: '#/components/schemas/common/advancedIdQuery'
-        experienceGroupId:
-          $ref: '#/components/schemas/common/advancedIdQuery'
-        eventTags:
-          $ref: '#/components/schemas/common/advancedTagQueryWithOps'
-      additionalProperties: false
-    webhookPatch:
-      title: Webhook Patch
-      description: Schema for the body of a Webhook modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        responseCode:
-          $ref: '#/components/schemas/common/responseCode'
-        verificationType:
-          $ref: '#/components/schemas/webhook/properties/verificationType'
-        verificationCode:
-          $ref: '#/components/schemas/webhook/properties/verificationCode'
-        waitForReply:
-          type: boolean
-        basicAuthUsername:
-          type: string
-          maxLength: 255
-        basicAuthPassword:
-          type: string
-          maxLength: 255
-        isWebsocket:
-          type: boolean
-        castBuffersAs:
-          $ref: '#/components/schemas/webhook/properties/castBuffersAs'
-        annotateMultipart:
-          $ref: '#/components/schemas/webhook/properties/annotateMultipart'
-        enabled:
-          type: boolean
-      additionalProperties: false
-    applicationJobLogs:
-      title: Application Job Logs
-      description: Schema for a collection of Application Job Logs
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/applicationJobLog'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        query:
-          type: object
-        perPage:
-          type: integer
-        page:
-          type: integer
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-    integrations:
-      title: Integrations
-      description: Schema for a collection of Integrations
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/integration'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-    files:
-      title: Files Schema
-      description: Schema for a collection of public or private files
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/file'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        parentExists:
-          type: boolean
-    apiTokenPost:
-      title: API Token Post
-      description: Schema for the body of an API Token creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        expirationDate:
-          $ref: '#/components/schemas/common/date'
-        scope:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/common/userApiScope'
         status:
-          $ref: '#/components/schemas/apiToken/properties/status'
-      additionalProperties: false
+          $ref: '#/components/schemas/common/status'
+        description:
+          $ref: '#/components/schemas/common/description'
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        certificate:
+          $ref: '#/components/schemas/common/certificateString'
+        filterType:
+          $ref: '#/components/schemas/common/authFilterType'
+        pubTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+        subTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
       required:
-      - name
-    success:
-      title: Success
-      description: Schema for reporting a successful operation
+      - certificate
+      additionalProperties: false
+    fileUploadPostResponse:
+      title: File Upload Post Response
+      description: Schema with the information needed to upload public or private file contents
+      allOf:
+      - $ref: '#/components/schemas/file'
+      - type: object
+        properties:
+          upload:
+            $ref: '#/components/schemas/common/upload'
+    dashboardSendReport:
+      title: Dashboard Send Report
+      description: Schema for the body of a Dashboard report request
       type: object
       properties:
-        success:
-          type: boolean
+        toEmail:
+          type: array
+          minItems: 1
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/common/email'
+        callbackUrl:
+          $ref: '#/components/schemas/common/url'
+        subject:
+          type: string
+          maxLength: 255
+        message:
+          type: string
+          maxLength: 32767
+        theme:
+          type: string
           enum:
-          - true
-    payloadStats:
-      title: Payload Stats
-      description: Schema for the result of a payload stats request
+          - dark
+          - light
+        time:
+          type: number
+        timezone:
+          type: string
+          maxLength: 255
+        locale:
+          type: string
+          maxLength: 5
+        ctx:
+          $ref: '#/components/schemas/dashboardContextInstance'
+        branded:
+          type: boolean
+      anyOf:
+      - required:
+        - toEmail
+      - required:
+        - callbackUrl
+      additionalProperties: false
+    dashboardContextInstance:
+      title: Dashboard Context Instance
+      description: Schema for a dashboard context instance
       type: object
-      properties:
-        appFile:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        dataTable:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceCreate:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceCommand:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceConnect:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceDisconnect:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceState:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        endpoint:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        event:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        flowError:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        inboundEmail:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        integration:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        mqttIn:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        mqttOut:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        notebook:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        resourceJob:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        timer:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        virtualButton:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        webhook:
-          type: object
-          patternProperties:
-            .*:
-              type: number
+      patternProperties:
+        ^[0-9a-zA-Z_-]{1,255}$:
+          $ref: '#/components/schemas/common/contextVariableValue'
+      additionalProperties: false
     applicationTemplate:
       title: Application Template
       description: Schema for a single Application Template
@@ -7906,449 +6906,57 @@ components:
               type: integer
             webhookCount:
               type: integer
-    applicationCertificates:
-      title: Application Certificates
-      description: Schema for a collection of Application Certificates
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/applicationCertificate'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-    applicationCertificateAuthorities:
-      title: Application Certificate Authorities
-      description: Schema for a collection of Application Certificate Authorities
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/applicationCertificateAuthority'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-    auditLogs:
-      title: Audit Logs
-      description: Schema for a collection of Audit Logs
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/auditLog'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
-    integrationPost:
-      title: Integration Post
-      description: Schema for the body of an Integration creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        integrationType:
-          $ref: '#/components/schemas/integration/properties/integrationType'
-        enabled:
-          type: boolean
-        credentialName:
-          $ref: '#/components/schemas/common/name'
-        topics:
-          $ref: '#/components/schemas/integration/properties/topics'
-        azureEventHubConfig:
-          $ref: '#/components/schemas/integration/properties/azureEventHubConfig'
-        googlePubSubConfig:
-          $ref: '#/components/schemas/integration/properties/googlePubSubConfig'
-        mqttConfig:
-          $ref: '#/components/schemas/integration/properties/mqttConfig'
-        particleConfig:
-          $ref: '#/components/schemas/integration/properties/particleConfig'
-        sqsConfig:
-          $ref: '#/components/schemas/integration/properties/sqsConfig'
-        websocketConfig:
-          $ref: '#/components/schemas/integration/properties/websocketConfig'
-      additionalProperties: false
-      required:
-      - name
-      - integrationType
-    dashboardPatch:
-      title: Dashboard Patch
-      description: Schema for the body of a Dashboard modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        blocks:
-          $ref: '#/components/schemas/dashboard/properties/blocks'
-        reportConfigs:
-          $ref: '#/components/schemas/dashboard/properties/reportConfigs'
-        description:
-          $ref: '#/components/schemas/common/description'
-        refreshRate:
-          $ref: '#/components/schemas/dashboard/properties/refreshRate'
-        duration:
-          $ref: '#/components/schemas/dashboard/properties/duration'
-        resolution:
-          $ref: '#/components/schemas/dashboard/properties/resolution'
-        defaultTheme:
-          $ref: '#/components/schemas/dashboard/properties/defaultTheme'
-        public:
-          type: boolean
-        password:
-          $ref: '#/components/schemas/dashboardPost/properties/password'
-        contextConfiguration:
-          $ref: '#/components/schemas/dashboard/properties/contextConfiguration'
-      additionalProperties: false
-    applicationKeyPost:
-      title: Application Key Post
-      description: Schema for the body of an Application Key creation request
-      type: object
-      properties:
-        deviceIds:
-          $ref: '#/components/schemas/common/objectIds'
-        deviceTags:
-          $ref: '#/components/schemas/common/tagsOptional'
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        filterType:
-          $ref: '#/components/schemas/common/authFilterType'
-        pubTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-        subTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-        addressFilterType:
-          $ref: '#/components/schemas/common/filterType'
-        addresses:
-          $ref: '#/components/schemas/applicationKey/properties/addresses'
-      additionalProperties: false
-    dashboardContextInstance:
-      title: Dashboard Context Instance
-      description: Schema for a dashboard context instance
-      type: object
-      patternProperties:
-        ^[0-9a-zA-Z_-]{1,255}$:
-          $ref: '#/components/schemas/common/contextVariableValue'
-      additionalProperties: false
-    flowVersions:
-      title: Workflow Versions
-      description: Schema for a collection of Workflow Versions
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/flowVersion'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        flowId:
-          $ref: '#/components/schemas/common/objectId'
-    applicationKeyPatch:
-      title: Application Key Patch
-      description: Schema for the body of an Application Key modification request
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/common/status'
-        name:
-          oneOf:
-          - $ref: '#/components/schemas/common/name'
-          - type: 'null'
-        description:
-          $ref: '#/components/schemas/common/description'
-        filterType:
-          $ref: '#/components/schemas/common/authFilterType'
-        pubTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-        subTopics:
-          $ref: '#/components/schemas/common/authPubSubTopics'
-        addressFilterType:
-          $ref: '#/components/schemas/common/filterType'
-        addresses:
-          $ref: '#/components/schemas/applicationKey/properties/addresses'
-      additionalProperties: false
-    flowVersion:
-      title: Workflow Version
-      description: Schema for a single Workflow Version
-      oneOf:
-      - description: Schema for a single Cloud/Edge/Embedded/Custom Node Workflow Version
-        type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/common/objectId'
-          flowVersionId:
-            $ref: '#/components/schemas/common/objectId'
-          flowId:
-            $ref: '#/components/schemas/common/objectId'
-          applicationId:
-            $ref: '#/components/schemas/common/objectId'
-          creationDate:
-            $ref: '#/components/schemas/common/date'
-          lastUpdated:
-            $ref: '#/components/schemas/common/date'
-          createdById:
-            $ref: '#/components/schemas/common/objectId'
-          createdByType:
-            $ref: '#/components/schemas/common/expSourceType'
-          lastUpdatedById:
-            $ref: '#/components/schemas/common/objectId'
-          lastUpdatedByType:
-            $ref: '#/components/schemas/common/expSourceType'
-          version:
-            $ref: '#/components/schemas/common/name'
-          flowClass:
-            type: string
-            enum:
-            - cloud
-            - edge
-            - embedded
-            - customNode
-          notes:
-            $ref: '#/components/schemas/common/description'
-          enabled:
-            type: boolean
-          triggers:
-            $ref: '#/components/schemas/flow/properties/triggers'
-          nodes:
-            $ref: '#/components/schemas/flow/properties/nodes'
-          globals:
-            $ref: '#/components/schemas/common/globals'
-          minimumAgentVersion:
-            $ref: '#/components/schemas/common/version'
-          customNodeConfig:
-            $ref: '#/components/schemas/flow/properties/customNodeConfig'
-          stats:
-            type: object
-            properties:
-              runCount:
-                type: number
-              errorCount:
-                type: number
-              byVersion:
-                type: object
-                patternProperties:
-                  .*:
-                    type: object
-                    properties:
-                      runCount:
-                        type: number
-                      errorCount:
-                        type: number
-      - description: Schema for a single Experience Workflow Version
-        type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/common/objectId'
-          flowVersionId:
-            $ref: '#/components/schemas/common/objectId'
-          flowId:
-            $ref: '#/components/schemas/common/objectId'
-          applicationId:
-            $ref: '#/components/schemas/common/objectId'
-          creationDate:
-            $ref: '#/components/schemas/common/date'
-          lastUpdated:
-            $ref: '#/components/schemas/common/date'
-          name:
-            $ref: '#/components/schemas/common/name'
-          description:
-            $ref: '#/components/schemas/common/description'
-          flowClass:
-            type: string
-            enum:
-            - experience
-          versions:
-            type: array
-            items:
-              $ref: '#/components/schemas/common/name'
-          enabled:
-            type: boolean
-          triggers:
-            $ref: '#/components/schemas/flow/properties/triggers'
-          nodes:
-            $ref: '#/components/schemas/flow/properties/nodes'
-          globals:
-            $ref: '#/components/schemas/common/globals'
-          stats:
-            type: object
-            properties:
-              runCount:
-                type: number
-              errorCount:
-                type: number
-              byVersion:
-                type: object
-                patternProperties:
-                  .*:
-                    type: object
-                    properties:
-                      runCount:
-                        type: number
-                      errorCount:
-                        type: number
-    apiToken:
-      title: API Token
-      description: Schema for a single API Token
+    applicationCertificate:
+      title: Application Certificate
+      description: Schema for a single Application Certificate
       type: object
       properties:
         id:
           $ref: '#/components/schemas/common/objectId'
-        apiTokenId:
+        applicationCertificateId:
           $ref: '#/components/schemas/common/objectId'
-        ownerId:
+        applicationId:
           $ref: '#/components/schemas/common/objectId'
-        ownerType:
-          type: string
-          enum:
-          - application
-          - user
-        creatorId:
-          $ref: '#/components/schemas/common/objectId'
-        creatorType:
-          type: string
-          enum:
-          - apiToken
-          - user
-          - flow
-        creatorName:
-          $ref: '#/components/schemas/common/optMedStr'
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
         creationDate:
           $ref: '#/components/schemas/common/date'
         lastUpdated:
           $ref: '#/components/schemas/common/date'
-        expirationDate:
-          $ref: '#/components/schemas/common/date'
-        scope:
-          type: array
-          items:
-            $ref: '#/components/schemas/common/reqMedStr'
         status:
-          type: string
-          enum:
-          - active
-          - inactive
-        token:
-          $ref: '#/components/schemas/common/token'
-    resourceJobPost:
-      title: Resource Job Post
-      description: Schema for a resource job creation
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
+          $ref: '#/components/schemas/common/status'
         description:
           $ref: '#/components/schemas/common/description'
-        dataTableId:
-          $ref: '#/components/schemas/common/templateOrObjectId'
-        queryJson:
-          $ref: '#/components/schemas/resourceJob/properties/queryJson'
-        resourceType:
-          $ref: '#/components/schemas/resourceJob/properties/resourceType'
-        maxIterationConcurrency:
-          $ref: '#/components/schemas/resourceJob/properties/maxIterationConcurrency'
-        iterationDelay:
-          $ref: '#/components/schemas/resourceJob/properties/iterationDelay'
-        iterationTimeout:
-          $ref: '#/components/schemas/resourceJob/properties/iterationTimeout'
-        defaultContext:
-          $ref: '#/components/schemas/resourceJob/properties/defaultContext'
-        retryOnTimeout:
-          $ref: '#/components/schemas/resourceJob/properties/retryOnTimeout'
-        retryOnFailure:
-          $ref: '#/components/schemas/resourceJob/properties/retryOnFailure'
-        maxIterationRetries:
-          $ref: '#/components/schemas/resourceJob/properties/maxIterationRetries'
-        retryDelay:
-          $ref: '#/components/schemas/resourceJob/properties/retryDelay'
-      additionalProperties: false
-      required:
-      - name
-      - resourceType
-    eventPatch:
-      title: Event Patch
-      description: Schema for the body of an Event modification request
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        certificateInfo:
+          $ref: '#/components/schemas/common/certificateInfo'
+        certificate:
+          $ref: '#/components/schemas/common/certificateString'
+        filterType:
+          $ref: '#/components/schemas/common/authFilterType'
+        pubTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+        subTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+    payloadCountsBreakdown:
+      title: Payload Counts Breakdown
+      description: Schema for the result of a payload counts breakdown request
       type: object
       properties:
-        state:
-          $ref: '#/components/schemas/common/eventState'
-        level:
-          $ref: '#/components/schemas/event/properties/level'
-        subject:
-          $ref: '#/components/schemas/event/properties/subject'
-        deviceId:
-          oneOf:
-          - $ref: '#/components/schemas/event/properties/deviceId'
-          - type: 'null'
-        comment:
-          $ref: '#/components/schemas/common/description'
-        data: {}
-        eventTags:
-          $ref: '#/components/schemas/common/objectTags'
-      additionalProperties: false
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                $ref: '#/components/schemas/common/date'
+              value:
+                type: integer
     application:
       title: Application
       description: Schema for a single Application
@@ -8588,6 +7196,804 @@ components:
               - bucket
               additionalProperties: false
           additionalProperties: false
+    webhookPost:
+      title: Webhook Post
+      description: Schema for the body of a Webhook creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        responseCode:
+          $ref: '#/components/schemas/common/responseCode'
+        verificationType:
+          $ref: '#/components/schemas/webhook/properties/verificationType'
+        verificationCode:
+          $ref: '#/components/schemas/webhook/properties/verificationCode'
+        waitForReply:
+          type: boolean
+        basicAuthUsername:
+          type: string
+          maxLength: 255
+        basicAuthPassword:
+          type: string
+          maxLength: 255
+        isWebsocket:
+          type: boolean
+        castBuffersAs:
+          $ref: '#/components/schemas/webhook/properties/castBuffersAs'
+        annotateMultipart:
+          $ref: '#/components/schemas/webhook/properties/annotateMultipart'
+        enabled:
+          type: boolean
+      required:
+      - name
+      additionalProperties: false
+    credentialLinkedResources:
+      title: Credential Linked Resources
+      description: The body of an credential linked resources response
+      type: object
+      properties:
+        integrations:
+          $ref: '#/components/schemas/integrations'
+        flows:
+          $ref: '#/components/schemas/flows'
+        flowVersions:
+          $ref: '#/components/schemas/flowVersions'
+      additionalProperties: false
+    apiToken:
+      title: API Token
+      description: Schema for a single API Token
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        apiTokenId:
+          $ref: '#/components/schemas/common/objectId'
+        ownerId:
+          $ref: '#/components/schemas/common/objectId'
+        ownerType:
+          type: string
+          enum:
+          - application
+          - user
+        creatorId:
+          $ref: '#/components/schemas/common/objectId'
+        creatorType:
+          type: string
+          enum:
+          - apiToken
+          - user
+          - flow
+        creatorName:
+          $ref: '#/components/schemas/common/optMedStr'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        expirationDate:
+          $ref: '#/components/schemas/common/date'
+        scope:
+          type: array
+          items:
+            $ref: '#/components/schemas/common/reqMedStr'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        token:
+          $ref: '#/components/schemas/common/token'
+    filePatch:
+      title: File Patch
+      description: Schema to patch a public or private file
+      type: object
+      properties:
+        fileSize:
+          type: number
+        contentType:
+          type: string
+          maxLength: 1024
+        fileDimensions:
+          type: object
+          properties:
+            width:
+              type: number
+            height:
+              type: number
+    dashboards:
+      title: Dashboards
+      description: Schema for a collection of Dashboards
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/dashboard'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    flowVersions:
+      title: Workflow Versions
+      description: Schema for a collection of Workflow Versions
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/flowVersion'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+    webhooks:
+      title: Webhooks
+      description: Schema for a collection of Webhooks
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/webhook'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    dashboardPost:
+      title: Dashboard Post
+      description: Schema for the body of a Dashboard creation request
+      type: object
+      properties:
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        name:
+          $ref: '#/components/schemas/common/name'
+        blocks:
+          $ref: '#/components/schemas/dashboard/properties/blocks'
+        description:
+          $ref: '#/components/schemas/common/description'
+        refreshRate:
+          $ref: '#/components/schemas/dashboard/properties/refreshRate'
+        duration:
+          $ref: '#/components/schemas/dashboard/properties/duration'
+        resolution:
+          $ref: '#/components/schemas/dashboard/properties/resolution'
+        defaultTheme:
+          $ref: '#/components/schemas/dashboard/properties/defaultTheme'
+        reportConfigs:
+          $ref: '#/components/schemas/dashboard/properties/reportConfigs'
+        public:
+          type: boolean
+        password:
+          oneOf:
+          - $ref: '#/components/schemas/common/userPassword'
+          - type: 'null'
+        contextConfiguration:
+          $ref: '#/components/schemas/dashboard/properties/contextConfiguration'
+      additionalProperties: false
+      required:
+      - name
+    flows:
+      title: Workflows
+      description: Schema for a collection of Workflows
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/flow'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        flowClass:
+          type: string
+          enum:
+          - cloud
+          - edge
+          - embedded
+          - experience
+          - customNode
+    integrations:
+      title: Integrations
+      description: Schema for a collection of Integrations
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/integration'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    applicationCertificateAuthorityPatch:
+      title: Application Certificate Authority Patch
+      description: Schema for the body of an Application Certificate Authority modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        status:
+          $ref: '#/components/schemas/common/status'
+        description:
+          $ref: '#/components/schemas/common/description'
+        caBundle:
+          $ref: '#/components/schemas/common/certificateString'
+      additionalProperties: false
+    flowVersion:
+      title: Workflow Version
+      description: Schema for a single Workflow Version
+      oneOf:
+      - description: Schema for a single Cloud/Edge/Embedded/Custom Node Workflow Version
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          flowVersionId:
+            $ref: '#/components/schemas/common/objectId'
+          flowId:
+            $ref: '#/components/schemas/common/objectId'
+          applicationId:
+            $ref: '#/components/schemas/common/objectId'
+          creationDate:
+            $ref: '#/components/schemas/common/date'
+          lastUpdated:
+            $ref: '#/components/schemas/common/date'
+          createdById:
+            $ref: '#/components/schemas/common/objectId'
+          createdByType:
+            $ref: '#/components/schemas/common/expSourceType'
+          lastUpdatedById:
+            $ref: '#/components/schemas/common/objectId'
+          lastUpdatedByType:
+            $ref: '#/components/schemas/common/expSourceType'
+          version:
+            $ref: '#/components/schemas/common/name'
+          flowClass:
+            type: string
+            enum:
+            - cloud
+            - edge
+            - embedded
+            - customNode
+          notes:
+            $ref: '#/components/schemas/common/description'
+          enabled:
+            type: boolean
+          triggers:
+            $ref: '#/components/schemas/flow/properties/triggers'
+          nodes:
+            $ref: '#/components/schemas/flow/properties/nodes'
+          globals:
+            $ref: '#/components/schemas/common/globals'
+          minimumAgentVersion:
+            $ref: '#/components/schemas/common/version'
+          customNodeConfig:
+            $ref: '#/components/schemas/flow/properties/customNodeConfig'
+          stats:
+            type: object
+            properties:
+              runCount:
+                type: number
+              errorCount:
+                type: number
+              byVersion:
+                type: object
+                patternProperties:
+                  .*:
+                    type: object
+                    properties:
+                      runCount:
+                        type: number
+                      errorCount:
+                        type: number
+      - description: Schema for a single Experience Workflow Version
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          flowVersionId:
+            $ref: '#/components/schemas/common/objectId'
+          flowId:
+            $ref: '#/components/schemas/common/objectId'
+          applicationId:
+            $ref: '#/components/schemas/common/objectId'
+          creationDate:
+            $ref: '#/components/schemas/common/date'
+          lastUpdated:
+            $ref: '#/components/schemas/common/date'
+          name:
+            $ref: '#/components/schemas/common/name'
+          description:
+            $ref: '#/components/schemas/common/description'
+          flowClass:
+            type: string
+            enum:
+            - experience
+          versions:
+            type: array
+            items:
+              $ref: '#/components/schemas/common/name'
+          enabled:
+            type: boolean
+          triggers:
+            $ref: '#/components/schemas/flow/properties/triggers'
+          nodes:
+            $ref: '#/components/schemas/flow/properties/nodes'
+          globals:
+            $ref: '#/components/schemas/common/globals'
+          stats:
+            type: object
+            properties:
+              runCount:
+                type: number
+              errorCount:
+                type: number
+              byVersion:
+                type: object
+                patternProperties:
+                  .*:
+                    type: object
+                    properties:
+                      runCount:
+                        type: number
+                      errorCount:
+                        type: number
+    applicationKeys:
+      title: Application Keys
+      description: Schema for a collection of Application Keys
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/applicationKey'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    payloadStats:
+      title: Payload Stats
+      description: Schema for the result of a payload stats request
+      type: object
+      properties:
+        appFile:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        dataTable:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCreate:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCommand:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceConnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceDisconnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceState:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        endpoint:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        event:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        flowError:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        inboundEmail:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        integration:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttIn:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttOut:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        notebook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        resourceJob:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        timer:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        virtualButton:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        webhook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+    periodSummaries:
+      title: Application Period Summaries
+      description: Schema for a collection of Application Period Summaries
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                $ref: '#/components/schemas/common/name'
+              id:
+                $ref: '#/components/schemas/common/objectId'
+              applicationId:
+                $ref: '#/components/schemas/common/objectId'
+              summary:
+                type: object
+                properties:
+                  deviceCounts:
+                    $ref: '#/components/schemas/deviceCounts'
+                  notebookMinuteCounts:
+                    $ref: '#/components/schemas/notebookMinuteCounts'
+                  payloadCounts:
+                    $ref: '#/components/schemas/payloadCountsBreakdown'
+            additionalProperties: false
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    deviceCounts:
+      title: Device Counts
+      description: Schema for the result of a device counts request
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                $ref: '#/components/schemas/common/date'
+              created:
+                type: integer
+              deleted:
+                type: integer
+              total:
+                type: integer
+    applicationCertificateAuthorityPost:
+      title: Application Certificate Authority Post
+      description: Schema for the body of an Application Certificate Authority creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        status:
+          $ref: '#/components/schemas/common/status'
+        description:
+          $ref: '#/components/schemas/common/description'
+        caBundle:
+          $ref: '#/components/schemas/common/certificateString'
+      required:
+      - name
+      - caBundle
+      additionalProperties: false
+    resourceJobPost:
+      title: Resource Job Post
+      description: Schema for a resource job creation
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        dataTableId:
+          $ref: '#/components/schemas/common/templateOrObjectId'
+        queryJson:
+          $ref: '#/components/schemas/resourceJob/properties/queryJson'
+        resourceType:
+          $ref: '#/components/schemas/resourceJob/properties/resourceType'
+        maxIterationConcurrency:
+          $ref: '#/components/schemas/resourceJob/properties/maxIterationConcurrency'
+        iterationDelay:
+          $ref: '#/components/schemas/resourceJob/properties/iterationDelay'
+        iterationTimeout:
+          $ref: '#/components/schemas/resourceJob/properties/iterationTimeout'
+        defaultContext:
+          $ref: '#/components/schemas/resourceJob/properties/defaultContext'
+        retryOnTimeout:
+          $ref: '#/components/schemas/resourceJob/properties/retryOnTimeout'
+        retryOnFailure:
+          $ref: '#/components/schemas/resourceJob/properties/retryOnFailure'
+        maxIterationRetries:
+          $ref: '#/components/schemas/resourceJob/properties/maxIterationRetries'
+        retryDelay:
+          $ref: '#/components/schemas/resourceJob/properties/retryDelay'
+      additionalProperties: false
+      required:
+      - name
+      - resourceType
+    integrationPost:
+      title: Integration Post
+      description: Schema for the body of an Integration creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        integrationType:
+          $ref: '#/components/schemas/integration/properties/integrationType'
+        enabled:
+          type: boolean
+        credentialName:
+          $ref: '#/components/schemas/common/name'
+        topics:
+          $ref: '#/components/schemas/integration/properties/topics'
+        azureEventHubConfig:
+          $ref: '#/components/schemas/integration/properties/azureEventHubConfig'
+        googlePubSubConfig:
+          $ref: '#/components/schemas/integration/properties/googlePubSubConfig'
+        mqttConfig:
+          $ref: '#/components/schemas/integration/properties/mqttConfig'
+        particleConfig:
+          $ref: '#/components/schemas/integration/properties/particleConfig'
+        sqsConfig:
+          $ref: '#/components/schemas/integration/properties/sqsConfig'
+        websocketConfig:
+          $ref: '#/components/schemas/integration/properties/websocketConfig'
+      additionalProperties: false
+      required:
+      - name
+      - integrationType
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    applicationKeyPostResponse:
+      title: Application Key Post Response
+      description: Schema for a response of Application Key creation
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        applicationKeyId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          $ref: '#/components/schemas/common/expSourceType'
+        key:
+          type: string
+        status:
+          $ref: '#/components/schemas/common/status'
+        secret:
+          type: string
+        deviceIds:
+          $ref: '#/components/schemas/common/objectIds'
+        deviceTags:
+          $ref: '#/components/schemas/common/tagsOptional'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        filterType:
+          $ref: '#/components/schemas/common/authFilterType'
+        pubTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+        subTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+        addressFilterType:
+          $ref: '#/components/schemas/common/filterType'
+        addresses:
+          $ref: '#/components/schemas/applicationKey/properties/addresses'
+    eventPatch:
+      title: Event Patch
+      description: Schema for the body of an Event modification request
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/common/eventState'
+        level:
+          $ref: '#/components/schemas/event/properties/level'
+        subject:
+          $ref: '#/components/schemas/event/properties/subject'
+        deviceId:
+          oneOf:
+          - $ref: '#/components/schemas/event/properties/deviceId'
+          - type: 'null'
+        comment:
+          $ref: '#/components/schemas/common/description'
+        data: {}
+        eventTags:
+          $ref: '#/components/schemas/common/objectTags'
+      additionalProperties: false
+    apiTokenPost:
+      title: API Token Post
+      description: Schema for the body of an API Token creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        expirationDate:
+          $ref: '#/components/schemas/common/date'
+        scope:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/common/userApiScope'
+        status:
+          $ref: '#/components/schemas/apiToken/properties/status'
+      additionalProperties: false
+      required:
+      - name
     apiTokens:
       title: API Tokens
       description: Schema for a collection of API Tokens
@@ -8620,21 +8026,606 @@ components:
           enum:
           - application
           - user
-    error:
-      title: Error
-      description: Schema for errors returned by the API
+    applicationDashboardPost:
+      title: Application Dashboard Post
+      description: Schema for the body of an Application scoped Dashboard creation request
       type: object
       properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        blocks:
+          $ref: '#/components/schemas/dashboard/properties/blocks'
+        description:
+          $ref: '#/components/schemas/common/description'
+        refreshRate:
+          $ref: '#/components/schemas/dashboard/properties/refreshRate'
+        duration:
+          $ref: '#/components/schemas/dashboard/properties/duration'
+        resolution:
+          $ref: '#/components/schemas/dashboard/properties/resolution'
+        defaultTheme:
+          $ref: '#/components/schemas/dashboard/properties/defaultTheme'
+        reportConfigs:
+          $ref: '#/components/schemas/dashboard/properties/reportConfigs'
+        public:
+          type: boolean
+        password:
+          type:
+          - string
+          - 'null'
+        contextConfiguration:
+          $ref: '#/components/schemas/dashboard/properties/contextConfiguration'
+      additionalProperties: false
+      required:
+      - name
+    resourceJobPatch:
+      title: Resource Job Patch
+      description: Schema for a resource job update
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        dataTableId:
+          $ref: '#/components/schemas/common/templateOrObjectId'
+        queryJson:
+          $ref: '#/components/schemas/resourceJob/properties/queryJson'
+        maxIterationConcurrency:
+          $ref: '#/components/schemas/resourceJob/properties/maxIterationConcurrency'
+        iterationDelay:
+          $ref: '#/components/schemas/resourceJob/properties/iterationDelay'
+        iterationTimeout:
+          $ref: '#/components/schemas/resourceJob/properties/iterationTimeout'
+        defaultContext:
+          $ref: '#/components/schemas/resourceJob/properties/defaultContext'
+        retryOnTimeout:
+          $ref: '#/components/schemas/resourceJob/properties/retryOnTimeout'
+        retryOnFailure:
+          $ref: '#/components/schemas/resourceJob/properties/retryOnFailure'
+        maxIterationRetries:
+          $ref: '#/components/schemas/resourceJob/properties/maxIterationRetries'
+        retryDelay:
+          $ref: '#/components/schemas/resourceJob/properties/retryDelay'
+      additionalProperties: false
+    applicationImportExecutions:
+      title: Application Import Executions
+      description: Schema for a list Application import executions
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          importSourceType:
+            type: string
+            enum:
+            - importBundle
+            - importUrl
+            - fromApplication
+            - repository
+          importExecutionId:
+            $ref: '#/components/schemas/common/objectId'
+          applicationId:
+            $ref: '#/components/schemas/common/objectId'
+          fromApplicationId:
+            $ref: '#/components/schemas/common/objectId'
+          runQueuedAt:
+            $ref: '#/components/schemas/common/date'
+          runStartedAt:
+            $ref: '#/components/schemas/common/date'
+          runCompletedAt:
+            $ref: '#/components/schemas/common/date'
+          status:
+            type: string
+            enum:
+            - queued
+            - inProgress
+            - completed
+            - errored
+            - failed
+          dryRun:
+            type: boolean
+          conflictBehavior:
+            $ref: '#/components/schemas/importIntoApplicationOptions/properties/conflictBehavior'
+          callbackUrl:
+            $ref: '#/components/schemas/common/url'
+          email:
+            $ref: '#/components/schemas/common/email'
+          include:
+            $ref: '#/components/schemas/importIntoApplicationOptions/properties/include'
+          jobId:
+            $ref: '#/components/schemas/jobEnqueuedResult/properties/jobId'
+          sourceId:
+            $ref: '#/components/schemas/common/objectId'
+          sourceType:
+            $ref: '#/components/schemas/common/sourceType'
+          error:
+            type: object
+            properties:
+              name:
+                type: string
+              message:
+                type: string
+          dryRunResults:
+            type: object
+            properties:
+              limitErrors:
+                $ref: '#/components/schemas/importIntoApplicationOptions/properties/include'
+              url:
+                $ref: '#/components/schemas/common/url'
+          validationErrors:
+            $ref: '#/components/schemas/validationErrors/properties/validationErrors'
+          importedFileUrl:
+            $ref: '#/components/schemas/common/url'
+          importUrl:
+            $ref: '#/components/schemas/common/url'
+          credentialName:
+            type: string
+          repo:
+            type: object
+            properties:
+              branch:
+                type: string
+                maxLength: 255
+              directory:
+                type: string
+                maxLength: 1024
+    auditLog:
+      title: Audit Log
+      description: Schema for a single Audit Log entry
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        auditLogId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+        primaryTargetId:
+          $ref: '#/components/schemas/common/objectId'
+        primaryTargetType:
+          type: string
+          enum:
+          - Application
+          - Dashboard
+          - OrgInvite
+        primaryTargetName:
+          $ref: '#/components/schemas/common/optMedStr'
+        secondaryTargetId:
+          $ref: '#/components/schemas/common/objectId'
+        secondaryTargetType:
+          type: string
+          enum:
+          - ApiToken
+          - ApplicationCertificateAuthority
+          - ApplicationCertificate
+          - ApplicationKey
+          - Credential
+          - Dashboard
+          - DataTable
+          - Device
+          - DeviceRecipe
+          - Event
+          - ExperienceDomain
+          - ExperienceEndpoint
+          - ExperienceGroup
+          - ExperienceSlug
+          - ExperienceUser
+          - ExperienceVersion
+          - ExperienceView
+          - File
+          - Flow
+          - Integration
+          - Notebook
+          - PrivateFile
+          - ResourceJob
+          - Webhook
+        secondaryTargetName:
+          $ref: '#/components/schemas/common/optMedStr'
+        actorId:
+          $ref: '#/components/schemas/common/objectId'
+        actorType:
+          type: string
+          enum:
+          - Application
+          - Device
+          - Flow
+          - User
+          - ApiToken
+        actorName:
+          $ref: '#/components/schemas/common/optMedStr'
+        requestResource:
+          $ref: '#/components/schemas/common/optMedStr'
+        requestAction:
+          $ref: '#/components/schemas/common/optMedStr'
+        requestQueryParams:
+          type: object
+        requestBody:
+          type: object
+        requestPathParams:
+          type: object
+        responseBody:
+          type: object
+        responseStatus:
+          $ref: '#/components/schemas/common/responseCode'
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
+        success:
+          type: boolean
+          enum:
+          - true
+    credentials:
+      title: Credentials
+      description: Schema for a collection of Credentials
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/credential'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    integrationPatch:
+      title: Integration Patch
+      description: Schema for the body of an Integration modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        enabled:
+          type: boolean
+        topics:
+          $ref: '#/components/schemas/integration/properties/topics'
+        credentialName:
+          oneOf:
+          - $ref: '#/components/schemas/common/name'
+          - type: 'null'
+        azureEventHubConfig:
+          $ref: '#/components/schemas/integration/properties/azureEventHubConfig'
+        googlePubSubConfig:
+          $ref: '#/components/schemas/integration/properties/googlePubSubConfig'
+        mqttConfig:
+          $ref: '#/components/schemas/integration/properties/mqttConfig'
+        particleConfig:
+          $ref: '#/components/schemas/integration/properties/particleConfig'
+        sqsConfig:
+          $ref: '#/components/schemas/integration/properties/sqsConfig'
+        websocketConfig:
+          $ref: '#/components/schemas/integration/properties/websocketConfig'
+      additionalProperties: false
+    auditLogs:
+      title: Audit Logs
+      description: Schema for a collection of Audit Logs
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/auditLog'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+    resourceJobExecutionLogs:
+      title: Resource Job Execution Logs
+      description: Schema for a set of Resource Job execution logs
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          applicationId:
+            $ref: '#/components/schemas/common/objectId'
+          resourceJobExecutionId:
+            $ref: '#/components/schemas/common/objectId'
+          resourceJobId:
+            $ref: '#/components/schemas/common/objectId'
+          accumulator:
+            type: string
+            maxLength: 256
+          status:
+            type: string
+            enum:
+            - inProgress
+            - completed
+            - erroring
+            - errored
+            - canceling
+            - canceled
+          queryJson:
+            type: string
+            maxLength: 8192
+          resourceType:
+            $ref: '#/components/schemas/resourceJob/properties/resourceType'
+          sourceType:
+            $ref: '#/components/schemas/common/sourceType'
+          sourceId:
+            $ref: '#/components/schemas/common/objectId'
+          cancelSourceType:
+            $ref: '#/components/schemas/common/sourceType'
+          cancelSourceId:
+            $ref: '#/components/schemas/common/objectId'
+          runStartedAt:
+            $ref: '#/components/schemas/common/date'
+          runCompletedAt:
+            $ref: '#/components/schemas/common/date'
+          executionReportUrl:
+            type: string
+          templateContext:
+            type: string
+            maxLength: 32767
+          iterationDelay:
+            $ref: '#/components/schemas/resourceJob/properties/iterationDelay'
+          iterationTimeout:
+            $ref: '#/components/schemas/resourceJob/properties/iterationTimeout'
+          maxIterationConcurrency:
+            $ref: '#/components/schemas/resourceJob/properties/maxIterationConcurrency'
+          executionSummary:
+            type: object
+            properties:
+              succeeded:
+                type: number
+              failed:
+                type: number
+              timedOut:
+                type: number
+              inProgress:
+                type: number
+              remaining:
+                type: number
+        retryOnTimeout:
+          $ref: '#/definitions/resourceJob/properties/retryOnTimeout'
+        retryOnFailure:
+          $ref: '#/definitions/resourceJob/properties/retryOnFailure'
+        maxIterationRetries:
+          $ref: '#/definitions/resourceJob/properties/maxIterationRetries'
+        retryDelay:
+          $ref: '#/definitions/resourceJob/properties/retryDelay'
+    resourceJobs:
+      title: Resource Jobs
+      description: Schema for a collection of Resource Jobs
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/resourceJob'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    applicationGlobalPatch:
+      title: Application Global Patch
+      description: Schema for the body of an Application Global modification request
+      type: array
+      maxItems: 100
+      items:
+        type: object
+        properties:
+          key:
+            $ref: '#/components/schemas/common/key'
+          json:
+            type:
+            - string
+            - 'null'
+            minLength: 1
+            maxLength: 32767
+          cloudOnly:
+            type: boolean
+          description:
+            $ref: '#/components/schemas/common/shortString'
+        additionalProperties: false
+        required:
+        - key
+    applicationCertificatePatch:
+      title: Application Certificate Patch
+      description: Schema for the body of an Application Certificate modification request
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/common/status'
+        description:
+          $ref: '#/components/schemas/common/description'
+        certificate:
+          $ref: '#/components/schemas/common/certificateString'
+        filterType:
+          $ref: '#/components/schemas/common/authFilterType'
+        pubTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+        subTopics:
+          $ref: '#/components/schemas/common/authPubSubTopics'
+      additionalProperties: false
+    webhookPatch:
+      title: Webhook Patch
+      description: Schema for the body of a Webhook modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        responseCode:
+          $ref: '#/components/schemas/common/responseCode'
+        verificationType:
+          $ref: '#/components/schemas/webhook/properties/verificationType'
+        verificationCode:
+          $ref: '#/components/schemas/webhook/properties/verificationCode'
+        waitForReply:
+          type: boolean
+        basicAuthUsername:
+          type: string
+          maxLength: 255
+        basicAuthPassword:
+          type: string
+          maxLength: 255
+        isWebsocket:
+          type: boolean
+        castBuffersAs:
+          $ref: '#/components/schemas/webhook/properties/castBuffersAs'
+        annotateMultipart:
+          $ref: '#/components/schemas/webhook/properties/annotateMultipart'
+        enabled:
+          type: boolean
+      additionalProperties: false
+    files:
+      title: Files Schema
+      description: Schema for a collection of public or private files
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/file'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        parentExists:
+          type: boolean
+    filePost:
+      title: File Post
+      description: Schema to create a single public or private file or directory
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        parentDirectory:
+          type: string
+          maxLength: 1024
         type:
           type: string
-        message:
+          enum:
+          - file
+          - directory
+        fileSize:
+          type: number
+        contentType:
           type: string
-    templateKeywords:
-      title: Template Keywords
-      description: Schema for a collection of template keywords
+          maxLength: 1024
+        fileDimensions:
+          type: object
+          properties:
+            width:
+              type: number
+            height:
+              type: number
+          additionalProperties: false
+      additionalProperties: false
+      required:
+      - name
+      - type
+    advancedEventQuery:
+      title: Advanced Event Query
+      description: Schema for advanced event queries
+      type: object
       properties:
-        keywords:
-          $ref: '#/components/schemas/common/keys'
+        $and:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedEventQuery'
+          maxItems: 100
+        $or:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedEventQuery'
+          maxItems: 100
+        $nor:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedEventQuery'
+          maxItems: 100
+        id:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        creationDate:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        lastUpdated:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        sourceId:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        sourceType:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        level:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        state:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        subject:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        deviceId:
+          $ref: '#/components/schemas/common/advancedValueQuery'
+        experienceUserId:
+          $ref: '#/components/schemas/common/advancedIdQuery'
+        experienceGroupId:
+          $ref: '#/components/schemas/common/advancedIdQuery'
+        eventTags:
+          $ref: '#/components/schemas/common/advancedTagQueryWithOps'
       additionalProperties: false
     applicationCertificateAuthority:
       title: Application Certificate Authority
@@ -8663,40 +8654,37 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/common/certificateInfo'
-    jobEnqueuedResult:
-      title: Job Enqueued API Result
-      description: Schema for the result of a job being queued
-      type: object
-      properties:
-        jobQueued:
-          type: boolean
-          enum:
-          - true
-        jobId:
-          type: string
-          maxLength: 21
-        success:
-          type: boolean
-          enum:
-          - true
-    applicationCertificateAuthorityPatch:
-      title: Application Certificate Authority Patch
-      description: Schema for the body of an Application Certificate Authority modification request
+    dashboardPatch:
+      title: Dashboard Patch
+      description: Schema for the body of a Dashboard modification request
       type: object
       properties:
         name:
           $ref: '#/components/schemas/common/name'
-        status:
-          $ref: '#/components/schemas/common/status'
+        blocks:
+          $ref: '#/components/schemas/dashboard/properties/blocks'
+        reportConfigs:
+          $ref: '#/components/schemas/dashboard/properties/reportConfigs'
         description:
           $ref: '#/components/schemas/common/description'
-        caBundle:
-          $ref: '#/components/schemas/common/certificateString'
+        refreshRate:
+          $ref: '#/components/schemas/dashboard/properties/refreshRate'
+        duration:
+          $ref: '#/components/schemas/dashboard/properties/duration'
+        resolution:
+          $ref: '#/components/schemas/dashboard/properties/resolution'
+        defaultTheme:
+          $ref: '#/components/schemas/dashboard/properties/defaultTheme'
+        public:
+          type: boolean
+        password:
+          $ref: '#/components/schemas/dashboardPost/properties/password'
+        contextConfiguration:
+          $ref: '#/components/schemas/dashboard/properties/contextConfiguration'
       additionalProperties: false
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
-        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.

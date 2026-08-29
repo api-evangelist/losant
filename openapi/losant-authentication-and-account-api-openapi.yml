@@ -1,10 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Losant Application Authentication and Account API
+  title: Losant Authentication and Account API
   version: 1.29.4
-  description: Manage Losant Applications, the top-level container for IoT solutions, plus dashboards, events, webhooks, integrations,
-    files, audit logs, credentials, certificates, application keys, API tokens, and resource jobs. Derived from the Losant
-    Platform API (Bravado/Swagger 2) at https://api.losant.com/.
+  description: Authenticate users and devices, manage personal access tokens, user profile, and organization membership for the Losant Enterprise IoT Platform. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
   contact:
     name: Losant Support
     url: https://www.losant.com/contact
@@ -23,41 +21,8 @@ tags:
 - name: Authentication and Account
   description: Authentication and Account resources on the Losant Platform.
 paths:
-  /auth/ssoDomain:
-    get:
-      operationId: auth.ssoDomain
-      summary: ''
-      description: Checks email domain for SSO configuration.
-      tags:
-      - Authentication and Account
-      parameters:
-      - name: email
-        in: query
-        description: The email address associated with the user login
-        required: true
-        example: example@example.com
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Successful finding SSO for domain. Returns SSO request URL and type.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ssoRequest'
-        '204':
-          description: No domain associated with an SSO configuration
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /auth/user/saml:
+  /auth:
     post:
-      operationId: auth.authenticateUserSaml
       summary: ''
       description: Authenticates a user via a SAML response.
       tags:
@@ -90,9 +55,131 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+    get:
+      summary: ''
+      description: Checks email domain for SSO configuration.
+      tags:
+      - Authentication and Account
+      parameters:
+      - name: email
+        in: query
+        description: The email address associated with the user login
+        required: true
+        example: example@example.com
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful finding SSO for domain. Returns SSO request URL and type.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ssoRequest'
+        '204':
+          description: No domain associated with an SSO configuration
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /me:
+    get:
+      summary: Retrieves Pending Organization Invitations for a User
+      tags:
+      - Authentication and Account
+      responses:
+        '200':
+          description: Information about invitations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInvitesUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    patch:
+      summary: Moves Resources to a New Owner
+      tags:
+      - Authentication and Account
+      requestBody:
+        description: Object containing properties of the transfer
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resourceTransfer'
+      responses:
+        '200':
+          description: If resource transfer was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Accepts or Rejects an Invitation to an Organization
+      tags:
+      - Authentication and Account
+      parameters:
+      - name: inviteId
+        in: path
+        description: ID associated with the invitation
+        required: true
+        example: 575ec8687ae143cd83dc4a97
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Response to invitation
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgInviteActionUser'
+      responses:
+        '200':
+          description: Acceptance or rejection of invitation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInviteResultUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if invitation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '410':
+          description: Error if invitation has expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
   /invites:
     get:
-      operationId: orgInvites.get
       summary: ''
       description: Gets information about an invite
       tags:
@@ -140,7 +227,6 @@ paths:
       security:
       - BearerAuth: []
     post:
-      operationId: orgInvites.post
       summary: ''
       description: Accepts/Rejects an invite
       tags:
@@ -179,206 +265,41 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /me/invites:
+  /orgs/{orgId}:
     get:
-      operationId: me.invites
-      summary: Retrieves Pending Organization Invitations for a User
-      tags:
-      - Authentication and Account
-      responses:
-        '200':
-          description: Information about invitations
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/orgInvitesUser'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /me/invites/{inviteId}:
-    post:
-      operationId: me.respondToInvite
-      summary: Accepts or Rejects an Invitation to an Organization
+      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for This Organization
       tags:
       - Authentication and Account
       parameters:
-      - name: inviteId
+      - name: orgId
         in: path
-        description: ID associated with the invitation
+        description: ID associated with the organization
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        example: 575ed6e87ae143cd83dc4aa8
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Response to invitation
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/orgInviteActionUser'
-      responses:
-        '200':
-          description: Acceptance or rejection of invitation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/orgInviteResultUser'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if invitation not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '410':
-          description: Error if invitation has expired
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /me/tokens:
-    get:
-      operationId: userApiTokens.get
-      summary: Returns the API Tokens for a User
-      tags:
-      - Authentication and Account
-      parameters:
-      - name: sortField
+      - name: start
         in: query
-        description: Field to sort the results by
-        required: false
-        example: name
-        schema:
-          type: string
-          enum:
-          - name
-          - status
-          - id
-          - creationDate
-          - lastUpdated
-          - expirationDate
-          default: name
-      - name: sortDirection
-        in: query
-        description: Direction to sort the results by
-        required: false
-        example: asc
-        schema:
-          type: string
-          enum:
-          - asc
-          - desc
-          default: asc
-      - name: page
-        in: query
-        description: Which page of results to return
+        description: Start of range for notebook execution query (ms since epoch)
         required: false
         example: 0
         schema:
           type: string
-          default: 0
-      - name: perPage
+      - name: end
         in: query
-        description: How many items to return per page
+        description: End of range for notebook execution query (ms since epoch)
         required: false
-        example: 10
-        schema:
-          type: string
-          default: 100
-      - name: filterField
-        in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
-        required: false
-        example: key
-        schema:
-          type: string
-          enum:
-          - name
-          - status
-      - name: filter
-        in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
-        required: false
-        example: my*token
+        example: 1465790400000
         schema:
           type: string
       responses:
         '200':
-          description: Collection of API tokens
+          description: Notebook usage information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/apiToken'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    post:
-      operationId: userApiTokens.post
-      summary: Create a New API Token for an User
-      tags:
-      - Authentication and Account
-      requestBody:
-        description: API token information
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/apiTokenPost'
-      responses:
-        '201':
-          description: The successfully created API token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiToken'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /me/tokens/{apiTokenId}:
-    get:
-      operationId: userApiToken.get
-      summary: Retrieves Information on an API Token
-      tags:
-      - Authentication and Account
-      parameters:
-      - name: apiTokenId
-        in: path
-        description: ID associated with the API token
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: API token information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiToken'
+                $ref: '#/components/schemas/notebookMinuteCounts'
         '400':
           description: Error if malformed request
           content:
@@ -386,7 +307,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if API token was not found
+          description: Error if organization was not found
           content:
             application/json:
               schema:
@@ -394,88 +315,18 @@ paths:
       security:
       - BearerAuth: []
     patch:
-      operationId: userApiToken.patch
-      summary: Updates Information About an API Token
-      tags:
-      - Authentication and Account
-      parameters:
-      - name: apiTokenId
-        in: path
-        description: ID associated with the API token
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new properties of the API token
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/apiTokenPatch'
-      responses:
-        '200':
-          description: Updated API token information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiToken'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if API token was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-    delete:
-      operationId: userApiToken.delete
-      summary: Deletes an API Token
-      tags:
-      - Authentication and Account
-      parameters:
-      - name: apiTokenId
-        in: path
-        description: ID associated with the API token
-        required: true
-        example: 575ec7417ae143cd83dc4a95
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If API token was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if API token was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /me/transferResources:
-    patch:
-      operationId: me.transferResources
       summary: Moves Resources to a New Owner
       tags:
       - Authentication and Account
+      parameters:
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ed6e87ae143cd83dc4aa8
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
       requestBody:
         description: Object containing properties of the transfer
         required: true
@@ -496,11 +347,113 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Removes a Member from the Org
+      tags:
+      - Authentication and Account
+      parameters:
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ed6e87ae143cd83dc4aa8
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: userId
+        in: query
+        description: Id of user to remove
+        required: true
+        example: 575ed70c7ae143cd83dc4aa9
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      - name: summaryExclude
+        in: query
+        description: Comma-separated list of summary fields to exclude from org summary
+        required: false
+        example: payloadCount
+        schema:
+          type: string
+      - name: summaryInclude
+        in: query
+        description: Comma-separated list of summary fields to include in org summary
+        required: false
+        example: payloadCount
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Updated organization information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/org'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Invites a Person to an Organization
+      tags:
+      - Authentication and Account
+      parameters:
+      - name: orgId
+        in: path
+        description: ID associated with the organization
+        required: true
+        example: 575ed6e87ae143cd83dc4aa8
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      requestBody:
+        description: Object containing new invite info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgInvitePost'
+      responses:
+        '200':
+          description: Invitation information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInvites'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
   /orgs:
     get:
-      operationId: orgs.get
       summary: Returns the Organizations Associated with the Current User
       tags:
       - Authentication and Account
@@ -591,7 +544,6 @@ paths:
       security:
       - BearerAuth: []
     post:
-      operationId: orgs.post
       summary: Create a New Organization
       tags:
       - Authentication and Account
@@ -632,143 +584,27 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /orgs/{orgId}/invites:
-    post:
-      operationId: org.inviteMember
-      summary: Invites a Person to an Organization
-      tags:
-      - Authentication and Account
-      parameters:
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ed6e87ae143cd83dc4aa8
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new invite info
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/orgInvitePost'
-      responses:
-        '200':
-          description: Invitation information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/orgInvites'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if organization not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /orgs/{orgId}/member:
-    delete:
-      operationId: org.removeMember
-      summary: Removes a Member from the Org
-      tags:
-      - Authentication and Account
-      parameters:
-      - name: orgId
-        in: path
-        description: ID associated with the organization
-        required: true
-        example: 575ed6e87ae143cd83dc4aa8
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: userId
-        in: query
-        description: Id of user to remove
-        required: true
-        example: 575ed70c7ae143cd83dc4aa9
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: summaryExclude
-        in: query
-        description: Comma-separated list of summary fields to exclude from org summary
-        required: false
-        example: payloadCount
-        schema:
-          type: string
-      - name: summaryInclude
-        in: query
-        description: Comma-separated list of summary fields to include in org summary
-        required: false
-        example: payloadCount
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Updated organization information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/org'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if organization not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-  /orgs/{orgId}/notebookMinuteCounts:
+  /me/tokens/{apiTokenId}:
     get:
-      operationId: org.notebookMinuteCounts
-      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for This Organization
+      summary: Retrieves Information on an API Token
       tags:
       - Authentication and Account
       parameters:
-      - name: orgId
+      - name: apiTokenId
         in: path
-        description: ID associated with the organization
+        description: ID associated with the API token
         required: true
-        example: 575ed6e87ae143cd83dc4aa8
+        example: 575ec7417ae143cd83dc4a95
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      - name: start
-        in: query
-        description: Start of range for notebook execution query (ms since epoch)
-        required: false
-        example: 0
-        schema:
-          type: string
-      - name: end
-        in: query
-        description: End of range for notebook execution query (ms since epoch)
-        required: false
-        example: 1465790400000
-        schema:
-          type: string
       responses:
         '200':
-          description: Notebook usage information
+          description: API token information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/notebookMinuteCounts'
+                $ref: '#/components/schemas/apiToken'
         '400':
           description: Error if malformed request
           content:
@@ -776,38 +612,70 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if organization was not found
+          description: Error if API token was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
-  /orgs/{orgId}/transferResources:
     patch:
-      operationId: org.transferResources
-      summary: Moves Resources to a New Owner
+      summary: Updates Information About an API Token
       tags:
       - Authentication and Account
       parameters:
-      - name: orgId
+      - name: apiTokenId
         in: path
-        description: ID associated with the organization
+        description: ID associated with the API token
         required: true
-        example: 575ed6e87ae143cd83dc4aa8
+        example: 575ec7417ae143cd83dc4a95
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
       requestBody:
-        description: Object containing properties of the transfer
+        description: Object containing new properties of the API token
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/resourceTransfer'
+              $ref: '#/components/schemas/apiTokenPatch'
       responses:
         '200':
-          description: If resource transfer was successful
+          description: Updated API token information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if API token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    delete:
+      summary: Deletes an API Token
+      tags:
+      - Authentication and Account
+      parameters:
+      - name: apiTokenId
+        in: path
+        description: ID associated with the API token
+        required: true
+        example: 575ec7417ae143cd83dc4a95
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      responses:
+        '200':
+          description: If API token was successfully deleted
           content:
             application/json:
               schema:
@@ -819,7 +687,113 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
         '404':
-          description: Error if organization was not found
+          description: Error if API token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+  /me/tokens:
+    get:
+      summary: Returns the API Tokens for a User
+      tags:
+      - Authentication and Account
+      parameters:
+      - name: sortField
+        in: query
+        description: Field to sort the results by
+        required: false
+        example: name
+        schema:
+          type: string
+          enum:
+          - name
+          - status
+          - id
+          - creationDate
+          - lastUpdated
+          - expirationDate
+          default: name
+      - name: sortDirection
+        in: query
+        description: Direction to sort the results by
+        required: false
+        example: asc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: page
+        in: query
+        description: Which page of results to return
+        required: false
+        example: 0
+        schema:
+          type: string
+          default: 0
+      - name: perPage
+        in: query
+        description: How many items to return per page
+        required: false
+        example: 10
+        schema:
+          type: string
+          default: 100
+      - name: filterField
+        in: query
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        required: false
+        example: key
+        schema:
+          type: string
+          enum:
+          - name
+          - status
+      - name: filter
+        in: query
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        required: false
+        example: my*token
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection of API tokens
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      security:
+      - BearerAuth: []
+    post:
+      summary: Create a New API Token for an User
+      tags:
+      - Authentication and Account
+      requestBody:
+        description: API token information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/apiTokenPost'
+      responses:
+        '201':
+          description: The successfully created API token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
           content:
             application/json:
               schema:
@@ -828,6 +802,120 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    orgInviteActionUser:
+      title: Organization Invitation Action For User
+      description: Schema for the body of a request to accept or reject an invitation
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - accept
+          - dismiss
+          - reject
+      additionalProperties: false
+      required:
+      - action
+    payloadStats:
+      title: Payload Stats
+      description: Schema for the result of a payload stats request
+      type: object
+      properties:
+        appFile:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        dataTable:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCreate:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCommand:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceConnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceDisconnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceState:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        endpoint:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        event:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        flowError:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        inboundEmail:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        integration:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttIn:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttOut:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        notebook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        resourceJob:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        timer:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        virtualButton:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        webhook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
     apiTokenPatch:
       title: API Token Patch
       description: Schema for the body of an API Token modification request
@@ -840,53 +928,20 @@ components:
         status:
           $ref: '#/components/schemas/apiToken/properties/status'
       additionalProperties: false
-    orgPost:
-      title: Organization Post
-      description: Schema for the body of an Organization creation request
+    ssoRequest:
+      title: SSO Request
+      description: SSO Request built from the SP and IDP config
       type: object
       properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
+        ssoType:
+          type: string
+          enum:
+          - SAML
+        ssoRequest:
           $ref: '#/components/schemas/common/description'
-        planId:
-          $ref: '#/components/schemas/common/optMedStr'
-        billingEmail:
-          $ref: '#/components/schemas/common/email'
-        cardToken:
-          $ref: '#/components/schemas/common/optMedStr'
-        iconColor:
-          $ref: '#/components/schemas/common/color'
-        mfaMode:
-          $ref: '#/components/schemas/common/mfaMode'
-      additionalProperties: false
       required:
-      - name
-    orgs:
-      title: Organizations
-      description: Schema for a collection of Organizations
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/org'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
+      - ssoType
+      - ssoRequest
     org:
       title: Organization
       description: Schema for a single Organization
@@ -1050,6 +1105,45 @@ components:
           type: boolean
         orgId:
           $ref: '#/components/schemas/common/objectId'
+    orgInviteInfo:
+      title: Organization Invitation Information
+      description: Schema for information about an invitation
+      type: object
+      properties:
+        orgName:
+          $ref: '#/components/schemas/common/name'
+        email:
+          $ref: '#/components/schemas/common/email'
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        inviteDate:
+          $ref: '#/components/schemas/common/date'
+        ttl:
+          type: number
+        disallowTransfer:
+          type: boolean
+    orgPost:
+      title: Organization Post
+      description: Schema for the body of an Organization creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        planId:
+          $ref: '#/components/schemas/common/optMedStr'
+        billingEmail:
+          $ref: '#/components/schemas/common/email'
+        cardToken:
+          $ref: '#/components/schemas/common/optMedStr'
+        iconColor:
+          $ref: '#/components/schemas/common/color'
+        mfaMode:
+          $ref: '#/components/schemas/common/mfaMode'
+      additionalProperties: false
+      required:
+      - name
     apiToken:
       title: API Token
       description: Schema for a single API Token
@@ -1097,6 +1191,24 @@ components:
           - inactive
         token:
           $ref: '#/components/schemas/common/token'
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
     apiTokenPost:
       title: API Token Post
       description: Schema for the body of an API Token creation request
@@ -1118,22 +1230,256 @@ components:
       additionalProperties: false
       required:
       - name
-    authedUser:
-      title: Authenticated User
-      description: Schema for the successful response when authenticating a User
+    orgInvites:
+      title: Organization Invitations
+      description: Schema for an array of pending invitations to an Organization
+      type: array
+      items:
+        type: object
+        properties:
+          $ref: '#/definitions/orgInvite'
+    orgInvitesUser:
+      title: User Organization Invitations
+      description: Schema for an array of pending organization invitations for a user
+      type: array
+      items:
+        type: object
+        properties:
+          $ref: '#/definitions/orgInviteUser'
+    orgInvitePost:
+      title: Organization Invitation Post
+      description: Schema for the body of a request to send an invitation
       type: object
       properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        applicationRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        dashboardRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        disallowTransfer:
+          type: boolean
+      additionalProperties: false
+      required:
+      - email
+      - role
+    me:
+      title: Me
+      description: Schema for information about the currently authenticated user
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
         userId:
           $ref: '#/components/schemas/common/objectId'
-        token:
-          $ref: '#/components/schemas/common/token'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        passwordLastUpdated:
+          $ref: '#/components/schemas/common/date'
+        email:
+          $ref: '#/components/schemas/common/email'
+        requestedEmail:
+          $ref: '#/components/schemas/common/email'
+        firstName:
+          $ref: '#/components/schemas/common/reqMedStr'
+        lastName:
+          $ref: '#/components/schemas/common/optMedStr'
+        companyName:
+          $ref: '#/components/schemas/common/optMedStr'
+        title:
+          $ref: '#/components/schemas/common/optMedStr'
+        phoneNumber:
+          $ref: '#/components/schemas/common/optMedStr'
+        location:
+          $ref: '#/components/schemas/common/optMedStr'
+        url:
+          $ref: '#/components/schemas/common/optMedStr'
+        tokenCutoff:
+          $ref: '#/components/schemas/common/date'
+        emailVerified:
+          type: boolean
         needsToVerifyEmail:
           type: boolean
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
+        twoFactorAuthEnabled:
+          type: boolean
+        fullName:
+          type: string
+        githubName:
+          type: string
+        avatarUrl:
+          $ref: '#/components/schemas/common/url'
+        limits:
+          type: object
+          properties:
+            apitoken:
+              type: integer
+            application:
+              type: integer
+            applicationcertificate:
+              type: integer
+            applicationcertificateauthority:
+              type: integer
+            applicationkey:
+              type: integer
+            credential:
+              type: integer
+            dashboard:
+              type: integer
+            datatable:
+              type: integer
+            device:
+              type: integer
+            devicerecipe:
+              type: integer
+            experiencedomain:
+              type: integer
+            experienceendpoint:
+              type: integer
+            experiencegroup:
+              type: integer
+            experienceslug:
+              type: integer
+            experienceuser:
+              type: integer
+            experienceversion:
+              type: integer
+            experienceview:
+              type: integer
+            file:
+              type: integer
+            flow:
+              type: integer
+            integration:
+              type: integer
+            notebook:
+              type: integer
+            privatefile:
+              type: integer
+            resourcejob:
+              type: integer
+            webhook:
+              type: integer
+            dataTTL:
+              type: integer
+            payload:
+              type: integer
+            storage:
+              type: integer
+            notebookMinutesPerRun:
+              type: integer
+            notebookMinutesPerMonth:
+              type: integer
+            notebookInParallel:
+              type: integer
+            experienceFlowSlots:
+              type: integer
+            applicationFlowSlots:
+              type: integer
+            systemInterval:
+              type: integer
+          additionalProperties: false
+        recentDashboards:
+          $ref: '#/components/schemas/recentItemList'
+        recentApplications:
+          $ref: '#/components/schemas/recentItemList'
+        recentOrganizations:
+          $ref: '#/components/schemas/recentItemList'
+        summary:
+          type: object
+          properties:
+            apiTokenCount:
+              type: integer
+            appCount:
+              type: integer
+            certificateCount:
+              type: integer
+            certificateAuthorityCount:
+              type: integer
+            credentialCount:
+              type: integer
+            dashCount:
+              type: integer
+            dataTableCount:
+              type: integer
+            deviceCount:
+              type: integer
+            deviceRecipeCount:
+              type: integer
+            eventCount:
+              type: integer
+            experienceDomainCount:
+              type: integer
+            experienceEndpointCount:
+              type: integer
+            experienceGroupCount:
+              type: integer
+            experienceSlugCount:
+              type: integer
+            experienceUserCount:
+              type: integer
+            experienceVersionCount:
+              type: integer
+            experienceViewCount:
+              type: integer
+            fileCount:
+              type: integer
+            flowCount:
+              type: integer
+            integrationCount:
+              type: integer
+            keyCount:
+              type: integer
+            notebookCount:
+              type: integer
+            resourceJobCount:
+              type: integer
+            privateFileCount:
+              type: integer
+            webhookCount:
+              type: integer
+            orgCount:
+              type: integer
+            instanceCount:
+              type: integer
+            payloadCount:
+              $ref: '#/components/schemas/payloadStats'
+            storageStats:
+              $ref: '#/components/schemas/common/storageStats'
+            notebookStats:
+              $ref: '#/components/schemas/common/notebookStats'
+        currentPeriodStart:
+          $ref: '#/components/schemas/common/date'
+        currentPeriodEnd:
+          $ref: '#/components/schemas/common/date'
+        ssoLinked:
+          type: boolean
+    samlResponse:
+      title: SAML Response
+      description: SAML Response body for login
+      type: object
+      properties:
+        SAMLResponse:
+          type: string
+          minLength: 4
+          maxLength: 100000
+        SAMLDomain:
+          $ref: '#/components/schemas/common/domainName'
+        requestedScopes:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/common/userApiScope'
+        tokenTTL:
+          type: integer
+          minimum: 0
       required:
-      - userId
-      - token
+      - SAMLResponse
+      - SAMLDomain
+      additionalProperties: false
     orgInviteResultUser:
       title: Organization Invitation Result For User
       description: Schema for the result of accepting/rejecting an invitation
@@ -1147,224 +1493,6 @@ components:
           - dismissed
         orgId:
           $ref: '#/components/schemas/common/objectId'
-    success:
-      title: Success
-      description: Schema for reporting a successful operation
-      type: object
-      properties:
-        success:
-          type: boolean
-          enum:
-          - true
-    orgInvitesUser:
-      title: User Organization Invitations
-      description: Schema for an array of pending organization invitations for a user
-      type: array
-      items:
-        type: object
-        properties:
-          $ref: '#/definitions/orgInviteUser'
-    ssoRequest:
-      title: SSO Request
-      description: SSO Request built from the SP and IDP config
-      type: object
-      properties:
-        ssoType:
-          type: string
-          enum:
-          - SAML
-        ssoRequest:
-          $ref: '#/components/schemas/common/description'
-      required:
-      - ssoType
-      - ssoRequest
-    payloadStats:
-      title: Payload Stats
-      description: Schema for the result of a payload stats request
-      type: object
-      properties:
-        appFile:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        dataTable:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceCreate:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceCommand:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceConnect:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceDisconnect:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceState:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        endpoint:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        event:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        flowError:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        inboundEmail:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        integration:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        mqttIn:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        mqttOut:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        notebook:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        resourceJob:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        timer:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        virtualButton:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        webhook:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-    orgInviteAction:
-      title: Organization Invitation Action
-      description: Schema for the body of a request to accept or reject an invitation
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/common/email'
-        token:
-          $ref: '#/components/schemas/common/token'
-        accept:
-          type: boolean
-      additionalProperties: false
-      required:
-      - email
-      - token
-      - accept
-    orgInvites:
-      title: Organization Invitations
-      description: Schema for an array of pending invitations to an Organization
-      type: array
-      items:
-        type: object
-        properties:
-          $ref: '#/definitions/orgInvite'
-    error:
-      title: Error
-      description: Schema for errors returned by the API
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
-    me:
-      properties:
-        avatarUrl:
-          $ref: '#/components/schemas/common/url'
-    orgInviteInfo:
-      title: Organization Invitation Information
-      description: Schema for information about an invitation
-      type: object
-      properties:
-        orgName:
-          $ref: '#/components/schemas/common/name'
-        email:
-          $ref: '#/components/schemas/common/email'
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        inviteDate:
-          $ref: '#/components/schemas/common/date'
-        ttl:
-          type: number
-        disallowTransfer:
-          type: boolean
-    resourceTransfer:
-      title: Resource Transfer
-      description: Schema for the body of a resource transfer request
-      type: object
-      properties:
-        destinationId:
-          $ref: '#/components/schemas/common/objectId'
-        destinationType:
-          $ref: '#/components/schemas/common/ownerType'
-        applicationIds:
-          $ref: '#/components/schemas/common/objectIds'
-        dashboardIds:
-          $ref: '#/components/schemas/common/objectIds'
-        strict:
-          type: boolean
-      additionalProperties: false
-      required:
-      - destinationId
-      - destinationType
-    orgInviteActionUser:
-      title: Organization Invitation Action For User
-      description: Schema for the body of a request to accept or reject an invitation
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - accept
-          - dismiss
-          - reject
-      additionalProperties: false
-      required:
-      - action
     notebookMinuteCounts:
       title: Notebook Minute Counts
       description: Schema for the result of a notebook minute counts request
@@ -1391,52 +1519,85 @@ components:
                 type: integer
               timeout:
                 type: integer
-    orgInvitePost:
-      title: Organization Invitation Post
-      description: Schema for the body of a request to send an invitation
+    resourceTransfer:
+      title: Resource Transfer
+      description: Schema for the body of a resource transfer request
+      type: object
+      properties:
+        destinationId:
+          $ref: '#/components/schemas/common/objectId'
+        destinationType:
+          $ref: '#/components/schemas/common/ownerType'
+        applicationIds:
+          $ref: '#/components/schemas/common/objectIds'
+        dashboardIds:
+          $ref: '#/components/schemas/common/objectIds'
+        strict:
+          type: boolean
+      additionalProperties: false
+      required:
+      - destinationId
+      - destinationType
+    authedUser:
+      title: Authenticated User
+      description: Schema for the successful response when authenticating a User
+      type: object
+      properties:
+        userId:
+          $ref: '#/components/schemas/common/objectId'
+        token:
+          $ref: '#/components/schemas/common/token'
+        needsToVerifyEmail:
+          type: boolean
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+      required:
+      - userId
+      - token
+    orgs:
+      title: Organizations
+      description: Schema for a collection of Organizations
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/org'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    orgInviteAction:
+      title: Organization Invitation Action
+      description: Schema for the body of a request to accept or reject an invitation
       type: object
       properties:
         email:
           $ref: '#/components/schemas/common/email'
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        applicationRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        dashboardRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        disallowTransfer:
+        token:
+          $ref: '#/components/schemas/common/token'
+        accept:
           type: boolean
       additionalProperties: false
       required:
       - email
-      - role
-    samlResponse:
-      title: SAML Response
-      description: SAML Response body for login
-      type: object
-      properties:
-        SAMLResponse:
-          type: string
-          minLength: 4
-          maxLength: 100000
-        SAMLDomain:
-          $ref: '#/components/schemas/common/domainName'
-        requestedScopes:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/common/userApiScope'
-        tokenTTL:
-          type: integer
-          minimum: 0
-      required:
-      - SAMLResponse
-      - SAMLDomain
-      additionalProperties: false
+      - token
+      - accept
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device,
-        POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
