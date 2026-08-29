@@ -14,6 +14,19 @@ description: |
   https://mcp.losant.com/mcp so AI assistants can query and write application configuration and telemetry.
   Losant was acquired by SUSE, which is folding the platform into an open process automation offering for
   Industrial IoT.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
