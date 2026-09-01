@@ -45,7 +45,7 @@ humanURL: https://www.losant.com/
 baseURL: https://api.losant.com
 tags:
   - IoT
-  - Internet Of Things
+  - Internet of Things
   - Devices
   - Edge Compute
   - Embedded
