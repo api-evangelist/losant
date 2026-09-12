@@ -390,6 +390,8 @@ apis:
   - type: Documentation
     url: https://docs.losant.com/rest-api/instance-custom-node/
 common:
+  - type: Website
+    url: https://www.losant.com/
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/losant/overview
   - type: AgenticAccess
