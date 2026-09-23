@@ -169,16 +169,14 @@
     "losant-edge-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "losant-instance-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "losant-notebook-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "losant-workflow-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0"
+    "losant-workflow-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
-    "losant-application-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "losant-authentication-and-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "losant-data-and-data-tables-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "losant-device-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "losant-edge-and-embedded-compute-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "losant-enterprise-instance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "losant-experience-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "losant-notebooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "losant-workflow-engine-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]

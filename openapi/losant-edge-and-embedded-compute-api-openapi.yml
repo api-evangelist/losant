@@ -64,6 +64,8 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+      operationId: getApplicationsByApplicationIdEdgeDeploymentsByEdgeDeploymentId
+      x-operation-id-source: derived
   /applications/{applicationId}/edge/deployments:
     get:
       summary: Returns the Edge Deployments for an Application
@@ -170,8 +172,10 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+      operationId: getApplicationsByApplicationIdEdgeDeployments
+      x-operation-id-source: derived
     post:
-      summary: Replace Deployments of an Edge Workflow Version with a New Version. New Version Can Be Blank, if Removal Is Desired.
+      summary: Replace Deployments of an Edge Workflow Version with a New Version.
       tags:
       - Edge and Embedded Compute
       parameters:
@@ -211,6 +215,8 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+      operationId: postApplicationsByApplicationIdEdgeDeployments
+      x-operation-id-source: derived
   /applications/{applicationId}/embedded/deployments/{embeddedDeploymentId}:
     get:
       summary: Retrieves Information on an Embedded Deployment
@@ -254,6 +260,8 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+      operationId: getApplicationsByApplicationIdEmbeddedDeploymentsByEmbeddedDeploymentId
+      x-operation-id-source: derived
   /applications/{applicationId}/embedded/deployments:
     get:
       summary: Returns the Embedded Deployments for an Application
@@ -351,6 +359,8 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+      operationId: getApplicationsByApplicationIdEmbeddedDeployments
+      x-operation-id-source: derived
     post:
       summary: Request an Export of the Compiled WASM Files for a Current Deployment
       tags:
@@ -392,8 +402,31 @@ paths:
                 $ref: '#/components/schemas/error'
       security:
       - BearerAuth: []
+      operationId: postApplicationsByApplicationIdEmbeddedDeployments
+      x-operation-id-source: derived
 components:
   schemas:
+    edgeDeployments:
+      title: Edge Deployments
+      description: Schema for a collection of Edge Deployments
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/edgeDeployment'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        version:
+          $ref: '#/components/schemas/common/name'
     embeddedDeploymentExport:
       title: Embedded Deployment Export
       description: Schema for the body of a compiled embedded deployment files request
@@ -425,64 +458,6 @@ components:
         gzip:
           type: boolean
       additionalProperties: false
-    edgeDeployments:
-      title: Edge Deployments
-      description: Schema for a collection of Edge Deployments
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/edgeDeployment'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        deviceId:
-          $ref: '#/components/schemas/common/objectId'
-        flowId:
-          $ref: '#/components/schemas/common/objectId'
-        version:
-          $ref: '#/components/schemas/common/name'
-    embeddedDeployments:
-      title: Embedded Deployments
-      description: Schema for a collection of Embedded Deployments
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/embeddedDeployment'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        deviceId:
-          $ref: '#/components/schemas/common/objectId'
-        flowId:
-          $ref: '#/components/schemas/common/objectId'
-        version:
-          $ref: '#/components/schemas/common/name'
-    jobEnqueuedResult:
-      title: Job Enqueued API Result
-      description: Schema for the result of a job being queued
-      type: object
-      properties:
-        jobQueued:
-          type: boolean
-          enum:
-          - true
-        jobId:
-          type: string
-          maxLength: 21
-        success:
-          type: boolean
-          enum:
-          - true
     edgeDeploymentReplace:
       title: Edge Deployment Replace
       description: Schema for replacing a deployment of a workflow version with a different workflow version
@@ -584,6 +559,15 @@ components:
                 $ref: '#/components/schemas/common/nullableName'
               error:
                 type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
     error:
       title: Error
       description: Schema for errors returned by the API
@@ -593,6 +577,43 @@ components:
           type: string
         message:
           type: string
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
+        success:
+          type: boolean
+          enum:
+          - true
+    embeddedDeployments:
+      title: Embedded Deployments
+      description: Schema for a collection of Embedded Deployments
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/embeddedDeployment'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        version:
+          $ref: '#/components/schemas/common/name'
     edgeDeployment:
       title: Edge Deployment
       description: Schema for a single deployment of an edge workflow to an edge device
@@ -671,15 +692,6 @@ components:
                 $ref: '#/components/schemas/common/name'
               error:
                 type: string
-    success:
-      title: Success
-      description: Schema for reporting a successful operation
-      type: object
-      properties:
-        success:
-          type: boolean
-          enum:
-          - true
   securitySchemes:
     BearerAuth:
       type: http
