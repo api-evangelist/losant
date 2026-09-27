@@ -365,84 +365,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    notebooks:
-      title: Notebooks
-      description: Schema for a collection of Notebooks
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/notebook'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-    notebookPatch:
-      title: Notebook Patch
-      description: Schema for the body of a Notebook modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/reqMedStr'
-        description:
-          $ref: '#/components/schemas/common/description'
-        inputs:
-          $ref: '#/components/schemas/notebook/properties/inputs'
-        outputs:
-          $ref: '#/components/schemas/notebook/properties/outputs'
-        imageVersion:
-          $ref: '#/components/schemas/common/notebookImageVersion'
-      additionalProperties: false
-    success:
-      title: Success
-      description: Schema for reporting a successful operation
-      type: object
-      properties:
-        success:
-          type: boolean
-          enum:
-          - true
-    notebookMinuteCounts:
-      title: Notebook Minute Counts
-      description: Schema for the result of a notebook minute counts request
-      type: object
-      properties:
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        counts:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              minutes:
-                type: integer
-              completed:
-                type: integer
-              canceled:
-                type: integer
-              errored:
-                type: integer
-              timeout:
-                type: integer
     notebook:
       title: Notebook
       description: Schema for a single Notebook
@@ -739,6 +661,15 @@ components:
             errorsThisPeriod:
               type: number
           additionalProperties: false
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
     error:
       title: Error
       description: Schema for errors returned by the API
@@ -748,6 +679,75 @@ components:
           type: string
         message:
           type: string
+    notebookPatch:
+      title: Notebook Patch
+      description: Schema for the body of a Notebook modification request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/reqMedStr'
+        description:
+          $ref: '#/components/schemas/common/description'
+        inputs:
+          $ref: '#/components/schemas/notebook/properties/inputs'
+        outputs:
+          $ref: '#/components/schemas/notebook/properties/outputs'
+        imageVersion:
+          $ref: '#/components/schemas/common/notebookImageVersion'
+      additionalProperties: false
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                $ref: '#/components/schemas/common/date'
+              minutes:
+                type: integer
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+    notebooks:
+      title: Notebooks
+      description: Schema for a collection of Notebooks
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/notebook'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
     notebookPost:
       title: Notebook Post
       description: Schema for the body of an Notebook creation request

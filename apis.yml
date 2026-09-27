@@ -15,17 +15,23 @@ description: |
   Losant was acquired by SUSE, which is folding the platform into an open process automation offering for
   Industrial IoT.
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - losant/application-templates
+    - losant/eea-examples
+    - losant/notebook-examples
+    - losant/workflow-node-catalog
   open_source: unknown
   commercial: true
   callable_host: true
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - openapi
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -51,7 +57,7 @@ tags:
   - MQTT
   - Industrial IoT
   - Telemetry
-  - Workflow-Automation
+  - Workflow Automation
   - Visual Workflow Engine
   - Dashboards
   - Time Series
@@ -72,6 +78,7 @@ tags_raw:
   - Time Series
   - Connected Products
   - Enterprise
+  - Workflow-Automation
 kind: contract
 access: 3rd-Party
 x-type: company
