@@ -406,93 +406,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    edgeDeployment:
-      title: Edge Deployment
-      description: Schema for a single deployment of an edge workflow to an edge device
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        edgeDeploymentId:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        deviceId:
-          $ref: '#/components/schemas/common/objectId'
-        deviceName:
-          $ref: '#/components/schemas/common/name'
-        deviceConnectionInfo:
-          type: object
-          properties:
-            time:
-              $ref: '#/components/schemas/common/date'
-            connected:
-              enum:
-              - 1
-              - 0
-              - null
-        flowId:
-          $ref: '#/components/schemas/common/objectId'
-        flowName:
-          $ref: '#/components/schemas/common/name'
-        flowClass:
-          type: string
-          enum:
-          - edge
-          - customNode
-        fileName:
-          $ref: '#/components/schemas/common/safeFileName'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        currentVersion:
-          $ref: '#/components/schemas/common/nullableName'
-        desiredVersion:
-          $ref: '#/components/schemas/common/nullableName'
-        currentEtag:
-          $ref: '#/components/schemas/common/name'
-        desiredEtag:
-          $ref: '#/components/schemas/common/name'
-        logs:
-          type: array
-          items:
-            type: object
-            properties:
-              sourceType:
-                $ref: '#/components/schemas/common/sourceType'
-              sourceId:
-                $ref: '#/components/schemas/common/objectId'
-              date:
-                $ref: '#/components/schemas/common/date'
-              changeType:
-                type: string
-                enum:
-                - current
-                - desired
-              newValue:
-                $ref: '#/components/schemas/common/nullableName'
-              previousValue:
-                $ref: '#/components/schemas/common/nullableName'
-              attemptedValue:
-                $ref: '#/components/schemas/common/nullableName'
-              newEtag:
-                $ref: '#/components/schemas/common/name'
-              previousEtag:
-                $ref: '#/components/schemas/common/name'
-              attemptedEtag:
-                $ref: '#/components/schemas/common/name'
-              error:
-                type: string
-    success:
-      title: Success
-      description: Schema for reporting a successful operation
-      type: object
-      properties:
-        success:
-          type: boolean
-          enum:
-          - true
     embeddedDeploymentExport:
       title: Embedded Deployment Export
       description: Schema for the body of a compiled embedded deployment files request
@@ -524,89 +437,6 @@ components:
         gzip:
           type: boolean
       additionalProperties: false
-    error:
-      title: Error
-      description: Schema for errors returned by the API
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
-    edgeDeployments:
-      title: Edge Deployments
-      description: Schema for a collection of Edge Deployments
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/edgeDeployment'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        deviceId:
-          $ref: '#/components/schemas/common/objectId'
-        flowId:
-          $ref: '#/components/schemas/common/objectId'
-        version:
-          $ref: '#/components/schemas/common/name'
-    edgeDeploymentReplace:
-      title: Edge Deployment Replace
-      description: Schema for replacing a deployment of a workflow version with a different workflow version
-      type: object
-      properties:
-        flowId:
-          $ref: '#/components/schemas/common/objectId'
-        oldVersion:
-          $ref: '#/components/schemas/common/name'
-        newVersion:
-          $ref: '#/components/schemas/common/nullableName'
-      additionalProperties: false
-      required:
-      - flowId
-      - oldVersion
-      - newVersion
-    embeddedDeployments:
-      title: Embedded Deployments
-      description: Schema for a collection of Embedded Deployments
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/embeddedDeployment'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        deviceId:
-          $ref: '#/components/schemas/common/objectId'
-        flowId:
-          $ref: '#/components/schemas/common/objectId'
-        version:
-          $ref: '#/components/schemas/common/name'
-    jobEnqueuedResult:
-      title: Job Enqueued API Result
-      description: Schema for the result of a job being queued
-      type: object
-      properties:
-        jobQueued:
-          type: boolean
-          enum:
-          - true
-        jobId:
-          type: string
-          maxLength: 21
-        success:
-          type: boolean
-          enum:
-          - true
     embeddedDeployment:
       title: Embedded Deployment
       description: Schema for a single deployment of embedded workflows to embedded devices
@@ -692,6 +522,176 @@ components:
                 $ref: '#/components/schemas/common/nullableName'
               error:
                 type: string
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    edgeDeployment:
+      title: Edge Deployment
+      description: Schema for a single deployment of an edge workflow to an edge device
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        edgeDeploymentId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceName:
+          $ref: '#/components/schemas/common/name'
+        deviceConnectionInfo:
+          type: object
+          properties:
+            time:
+              $ref: '#/components/schemas/common/date'
+            connected:
+              enum:
+              - 1
+              - 0
+              - null
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        flowName:
+          $ref: '#/components/schemas/common/name'
+        flowClass:
+          type: string
+          enum:
+          - edge
+          - customNode
+        fileName:
+          $ref: '#/components/schemas/common/safeFileName'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        currentVersion:
+          $ref: '#/components/schemas/common/nullableName'
+        desiredVersion:
+          $ref: '#/components/schemas/common/nullableName'
+        currentEtag:
+          $ref: '#/components/schemas/common/name'
+        desiredEtag:
+          $ref: '#/components/schemas/common/name'
+        logs:
+          type: array
+          items:
+            type: object
+            properties:
+              sourceType:
+                $ref: '#/components/schemas/common/sourceType'
+              sourceId:
+                $ref: '#/components/schemas/common/objectId'
+              date:
+                $ref: '#/components/schemas/common/date'
+              changeType:
+                type: string
+                enum:
+                - current
+                - desired
+              newValue:
+                $ref: '#/components/schemas/common/nullableName'
+              previousValue:
+                $ref: '#/components/schemas/common/nullableName'
+              attemptedValue:
+                $ref: '#/components/schemas/common/nullableName'
+              newEtag:
+                $ref: '#/components/schemas/common/name'
+              previousEtag:
+                $ref: '#/components/schemas/common/name'
+              attemptedEtag:
+                $ref: '#/components/schemas/common/name'
+              error:
+                type: string
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
+        success:
+          type: boolean
+          enum:
+          - true
+    edgeDeploymentReplace:
+      title: Edge Deployment Replace
+      description: Schema for replacing a deployment of a workflow version with a different workflow version
+      type: object
+      properties:
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        oldVersion:
+          $ref: '#/components/schemas/common/name'
+        newVersion:
+          $ref: '#/components/schemas/common/nullableName'
+      additionalProperties: false
+      required:
+      - flowId
+      - oldVersion
+      - newVersion
+    edgeDeployments:
+      title: Edge Deployments
+      description: Schema for a collection of Edge Deployments
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/edgeDeployment'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        version:
+          $ref: '#/components/schemas/common/name'
+    embeddedDeployments:
+      title: Embedded Deployments
+      description: Schema for a collection of Embedded Deployments
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/embeddedDeployment'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        flowId:
+          $ref: '#/components/schemas/common/objectId'
+        version:
+          $ref: '#/components/schemas/common/name'
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
   securitySchemes:
     BearerAuth:
       type: http
