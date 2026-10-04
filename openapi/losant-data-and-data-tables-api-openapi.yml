@@ -688,61 +688,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    dataTableRows:
-      title: Data Table Rows
-      description: Schema for a collection of Data Table Rows
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/dataTableRow'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-        sortColumn:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        dataTableId:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        query:
-          type: object
-    dataTable:
-      title: Data Table
-      description: Schema for a single Data Table
+    dataTableRow:
+      title: Data Table Row
+      description: Schema for a single Data Table Row
       type: object
       properties:
         id:
           $ref: '#/components/schemas/common/objectId'
-        dataTableId:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
+        createdAt:
           $ref: '#/components/schemas/common/date'
-        lastUpdated:
+        updatedAt:
           $ref: '#/components/schemas/common/date'
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        columns:
-          type: array
-          items:
-            $ref: '#/components/schemas/dataTableColumn'
-          maxItems: 50
-    dataTableRowInsertUpdate:
-      title: Data Table Row Insert Update
-      description: Schema for inserting or updating a data table row
-      type: object
       patternProperties:
         ^[0-9a-zA-Z_-]{1,255}$:
           type:
@@ -750,7 +706,6 @@ components:
           - number
           - boolean
           - 'null'
-      additionalProperties: false
     advancedDeviceQuery:
       title: Advanced Device Query
       description: Schema for advanced device queries
@@ -804,44 +759,6 @@ components:
         connectionStatus:
           $ref: '#/components/schemas/common/advancedValueQuery'
       additionalProperties: false
-    dataTableColumn:
-      title: Data Table Column
-      description: Schema for a single Data Table Column
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/key'
-        dataType:
-          type: string
-          enum:
-          - string
-          - number
-          - boolean
-        constraint:
-          type: string
-          enum:
-          - unique
-          - required
-          - optional
-        defaultValue:
-          type:
-          - string
-          - number
-          - boolean
-      required:
-      - name
-      - dataType
-      - constraint
-      additionalProperties: false
-    error:
-      title: Error
-      description: Schema for errors returned by the API
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
     dataTablePatch:
       title: Data Table Patch
       description: Schema for the body of a Data Table modification request
@@ -852,22 +769,69 @@ components:
         description:
           $ref: '#/components/schemas/common/description'
       additionalProperties: false
-    jobEnqueuedResult:
-      title: Job Enqueued API Result
-      description: Schema for the result of a job being queued
+    dataTables:
+      title: Data Tables
+      description: Schema for a collection of Data Tables
       type: object
       properties:
-        jobQueued:
-          type: boolean
-          enum:
-          - true
-        jobId:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataTable'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
           type: string
-          maxLength: 21
-        success:
-          type: boolean
-          enum:
-          - true
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+    dataTable:
+      title: Data Table
+      description: Schema for a single Data Table
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        dataTableId:
+          $ref: '#/components/schemas/common/objectId'
+        applicationId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataTableColumn'
+          maxItems: 50
+    dataTableRowInsertUpdate:
+      title: Data Table Row Insert Update
+      description: Schema for inserting or updating a data table row
+      type: object
+      patternProperties:
+        ^[0-9a-zA-Z_-]{1,255}$:
+          type:
+          - string
+          - number
+          - boolean
+          - 'null'
+      additionalProperties: false
     devicesDataExport:
       title: Devices Data Export
       description: Schema for exporting the data for multiple devices
@@ -908,24 +872,6 @@ components:
               type: boolean
               default: false
       additionalProperties: false
-    dataTableRow:
-      title: Data Table Row
-      description: Schema for a single Data Table Row
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        createdAt:
-          $ref: '#/components/schemas/common/date'
-        updatedAt:
-          $ref: '#/components/schemas/common/date'
-      patternProperties:
-        ^[0-9a-zA-Z_-]{1,255}$:
-          type:
-          - string
-          - number
-          - boolean
-          - 'null'
     dataTablePost:
       title: Data Table Post
       description: Schema for the body of a Data Table creation request
@@ -940,33 +886,33 @@ components:
       required:
       - name
       additionalProperties: false
-    dataTables:
-      title: Data Tables
-      description: Schema for a collection of Data Tables
+    dataTableRows:
+      title: Data Table Rows
+      description: Schema for a collection of Data Table Rows
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/dataTable'
+            $ref: '#/components/schemas/dataTableRow'
         count:
           type: integer
         totalCount:
           type: integer
-        perPage:
+        limit:
           type: integer
-        page:
+        offset:
           type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
+        sortColumn:
           type: string
         sortDirection:
           $ref: '#/components/schemas/common/sortDirection'
+        dataTableId:
+          $ref: '#/components/schemas/common/objectId'
         applicationId:
           $ref: '#/components/schemas/common/objectId'
+        query:
+          type: object
     success:
       title: Success
       description: Schema for reporting a successful operation
@@ -976,6 +922,60 @@ components:
           type: boolean
           enum:
           - true
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
+        success:
+          type: boolean
+          enum:
+          - true
+    dataTableColumn:
+      title: Data Table Column
+      description: Schema for a single Data Table Column
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/key'
+        dataType:
+          type: string
+          enum:
+          - string
+          - number
+          - boolean
+        constraint:
+          type: string
+          enum:
+          - unique
+          - required
+          - optional
+        defaultValue:
+          type:
+          - string
+          - number
+          - boolean
+      required:
+      - name
+      - dataType
+      - constraint
+      additionalProperties: false
   securitySchemes:
     BearerAuth:
       type: http

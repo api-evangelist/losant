@@ -365,24 +365,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    notebookPost:
-      title: Notebook Post
-      description: Schema for the body of an Notebook creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/reqMedStr'
-        description:
-          $ref: '#/components/schemas/common/description'
-        imageVersion:
-          $ref: '#/components/schemas/common/notebookImageVersion'
-        inputs:
-          $ref: '#/components/schemas/notebook/properties/inputs'
-        outputs:
-          $ref: '#/components/schemas/notebook/properties/outputs'
-      additionalProperties: false
-      required:
-      - name
     notebook:
       title: Notebook
       description: Schema for a single Notebook
@@ -679,6 +661,32 @@ components:
             errorsThisPeriod:
               type: number
           additionalProperties: false
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                $ref: '#/components/schemas/common/date'
+              minutes:
+                type: integer
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
     notebookPatch:
       title: Notebook Patch
       description: Schema for the body of a Notebook modification request
@@ -695,15 +703,24 @@ components:
         imageVersion:
           $ref: '#/components/schemas/common/notebookImageVersion'
       additionalProperties: false
-    error:
-      title: Error
-      description: Schema for errors returned by the API
+    notebookPost:
+      title: Notebook Post
+      description: Schema for the body of an Notebook creation request
       type: object
       properties:
-        type:
-          type: string
-        message:
-          type: string
+        name:
+          $ref: '#/components/schemas/common/reqMedStr'
+        description:
+          $ref: '#/components/schemas/common/description'
+        imageVersion:
+          $ref: '#/components/schemas/common/notebookImageVersion'
+        inputs:
+          $ref: '#/components/schemas/notebook/properties/inputs'
+        outputs:
+          $ref: '#/components/schemas/notebook/properties/outputs'
+      additionalProperties: false
+      required:
+      - name
     notebooks:
       title: Notebooks
       description: Schema for a collection of Notebooks
@@ -731,32 +748,6 @@ components:
           $ref: '#/components/schemas/common/sortDirection'
         applicationId:
           $ref: '#/components/schemas/common/objectId'
-    notebookMinuteCounts:
-      title: Notebook Minute Counts
-      description: Schema for the result of a notebook minute counts request
-      type: object
-      properties:
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        counts:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              minutes:
-                type: integer
-              completed:
-                type: integer
-              canceled:
-                type: integer
-              errored:
-                type: integer
-              timeout:
-                type: integer
     success:
       title: Success
       description: Schema for reporting a successful operation
@@ -766,6 +757,15 @@ components:
           type: boolean
           enum:
           - true
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
   securitySchemes:
     BearerAuth:
       type: http

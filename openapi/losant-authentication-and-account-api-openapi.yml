@@ -842,6 +842,39 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    resourceTransfer:
+      title: Resource Transfer
+      description: Schema for the body of a resource transfer request
+      type: object
+      properties:
+        destinationId:
+          $ref: '#/components/schemas/common/objectId'
+        destinationType:
+          $ref: '#/components/schemas/common/ownerType'
+        applicationIds:
+          $ref: '#/components/schemas/common/objectIds'
+        dashboardIds:
+          $ref: '#/components/schemas/common/objectIds'
+        strict:
+          type: boolean
+      additionalProperties: false
+      required:
+      - destinationId
+      - destinationType
+    orgInviteActionUser:
+      title: Organization Invitation Action For User
+      description: Schema for the body of a request to accept or reject an invitation
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - accept
+          - dismiss
+          - reject
+      additionalProperties: false
+      required:
+      - action
     apiToken:
       title: API Token
       description: Schema for a single API Token
@@ -889,23 +922,6 @@ components:
           - inactive
         token:
           $ref: '#/components/schemas/common/token'
-    orgInvites:
-      title: Organization Invitations
-      description: Schema for an array of pending invitations to an Organization
-      type: array
-      items:
-        type: object
-        properties:
-          $ref: '#/definitions/orgInvite'
-    orgInviteResult:
-      title: Organization Invitation Result
-      description: Schema for the result of accepting/rejecting an invitation
-      type: object
-      properties:
-        accepted:
-          type: boolean
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
     success:
       title: Success
       description: Schema for reporting a successful operation
@@ -915,29 +931,80 @@ components:
           type: boolean
           enum:
           - true
-    samlResponse:
-      title: SAML Response
-      description: SAML Response body for login
+    orgInvites:
+      title: Organization Invitations
+      description: Schema for an array of pending invitations to an Organization
+      type: array
+      items:
+        type: object
+        properties:
+          $ref: '#/definitions/orgInvite'
+    ssoRequest:
+      title: SSO Request
+      description: SSO Request built from the SP and IDP config
       type: object
       properties:
-        SAMLResponse:
+        ssoType:
           type: string
-          minLength: 4
-          maxLength: 100000
-        SAMLDomain:
-          $ref: '#/components/schemas/common/domainName'
-        requestedScopes:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/common/userApiScope'
-        tokenTTL:
-          type: integer
-          minimum: 0
+          enum:
+          - SAML
+        ssoRequest:
+          $ref: '#/components/schemas/common/description'
       required:
-      - SAMLResponse
-      - SAMLDomain
+      - ssoType
+      - ssoRequest
+    orgs:
+      title: Organizations
+      description: Schema for a collection of Organizations
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/org'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    orgInvitesUser:
+      title: User Organization Invitations
+      description: Schema for an array of pending organization invitations for a user
+      type: array
+      items:
+        type: object
+        properties:
+          $ref: '#/definitions/orgInviteUser'
+    orgInvitePost:
+      title: Organization Invitation Post
+      description: Schema for the body of a request to send an invitation
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        applicationRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        dashboardRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        disallowTransfer:
+          type: boolean
       additionalProperties: false
+      required:
+      - email
+      - role
     error:
       title: Error
       description: Schema for errors returned by the API
@@ -947,67 +1014,343 @@ components:
           type: string
         message:
           type: string
-    notebookMinuteCounts:
-      title: Notebook Minute Counts
-      description: Schema for the result of a notebook minute counts request
+    org:
+      title: Organization
+      description: Schema for a single Organization
       type: object
       properties:
-        start:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
           $ref: '#/components/schemas/common/date'
-        end:
+        lastUpdated:
           $ref: '#/components/schemas/common/date'
-        counts:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        members:
           type: array
           items:
             type: object
             properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              minutes:
-                type: integer
-              completed:
-                type: integer
-              canceled:
-                type: integer
-              errored:
-                type: integer
-              timeout:
-                type: integer
-    orgInviteActionUser:
-      title: Organization Invitation Action For User
-      description: Schema for the body of a request to accept or reject an invitation
-      type: object
-      properties:
-        action:
+              userId:
+                $ref: '#/components/schemas/common/objectId'
+              firstName:
+                $ref: '#/components/schemas/common/reqMedStr'
+              lastName:
+                $ref: '#/components/schemas/common/optMedStr'
+              email:
+                $ref: '#/components/schemas/common/email'
+              avatarUrl:
+                $ref: '#/components/schemas/me/properties/avatarUrl'
+              role:
+                $ref: '#/components/schemas/common/orgRole'
+              applicationRoles:
+                $ref: '#/components/schemas/common/resourceRoles'
+              dashboardRoles:
+                $ref: '#/components/schemas/common/resourceRoles'
+              twoFactorAuthEnabled:
+                type: boolean
+              ssoLinked:
+                type: boolean
+        limits:
+          $ref: '#/components/schemas/common/orgLimits'
+        summary:
+          type: object
+          properties:
+            apiTokenCount:
+              type: integer
+            appCount:
+              type: integer
+            certificateCount:
+              type: integer
+            certificateAuthorityCount:
+              type: integer
+            credentialCount:
+              type: integer
+            dashCount:
+              type: integer
+            dataTableCount:
+              type: integer
+            deviceCount:
+              type: integer
+            deviceRecipeCount:
+              type: integer
+            eventCount:
+              type: integer
+            experienceDomainCount:
+              type: integer
+            experienceEndpointCount:
+              type: integer
+            experienceGroupCount:
+              type: integer
+            experienceSlugCount:
+              type: integer
+            experienceUserCount:
+              type: integer
+            experienceVersionCount:
+              type: integer
+            experienceViewCount:
+              type: integer
+            fileCount:
+              type: integer
+            flowCount:
+              type: integer
+            integrationCount:
+              type: integer
+            keyCount:
+              type: integer
+            notebookCount:
+              type: integer
+            privateFileCount:
+              type: integer
+            resourceJobCount:
+              type: integer
+            webhookCount:
+              type: integer
+            memberCount:
+              type: integer
+            pendingInviteCount:
+              type: integer
+            payloadCount:
+              $ref: '#/components/schemas/payloadStats'
+            storageStats:
+              $ref: '#/components/schemas/common/storageStats'
+            notebookStats:
+              $ref: '#/components/schemas/common/notebookStats'
+        planId:
+          $ref: '#/components/schemas/common/optMedStr'
+        billingEmail:
+          $ref: '#/components/schemas/common/email'
+        subscriptionStatus:
           type: string
           enum:
-          - accept
-          - dismiss
-          - reject
-      additionalProperties: false
-      required:
-      - action
-    apiTokenPost:
-      title: API Token Post
-      description: Schema for the body of an API Token creation request
+          - trialing
+          - active
+          - past_due
+          - canceled
+          - unpaid
+        currentPeriodStart:
+          $ref: '#/components/schemas/common/date'
+        currentPeriodEnd:
+          $ref: '#/components/schemas/common/date'
+        isEnterprise:
+          type: boolean
+        iconColor:
+          $ref: '#/components/schemas/common/color'
+        whitelistedEmailDomains:
+          type: array
+          items:
+            $ref: '#/components/schemas/common/domainName'
+        disabledAt:
+          oneOf:
+          - type: boolean
+            enum:
+            - false
+          - $ref: '#/components/schemas/common/date'
+        isReadOnly:
+          type: boolean
+        mfaMode:
+          $ref: '#/components/schemas/common/mfaMode'
+        banner:
+          type: object
+          properties:
+            message:
+              type: string
+              maxLength: 2048
+            level:
+              type: string
+              enum:
+              - info
+              - warning
+              - critical
+          additionalProperties: false
+    payloadStats:
+      title: Payload Stats
+      description: Schema for the result of a payload stats request
+      type: object
+      properties:
+        appFile:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        dataTable:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCreate:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCommand:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceConnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceDisconnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceState:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        endpoint:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        event:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        flowError:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        inboundEmail:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        integration:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttIn:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttOut:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        notebook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        resourceJob:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        timer:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        virtualButton:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        webhook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+    apiTokenPatch:
+      title: API Token Patch
+      description: Schema for the body of an API Token modification request
       type: object
       properties:
         name:
           $ref: '#/components/schemas/common/name'
         description:
           $ref: '#/components/schemas/common/description'
-        expirationDate:
-          $ref: '#/components/schemas/common/date'
-        scope:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/common/userApiScope'
         status:
           $ref: '#/components/schemas/apiToken/properties/status'
       additionalProperties: false
+    orgInviteAction:
+      title: Organization Invitation Action
+      description: Schema for the body of a request to accept or reject an invitation
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
+        token:
+          $ref: '#/components/schemas/common/token'
+        accept:
+          type: boolean
+      additionalProperties: false
       required:
-      - name
+      - email
+      - token
+      - accept
+    orgInviteInfo:
+      title: Organization Invitation Information
+      description: Schema for information about an invitation
+      type: object
+      properties:
+        orgName:
+          $ref: '#/components/schemas/common/name'
+        email:
+          $ref: '#/components/schemas/common/email'
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        inviteDate:
+          $ref: '#/components/schemas/common/date'
+        ttl:
+          type: number
+        disallowTransfer:
+          type: boolean
+    authedUser:
+      title: Authenticated User
+      description: Schema for the successful response when authenticating a User
+      type: object
+      properties:
+        userId:
+          $ref: '#/components/schemas/common/objectId'
+        token:
+          $ref: '#/components/schemas/common/token'
+        needsToVerifyEmail:
+          type: boolean
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+      required:
+      - userId
+      - token
+    orgInviteResultUser:
+      title: Organization Invitation Result For User
+      description: Schema for the result of accepting/rejecting an invitation
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+          - accepted
+          - rejected
+          - dismissed
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+    orgInviteResult:
+      title: Organization Invitation Result
+      description: Schema for the result of accepting/rejecting an invitation
+      type: object
+      properties:
+        accepted:
+          type: boolean
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
     me:
       title: Me
       description: Schema for information about the currently authenticated user
@@ -1200,30 +1543,55 @@ components:
           $ref: '#/components/schemas/common/date'
         ssoLinked:
           type: boolean
-    authedUser:
-      title: Authenticated User
-      description: Schema for the successful response when authenticating a User
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
       type: object
       properties:
-        userId:
-          $ref: '#/components/schemas/common/objectId'
-        token:
-          $ref: '#/components/schemas/common/token'
-        needsToVerifyEmail:
-          type: boolean
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                $ref: '#/components/schemas/common/date'
+              minutes:
+                type: integer
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+    samlResponse:
+      title: SAML Response
+      description: SAML Response body for login
+      type: object
+      properties:
+        SAMLResponse:
+          type: string
+          minLength: 4
+          maxLength: 100000
+        SAMLDomain:
+          $ref: '#/components/schemas/common/domainName'
+        requestedScopes:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/common/userApiScope'
+        tokenTTL:
+          type: integer
+          minimum: 0
       required:
-      - userId
-      - token
-    orgInvitesUser:
-      title: User Organization Invitations
-      description: Schema for an array of pending organization invitations for a user
-      type: array
-      items:
-        type: object
-        properties:
-          $ref: '#/definitions/orgInviteUser'
+      - SAMLResponse
+      - SAMLDomain
+      additionalProperties: false
     orgPost:
       title: Organization Post
       description: Schema for the body of an Organization creation request
@@ -1246,395 +1614,27 @@ components:
       additionalProperties: false
       required:
       - name
-    orgInviteAction:
-      title: Organization Invitation Action
-      description: Schema for the body of a request to accept or reject an invitation
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/common/email'
-        token:
-          $ref: '#/components/schemas/common/token'
-        accept:
-          type: boolean
-      additionalProperties: false
-      required:
-      - email
-      - token
-      - accept
-    orgInviteInfo:
-      title: Organization Invitation Information
-      description: Schema for information about an invitation
-      type: object
-      properties:
-        orgName:
-          $ref: '#/components/schemas/common/name'
-        email:
-          $ref: '#/components/schemas/common/email'
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        inviteDate:
-          $ref: '#/components/schemas/common/date'
-        ttl:
-          type: number
-        disallowTransfer:
-          type: boolean
-    orgs:
-      title: Organizations
-      description: Schema for a collection of Organizations
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/org'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-    payloadStats:
-      title: Payload Stats
-      description: Schema for the result of a payload stats request
-      type: object
-      properties:
-        appFile:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        dataTable:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceCreate:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceCommand:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceConnect:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceDisconnect:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        deviceState:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        endpoint:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        event:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        flowError:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        inboundEmail:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        integration:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        mqttIn:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        mqttOut:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        notebook:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        resourceJob:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        timer:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        virtualButton:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-        webhook:
-          type: object
-          patternProperties:
-            .*:
-              type: number
-    resourceTransfer:
-      title: Resource Transfer
-      description: Schema for the body of a resource transfer request
-      type: object
-      properties:
-        destinationId:
-          $ref: '#/components/schemas/common/objectId'
-        destinationType:
-          $ref: '#/components/schemas/common/ownerType'
-        applicationIds:
-          $ref: '#/components/schemas/common/objectIds'
-        dashboardIds:
-          $ref: '#/components/schemas/common/objectIds'
-        strict:
-          type: boolean
-      additionalProperties: false
-      required:
-      - destinationId
-      - destinationType
-    org:
-      title: Organization
-      description: Schema for a single Organization
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        members:
-          type: array
-          items:
-            type: object
-            properties:
-              userId:
-                $ref: '#/components/schemas/common/objectId'
-              firstName:
-                $ref: '#/components/schemas/common/reqMedStr'
-              lastName:
-                $ref: '#/components/schemas/common/optMedStr'
-              email:
-                $ref: '#/components/schemas/common/email'
-              avatarUrl:
-                $ref: '#/components/schemas/me/properties/avatarUrl'
-              role:
-                $ref: '#/components/schemas/common/orgRole'
-              applicationRoles:
-                $ref: '#/components/schemas/common/resourceRoles'
-              dashboardRoles:
-                $ref: '#/components/schemas/common/resourceRoles'
-              twoFactorAuthEnabled:
-                type: boolean
-              ssoLinked:
-                type: boolean
-        limits:
-          $ref: '#/components/schemas/common/orgLimits'
-        summary:
-          type: object
-          properties:
-            apiTokenCount:
-              type: integer
-            appCount:
-              type: integer
-            certificateCount:
-              type: integer
-            certificateAuthorityCount:
-              type: integer
-            credentialCount:
-              type: integer
-            dashCount:
-              type: integer
-            dataTableCount:
-              type: integer
-            deviceCount:
-              type: integer
-            deviceRecipeCount:
-              type: integer
-            eventCount:
-              type: integer
-            experienceDomainCount:
-              type: integer
-            experienceEndpointCount:
-              type: integer
-            experienceGroupCount:
-              type: integer
-            experienceSlugCount:
-              type: integer
-            experienceUserCount:
-              type: integer
-            experienceVersionCount:
-              type: integer
-            experienceViewCount:
-              type: integer
-            fileCount:
-              type: integer
-            flowCount:
-              type: integer
-            integrationCount:
-              type: integer
-            keyCount:
-              type: integer
-            notebookCount:
-              type: integer
-            privateFileCount:
-              type: integer
-            resourceJobCount:
-              type: integer
-            webhookCount:
-              type: integer
-            memberCount:
-              type: integer
-            pendingInviteCount:
-              type: integer
-            payloadCount:
-              $ref: '#/components/schemas/payloadStats'
-            storageStats:
-              $ref: '#/components/schemas/common/storageStats'
-            notebookStats:
-              $ref: '#/components/schemas/common/notebookStats'
-        planId:
-          $ref: '#/components/schemas/common/optMedStr'
-        billingEmail:
-          $ref: '#/components/schemas/common/email'
-        subscriptionStatus:
-          type: string
-          enum:
-          - trialing
-          - active
-          - past_due
-          - canceled
-          - unpaid
-        currentPeriodStart:
-          $ref: '#/components/schemas/common/date'
-        currentPeriodEnd:
-          $ref: '#/components/schemas/common/date'
-        isEnterprise:
-          type: boolean
-        iconColor:
-          $ref: '#/components/schemas/common/color'
-        whitelistedEmailDomains:
-          type: array
-          items:
-            $ref: '#/components/schemas/common/domainName'
-        disabledAt:
-          oneOf:
-          - type: boolean
-            enum:
-            - false
-          - $ref: '#/components/schemas/common/date'
-        isReadOnly:
-          type: boolean
-        mfaMode:
-          $ref: '#/components/schemas/common/mfaMode'
-        banner:
-          type: object
-          properties:
-            message:
-              type: string
-              maxLength: 2048
-            level:
-              type: string
-              enum:
-              - info
-              - warning
-              - critical
-          additionalProperties: false
-    orgInvitePost:
-      title: Organization Invitation Post
-      description: Schema for the body of a request to send an invitation
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/common/email'
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        applicationRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        dashboardRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        disallowTransfer:
-          type: boolean
-      additionalProperties: false
-      required:
-      - email
-      - role
-    orgInviteResultUser:
-      title: Organization Invitation Result For User
-      description: Schema for the result of accepting/rejecting an invitation
-      type: object
-      properties:
-        result:
-          type: string
-          enum:
-          - accepted
-          - rejected
-          - dismissed
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
-    ssoRequest:
-      title: SSO Request
-      description: SSO Request built from the SP and IDP config
-      type: object
-      properties:
-        ssoType:
-          type: string
-          enum:
-          - SAML
-        ssoRequest:
-          $ref: '#/components/schemas/common/description'
-      required:
-      - ssoType
-      - ssoRequest
-    apiTokenPatch:
-      title: API Token Patch
-      description: Schema for the body of an API Token modification request
+    apiTokenPost:
+      title: API Token Post
+      description: Schema for the body of an API Token creation request
       type: object
       properties:
         name:
           $ref: '#/components/schemas/common/name'
         description:
           $ref: '#/components/schemas/common/description'
+        expirationDate:
+          $ref: '#/components/schemas/common/date'
+        scope:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/common/userApiScope'
         status:
           $ref: '#/components/schemas/apiToken/properties/status'
       additionalProperties: false
+      required:
+      - name
   securitySchemes:
     BearerAuth:
       type: http

@@ -2709,6 +2709,76 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    instances:
+      title: Instances
+      description: Schema for a collection of Instances
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instance'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    flowErrors:
+      title: Workflow Errors
+      description: Workflow run error information
+      type: object
+      properties:
+        flowVersion:
+          $ref: '#/components/schemas/common/name'
+        flowVersionId:
+          $ref: '#/components/schemas/common/objectId'
+        deviceId:
+          $ref: '#/components/schemas/common/objectId'
+        start:
+          $ref: '#/components/schemas/common/date'
+        end:
+          $ref: '#/components/schemas/common/date'
+        limit:
+          type: number
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              time:
+                $ref: '#/components/schemas/common/date'
+              deviceId:
+                $ref: '#/components/schemas/common/objectId'
+              deviceName:
+                $ref: '#/components/schemas/common/name'
+              flowVersion:
+                $ref: '#/components/schemas/common/name'
+              flowVersionId:
+                $ref: '#/components/schemas/common/objectId'
+              nodeId:
+                type: string
+              nodeLabel:
+                type: string
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
     org:
       title: Organization
       description: Schema for a single Organization
@@ -2863,40 +2933,72 @@ components:
               - warning
               - critical
           additionalProperties: false
-    notificationRulePost:
-      title: Notification Rule Post
-      description: Schema for the body of a notification rule creation request
+    instanceMemberPost:
+      title: Instance Member Post
+      description: Schema for an Instance member creation request
       type: object
       properties:
-        targetType:
-          $ref: '#/components/schemas/notificationRule/properties/targetType'
-        targetQueryJson:
-          $ref: '#/components/schemas/notificationRule/properties/targetQueryJson'
-        name:
-          $ref: '#/components/schemas/notificationRule/properties/name'
-        description:
-          $ref: '#/components/schemas/notificationRule/properties/description'
-        enabled:
-          $ref: '#/components/schemas/notificationRule/properties/enabled'
-        callbackUrl:
-          oneOf:
-          - $ref: '#/components/schemas/notificationRule/properties/callbackUrl'
-          - type: 'null'
-          - type: string
-            enum:
-            - ''
-        emailConfig:
-          oneOf:
-          - $ref: '#/components/schemas/notificationRule/properties/emailConfig'
-          - type: 'null'
-        ruleConfig:
-          $ref: '#/components/schemas/notificationRule/properties/ruleConfig'
+        userId:
+          $ref: '#/components/schemas/common/objectId'
+        email:
+          $ref: '#/components/schemas/common/email'
+        role:
+          $ref: '#/components/schemas/common/instanceRole'
       additionalProperties: false
-      required:
-      - targetType
-      - targetQueryJson
-      - name
-      - ruleConfig
+      anyOf:
+      - required:
+        - email
+        - role
+      - required:
+        - userId
+        - role
+    apiToken:
+      title: API Token
+      description: Schema for a single API Token
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        apiTokenId:
+          $ref: '#/components/schemas/common/objectId'
+        ownerId:
+          $ref: '#/components/schemas/common/objectId'
+        ownerType:
+          type: string
+          enum:
+          - application
+          - user
+        creatorId:
+          $ref: '#/components/schemas/common/objectId'
+        creatorType:
+          type: string
+          enum:
+          - apiToken
+          - user
+          - flow
+        creatorName:
+          $ref: '#/components/schemas/common/optMedStr'
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        expirationDate:
+          $ref: '#/components/schemas/common/date'
+        scope:
+          type: array
+          items:
+            $ref: '#/components/schemas/common/reqMedStr'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        token:
+          $ref: '#/components/schemas/common/token'
     notificationRule:
       title: Notification Rule
       description: Schema for a single notification rule
@@ -2999,6 +3101,32 @@ components:
           - thresholdType
           - threshold
           additionalProperties: false
+    instanceOrgMember:
+      title: Instance Org Member
+      description: Schema for an Instance Organization member
+      type: object
+      properties:
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+        userId:
+          $ref: '#/components/schemas/common/objectId'
+        email:
+          $ref: '#/components/schemas/common/email'
+        firstName:
+          $ref: '#/components/schemas/common/reqMedStr'
+        lastName:
+          $ref: '#/components/schemas/common/optMedStr'
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        avatarUrl:
+          $ref: '#/components/schemas/common/url'
+        twoFactorAuthEnabled:
+          type: boolean
+        ssoLinked:
+          type: boolean
+      additionalProperties: false
     instanceCustomNodePost:
       title: Instance Custom Node Post
       description: Schema for the body of a Instance Custom Node creation request
@@ -3048,31 +3176,92 @@ components:
       - name
       - triggers
       - nodes
-    instanceMemberPatch:
-      title: Instance Member Patch
-      description: Schema for an Instance member modification request
-      type: object
-      properties:
-        role:
-          $ref: '#/components/schemas/common/instanceRole'
-      additionalProperties: false
-      required:
-      - role
-    instanceOrgMembers:
-      title: Instance Organization Members
-      description: Schema for a collection of Organization members within an instance
+    notificationRuleDeliveryLogs:
+      title: Notification Rule Delivery Logs
+      description: Schema for a set of Notification Rule delivery logs
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/common/objectId'
+          notificationRuleDeliveryId:
+            $ref: '#/components/schemas/common/objectId'
+          notificationRuleId:
+            $ref: '#/components/schemas/common/objectId'
+          ownerId:
+            $ref: '#/components/schemas/common/objectId'
+          ownerType:
+            type: string
+            enum:
+            - instance
+          requestedById:
+            $ref: '#/components/schemas/common/objectId'
+          requestedByType:
+            type: string
+            enum:
+            - user
+            - apiToken
+            - system
+          sentAt:
+            $ref: '#/components/schemas/common/date'
+          targetType:
+            type: string
+            enum:
+            - organization
+          targetId:
+            $ref: '#/components/schemas/common/objectId'
+          targetName:
+            $ref: '#/components/schemas/common/name'
+          callbackUrl:
+            $ref: '#/components/schemas/common/url'
+          email:
+            type: object
+            properties:
+              subject:
+                type: string
+              body:
+                type: string
+              addresses:
+                type: array
+                items:
+                  $ref: '#/components/schemas/common/email'
+          evaluation:
+            type: object
+            properties:
+              value:
+                type: number
+              limit:
+                type: number
+              ruleType:
+                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/ruleType'
+              thresholdType:
+                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/thresholdType'
+              threshold:
+                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/threshold'
+              maxFrequency:
+                type: string
+                enum:
+                - billingCycle
+                - daily
+                - unlimited
+    instanceSandboxes:
+      title: Instance Sandboxes
+      description: Schema for a collection of instance associated sandboxes
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/instanceOrgMembers'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
+            $ref: '#/components/schemas/instanceSandbox'
         count:
           type: integer
+        limit:
+          type: integer
+        startingAfterId:
+          $ref: '#/components/schemas/common/objectId'
+        endingBeforeId:
+          $ref: '#/components/schemas/common/objectId'
         filter:
           type: string
         filterField:
@@ -3081,34 +3270,8 @@ components:
           type: string
         sortDirection:
           $ref: '#/components/schemas/common/sortDirection'
-    instanceOrgMemberPatch:
-      title: Instance Org Member Patch
-      description: Schema for an Instance Organization member modification request
-      type: object
-      properties:
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        applicationRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        dashboardRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-      additionalProperties: false
-    jobEnqueuedResult:
-      title: Job Enqueued API Result
-      description: Schema for the result of a job being queued
-      type: object
-      properties:
-        jobQueued:
+        hasMore:
           type: boolean
-          enum:
-          - true
-        jobId:
-          type: string
-          maxLength: 21
-        success:
-          type: boolean
-          enum:
-          - true
     instanceReportOptionsPost:
       title: Instance Report Options Post
       description: Schema for the body of a instance report request
@@ -3135,32 +3298,209 @@ components:
         end:
           $ref: '#/components/schemas/common/date'
       additionalProperties: false
-    instanceOrgPost:
-      title: Instance Owned Organization Post
-      description: Schema for the body of an Organization creation request within an instance
+    orgInviteCollection:
+      title: Instance Organization Invitations
+      description: Schema for an collection of pending invitations to an Instance Organization
       type: object
       properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/orgInvite'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+        count:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    instanceCustomNode:
+      title: Instance Custom Node
+      description: Schema for a single Instance Custom Node
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        instanceCustomNodeId:
+          $ref: '#/components/schemas/common/objectId'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        createdById:
+          $ref: '#/components/schemas/common/objectId'
+        createdByType:
+          type: string
+          enum:
+          - apiToken
+          - user
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        lastUpdatedById:
+          $ref: '#/components/schemas/common/objectId'
+        lastUpdatedByType:
+          type: string
+          enum:
+          - apiToken
+          - user
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        shortDescription:
+          $ref: '#/components/schemas/common/shortString'
+        iconData:
+          $ref: '#/components/schemas/common/imageDataUri'
+        docsUrl:
+          $ref: '#/components/schemas/common/shortString'
+        category:
+          $ref: '#/components/schemas/flow/properties/category'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        triggers:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                $ref: '#/components/schemas/common/optMedStr'
+              type:
+                type: string
+                enum:
+                - customNodeStart
+              config:
+                type: object
+                additionalProperties: false
+              meta:
+                type: object
+                properties:
+                  category:
+                    type: string
+                    enum:
+                    - trigger
+                  name:
+                    type: string
+                    enum:
+                    - customNodeStart
+                  label:
+                    $ref: '#/components/schemas/common/name'
+                  x:
+                    type: number
+                  y:
+                    type: number
+                  uiId:
+                    type: string
+                    maxLength: 48
+                  description:
+                    $ref: '#/components/schemas/common/description'
+                additionalProperties: false
+              outputIds:
+                $ref: '#/components/schemas/common/outputIds'
+            required:
+            - type
+            additionalProperties: false
+          maxItems: 1
+        nodes:
+          $ref: '#/components/schemas/flow/properties/nodes'
+        customNodeConfig:
+          $ref: '#/components/schemas/flow/properties/customNodeConfig'
+        customNodeSupports:
+          type: array
+          maxItems: 1
+          items:
+            type: string
+            enum:
+            - cloud
+            - edge
+        sourceApplicationId:
+          $ref: '#/components/schemas/common/objectId'
+        sourceFlowId:
+          $ref: '#/components/schemas/common/objectId'
+        sourceFlowVersion:
+          $ref: '#/components/schemas/common/name'
+        stats:
+          type: object
+          properties:
+            errorCount:
+              type: integer
+            runCount:
+              type: integer
+          additionalProperties: false
+        usage:
+          type: object
+          properties:
+            sandbox:
+              type: object
+              properties:
+                appCount:
+                  type: integer
+                flowCount:
+                  type: integer
+              additionalProperties: false
+          patternProperties:
+            ^[A-Fa-f\d]{24}$:
+              type: object
+              properties:
+                appCount:
+                  type: integer
+                flowCount:
+                  type: integer
+                orgName:
+                  $ref: '#/components/schemas/common/name'
+                orgIconColor:
+                  $ref: '#/components/schemas/common/color'
+              additionalProperties: false
+          additionalProperties: false
+    instancePatch:
+      title: Instance Patch
+      description: Schema for instance patch request
+      type: object
+      properties:
+        reportConfigs:
+          $ref: '#/components/schemas/instance/properties/reportConfigs'
+        orgDefaultLimitConfig:
+          $ref: '#/components/schemas/common/orgLimits'
+        mfaMode:
+          $ref: '#/components/schemas/common/mfaMode'
+      additionalProperties: false
+    instanceOrg:
+      title: Instance Organization
+      description: Schema for the body of an Organization owned by an instance
+      type: object
+      properties:
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
         name:
           $ref: '#/components/schemas/org/properties/name'
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        orgId:
+          $ref: '#/components/schemas/common/objectId'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
         description:
           $ref: '#/components/schemas/org/properties/description'
         iconColor:
           $ref: '#/components/schemas/org/properties/iconColor'
         limits:
-          $ref: '#/components/schemas/common/orgLimits'
-        members:
-          type: array
-          maxItems: '10'
-          items:
-            $ref: '#/components/schemas/instanceOrgMemberPost'
+          $ref: '#/components/schemas/org/properties/limits'
+        summary:
+          $ref: '#/components/schemas/org/properties/summary'
         whitelistedEmailDomains:
           $ref: '#/components/schemas/org/properties/whitelistedEmailDomains'
         auditLogEnabled:
           type: boolean
         disabledAt:
-          oneOf:
-          - $ref: '#/components/schemas/common/date'
-          - type: boolean
+          $ref: '#/components/schemas/org/properties/disabledAt'
         isReadOnly:
           type: boolean
         tags:
@@ -3171,32 +3511,257 @@ components:
           $ref: '#/components/schemas/common/mfaMode'
         banner:
           $ref: '#/components/schemas/org/properties/banner'
+        planId:
+          $ref: '#/components/schemas/org/properties/planId'
+        customerId:
+          $ref: '#/components/schemas/common/optMedStr'
+        subscriptionId:
+          $ref: '#/components/schemas/common/optMedStr'
+        billingEmail:
+          $ref: '#/components/schemas/org/properties/billingEmail'
+        subscriptionStatus:
+          $ref: '#/components/schemas/org/properties/subscriptionStatus'
+        currentPeriodStart:
+          $ref: '#/components/schemas/org/properties/currentPeriodStart'
+        currentPeriodEnd:
+          $ref: '#/components/schemas/org/properties/currentPeriodEnd'
       additionalProperties: false
       required:
       - name
-    orgInvite:
-      title: Organization Invitation
-      description: Schema for a pending invitation to an Organization
+    notificationRuleEvaluationOptions:
+      title: Notification Rule Evaluation Options
+      description: Schema for evaluation options for a notification rule
+      type: object
+      properties:
+        ignoreFrequencyCheck:
+          type: boolean
+      additionalProperties: false
+    instanceSandbox:
+      title: Instance Sandbox User
+      description: Schema for information about a sandbox user within an instance domain
       type: object
       properties:
         id:
           $ref: '#/components/schemas/common/objectId'
+        instanceSandboxId:
+          $ref: '#/components/schemas/common/objectId'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
+          $ref: '#/components/schemas/common/date'
+        permanentDeletion:
+          $ref: '#/components/schemas/common/date'
+        dataDeletion:
+          $ref: '#/components/schemas/common/date'
+        lastUpdated:
+          $ref: '#/components/schemas/common/date'
+        lastSuccessfulLogin:
+          $ref: '#/components/schemas/common/date'
+        lastFailedLogin:
+          $ref: '#/components/schemas/common/date'
+        failedLoginCount:
+          type: number
+        passwordLastUpdated:
+          $ref: '#/components/schemas/common/date'
         email:
           $ref: '#/components/schemas/common/email'
+        firstName:
+          $ref: '#/components/schemas/common/reqMedStr'
+        lastName:
+          $ref: '#/components/schemas/common/optMedStr'
+        companyName:
+          $ref: '#/components/schemas/common/optMedStr'
+        title:
+          $ref: '#/components/schemas/common/optMedStr'
+        phoneNumber:
+          $ref: '#/components/schemas/common/optMedStr'
+        location:
+          $ref: '#/components/schemas/common/optMedStr'
+        url:
+          $ref: '#/components/schemas/common/optMedStr'
+        tokenCutoff:
+          $ref: '#/components/schemas/common/date'
+        emailVerified:
+          type: boolean
+        needsToVerifyEmail:
+          type: boolean
+        twoFactorAuthEnabled:
+          type: boolean
+        fullName:
+          type: string
+        githubName:
+          type: string
+        avatarUrl:
+          $ref: '#/components/schemas/common/url'
+        limits:
+          $ref: '#/components/schemas/me/properties/limits'
+        summary:
+          $ref: '#/components/schemas/me/properties/summary'
+        currentPeriodStart:
+          $ref: '#/components/schemas/common/date'
+        currentPeriodEnd:
+          $ref: '#/components/schemas/common/date'
+        ssoLinked:
+          type: boolean
+        orgs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/common/objectId'
+              iconColor:
+                $ref: '#/components/schemas/common/color'
+              name:
+                $ref: '#/components/schemas/common/name'
+    orgRoleInfo:
+      title: Organization Role Info
+      description: Schema for an Organization member's role info
+      type: object
+      properties:
         role:
           $ref: '#/components/schemas/common/orgRole'
         applicationRoles:
           $ref: '#/components/schemas/common/resourceRoles'
         dashboardRoles:
           $ref: '#/components/schemas/common/resourceRoles'
-        inviteDate:
+      additionalProperties: false
+    notificationRulePost:
+      title: Notification Rule Post
+      description: Schema for the body of a notification rule creation request
+      type: object
+      properties:
+        targetType:
+          $ref: '#/components/schemas/notificationRule/properties/targetType'
+        targetQueryJson:
+          $ref: '#/components/schemas/notificationRule/properties/targetQueryJson'
+        name:
+          $ref: '#/components/schemas/notificationRule/properties/name'
+        description:
+          $ref: '#/components/schemas/notificationRule/properties/description'
+        enabled:
+          $ref: '#/components/schemas/notificationRule/properties/enabled'
+        callbackUrl:
+          oneOf:
+          - $ref: '#/components/schemas/notificationRule/properties/callbackUrl'
+          - type: 'null'
+          - type: string
+            enum:
+            - ''
+        emailConfig:
+          oneOf:
+          - $ref: '#/components/schemas/notificationRule/properties/emailConfig'
+          - type: 'null'
+        ruleConfig:
+          $ref: '#/components/schemas/notificationRule/properties/ruleConfig'
+      additionalProperties: false
+      required:
+      - targetType
+      - targetQueryJson
+      - name
+      - ruleConfig
+    instanceAuditLog:
+      title: Instance Audit Log
+      description: Schema for a single Instance Audit Log entry
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/common/objectId'
+        instanceAuditLogId:
+          $ref: '#/components/schemas/common/objectId'
+        creationDate:
           $ref: '#/components/schemas/common/date'
-        ttl:
-          type: number
-        hasExpired:
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        primaryTargetId:
+          $ref: '#/components/schemas/common/objectId'
+        primaryTargetType:
+          type: string
+          enum:
+          - Organization
+          - ApiToken
+          - User
+          - InstanceCustomNode
+          - NotificationRule
+        primaryTargetName:
+          $ref: '#/components/schemas/common/optMedStr'
+        secondaryTargetId:
+          $ref: '#/components/schemas/common/objectId'
+        secondaryTargetType:
+          type: string
+          enum:
+          - OrgInvite
+          - ApiToken
+        secondaryTargetName:
+          $ref: '#/components/schemas/common/optMedStr'
+        actorId:
+          $ref: '#/components/schemas/common/objectId'
+        actorType:
+          type: string
+          enum:
+          - User
+          - ApiToken
+        actorName:
+          $ref: '#/components/schemas/common/optMedStr'
+        requestResource:
+          $ref: '#/components/schemas/common/optMedStr'
+        requestAction:
+          $ref: '#/components/schemas/common/optMedStr'
+        requestQueryParams:
+          type: object
+        requestBody:
+          type: object
+        requestPathParams:
+          type: object
+        responseBody:
+          type: object
+        responseStatus:
+          $ref: '#/components/schemas/common/responseCode'
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
           type: boolean
-        disallowTransfer:
-          type: boolean
+          enum:
+          - true
+    notificationRulePatch:
+      title: Notification Rule Patch
+      description: Schema for the body of a notification rule modification request
+      type: object
+      properties:
+        targetQueryJson:
+          $ref: '#/components/schemas/notificationRule/properties/targetQueryJson'
+        name:
+          $ref: '#/components/schemas/notificationRule/properties/name'
+        description:
+          $ref: '#/components/schemas/notificationRule/properties/description'
+        enabled:
+          $ref: '#/components/schemas/notificationRule/properties/enabled'
+        callbackUrl:
+          oneOf:
+          - $ref: '#/components/schemas/notificationRule/properties/callbackUrl'
+          - type: 'null'
+          - type: string
+            enum:
+            - ''
+        emailConfig:
+          oneOf:
+          - $ref: '#/components/schemas/notificationRule/properties/emailConfig'
+          - type: 'null'
+        ruleConfig:
+          $ref: '#/components/schemas/notificationRule/properties/ruleConfig'
+      additionalProperties: false
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
     payloadStats:
       title: Payload Stats
       description: Schema for the result of a payload stats request
@@ -3297,242 +3862,108 @@ components:
           patternProperties:
             .*:
               type: number
-    instanceOrgMember:
-      title: Instance Org Member
-      description: Schema for an Instance Organization member
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
       type: object
       properties:
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
-        userId:
-          $ref: '#/components/schemas/common/objectId'
-        email:
-          $ref: '#/components/schemas/common/email'
-        firstName:
-          $ref: '#/components/schemas/common/reqMedStr'
-        lastName:
-          $ref: '#/components/schemas/common/optMedStr'
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        avatarUrl:
-          $ref: '#/components/schemas/common/url'
-        twoFactorAuthEnabled:
-          type: boolean
-        ssoLinked:
-          type: boolean
-      additionalProperties: false
-    instanceCustomNodePatch:
-      title: Instance Custom Node Patch
-      description: Schema for the body of a Instance Custom Node modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        shortDescription:
-          $ref: '#/components/schemas/common/shortString'
-        iconData:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/iconData'
-        docsUrl:
-          $ref: '#/components/schemas/common/shortString'
-        category:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/category'
-        minimumAgentVersion:
-          $ref: '#/components/schemas/common/version'
-        triggers:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/triggers'
-        nodes:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/nodes'
-        customNodeConfig:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/customNodeConfig'
-        customNodeSupports:
-          $ref: '#/components/schemas/instanceCustomNodePost/properties/customNodeSupports'
-      additionalProperties:
-        oneOf:
-        - type: array
-          maxItems: 0
-        - type: string
-          maxLength: 1024
-        - type: boolean
-      maxProperties: 25
-    instanceSandbox:
-      title: Instance Sandbox User
-      description: Schema for information about a sandbox user within an instance domain
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        instanceSandboxId:
-          $ref: '#/components/schemas/common/objectId'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
+        start:
           $ref: '#/components/schemas/common/date'
-        permanentDeletion:
+        end:
           $ref: '#/components/schemas/common/date'
-        dataDeletion:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        lastSuccessfulLogin:
-          $ref: '#/components/schemas/common/date'
-        lastFailedLogin:
-          $ref: '#/components/schemas/common/date'
-        failedLoginCount:
-          type: number
-        passwordLastUpdated:
-          $ref: '#/components/schemas/common/date'
-        email:
-          $ref: '#/components/schemas/common/email'
-        firstName:
-          $ref: '#/components/schemas/common/reqMedStr'
-        lastName:
-          $ref: '#/components/schemas/common/optMedStr'
-        companyName:
-          $ref: '#/components/schemas/common/optMedStr'
-        title:
-          $ref: '#/components/schemas/common/optMedStr'
-        phoneNumber:
-          $ref: '#/components/schemas/common/optMedStr'
-        location:
-          $ref: '#/components/schemas/common/optMedStr'
-        url:
-          $ref: '#/components/schemas/common/optMedStr'
-        tokenCutoff:
-          $ref: '#/components/schemas/common/date'
-        emailVerified:
-          type: boolean
-        needsToVerifyEmail:
-          type: boolean
-        twoFactorAuthEnabled:
-          type: boolean
-        fullName:
-          type: string
-        githubName:
-          type: string
-        avatarUrl:
-          $ref: '#/components/schemas/common/url'
-        limits:
-          $ref: '#/components/schemas/me/properties/limits'
-        summary:
-          $ref: '#/components/schemas/me/properties/summary'
-        currentPeriodStart:
-          $ref: '#/components/schemas/common/date'
-        currentPeriodEnd:
-          $ref: '#/components/schemas/common/date'
-        ssoLinked:
-          type: boolean
-        orgs:
+        counts:
           type: array
           items:
             type: object
             properties:
-              id:
-                $ref: '#/components/schemas/common/objectId'
-              iconColor:
-                $ref: '#/components/schemas/common/color'
-              name:
-                $ref: '#/components/schemas/common/name'
-    instanceAuditLog:
-      title: Instance Audit Log
-      description: Schema for a single Instance Audit Log entry
+              date:
+                $ref: '#/components/schemas/common/date'
+              minutes:
+                type: integer
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+    instanceCustomNodes:
+      title: Instance Custom Nodes
+      description: Schema for a collection of Custom Nodes within an instance
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceCustomNode'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+    orgInvite:
+      title: Organization Invitation
+      description: Schema for a pending invitation to an Organization
       type: object
       properties:
         id:
           $ref: '#/components/schemas/common/objectId'
-        instanceAuditLogId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
+        email:
+          $ref: '#/components/schemas/common/email'
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        applicationRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        dashboardRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        inviteDate:
           $ref: '#/components/schemas/common/date'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        primaryTargetId:
-          $ref: '#/components/schemas/common/objectId'
-        primaryTargetType:
-          type: string
-          enum:
-          - Organization
-          - ApiToken
-          - User
-          - InstanceCustomNode
-          - NotificationRule
-        primaryTargetName:
-          $ref: '#/components/schemas/common/optMedStr'
-        secondaryTargetId:
-          $ref: '#/components/schemas/common/objectId'
-        secondaryTargetType:
-          type: string
-          enum:
-          - OrgInvite
-          - ApiToken
-        secondaryTargetName:
-          $ref: '#/components/schemas/common/optMedStr'
-        actorId:
-          $ref: '#/components/schemas/common/objectId'
-        actorType:
-          type: string
-          enum:
-          - User
-          - ApiToken
-        actorName:
-          $ref: '#/components/schemas/common/optMedStr'
-        requestResource:
-          $ref: '#/components/schemas/common/optMedStr'
-        requestAction:
-          $ref: '#/components/schemas/common/optMedStr'
-        requestQueryParams:
-          type: object
-        requestBody:
-          type: object
-        requestPathParams:
-          type: object
-        responseBody:
-          type: object
-        responseStatus:
-          $ref: '#/components/schemas/common/responseCode'
-    success:
-      title: Success
-      description: Schema for reporting a successful operation
-      type: object
-      properties:
-        success:
+        ttl:
+          type: number
+        hasExpired:
           type: boolean
-          enum:
-          - true
-    instanceOrg:
-      title: Instance Organization
-      description: Schema for the body of an Organization owned by an instance
+        disallowTransfer:
+          type: boolean
+    instanceOrgPost:
+      title: Instance Owned Organization Post
+      description: Schema for the body of an Organization creation request within an instance
       type: object
       properties:
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
         name:
           $ref: '#/components/schemas/org/properties/name'
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        orgId:
-          $ref: '#/components/schemas/common/objectId'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
         description:
           $ref: '#/components/schemas/org/properties/description'
         iconColor:
           $ref: '#/components/schemas/org/properties/iconColor'
         limits:
-          $ref: '#/components/schemas/org/properties/limits'
-        summary:
-          $ref: '#/components/schemas/org/properties/summary'
+          $ref: '#/components/schemas/common/orgLimits'
+        members:
+          type: array
+          maxItems: '10'
+          items:
+            $ref: '#/components/schemas/instanceOrgMemberPost'
         whitelistedEmailDomains:
           $ref: '#/components/schemas/org/properties/whitelistedEmailDomains'
         auditLogEnabled:
           type: boolean
         disabledAt:
-          $ref: '#/components/schemas/org/properties/disabledAt'
+          oneOf:
+          - $ref: '#/components/schemas/common/date'
+          - type: boolean
         isReadOnly:
           type: boolean
         tags:
@@ -3543,119 +3974,55 @@ components:
           $ref: '#/components/schemas/common/mfaMode'
         banner:
           $ref: '#/components/schemas/org/properties/banner'
-        planId:
-          $ref: '#/components/schemas/org/properties/planId'
-        customerId:
-          $ref: '#/components/schemas/common/optMedStr'
-        subscriptionId:
-          $ref: '#/components/schemas/common/optMedStr'
-        billingEmail:
-          $ref: '#/components/schemas/org/properties/billingEmail'
-        subscriptionStatus:
-          $ref: '#/components/schemas/org/properties/subscriptionStatus'
-        currentPeriodStart:
-          $ref: '#/components/schemas/org/properties/currentPeriodStart'
-        currentPeriodEnd:
-          $ref: '#/components/schemas/org/properties/currentPeriodEnd'
       additionalProperties: false
       required:
       - name
-    notificationRuleDeliveryLogs:
-      title: Notification Rule Delivery Logs
-      description: Schema for a set of Notification Rule delivery logs
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/common/objectId'
-          notificationRuleDeliveryId:
-            $ref: '#/components/schemas/common/objectId'
-          notificationRuleId:
-            $ref: '#/components/schemas/common/objectId'
-          ownerId:
-            $ref: '#/components/schemas/common/objectId'
-          ownerType:
-            type: string
-            enum:
-            - instance
-          requestedById:
-            $ref: '#/components/schemas/common/objectId'
-          requestedByType:
-            type: string
-            enum:
-            - user
-            - apiToken
-            - system
-          sentAt:
-            $ref: '#/components/schemas/common/date'
-          targetType:
-            type: string
-            enum:
-            - organization
-          targetId:
-            $ref: '#/components/schemas/common/objectId'
-          targetName:
-            $ref: '#/components/schemas/common/name'
-          callbackUrl:
-            $ref: '#/components/schemas/common/url'
-          email:
-            type: object
-            properties:
-              subject:
-                type: string
-              body:
-                type: string
-              addresses:
-                type: array
-                items:
-                  $ref: '#/components/schemas/common/email'
-          evaluation:
-            type: object
-            properties:
-              value:
-                type: number
-              limit:
-                type: number
-              ruleType:
-                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/ruleType'
-              thresholdType:
-                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/thresholdType'
-              threshold:
-                $ref: '#/components/schemas/notificationRule/properties/ruleConfig/properties/threshold'
-              maxFrequency:
-                type: string
-                enum:
-                - billingCycle
-                - daily
-                - unlimited
-    instanceSandboxes:
-      title: Instance Sandboxes
-      description: Schema for a collection of instance associated sandboxes
+    instanceOrgMemberPatch:
+      title: Instance Org Member Patch
+      description: Schema for an Instance Organization member modification request
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instanceSandbox'
-        count:
-          type: integer
-        limit:
-          type: integer
-        startingAfterId:
-          $ref: '#/components/schemas/common/objectId'
-        endingBeforeId:
-          $ref: '#/components/schemas/common/objectId'
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        hasMore:
-          type: boolean
+        role:
+          $ref: '#/components/schemas/common/orgRole'
+        applicationRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+        dashboardRoles:
+          $ref: '#/components/schemas/common/resourceRoles'
+      additionalProperties: false
+    instanceOrgMemberPost:
+      title: Instance Org Member Post
+      description: Schema for an Instance Organization member creation request
+      oneOf:
+      - type: object
+        properties:
+          userId:
+            $ref: '#/components/schemas/common/objectId'
+          role:
+            $ref: '#/components/schemas/common/orgRole'
+          applicationRoles:
+            $ref: '#/components/schemas/common/resourceRoles'
+          dashboardRoles:
+            $ref: '#/components/schemas/common/resourceRoles'
+        additionalProperties: false
+        required:
+        - userId
+        - role
+      - type: object
+        properties:
+          email:
+            $ref: '#/components/schemas/common/email'
+          role:
+            $ref: '#/components/schemas/common/orgRole'
+          applicationRoles:
+            $ref: '#/components/schemas/common/resourceRoles'
+          dashboardRoles:
+            $ref: '#/components/schemas/common/resourceRoles'
+          disallowTransfer:
+            type: boolean
+        additionalProperties: false
+        required:
+        - email
+        - role
     instance:
       title: Instance
       description: Schema for a single Instance
@@ -3801,189 +4168,22 @@ components:
                 $ref: '#/components/schemas/common/instanceRole'
         mfaMode:
           $ref: '#/components/schemas/common/mfaMode'
-    instanceCustomNode:
-      title: Instance Custom Node
-      description: Schema for a single Instance Custom Node
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
       type: object
       properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        instanceCustomNodeId:
-          $ref: '#/components/schemas/common/objectId'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        createdById:
-          $ref: '#/components/schemas/common/objectId'
-        createdByType:
-          type: string
-          enum:
-          - apiToken
-          - user
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        lastUpdatedById:
-          $ref: '#/components/schemas/common/objectId'
-        lastUpdatedByType:
-          type: string
-          enum:
-          - apiToken
-          - user
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        shortDescription:
-          $ref: '#/components/schemas/common/shortString'
-        iconData:
-          $ref: '#/components/schemas/common/imageDataUri'
-        docsUrl:
-          $ref: '#/components/schemas/common/shortString'
-        category:
-          $ref: '#/components/schemas/flow/properties/category'
-        minimumAgentVersion:
-          $ref: '#/components/schemas/common/version'
-        triggers:
-          type: array
-          items:
-            type: object
-            properties:
-              key:
-                $ref: '#/components/schemas/common/optMedStr'
-              type:
-                type: string
-                enum:
-                - customNodeStart
-              config:
-                type: object
-                additionalProperties: false
-              meta:
-                type: object
-                properties:
-                  category:
-                    type: string
-                    enum:
-                    - trigger
-                  name:
-                    type: string
-                    enum:
-                    - customNodeStart
-                  label:
-                    $ref: '#/components/schemas/common/name'
-                  x:
-                    type: number
-                  y:
-                    type: number
-                  uiId:
-                    type: string
-                    maxLength: 48
-                  description:
-                    $ref: '#/components/schemas/common/description'
-                additionalProperties: false
-              outputIds:
-                $ref: '#/components/schemas/common/outputIds'
-            required:
-            - type
-            additionalProperties: false
-          maxItems: 1
-        nodes:
-          $ref: '#/components/schemas/flow/properties/nodes'
-        customNodeConfig:
-          $ref: '#/components/schemas/flow/properties/customNodeConfig'
-        customNodeSupports:
-          type: array
-          maxItems: 1
-          items:
-            type: string
-            enum:
-            - cloud
-            - edge
-        sourceApplicationId:
-          $ref: '#/components/schemas/common/objectId'
-        sourceFlowId:
-          $ref: '#/components/schemas/common/objectId'
-        sourceFlowVersion:
-          $ref: '#/components/schemas/common/name'
-        stats:
-          type: object
-          properties:
-            errorCount:
-              type: integer
-            runCount:
-              type: integer
-          additionalProperties: false
-        usage:
-          type: object
-          properties:
-            sandbox:
-              type: object
-              properties:
-                appCount:
-                  type: integer
-                flowCount:
-                  type: integer
-              additionalProperties: false
-          patternProperties:
-            ^[A-Fa-f\d]{24}$:
-              type: object
-              properties:
-                appCount:
-                  type: integer
-                flowCount:
-                  type: integer
-                orgName:
-                  $ref: '#/components/schemas/common/name'
-                orgIconColor:
-                  $ref: '#/components/schemas/common/color'
-              additionalProperties: false
-          additionalProperties: false
-    notificationRulePatch:
-      title: Notification Rule Patch
-      description: Schema for the body of a notification rule modification request
-      type: object
-      properties:
-        targetQueryJson:
-          $ref: '#/components/schemas/notificationRule/properties/targetQueryJson'
-        name:
-          $ref: '#/components/schemas/notificationRule/properties/name'
-        description:
-          $ref: '#/components/schemas/notificationRule/properties/description'
-        enabled:
-          $ref: '#/components/schemas/notificationRule/properties/enabled'
-        callbackUrl:
-          oneOf:
-          - $ref: '#/components/schemas/notificationRule/properties/callbackUrl'
-          - type: 'null'
-          - type: string
-            enum:
-            - ''
-        emailConfig:
-          oneOf:
-          - $ref: '#/components/schemas/notificationRule/properties/emailConfig'
-          - type: 'null'
-        ruleConfig:
-          $ref: '#/components/schemas/notificationRule/properties/ruleConfig'
-      additionalProperties: false
-    orgInvitePost:
-      title: Organization Invitation Post
-      description: Schema for the body of a request to send an invitation
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/common/email'
-        role:
-          $ref: '#/components/schemas/common/orgRole'
-        applicationRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        dashboardRoles:
-          $ref: '#/components/schemas/common/resourceRoles'
-        disallowTransfer:
+        jobQueued:
           type: boolean
-      additionalProperties: false
-      required:
-      - email
-      - role
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 21
+        success:
+          type: boolean
+          enum:
+          - true
     instanceOrgs:
       title: Instance Organizations
       description: Schema for a collection of Organizations within an instance
@@ -4011,65 +4211,29 @@ components:
           type: string
         sortDirection:
           $ref: '#/components/schemas/common/sortDirection'
-    instanceMember:
-      title: Instance Member
-      description: Schema for an Instance member
+    instanceAuditLogs:
+      title: Instance Audit Logs
+      description: Schema for a collection of Instance Audit Logs
       type: object
       properties:
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        userId:
-          $ref: '#/components/schemas/common/objectId'
-        email:
-          $ref: '#/components/schemas/common/email'
-        firstName:
-          $ref: '#/components/schemas/common/reqMedStr'
-        lastName:
-          $ref: '#/components/schemas/common/optMedStr'
-        role:
-          $ref: '#/components/schemas/common/instanceRole'
-        avatarUrl:
-          $ref: '#/components/schemas/common/url'
-        twoFactorAuthEnabled:
-          type: boolean
-        ssoLinked:
-          type: boolean
-      additionalProperties: false
-    error:
-      title: Error
-      description: Schema for errors returned by the API
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
-    notebookMinuteCounts:
-      title: Notebook Minute Counts
-      description: Schema for the result of a notebook minute counts request
-      type: object
-      properties:
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        counts:
+        items:
           type: array
           items:
-            type: object
-            properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              minutes:
-                type: integer
-              completed:
-                type: integer
-              canceled:
-                type: integer
-              errored:
-                type: integer
-              timeout:
-                type: integer
+            $ref: '#/components/schemas/instanceAuditLogs'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        sortField:
+          type: string
+        sortDirection:
+          $ref: '#/components/schemas/common/sortDirection'
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
     instanceMembers:
       title: Instance Members
       description: Schema for a collection of Instance members
@@ -4122,49 +4286,60 @@ components:
           type: string
           enum:
           - instance
-    orgRoleInfo:
-      title: Organization Role Info
-      description: Schema for an Organization member's role info
+    instanceCustomNodePatch:
+      title: Instance Custom Node Patch
+      description: Schema for the body of a Instance Custom Node modification request
       type: object
       properties:
+        name:
+          $ref: '#/components/schemas/common/name'
+        description:
+          $ref: '#/components/schemas/common/description'
+        shortDescription:
+          $ref: '#/components/schemas/common/shortString'
+        iconData:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/iconData'
+        docsUrl:
+          $ref: '#/components/schemas/common/shortString'
+        category:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/category'
+        minimumAgentVersion:
+          $ref: '#/components/schemas/common/version'
+        triggers:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/triggers'
+        nodes:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/nodes'
+        customNodeConfig:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/customNodeConfig'
+        customNodeSupports:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/customNodeSupports'
+      additionalProperties:
+        oneOf:
+        - type: array
+          maxItems: 0
+        - type: string
+          maxLength: 1024
+        - type: boolean
+      maxProperties: 25
+    orgInvitePost:
+      title: Organization Invitation Post
+      description: Schema for the body of a request to send an invitation
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/common/email'
         role:
           $ref: '#/components/schemas/common/orgRole'
         applicationRoles:
           $ref: '#/components/schemas/common/resourceRoles'
         dashboardRoles:
           $ref: '#/components/schemas/common/resourceRoles'
+        disallowTransfer:
+          type: boolean
       additionalProperties: false
-    instancePatch:
-      title: Instance Patch
-      description: Schema for instance patch request
-      type: object
-      properties:
-        reportConfigs:
-          $ref: '#/components/schemas/instance/properties/reportConfigs'
-        orgDefaultLimitConfig:
-          $ref: '#/components/schemas/common/orgLimits'
-        mfaMode:
-          $ref: '#/components/schemas/common/mfaMode'
-      additionalProperties: false
-    instanceMemberPost:
-      title: Instance Member Post
-      description: Schema for an Instance member creation request
-      type: object
-      properties:
-        userId:
-          $ref: '#/components/schemas/common/objectId'
-        email:
-          $ref: '#/components/schemas/common/email'
-        role:
-          $ref: '#/components/schemas/common/instanceRole'
-      additionalProperties: false
-      anyOf:
-      - required:
-        - email
-        - role
-      - required:
-        - userId
-        - role
+      required:
+      - email
+      - role
     apiTokenPatch:
       title: API Token Patch
       description: Schema for the body of an API Token modification request
@@ -4177,62 +4352,15 @@ components:
         status:
           $ref: '#/components/schemas/apiToken/properties/status'
       additionalProperties: false
-    apiToken:
-      title: API Token
-      description: Schema for a single API Token
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        apiTokenId:
-          $ref: '#/components/schemas/common/objectId'
-        ownerId:
-          $ref: '#/components/schemas/common/objectId'
-        ownerType:
-          type: string
-          enum:
-          - application
-          - user
-        creatorId:
-          $ref: '#/components/schemas/common/objectId'
-        creatorType:
-          type: string
-          enum:
-          - apiToken
-          - user
-          - flow
-        creatorName:
-          $ref: '#/components/schemas/common/optMedStr'
-        name:
-          $ref: '#/components/schemas/common/name'
-        description:
-          $ref: '#/components/schemas/common/description'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        expirationDate:
-          $ref: '#/components/schemas/common/date'
-        scope:
-          type: array
-          items:
-            $ref: '#/components/schemas/common/reqMedStr'
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-        token:
-          $ref: '#/components/schemas/common/token'
-    orgInviteCollection:
-      title: Instance Organization Invitations
-      description: Schema for an collection of pending invitations to an Instance Organization
+    instanceOrgMembers:
+      title: Instance Organization Members
+      description: Schema for a collection of Organization members within an instance
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/orgInvite'
+            $ref: '#/components/schemas/instanceOrgMembers'
         instanceId:
           $ref: '#/components/schemas/common/objectId'
         orgId:
@@ -4247,6 +4375,40 @@ components:
           type: string
         sortDirection:
           $ref: '#/components/schemas/common/sortDirection'
+    instanceMemberPatch:
+      title: Instance Member Patch
+      description: Schema for an Instance member modification request
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/common/instanceRole'
+      additionalProperties: false
+      required:
+      - role
+    instanceMember:
+      title: Instance Member
+      description: Schema for an Instance member
+      type: object
+      properties:
+        instanceId:
+          $ref: '#/components/schemas/common/objectId'
+        userId:
+          $ref: '#/components/schemas/common/objectId'
+        email:
+          $ref: '#/components/schemas/common/email'
+        firstName:
+          $ref: '#/components/schemas/common/reqMedStr'
+        lastName:
+          $ref: '#/components/schemas/common/optMedStr'
+        role:
+          $ref: '#/components/schemas/common/instanceRole'
+        avatarUrl:
+          $ref: '#/components/schemas/common/url'
+        twoFactorAuthEnabled:
+          type: boolean
+        ssoLinked:
+          type: boolean
+      additionalProperties: false
     instanceOrgPatch:
       title: Instance Owned Organization Patch
       description: Schema for the body of an Organization modification request within an instance
@@ -4277,29 +4439,6 @@ components:
         banner:
           $ref: '#/components/schemas/org/properties/banner'
       additionalProperties: false
-    instanceAuditLogs:
-      title: Instance Audit Logs
-      description: Schema for a collection of Instance Audit Logs
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instanceAuditLogs'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
     apiTokenPost:
       title: API Token Post
       description: Schema for the body of an API Token creation request
@@ -4321,145 +4460,6 @@ components:
       additionalProperties: false
       required:
       - name
-    instanceOrgMemberPost:
-      title: Instance Org Member Post
-      description: Schema for an Instance Organization member creation request
-      oneOf:
-      - type: object
-        properties:
-          userId:
-            $ref: '#/components/schemas/common/objectId'
-          role:
-            $ref: '#/components/schemas/common/orgRole'
-          applicationRoles:
-            $ref: '#/components/schemas/common/resourceRoles'
-          dashboardRoles:
-            $ref: '#/components/schemas/common/resourceRoles'
-        additionalProperties: false
-        required:
-        - userId
-        - role
-      - type: object
-        properties:
-          email:
-            $ref: '#/components/schemas/common/email'
-          role:
-            $ref: '#/components/schemas/common/orgRole'
-          applicationRoles:
-            $ref: '#/components/schemas/common/resourceRoles'
-          dashboardRoles:
-            $ref: '#/components/schemas/common/resourceRoles'
-          disallowTransfer:
-            type: boolean
-        additionalProperties: false
-        required:
-        - email
-        - role
-    instanceCustomNodes:
-      title: Instance Custom Nodes
-      description: Schema for a collection of Custom Nodes within an instance
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instanceCustomNode'
-        instanceId:
-          $ref: '#/components/schemas/common/objectId'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-    instances:
-      title: Instances
-      description: Schema for a collection of Instances
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/instance'
-        count:
-          type: integer
-        totalCount:
-          type: integer
-        perPage:
-          type: integer
-        page:
-          type: integer
-        filter:
-          type: string
-        filterField:
-          type: string
-        sortField:
-          type: string
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-    notificationRuleEvaluationOptions:
-      title: Notification Rule Evaluation Options
-      description: Schema for evaluation options for a notification rule
-      type: object
-      properties:
-        ignoreFrequencyCheck:
-          type: boolean
-      additionalProperties: false
-    flowErrors:
-      title: Workflow Errors
-      description: Workflow run error information
-      type: object
-      properties:
-        flowVersion:
-          $ref: '#/components/schemas/common/name'
-        flowVersionId:
-          $ref: '#/components/schemas/common/objectId'
-        deviceId:
-          $ref: '#/components/schemas/common/objectId'
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        limit:
-          type: number
-        sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              time:
-                $ref: '#/components/schemas/common/date'
-              deviceId:
-                $ref: '#/components/schemas/common/objectId'
-              deviceName:
-                $ref: '#/components/schemas/common/name'
-              flowVersion:
-                $ref: '#/components/schemas/common/name'
-              flowVersionId:
-                $ref: '#/components/schemas/common/objectId'
-              nodeId:
-                type: string
-              nodeLabel:
-                type: string
-              error:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  message:
-                    type: string
   securitySchemes:
     BearerAuth:
       type: http
