@@ -118,3 +118,45 @@ contact:
   type: Sales
 - url: mailto:hello@losant.com
   type: Email
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  units:
+  - negotiated
+  - object
+  plans:
+  - name: Developer Sandbox
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Enterprise Cloud (Custom)
+    access: other
+    model: negotiated
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - year
+  - name: Dedicated Enterprise Instance
+    access: other
+    model: negotiated
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - year
+  - name: Self-Hosted Enterprise Instance
+    access: other
+    model: negotiated
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - year
