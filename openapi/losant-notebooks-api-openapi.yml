@@ -365,6 +365,15 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
     notebook:
       title: Notebook
       description: Schema for a single Notebook
@@ -661,6 +670,24 @@ components:
             errorsThisPeriod:
               type: number
           additionalProperties: false
+    notebookPost:
+      title: Notebook Post
+      description: Schema for the body of an Notebook creation request
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/common/reqMedStr'
+        description:
+          $ref: '#/components/schemas/common/description'
+        imageVersion:
+          $ref: '#/components/schemas/common/notebookImageVersion'
+        inputs:
+          $ref: '#/components/schemas/notebook/properties/inputs'
+        outputs:
+          $ref: '#/components/schemas/notebook/properties/outputs'
+      additionalProperties: false
+      required:
+      - name
     notebookMinuteCounts:
       title: Notebook Minute Counts
       description: Schema for the result of a notebook minute counts request
@@ -687,40 +714,6 @@ components:
                 type: integer
               timeout:
                 type: integer
-    notebookPatch:
-      title: Notebook Patch
-      description: Schema for the body of a Notebook modification request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/reqMedStr'
-        description:
-          $ref: '#/components/schemas/common/description'
-        inputs:
-          $ref: '#/components/schemas/notebook/properties/inputs'
-        outputs:
-          $ref: '#/components/schemas/notebook/properties/outputs'
-        imageVersion:
-          $ref: '#/components/schemas/common/notebookImageVersion'
-      additionalProperties: false
-    notebookPost:
-      title: Notebook Post
-      description: Schema for the body of an Notebook creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/reqMedStr'
-        description:
-          $ref: '#/components/schemas/common/description'
-        imageVersion:
-          $ref: '#/components/schemas/common/notebookImageVersion'
-        inputs:
-          $ref: '#/components/schemas/notebook/properties/inputs'
-        outputs:
-          $ref: '#/components/schemas/notebook/properties/outputs'
-      additionalProperties: false
-      required:
-      - name
     notebooks:
       title: Notebooks
       description: Schema for a collection of Notebooks
@@ -748,15 +741,22 @@ components:
           $ref: '#/components/schemas/common/sortDirection'
         applicationId:
           $ref: '#/components/schemas/common/objectId'
-    success:
-      title: Success
-      description: Schema for reporting a successful operation
+    notebookPatch:
+      title: Notebook Patch
+      description: Schema for the body of a Notebook modification request
       type: object
       properties:
-        success:
-          type: boolean
-          enum:
-          - true
+        name:
+          $ref: '#/components/schemas/common/reqMedStr'
+        description:
+          $ref: '#/components/schemas/common/description'
+        inputs:
+          $ref: '#/components/schemas/notebook/properties/inputs'
+        outputs:
+          $ref: '#/components/schemas/notebook/properties/outputs'
+        imageVersion:
+          $ref: '#/components/schemas/common/notebookImageVersion'
+      additionalProperties: false
     error:
       title: Error
       description: Schema for errors returned by the API
