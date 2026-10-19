@@ -1,0 +1,3597 @@
+openapi: 3.2.0
+info:
+  title: Platform Applications API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Applications
+paths:
+  /applications:
+    get:
+      operationId: applications.get
+      summary: Returns the applications the current user has permission to see
+      tags:
+      - Applications
+      parameters:
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - ownerId
+          - lastUpdated
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+        example: name
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my * app
+      - name: orgId
+        in: query
+        required: false
+        description: If not provided, return all applications. If provided but blank, only return applications belonging to the current user. If provided and an id, only return applications belonging to the given organization id.
+        schema:
+          type: string
+          pattern: ^([A-Fa-f\d]{24}|)$
+        example: 575ecdf07ae143cd83dc4a9a
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from application summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in application summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Collection of applications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applications'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - applications.get
+    post:
+      operationId: applications.post
+      summary: Create a new application
+      tags:
+      - Applications
+      parameters:
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from application summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in application summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '201':
+          description: Successfully created application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/application'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationPost'
+        description: New application information
+      x-losant-auth-scopes:
+      - applications.post
+  /applications/import:
+    post:
+      operationId: applications.import
+      summary: Create a new application from an import bundle
+      tags:
+      - Applications
+      parameters: []
+      responses:
+        '201':
+          description: Successfully created application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationCreationByTemplateResult'
+        '202':
+          description: If application was enqueued to be imported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '422':
+          description: Error if too many validation errors occurred on other resources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/validationErrors'
+      x-losant-auth-scopes:
+      - applications.import
+  /applications/periodSummaries:
+    get:
+      operationId: applications.periodSummaries
+      summary: Returns application usage summaries over a selected date range
+      tags:
+      - Applications
+      parameters:
+      - name: start
+        in: query
+        required: false
+        description: Start of range for resource count queries (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for resource count queries (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting payload counts should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      - name: includeNonBillable
+        in: query
+        required: false
+        description: If non-billable payloads should be included in the result
+        schema:
+          type: string
+          default: false
+        example: true
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - ownerId
+          - lastUpdated
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+        example: name
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my * app
+      - name: orgId
+        in: query
+        required: false
+        description: If not provided, return all applications. If provided but blank, only return applications belonging to the current user. If provided and an id, only return applications belonging to the given organization id.
+        schema:
+          type: string
+          pattern: ^([A-Fa-f\d]{24}|)$
+        example: 575ecdf07ae143cd83dc4a9a
+      - name: exclude
+        in: query
+        required: false
+        description: Comma-separated list of resources to exclude from summary
+        schema:
+          type: string
+        example: payloadCounts, deviceCounts, notebookMinuteCounts
+      - name: include
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in application summary
+        schema:
+          type: string
+        example: deviceCounts
+      responses:
+        '200':
+          description: Collection of application period summaries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/periodSummaries'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - applications.periodSummaries
+  /applications/{applicationId}:
+    get:
+      operationId: application.get
+      summary: Retrieves information on an application
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from application summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in application summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Application information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/application'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.get
+    patch:
+      operationId: application.patch
+      summary: Updates information about an application
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from application summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in application summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Updated application information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/application'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationPatch'
+        description: Object containing new application properties
+      x-losant-auth-scopes:
+      - application.patch
+    delete:
+      operationId: application.delete
+      summary: Deletes an application
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: If application was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.delete
+  /applications/{applicationId}/applyTemplate:
+    patch:
+      operationId: application.applyTemplate
+      summary: Add resources to an application via an application template
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Updated application information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/application'
+        '202':
+          description: If a job was enqueued for the resources to be imported into the application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationApplyTemplatePatch'
+        description: Object containing template import options
+      x-losant-auth-scopes:
+      - application.applyTemplate
+  /applications/{applicationId}/archiveData:
+    get:
+      operationId: application.archiveData
+      summary: Returns success when a job has been enqueued to archive this application's…
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: date
+        in: query
+        required: true
+        description: The date to archive data (ms since epoch), it must be within the archive time range older than 31 days and newer than the organizations dataTTL
+        schema:
+          type: string
+        example: 1518556791829
+      responses:
+        '202':
+          description: Enqueued a job to archive this applications device data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.archiveData
+  /applications/{applicationId}/backfillArchiveData:
+    get:
+      operationId: application.backfillArchiveData
+      summary: Returns success when a job has been enqueued to backfill all current data to…
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '202':
+          description: Enqueued a job to backfill device data to this application archive location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.backfillArchiveData
+  /applications/{applicationId}/clone:
+    post:
+      operationId: application.clone
+      summary: Copy an application into a new application
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: if dryRun is set and successful, then return success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationCloneDryRunResult'
+        '201':
+          description: If application was successfully cloned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationCreationByTemplateResult'
+        '202':
+          description: If application was enqueued to be cloned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '422':
+          description: Error if too many validation errors occurred on other resources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/validationErrors'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationClonePost'
+        description: Object containing optional clone fields
+      x-losant-auth-scopes:
+      - application.clone
+  /applications/{applicationId}/deviceCounts:
+    get:
+      operationId: application.deviceCounts
+      summary: Returns device counts by day for the time range specified for this application
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: start
+        in: query
+        required: false
+        description: Start of range for device count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for device count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Device counts by day
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.deviceCounts
+  /applications/{applicationId}/export:
+    post:
+      operationId: application.export
+      summary: Export an application and all of its resources
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: a url to download the zip of exported resources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationExportResult'
+        '202':
+          description: If application was enqueued to be exported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationExportPost'
+        description: Object containing export application options
+      x-losant-auth-scopes:
+      - application.export
+  /applications/{applicationId}/fullDataTablesArchive:
+    get:
+      operationId: application.fullDataTablesArchive
+      summary: Returns success when a job has been enqueued to archive all selected data tables
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '202':
+          description: Enqueued a job to archive all selected data tables to this application archive location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.fullDataTablesArchive
+  /applications/{applicationId}/fullEventsArchive:
+    get:
+      operationId: application.fullEventsArchive
+      summary: Returns success when a job has been enqueued to archive all current events
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '202':
+          description: Enqueued a job to archive all events to this application archive location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.fullEventsArchive
+  /applications/{applicationId}/globals:
+    patch:
+      operationId: application.globals
+      summary: Updates an application global at the given key
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Updated application information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/application'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationGlobalPatch'
+        description: Array of objects containing new application global information
+      x-losant-auth-scopes:
+      - application.patch
+  /applications/{applicationId}/import:
+    post:
+      operationId: application.import
+      summary: Add multiple resources to an application via a zip file
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Updated application information or a dry-run result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationImportResult'
+        '202':
+          description: If a job was enqueued for the resources to be imported into the application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.import
+  /applications/{applicationId}/importLogs:
+    get:
+      operationId: application.importLogs
+      summary: Retrieves information on application import logs
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: limit
+        in: query
+        required: false
+        description: Max log entries to return (ordered by time descending)
+        schema:
+          type: string
+          default: 1
+        example: 10
+      - name: since
+        in: query
+        required: false
+        description: Look for log entries since this time (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Application log objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationImportExecutions'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.importLogs
+  /applications/{applicationId}/mqttPublishMessage:
+    post:
+      operationId: application.mqttPublishMessage
+      summary: Publishes the given message to the given MQTT topic
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Message successfully published
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/mqttPublishBody'
+        description: Object containing topic and message
+      x-losant-auth-scopes:
+      - application.mqttPublishMessage
+  /applications/{applicationId}/mqttSubscriptionStream:
+    get:
+      operationId: application.mqttSubscriptionStream
+      summary: Attach to a real time stream of state messages for the given MQTT topic using…
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: keepAliveInterval
+        in: query
+        required: false
+        description: Number of seconds between keepalive messages
+        schema:
+          type: string
+          default: 2
+        example: 2
+      - name: topic
+        in: query
+        required: true
+        description: The MQTT topic to subscribe to
+        schema:
+          type: string
+        example: my/topic
+      responses:
+        '200':
+          description: SSE stream of mqtt messages for the requested topic
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.mqttSubscriptionStream
+  /applications/{applicationId}/notebookMinuteCounts:
+    get:
+      operationId: application.notebookMinuteCounts
+      summary: Returns notebook execution usage by day for the time range specified for this…
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: start
+        in: query
+        required: false
+        description: Start of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Notebook usage information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebookMinuteCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.notebookMinuteCounts
+  /applications/{applicationId}/payloadCounts:
+    get:
+      operationId: application.payloadCounts
+      summary: Returns payload counts for the time range specified for this application
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+          default: -2592000000
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+          default: 0
+        example: 1465790400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting stats should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      responses:
+        '200':
+          description: Payload counts, by type and source
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadStats'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.payloadCounts
+  /applications/{applicationId}/payloadCountsBreakdown:
+    get:
+      operationId: application.payloadCountsBreakdown
+      summary: Returns payload counts per resolution in the time range specified for this…
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: resolution
+        in: query
+        required: false
+        description: Resolution in milliseconds
+        schema:
+          type: string
+          enum:
+          - '86400000'
+          - '3600000'
+          default: 86400000
+        example: 86400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting stats should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      - name: includeNonBillable
+        in: query
+        required: false
+        description: If non-billable payloads should be included in the result
+        schema:
+          type: string
+          default: false
+        example: true
+      responses:
+        '200':
+          description: Sum of payload counts by date
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadCountsBreakdown'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.payloadCountsBreakdown
+  /applications/{applicationId}/readme:
+    get:
+      operationId: application.readme
+      summary: Get the current application readme information
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: The application readme information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationReadme'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.get
+    patch:
+      operationId: application.readmePatch
+      summary: Update the current application readme information
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Updated readme information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationReadme'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationReadmePatch'
+        description: Object containing new readme information
+      x-losant-auth-scopes:
+      - application.patch
+  /applications/{applicationId}/search:
+    get:
+      operationId: application.search
+      summary: Search across an application's resources by target identifier
+      tags:
+      - Applications
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID of the associated application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: filter
+        in: query
+        required: true
+        description: The partial resource name being searched for
+        schema:
+          type: string
+        example: my dev
+      responses:
+        '200':
+          description: An array of resource ids, names, descriptions, and types matching the search query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationSearchResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - application.search
+components:
+  schemas:
+    applicationSearchResult:
+      title: Application Search Result
+      description: Results of a search of an application's resources
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          name:
+            type: string
+          metadata:
+            type: object
+            properties:
+              descriptor:
+                type: string
+              parentDirectory:
+                type: string
+              contentType:
+                type: string
+          version:
+            type: string
+          viewType:
+            type: string
+            enum:
+            - layout
+            - page
+            - component
+          flowClass:
+            type: string
+            enum:
+            - cloud
+            - edge
+            - embedded
+            - experience
+            - customNode
+          deviceClass:
+            type: string
+            enum:
+            - standalone
+            - gateway
+            - peripheral
+            - floating
+            - edgeCompute
+            - system
+            - embedded
+          _type:
+            type: string
+            enum:
+            - applicationApiToken
+            - credential
+            - dashboard
+            - dataTable
+            - deviceRecipe
+            - device
+            - experienceDomain
+            - event
+            - experienceEndpoint
+            - experienceGroup
+            - experienceSlug
+            - experienceUser
+            - experienceVersion
+            - experienceView
+            - file
+            - flow
+            - integration
+            - notebook
+            - resourceJob
+            - webhook
+        required:
+        - id
+        - name
+        - _type
+    validationErrors:
+      title: Validation Errors
+      description: Schema for validation errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              name:
+                type: string
+              id:
+                type: string
+              message:
+                type: string
+    applicationGlobalPatch:
+      title: Application Global Patch
+      description: Schema for the body of an Application Global modification request
+      type: array
+      maxItems: 100
+      items:
+        type: object
+        properties:
+          key:
+            type: string
+            pattern: ^[0-9a-zA-Z_-]{1,255}$
+          json:
+            type:
+            - string
+            - 'null'
+            minLength: 1
+            maxLength: 32767
+          cloudOnly:
+            type: boolean
+          description:
+            type: string
+            maxLength: 1024
+        additionalProperties: false
+        required:
+        - key
+    applicationImportResult:
+      title: Application Import Result
+      description: 'Schema for the synchronous result of importing resources into an application — either the updated application (when `dryRun: false`) or a dry-run report (when `dryRun: true`)'
+      oneOf:
+      - $ref: '#/components/schemas/application'
+      - title: Application Import Dry-Run Result
+        description: 'Returned by application.import when `dryRun: true` and the import does not require a job'
+        type: object
+        properties:
+          limitErrors:
+            type: array
+            items:
+              enum:
+              - ApplicationCertificateAuthority
+              - Dashboard
+              - DataTableRow
+              - DataTable
+              - DeviceRecipe
+              - Device
+              - ExperienceDevelopConfig
+              - ExperienceEndpoint
+              - ExperienceFlowVersion
+              - ExperienceGroup
+              - ExperienceUser
+              - ExperienceVersion
+              - ExperienceView
+              - File
+              - FlowVersion
+              - Flow
+              - Global
+              - Integration
+              - Notebook
+              - PrivateFile
+              - Webhook
+              - ResourceJob
+            uniqueItems: true
+          url:
+            type: string
+        required:
+        - url
+        - limitErrors
+    application:
+      title: Application
+      description: Schema for a single Application
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        appliedTemplateIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        ownerId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        ownerType:
+          type: string
+          enum:
+          - user
+          - organization
+        organizationName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        organizationIconColor:
+          type: string
+          maxLength: 64
+        _currentRole:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1024
+        endpointSlug:
+          type: string
+          minLength: 3
+          maxLength: 63
+          pattern: ^[0-9a-z-]*$
+        expUserTokenCutoff:
+          type: string
+          format: date-time
+        endpointDefaultCors:
+          type: boolean
+        globals:
+          type: array
+          maxItems: 100
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              json:
+                type: string
+                minLength: 1
+                maxLength: 32767
+              cloudOnly:
+                type: boolean
+                default: false
+              description:
+                type: string
+                maxLength: 1024
+            additionalProperties: false
+            required:
+            - key
+            - json
+        blobUrlTTL:
+          type: number
+          minimum: 3600
+          maximum: 604800
+        summary:
+          type: object
+          properties:
+            apiTokenCount:
+              type: integer
+            certificateCount:
+              type: integer
+            certificateAuthorityCount:
+              type: integer
+            credentialCount:
+              type: integer
+            dashCount:
+              type: integer
+            dataTableCount:
+              type: integer
+            deviceCount:
+              type: integer
+            deviceRecipeCount:
+              type: integer
+            eventCount:
+              type: integer
+            experienceDomainCount:
+              type: integer
+            experienceEndpointCount:
+              type: integer
+            experienceGroupCount:
+              type: integer
+            experienceSlugCount:
+              type: integer
+            experienceUserCount:
+              type: integer
+            experienceVersionCount:
+              type: integer
+            experienceViewCount:
+              type: integer
+            fileCount:
+              type: integer
+            flowCount:
+              type: integer
+            integrationCount:
+              type: integer
+            keyCount:
+              type: integer
+            notebookCount:
+              type: integer
+            privateFileCount:
+              type: integer
+            resourceJobCount:
+              type: integer
+            webhookCount:
+              type: integer
+            payloadCount:
+              title: Payload Stats
+              description: Schema for the result of a payload stats request
+              type: object
+              properties:
+                appFile:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                dataTable:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceCreate:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceCommand:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceConnect:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceDisconnect:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceState:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                endpoint:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                event:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                flowError:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                inboundEmail:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                integration:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                mqttIn:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                mqttOut:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                notebook:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                resourceJob:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                timer:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                virtualButton:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                webhook:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+            storageStats:
+              type: object
+              properties:
+                count:
+                  type: integer
+                size:
+                  type: integer
+            notebookStats:
+              type: object
+              properties:
+                awaitingCompletion:
+                  type: integer
+                minutesThisPeriod:
+                  type: number
+                runsThisPeriod:
+                  type: integer
+        ftueTracking:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              version:
+                type: number
+              status:
+                type: string
+                enum:
+                - skipped
+                - completed
+            required:
+            - name
+            - version
+            - status
+            additionalProperties: false
+          maxItems: 100
+        archiveConfig:
+          type: object
+          properties:
+            directory:
+              type: string
+              maxLength: 255
+            mode:
+              type: string
+              enum:
+              - all
+              - whitelist
+              - blacklist
+            deviceIds:
+              type: array
+              items:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              maxItems: 1000
+            deviceTags:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                  value:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                additionalProperties: false
+              maxItems: 100
+            includeDevices:
+              type: boolean
+              default: true
+            includeEvents:
+              type: boolean
+              default: false
+            includeDataTables:
+              type: boolean
+              default: false
+            dataTablesMode:
+              type: string
+              enum:
+              - all
+              - whitelist
+              - blacklist
+            dataTableIds:
+              type: array
+              items:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              maxItems: 1000
+            includeApplicationExport:
+              type: boolean
+              default: false
+            applicationExportOptions:
+              type: object
+              properties:
+                includeFiles:
+                  type: boolean
+                  default: false
+                includePrivateFiles:
+                  type: boolean
+                  default: false
+                includeDataTableRows:
+                  type: boolean
+                  default: false
+                includeDevices:
+                  type: boolean
+                  default: false
+                exportType:
+                  type: string
+                  enum:
+                  - repo
+                  default: repo
+                credentialName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                repo:
+                  type: object
+                  properties:
+                    branch:
+                      type: string
+                      maxLength: 255
+                    directory:
+                      type: string
+                      maxLength: 1024
+                    commitMessage:
+                      type: string
+                      maxLength: 1024
+              required:
+              - credentialName
+              additionalProperties: false
+            delayDays:
+              type: integer
+              minimum: 1
+            s3:
+              type: object
+              properties:
+                bucket:
+                  type: string
+                  maxLength: 255
+                accessKeyId:
+                  type: string
+                  minLength: 4
+                  maxLength: 128
+                secretAccessKey:
+                  type: string
+                  minLength: 4
+                  maxLength: 128
+                region:
+                  type: string
+                  maxLength: 128
+              required:
+              - bucket
+              additionalProperties: false
+            credentialName:
+              type: string
+              minLength: 1
+              maxLength: 255
+            gcs:
+              type: object
+              properties:
+                projectId:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                keyJson:
+                  type: string
+                  maxLength: 32767
+                  minLength: 4
+                bucket:
+                  type: string
+                  maxLength: 255
+              required:
+              - bucket
+              additionalProperties: false
+            azure:
+              type: object
+              properties:
+                account:
+                  type: string
+                  minLength: 3
+                  maxLength: 24
+                accountKey:
+                  type: string
+                  maxLength: 255
+                bucket:
+                  type: string
+                  minLength: 3
+                  maxLength: 63
+              required:
+              - bucket
+              additionalProperties: false
+          additionalProperties: false
+      required:
+      - id
+      - name
+    applicationReadme:
+      title: Application Readme
+      description: Schema for an Application Readme
+      type: object
+      properties:
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        lastUpdated:
+          type: string
+          format: date-time
+        lastUpdatedById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        lastUpdatedByType:
+          type: string
+          enum:
+          - flow
+          - user
+          - apiToken
+        content:
+          type: string
+    applicationApplyTemplatePatch:
+      title: Application Apply Template Patch
+      description: Schema for the body of an apply application template request
+      type: object
+      properties:
+        templateId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+      required:
+      - templateId
+      additionalProperties: false
+    applicationExportResult:
+      title: Application Export Result
+      description: Schema for an application export result
+      type: object
+      properties:
+        url:
+          type: string
+      additionalProperties: false
+    applicationPatch:
+      title: Application Patch
+      description: Schema for the body of an Application modification request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1024
+        endpointSlug:
+          type: string
+          minLength: 3
+          maxLength: 63
+          pattern: ^[0-9a-z-]*$
+        expUserTokenCutoff:
+          type: string
+          format: date-time
+        endpointDefaultCors:
+          type: boolean
+        globals:
+          type: array
+          maxItems: 100
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              json:
+                type: string
+                minLength: 1
+                maxLength: 32767
+              cloudOnly:
+                type: boolean
+                default: false
+              description:
+                type: string
+                maxLength: 1024
+            additionalProperties: false
+            required:
+            - key
+            - json
+        ftueTracking:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              version:
+                type: number
+              status:
+                type: string
+                enum:
+                - skipped
+                - completed
+            required:
+            - name
+            - version
+            - status
+            additionalProperties: false
+          maxItems: 100
+        archiveConfig:
+          oneOf:
+          - type: object
+            properties:
+              directory:
+                type: string
+                maxLength: 255
+              mode:
+                type: string
+                enum:
+                - all
+                - whitelist
+                - blacklist
+              deviceIds:
+                type: array
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                maxItems: 1000
+              deviceTags:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                      pattern: ^[0-9a-zA-Z_-]{1,255}$
+                    value:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                  additionalProperties: false
+                maxItems: 100
+              includeDevices:
+                type: boolean
+                default: true
+              includeEvents:
+                type: boolean
+                default: false
+              includeDataTables:
+                type: boolean
+                default: false
+              dataTablesMode:
+                type: string
+                enum:
+                - all
+                - whitelist
+                - blacklist
+              dataTableIds:
+                type: array
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                maxItems: 1000
+              includeApplicationExport:
+                type: boolean
+                default: false
+              applicationExportOptions:
+                type: object
+                properties:
+                  includeFiles:
+                    type: boolean
+                    default: false
+                  includePrivateFiles:
+                    type: boolean
+                    default: false
+                  includeDataTableRows:
+                    type: boolean
+                    default: false
+                  includeDevices:
+                    type: boolean
+                    default: false
+                  exportType:
+                    type: string
+                    enum:
+                    - repo
+                    default: repo
+                  credentialName:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                  repo:
+                    type: object
+                    properties:
+                      branch:
+                        type: string
+                        maxLength: 255
+                      directory:
+                        type: string
+                        maxLength: 1024
+                      commitMessage:
+                        type: string
+                        maxLength: 1024
+                required:
+                - credentialName
+                additionalProperties: false
+              delayDays:
+                type: integer
+                minimum: 1
+              s3:
+                type: object
+                properties:
+                  bucket:
+                    type: string
+                    maxLength: 255
+                  accessKeyId:
+                    type: string
+                    minLength: 4
+                    maxLength: 128
+                  secretAccessKey:
+                    type: string
+                    minLength: 4
+                    maxLength: 128
+                  region:
+                    type: string
+                    maxLength: 128
+                required:
+                - bucket
+                additionalProperties: false
+              credentialName:
+                type: string
+                minLength: 1
+                maxLength: 255
+              gcs:
+                type: object
+                properties:
+                  projectId:
+                    type: string
+                    minLength: 1
+                    maxLength: 1024
+                  keyJson:
+                    type: string
+                    maxLength: 32767
+                    minLength: 4
+                  bucket:
+                    type: string
+                    maxLength: 255
+                required:
+                - bucket
+                additionalProperties: false
+              azure:
+                type: object
+                properties:
+                  account:
+                    type: string
+                    minLength: 3
+                    maxLength: 24
+                  accountKey:
+                    type: string
+                    maxLength: 255
+                  bucket:
+                    type: string
+                    minLength: 3
+                    maxLength: 63
+                required:
+                - bucket
+                additionalProperties: false
+            additionalProperties: false
+          - type: 'null'
+        blobUrlTTL:
+          type: number
+          minimum: 3600
+          maximum: 604800
+      additionalProperties: false
+    payloadCountsBreakdown:
+      title: Payload Counts Breakdown
+      description: Schema for the result of a payload counts breakdown request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              value:
+                type: integer
+    mqttPublishBody:
+      title: MQTT Publish Body
+      description: Schema for the body of an MQTT Publish Message request
+      type: object
+      properties:
+        topic:
+          type: string
+          minLength: 1
+          maxLength: 230
+        message:
+          type: string
+          maxLength: 32767
+      required:
+      - topic
+      - message
+      additionalProperties: false
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 24
+        success:
+          type: boolean
+          enum:
+          - true
+    applicationReadmePatch:
+      title: Application Readme Patch
+      description: Schema for the body of an Application Readme modification request
+      type: object
+      properties:
+        content:
+          type: string
+          maxLength: 131072
+      additionalProperties: false
+    applicationCreationByTemplateResult:
+      title: Application Creation By Template Result
+      description: Schema for the result of creating an application by template
+      type: object
+      properties:
+        application:
+          title: Application
+          description: Schema for a single Application
+          type: object
+          properties:
+            id:
+              type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            applicationId:
+              type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            creationDate:
+              type: string
+              format: date-time
+            lastUpdated:
+              type: string
+              format: date-time
+            appliedTemplateIds:
+              type: array
+              items:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              maxItems: 1000
+            ownerId:
+              type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            ownerType:
+              type: string
+              enum:
+              - user
+              - organization
+            organizationName:
+              type: string
+              minLength: 1
+              maxLength: 255
+            organizationIconColor:
+              type: string
+              maxLength: 64
+            _currentRole:
+              type: string
+              enum:
+              - admin
+              - edit
+              - collaborate
+              - view
+            name:
+              type: string
+              minLength: 1
+              maxLength: 255
+            description:
+              type: string
+              maxLength: 1024
+            endpointSlug:
+              type: string
+              minLength: 3
+              maxLength: 63
+              pattern: ^[0-9a-z-]*$
+            expUserTokenCutoff:
+              type: string
+              format: date-time
+            endpointDefaultCors:
+              type: boolean
+            globals:
+              type: array
+              maxItems: 100
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                  json:
+                    type: string
+                    minLength: 1
+                    maxLength: 32767
+                  cloudOnly:
+                    type: boolean
+                    default: false
+                  description:
+                    type: string
+                    maxLength: 1024
+                additionalProperties: false
+                required:
+                - key
+                - json
+            blobUrlTTL:
+              type: number
+              minimum: 3600
+              maximum: 604800
+            summary:
+              type: object
+              properties:
+                apiTokenCount:
+                  type: integer
+                certificateCount:
+                  type: integer
+                certificateAuthorityCount:
+                  type: integer
+                credentialCount:
+                  type: integer
+                dashCount:
+                  type: integer
+                dataTableCount:
+                  type: integer
+                deviceCount:
+                  type: integer
+                deviceRecipeCount:
+                  type: integer
+                eventCount:
+                  type: integer
+                experienceDomainCount:
+                  type: integer
+                experienceEndpointCount:
+                  type: integer
+                experienceGroupCount:
+                  type: integer
+                experienceSlugCount:
+                  type: integer
+                experienceUserCount:
+                  type: integer
+                experienceVersionCount:
+                  type: integer
+                experienceViewCount:
+                  type: integer
+                fileCount:
+                  type: integer
+                flowCount:
+                  type: integer
+                integrationCount:
+                  type: integer
+                keyCount:
+                  type: integer
+                notebookCount:
+                  type: integer
+                privateFileCount:
+                  type: integer
+                resourceJobCount:
+                  type: integer
+                webhookCount:
+                  type: integer
+                payloadCount:
+                  title: Payload Stats
+                  description: Schema for the result of a payload stats request
+                  type: object
+                  properties:
+                    appFile:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    dataTable:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    deviceCreate:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    deviceCommand:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    deviceConnect:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    deviceDisconnect:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    deviceState:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    endpoint:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    event:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    flowError:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    inboundEmail:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    integration:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    mqttIn:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    mqttOut:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    notebook:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    resourceJob:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    timer:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    virtualButton:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                    webhook:
+                      type: object
+                      patternProperties:
+                        .*:
+                          type: number
+                storageStats:
+                  type: object
+                  properties:
+                    count:
+                      type: integer
+                    size:
+                      type: integer
+                notebookStats:
+                  type: object
+                  properties:
+                    awaitingCompletion:
+                      type: integer
+                    minutesThisPeriod:
+                      type: number
+                    runsThisPeriod:
+                      type: integer
+            ftueTracking:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                  version:
+                    type: number
+                  status:
+                    type: string
+                    enum:
+                    - skipped
+                    - completed
+                required:
+                - name
+                - version
+                - status
+                additionalProperties: false
+              maxItems: 100
+            archiveConfig:
+              type: object
+              properties:
+                directory:
+                  type: string
+                  maxLength: 255
+                mode:
+                  type: string
+                  enum:
+                  - all
+                  - whitelist
+                  - blacklist
+                deviceIds:
+                  type: array
+                  items:
+                    type: string
+                    pattern: ^[A-Fa-f\d]{24}$
+                  maxItems: 1000
+                deviceTags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                        pattern: ^[0-9a-zA-Z_-]{1,255}$
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
+                  maxItems: 100
+                includeDevices:
+                  type: boolean
+                  default: true
+                includeEvents:
+                  type: boolean
+                  default: false
+                includeDataTables:
+                  type: boolean
+                  default: false
+                dataTablesMode:
+                  type: string
+                  enum:
+                  - all
+                  - whitelist
+                  - blacklist
+                dataTableIds:
+                  type: array
+                  items:
+                    type: string
+                    pattern: ^[A-Fa-f\d]{24}$
+                  maxItems: 1000
+                includeApplicationExport:
+                  type: boolean
+                  default: false
+                applicationExportOptions:
+                  type: object
+                  properties:
+                    includeFiles:
+                      type: boolean
+                      default: false
+                    includePrivateFiles:
+                      type: boolean
+                      default: false
+                    includeDataTableRows:
+                      type: boolean
+                      default: false
+                    includeDevices:
+                      type: boolean
+                      default: false
+                    exportType:
+                      type: string
+                      enum:
+                      - repo
+                      default: repo
+                    credentialName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    repo:
+                      type: object
+                      properties:
+                        branch:
+                          type: string
+                          maxLength: 255
+                        directory:
+                          type: string
+                          maxLength: 1024
+                        commitMessage:
+                          type: string
+                          maxLength: 1024
+                  required:
+                  - credentialName
+                  additionalProperties: false
+                delayDays:
+                  type: integer
+                  minimum: 1
+                s3:
+                  type: object
+                  properties:
+                    bucket:
+                      type: string
+                      maxLength: 255
+                    accessKeyId:
+                      type: string
+                      minLength: 4
+                      maxLength: 128
+                    secretAccessKey:
+                      type: string
+                      minLength: 4
+                      maxLength: 128
+                    region:
+                      type: string
+                      maxLength: 128
+                  required:
+                  - bucket
+                  additionalProperties: false
+                credentialName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                gcs:
+                  type: object
+                  properties:
+                    projectId:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    keyJson:
+                      type: string
+                      maxLength: 32767
+                      minLength: 4
+                    bucket:
+                      type: string
+                      maxLength: 255
+                  required:
+                  - bucket
+                  additionalProperties: false
+                azure:
+                  type: object
+                  properties:
+                    account:
+                      type: string
+                      minLength: 3
+                      maxLength: 24
+                    accountKey:
+                      type: string
+                      maxLength: 255
+                    bucket:
+                      type: string
+                      minLength: 3
+                      maxLength: 63
+                  required:
+                  - bucket
+                  additionalProperties: false
+              additionalProperties: false
+          required:
+          - id
+          - name
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              name:
+                type: string
+              id:
+                type: string
+              message:
+                type: string
+      additionalProperties: false
+    applicationImportExecutions:
+      title: Application Import Executions
+      description: Schema for a list of Application import executions
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          importSourceType:
+            type: string
+            enum:
+            - importBundle
+            - importUrl
+            - fromApplication
+            - repository
+          importExecutionId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          applicationId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          fromApplicationId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          runQueuedAt:
+            type: string
+            format: date-time
+          runStartedAt:
+            type: string
+            format: date-time
+          runCompletedAt:
+            type: string
+            format: date-time
+          status:
+            type: string
+            enum:
+            - queued
+            - inProgress
+            - completed
+            - errored
+            - failed
+          dryRun:
+            type: boolean
+          conflictBehavior:
+            type: string
+            enum:
+            - create
+            - error
+            - retain
+            - replace
+            default: create
+          callbackUrl:
+            type: string
+            format: uri
+            maxLength: 1024
+          email:
+            type: string
+            format: email
+            maxLength: 1024
+          include:
+            type: array
+            items:
+              enum:
+              - ApplicationCertificateAuthority
+              - Dashboard
+              - DataTableRow
+              - DataTable
+              - DeviceRecipe
+              - Device
+              - ExperienceDevelopConfig
+              - ExperienceEndpoint
+              - ExperienceFlowVersion
+              - ExperienceGroup
+              - ExperienceUser
+              - ExperienceVersion
+              - ExperienceView
+              - File
+              - FlowVersion
+              - Flow
+              - Global
+              - Integration
+              - Notebook
+              - PrivateFile
+              - Webhook
+              - ResourceJob
+            uniqueItems: true
+          jobId:
+            type: string
+            maxLength: 24
+          sourceId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          sourceType:
+            type: string
+            enum:
+            - flow
+            - user
+            - device
+            - apiToken
+            - notebook
+          error:
+            type: object
+            properties:
+              name:
+                type: string
+              message:
+                type: string
+          dryRunResult:
+            type: object
+            properties:
+              limitErrors:
+                type: array
+                items:
+                  enum:
+                  - ApplicationCertificateAuthority
+                  - Dashboard
+                  - DataTableRow
+                  - DataTable
+                  - DeviceRecipe
+                  - Device
+                  - ExperienceDevelopConfig
+                  - ExperienceEndpoint
+                  - ExperienceFlowVersion
+                  - ExperienceGroup
+                  - ExperienceUser
+                  - ExperienceVersion
+                  - ExperienceView
+                  - File
+                  - FlowVersion
+                  - Flow
+                  - Global
+                  - Integration
+                  - Notebook
+                  - PrivateFile
+                  - Webhook
+                  - ResourceJob
+                uniqueItems: true
+              url:
+                type: string
+          validationErrors:
+            type: array
+            items:
+              type: object
+              properties:
+                type:
+                  type: string
+                name:
+                  type: string
+                id:
+                  type: string
+                message:
+                  type: string
+          importedFileUrl:
+            type: string
+            format: uri
+            maxLength: 1024
+          importUrl:
+            type: string
+            format: uri
+            maxLength: 1024
+          credentialName:
+            type: string
+          repo:
+            type: object
+            properties:
+              branch:
+                type: string
+                maxLength: 255
+              directory:
+                type: string
+                maxLength: 1024
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    applicationClonePost:
+      title: Application Clone Post
+      description: Schema for the body of an application clone request
+      type: object
+      properties:
+        dryRun:
+          type: boolean
+          default: false
+        includeFiles:
+          type: boolean
+          default: false
+        includePrivateFiles:
+          type: boolean
+          default: false
+        includeDataTableRows:
+          type: boolean
+          default: false
+        includeDevices:
+          type: boolean
+          default: false
+        ownerId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: 'null'
+        ownerType:
+          type: string
+          enum:
+          - user
+          - organization
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        forceJob:
+          type: boolean
+          default: false
+      additionalProperties: false
+    periodSummaries:
+      title: Application Period Summaries
+      description: Schema for a collection of Application Period Summaries
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+              id:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              applicationId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              summary:
+                type: object
+                properties:
+                  deviceCounts:
+                    title: Device Counts
+                    description: Schema for the result of a device counts request
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        format: date-time
+                      end:
+                        type: string
+                        format: date-time
+                      counts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            date:
+                              type: string
+                              format: date-time
+                            created:
+                              type: integer
+                            deleted:
+                              type: integer
+                            total:
+                              type: integer
+                  notebookMinuteCounts:
+                    title: Notebook Minute Counts
+                    description: Schema for the result of a notebook minute counts request
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        format: date-time
+                      end:
+                        type: string
+                        format: date-time
+                      counts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            date:
+                              type: string
+                              format: date-time
+                            minutes:
+                              type: number
+                            completed:
+                              type: integer
+                            canceled:
+                              type: integer
+                            errored:
+                              type: integer
+                            timeout:
+                              type: integer
+                  payloadCounts:
+                    title: Payload Counts Breakdown
+                    description: Schema for the result of a payload counts breakdown request
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        format: date-time
+                      end:
+                        type: string
+                        format: date-time
+                      counts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            date:
+                              type: string
+                              format: date-time
+                            value:
+                              type: integer
+            additionalProperties: false
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    payloadStats:
+      title: Payload Stats
+      description: Schema for the result of a payload stats request
+      type: object
+      properties:
+        appFile:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        dataTable:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCreate:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCommand:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceConnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceDisconnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceState:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        endpoint:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        event:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        flowError:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        inboundEmail:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        integration:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttIn:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttOut:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        notebook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        resourceJob:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        timer:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        virtualButton:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        webhook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+    deviceCounts:
+      title: Device Counts
+      description: Schema for the result of a device counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              created:
+                type: integer
+              deleted:
+                type: integer
+              total:
+                type: integer
+    applicationCloneDryRunResult:
+      title: Success Dry Run
+      description: Schema for reporting a successful dry run of clone application
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+        requiresJob:
+          type: boolean
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    applications:
+      title: Applications
+      description: Schema for a collection of Applications
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/application'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    applicationPost:
+      title: Application Post
+      description: Schema for the body of an Application creation request
+      type: object
+      properties:
+        orgId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationTemplateId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1024
+        appliedTemplateIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        endpointSlug:
+          type: string
+          minLength: 3
+          maxLength: 63
+          pattern: ^[0-9a-z-]*$
+        expUserTokenCutoff:
+          type: string
+          format: date-time
+        endpointDefaultCors:
+          type: boolean
+        globals:
+          type: array
+          maxItems: 100
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              json:
+                type: string
+                minLength: 1
+                maxLength: 32767
+              cloudOnly:
+                type: boolean
+                default: false
+              description:
+                type: string
+                maxLength: 1024
+            additionalProperties: false
+            required:
+            - key
+            - json
+        archiveConfig:
+          type: object
+          properties:
+            directory:
+              type: string
+              maxLength: 255
+            mode:
+              type: string
+              enum:
+              - all
+              - whitelist
+              - blacklist
+            deviceIds:
+              type: array
+              items:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              maxItems: 1000
+            deviceTags:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                  value:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                additionalProperties: false
+              maxItems: 100
+            includeDevices:
+              type: boolean
+              default: true
+            includeEvents:
+              type: boolean
+              default: false
+            includeDataTables:
+              type: boolean
+              default: false
+            dataTablesMode:
+              type: string
+              enum:
+              - all
+              - whitelist
+              - blacklist
+            dataTableIds:
+              type: array
+              items:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              maxItems: 1000
+            includeApplicationExport:
+              type: boolean
+              default: false
+            applicationExportOptions:
+              type: object
+              properties:
+                includeFiles:
+                  type: boolean
+                  default: false
+                includePrivateFiles:
+                  type: boolean
+                  default: false
+                includeDataTableRows:
+                  type: boolean
+                  default: false
+                includeDevices:
+                  type: boolean
+                  default: false
+                exportType:
+                  type: string
+                  enum:
+                  - repo
+                  default: repo
+                credentialName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                repo:
+                  type: object
+                  properties:
+                    branch:
+                      type: string
+                      maxLength: 255
+                    directory:
+                      type: string
+                      maxLength: 1024
+                    commitMessage:
+                      type: string
+                      maxLength: 1024
+              required:
+              - credentialName
+              additionalProperties: false
+            delayDays:
+              type: integer
+              minimum: 1
+            s3:
+              type: object
+              properties:
+                bucket:
+                  type: string
+                  maxLength: 255
+                accessKeyId:
+                  type: string
+                  minLength: 4
+                  maxLength: 128
+                secretAccessKey:
+                  type: string
+                  minLength: 4
+                  maxLength: 128
+                region:
+                  type: string
+                  maxLength: 128
+              required:
+              - bucket
+              additionalProperties: false
+            credentialName:
+              type: string
+              minLength: 1
+              maxLength: 255
+            gcs:
+              type: object
+              properties:
+                projectId:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                keyJson:
+                  type: string
+                  maxLength: 32767
+                  minLength: 4
+                bucket:
+                  type: string
+                  maxLength: 255
+              required:
+              - bucket
+              additionalProperties: false
+            azure:
+              type: object
+              properties:
+                account:
+                  type: string
+                  minLength: 3
+                  maxLength: 24
+                accountKey:
+                  type: string
+                  maxLength: 255
+                bucket:
+                  type: string
+                  minLength: 3
+                  maxLength: 63
+              required:
+              - bucket
+              additionalProperties: false
+          additionalProperties: false
+        blobUrlTTL:
+          type: number
+          minimum: 3600
+          maximum: 604800
+      additionalProperties: false
+      required:
+      - name
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              minutes:
+                type: number
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+    applicationExportPost:
+      title: Application Export Post
+      description: Schema for the body of an application export request
+      type: object
+      properties:
+        includeFiles:
+          type: boolean
+          default: false
+        includePrivateFiles:
+          type: boolean
+          default: false
+        includeDataTableRows:
+          type: boolean
+          default: false
+        includeDevices:
+          type: boolean
+          default: false
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        forceJob:
+          type: boolean
+          default: false
+        exportType:
+          type: string
+          enum:
+          - zip
+          - repo
+          default: zip
+        credentialName:
+          type: string
+          maxLength: 255
+        repo:
+          type: object
+          properties:
+            branch:
+              type: string
+              maxLength: 255
+            directory:
+              type: string
+              maxLength: 1024
+            commitMessage:
+              type: string
+              maxLength: 1024
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

@@ -1,0 +1,1711 @@
+openapi: 3.2.0
+info:
+  title: Platform Instances API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Instances
+paths:
+  /instances:
+    get:
+      operationId: instances.get
+      summary: Returns a collection of instances
+      tags:
+      - Instances
+      parameters:
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+        example: name
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my * instance
+      responses:
+        '200':
+          description: Collection of instances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instances'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instances.get
+  /instances/{instanceId}:
+    get:
+      operationId: instance.get
+      summary: Returns an instance
+      tags:
+      - Instances
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: A single instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instance'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instance.get
+    patch:
+      operationId: instance.patch
+      summary: Updates information about an instance
+      tags:
+      - Instances
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: The updated instance object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instance'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instancePatch'
+        description: Updated instance information
+      x-losant-auth-scopes:
+      - instance.patch
+  /instances/{instanceId}/deviceCounts:
+    get:
+      operationId: instance.deviceCounts
+      summary: Returns device counts by day for the time range specified for this instance
+      tags:
+      - Instances
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: start
+        in: query
+        required: false
+        description: Start of range for device count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for device count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Device counts by day
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instance.deviceCounts
+  /instances/{instanceId}/generateReport:
+    post:
+      operationId: instance.generateReport
+      summary: Generates a CSV report on instance stats
+      tags:
+      - Instances
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '202':
+          description: If generation of report was successfully started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceReportOptionsPost'
+        description: Object containing report configuration
+      x-losant-auth-scopes:
+      - instance.generateReport
+  /instances/{instanceId}/historicalSummaries:
+    get:
+      operationId: instance.historicalSummaries
+      summary: Return historical summary entries for an instance
+      tags:
+      - Instances
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: month
+        in: query
+        required: false
+        description: Timestamp within the month to report a summary for.
+        schema:
+          type: string
+          default: now
+        example: 1609459204518
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - resourceId
+          - currentPeriodStart
+          default: currentPeriodStart
+        example: resourceId
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results in
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - resourceType
+          - resourceId
+          - ownerId
+          - ownerType
+        example: resourceType
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: organization
+      responses:
+        '200':
+          description: Collection of historical summaries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/historicalSummaries'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instance.historicalSummaries
+  /instances/{instanceId}/notebookMinuteCounts:
+    get:
+      operationId: instance.notebookMinuteCounts
+      summary: Returns notebook execution usage by day for the time range specified for this…
+      tags:
+      - Instances
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: start
+        in: query
+        required: false
+        description: Start of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Notebook usage information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebookMinuteCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instance.notebookMinuteCounts
+  /instances/{instanceId}/payloadCounts:
+    get:
+      operationId: instance.payloadCounts
+      summary: Returns payload counts for the time range specified for this instance
+      tags:
+      - Instances
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting stats should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      responses:
+        '200':
+          description: Payload counts, by type and source
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadStats'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instance.payloadCounts
+  /instances/{instanceId}/payloadCountsBreakdown:
+    get:
+      operationId: instance.payloadCountsBreakdown
+      summary: Returns payload counts per resolution in the time range specified for this…
+      tags:
+      - Instances
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: resolution
+        in: query
+        required: false
+        description: Resolution in milliseconds
+        schema:
+          type: string
+          enum:
+          - '86400000'
+          - '3600000'
+          default: 86400000
+        example: 86400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting stats should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      - name: includeNonBillable
+        in: query
+        required: false
+        description: If non-billable payloads should be included in the result
+        schema:
+          type: string
+          default: false
+        example: true
+      responses:
+        '200':
+          description: Sum of payload counts by date
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadCountsBreakdown'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instance.payloadCountsBreakdown
+components:
+  schemas:
+    deviceCounts:
+      title: Device Counts
+      description: Schema for the result of a device counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              created:
+                type: integer
+              deleted:
+                type: integer
+              total:
+                type: integer
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    instances:
+      title: Instances
+      description: Schema for a collection of Instances
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instance'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    payloadCountsBreakdown:
+      title: Payload Counts Breakdown
+      description: Schema for the result of a payload counts breakdown request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              value:
+                type: integer
+    instanceReportOptionsPost:
+      title: Instance Report Options Post
+      description: Schema for the body of an instance report request
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        resourceGroupBy:
+          type: string
+          enum:
+          - application
+          - organization
+        dateGroupBy:
+          type: string
+          enum:
+          - day
+          - month
+        includeSandbox:
+          type: boolean
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+      additionalProperties: false
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 24
+        success:
+          type: boolean
+          enum:
+          - true
+    historicalSummaries:
+      title: Historical Summaries
+      description: Schema for a collection of Historical Summaries
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/historicalSummary'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    historicalSummary:
+      title: Historical Summary
+      description: Schema for a historical summary report
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum:
+          - application
+          - organization
+          - sandbox
+        resourceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        resourceName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        resourceProration:
+          type: number
+        ownerType:
+          type: string
+          enum:
+          - organization
+          - user
+          - sandbox
+        ownerId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        ownerName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        limits:
+          type: object
+          properties:
+            apitoken:
+              type: integer
+              minimum: 0
+            application:
+              type: integer
+              minimum: 0
+            applicationcertificate:
+              type: integer
+              minimum: 0
+            applicationcertificateauthority:
+              type: integer
+              minimum: 0
+            applicationkey:
+              type: integer
+              minimum: 0
+            credential:
+              type: integer
+              minimum: 0
+            dashboard:
+              type: integer
+              minimum: 0
+            datatable:
+              type: integer
+              minimum: 0
+            device:
+              type: integer
+              minimum: 0
+            devicerecipe:
+              type: integer
+              minimum: 0
+            experiencedomain:
+              type: integer
+              minimum: 0
+            experienceendpoint:
+              type: integer
+              minimum: 0
+            experiencegroup:
+              type: integer
+              minimum: 0
+            experienceslug:
+              type: integer
+              minimum: 0
+            experienceuser:
+              type: integer
+              minimum: 0
+            experienceversion:
+              type: integer
+              minimum: 0
+            experienceview:
+              type: integer
+              minimum: 0
+            file:
+              type: integer
+              minimum: 0
+            flow:
+              type: integer
+              minimum: 0
+            integration:
+              type: integer
+              minimum: 0
+            notebook:
+              type: integer
+              minimum: 0
+            privatefile:
+              type: integer
+              minimum: 0
+            resourcejob:
+              type: integer
+              minimum: 0
+            webhook:
+              type: integer
+              minimum: 0
+            dataTTL:
+              type: integer
+              minimum: 86400
+            member:
+              type: integer
+              minimum: 0
+            payload:
+              type: integer
+              minimum: 0
+            storage:
+              type: integer
+              minimum: 0
+            notebookMinutesPerRun:
+              type: integer
+              minimum: 0
+            notebookMinutesPerMonth:
+              type: integer
+              minimum: 0
+            notebookInParallel:
+              type: integer
+              minimum: 0
+            experienceFlowSlots:
+              type: integer
+              minimum: 0
+            applicationFlowSlots:
+              type: integer
+              minimum: 0
+            systemInterval:
+              type: integer
+              minimum: 5
+              maximum: 3600
+          additionalProperties: false
+        currentPeriodStart:
+          type: string
+          format: date-time
+        currentPeriodEnd:
+          type: string
+          format: date-time
+        applicationCount:
+          type: number
+        applicationCountProrated:
+          type: number
+        userCount:
+          type: number
+        userCountProrated:
+          type: number
+        apiTokenCount:
+          type: number
+        applicationKeyCount:
+          type: number
+        certificateAuthorityCount:
+          type: number
+        certificateCount:
+          type: number
+        credentialCount:
+          type: integer
+        dashboardCount:
+          type: number
+        dashboardCountProrated:
+          type: number
+        dataTableCount:
+          type: number
+        dataTableRowCount:
+          type: number
+        dataTableTotalSizeMb:
+          type: number
+        deviceCount:
+          type: number
+        deviceCountProrated:
+          type: number
+        deviceRecipeCount:
+          type: number
+        eventCount:
+          type: number
+        experienceDomainCount:
+          type: number
+        experienceEndpointCount:
+          type: number
+        experienceGroupCount:
+          type: number
+        experienceSlugCount:
+          type: number
+        experienceUserCount:
+          type: number
+        experienceVersionCount:
+          type: number
+        experienceViewCount:
+          type: number
+        fileCount:
+          type: number
+        fileTotalSizeMb:
+          type: number
+        integrationCount:
+          type: number
+        notebookCount:
+          type: number
+        resourceJobCount:
+          type: integer
+        notebookRunCount:
+          type: number
+        notebookMinutesCount:
+          type: number
+        privateFileCount:
+          type: number
+        privateFileTotalSizeMb:
+          type: number
+        webhookCount:
+          type: number
+        workflowCount:
+          type: number
+        payloadBillableCount:
+          type: number
+        payloadNonbillableCount:
+          type: number
+        payloadBillableSizeMb:
+          type: number
+        payloadNonbillableSizeMb:
+          type: number
+        payloadCountDetails:
+          title: Payload Stats
+          description: Schema for the result of a payload stats request
+          type: object
+          properties:
+            appFile:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            dataTable:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            deviceCreate:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            deviceCommand:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            deviceConnect:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            deviceDisconnect:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            deviceState:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            endpoint:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            event:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            flowError:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            inboundEmail:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            integration:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            mqttIn:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            mqttOut:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            notebook:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            resourceJob:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            timer:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            virtualButton:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            webhook:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+        payloadSizeDetails:
+          title: Payload Stats
+          description: Schema for the result of a payload stats request
+          type: object
+          properties:
+            appFile:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            dataTable:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            deviceCreate:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            deviceCommand:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            deviceConnect:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            deviceDisconnect:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            deviceState:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            endpoint:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            event:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            flowError:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            inboundEmail:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            integration:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            mqttIn:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            mqttOut:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            notebook:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            resourceJob:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            timer:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            virtualButton:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+            webhook:
+              type: object
+              patternProperties:
+                .*:
+                  type: number
+      additionalProperties: false
+    instancePatch:
+      title: Instance Patch
+      description: Schema for instance patch request
+      type: object
+      properties:
+        reportConfigs:
+          type: array
+          maxItems: 10
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                maxLength: 48
+              cron:
+                type: string
+                maxLength: 255
+              timezone:
+                type: string
+                maxLength: 255
+              emails:
+                type: array
+                maxItems: 10
+                items:
+                  type: string
+                  format: email
+                  maxLength: 1024
+              callbackUrl:
+                type: string
+                format: uri
+                maxLength: 1024
+              resourceGroupBy:
+                type: string
+                enum:
+                - application
+                - organization
+              dateGroupBy:
+                type: string
+                enum:
+                - day
+                - month
+              periods:
+                type: integer
+                minimum: 1
+                maximum: 90
+              includeSandbox:
+                type: boolean
+            required:
+            - cron
+            additionalProperties: false
+        orgDefaultLimitConfig:
+          type: object
+          properties:
+            apitoken:
+              type: integer
+              minimum: 0
+            application:
+              type: integer
+              minimum: 0
+            applicationcertificate:
+              type: integer
+              minimum: 0
+            applicationcertificateauthority:
+              type: integer
+              minimum: 0
+            applicationkey:
+              type: integer
+              minimum: 0
+            credential:
+              type: integer
+              minimum: 0
+            dashboard:
+              type: integer
+              minimum: 0
+            datatable:
+              type: integer
+              minimum: 0
+            device:
+              type: integer
+              minimum: 0
+            devicerecipe:
+              type: integer
+              minimum: 0
+            experiencedomain:
+              type: integer
+              minimum: 0
+            experienceendpoint:
+              type: integer
+              minimum: 0
+            experiencegroup:
+              type: integer
+              minimum: 0
+            experienceslug:
+              type: integer
+              minimum: 0
+            experienceuser:
+              type: integer
+              minimum: 0
+            experienceversion:
+              type: integer
+              minimum: 0
+            experienceview:
+              type: integer
+              minimum: 0
+            file:
+              type: integer
+              minimum: 0
+            flow:
+              type: integer
+              minimum: 0
+            integration:
+              type: integer
+              minimum: 0
+            notebook:
+              type: integer
+              minimum: 0
+            privatefile:
+              type: integer
+              minimum: 0
+            resourcejob:
+              type: integer
+              minimum: 0
+            webhook:
+              type: integer
+              minimum: 0
+            dataTTL:
+              type: integer
+              minimum: 86400
+            member:
+              type: integer
+              minimum: 0
+            payload:
+              type: integer
+              minimum: 0
+            storage:
+              type: integer
+              minimum: 0
+            notebookMinutesPerRun:
+              type: integer
+              minimum: 0
+            notebookMinutesPerMonth:
+              type: integer
+              minimum: 0
+            notebookInParallel:
+              type: integer
+              minimum: 0
+            experienceFlowSlots:
+              type: integer
+              minimum: 0
+            applicationFlowSlots:
+              type: integer
+              minimum: 0
+            systemInterval:
+              type: integer
+              minimum: 5
+              maximum: 3600
+          additionalProperties: false
+        mfaMode:
+          type: string
+          enum:
+          - notRequired
+          - adminRequired
+          - required
+      additionalProperties: false
+    instance:
+      title: Instance
+      description: Schema for a single Instance
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        allowAuditLogging:
+          type: boolean
+        reportConfigs:
+          type: array
+          maxItems: 10
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                maxLength: 48
+              cron:
+                type: string
+                maxLength: 255
+              timezone:
+                type: string
+                maxLength: 255
+              emails:
+                type: array
+                maxItems: 10
+                items:
+                  type: string
+                  format: email
+                  maxLength: 1024
+              callbackUrl:
+                type: string
+                format: uri
+                maxLength: 1024
+              resourceGroupBy:
+                type: string
+                enum:
+                - application
+                - organization
+              dateGroupBy:
+                type: string
+                enum:
+                - day
+                - month
+              periods:
+                type: integer
+                minimum: 1
+                maximum: 90
+              includeSandbox:
+                type: boolean
+            required:
+            - cron
+            additionalProperties: false
+        limits:
+          type: object
+          properties:
+            organization:
+              type: integer
+            instanceApiToken:
+              type: integer
+            instanceNotificationRule:
+              type: integer
+            instanceCustomNode:
+              type: integer
+            apitoken:
+              type: integer
+            application:
+              type: integer
+            applicationcertificate:
+              type: integer
+            applicationcertificateauthority:
+              type: integer
+            applicationkey:
+              type: integer
+            credential:
+              type: integer
+            dashboard:
+              type: integer
+            datatable:
+              type: integer
+            device:
+              type: integer
+            devicerecipe:
+              type: integer
+            experiencedomain:
+              type: integer
+            experienceendpoint:
+              type: integer
+            experiencegroup:
+              type: integer
+            experienceslug:
+              type: integer
+            experienceuser:
+              type: integer
+            experienceversion:
+              type: integer
+            experienceview:
+              type: integer
+            file:
+              type: integer
+            flow:
+              type: integer
+            integration:
+              type: integer
+            notebook:
+              type: integer
+            privatefile:
+              type: integer
+            resourcejob:
+              type: integer
+            webhook:
+              type: integer
+            dataTTL:
+              type: integer
+            member:
+              type: integer
+            payload:
+              type: integer
+            storage:
+              type: integer
+            notebookMinutesPerRun:
+              type: integer
+            notebookMinutesPerMonth:
+              type: integer
+            notebookInParallel:
+              type: integer
+            experienceFlowSlots:
+              type: integer
+            applicationFlowSlots:
+              type: integer
+            systemInterval:
+              type: integer
+          additionalProperties: false
+        orgDefaultLimitConfig:
+          type: object
+          properties:
+            apitoken:
+              type: integer
+              minimum: 0
+            application:
+              type: integer
+              minimum: 0
+            applicationcertificate:
+              type: integer
+              minimum: 0
+            applicationcertificateauthority:
+              type: integer
+              minimum: 0
+            applicationkey:
+              type: integer
+              minimum: 0
+            credential:
+              type: integer
+              minimum: 0
+            dashboard:
+              type: integer
+              minimum: 0
+            datatable:
+              type: integer
+              minimum: 0
+            device:
+              type: integer
+              minimum: 0
+            devicerecipe:
+              type: integer
+              minimum: 0
+            experiencedomain:
+              type: integer
+              minimum: 0
+            experienceendpoint:
+              type: integer
+              minimum: 0
+            experiencegroup:
+              type: integer
+              minimum: 0
+            experienceslug:
+              type: integer
+              minimum: 0
+            experienceuser:
+              type: integer
+              minimum: 0
+            experienceversion:
+              type: integer
+              minimum: 0
+            experienceview:
+              type: integer
+              minimum: 0
+            file:
+              type: integer
+              minimum: 0
+            flow:
+              type: integer
+              minimum: 0
+            integration:
+              type: integer
+              minimum: 0
+            notebook:
+              type: integer
+              minimum: 0
+            privatefile:
+              type: integer
+              minimum: 0
+            resourcejob:
+              type: integer
+              minimum: 0
+            webhook:
+              type: integer
+              minimum: 0
+            dataTTL:
+              type: integer
+              minimum: 86400
+            member:
+              type: integer
+              minimum: 0
+            payload:
+              type: integer
+              minimum: 0
+            storage:
+              type: integer
+              minimum: 0
+            notebookMinutesPerRun:
+              type: integer
+              minimum: 0
+            notebookMinutesPerMonth:
+              type: integer
+              minimum: 0
+            notebookInParallel:
+              type: integer
+              minimum: 0
+            experienceFlowSlots:
+              type: integer
+              minimum: 0
+            applicationFlowSlots:
+              type: integer
+              minimum: 0
+            systemInterval:
+              type: integer
+              minimum: 5
+              maximum: 3600
+          additionalProperties: false
+        members:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - admin
+                - view
+        mfaMode:
+          type: string
+          enum:
+          - notRequired
+          - adminRequired
+          - required
+        entitlementMode:
+          type: string
+          enum:
+          - scc
+    payloadStats:
+      title: Payload Stats
+      description: Schema for the result of a payload stats request
+      type: object
+      properties:
+        appFile:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        dataTable:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCreate:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCommand:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceConnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceDisconnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceState:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        endpoint:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        event:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        flowError:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        inboundEmail:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        integration:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttIn:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttOut:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        notebook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        resourceJob:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        timer:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        virtualButton:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        webhook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              minutes:
+                type: number
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

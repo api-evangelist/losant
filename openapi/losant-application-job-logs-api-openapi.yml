@@ -1,0 +1,947 @@
+openapi: 3.2.0
+info:
+  title: Platform Application Job Logs API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Application Job Logs
+paths:
+  /applications/{applicationId}/jobLogs:
+    get:
+      operationId: applicationJobLogs.get
+      summary: Returns the job logs for an application
+      tags:
+      - Application Job Logs
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - status
+          - resourceType
+          - runQueuedAt
+          - runStartedAt
+          - runCompletedAt
+          default: runQueuedAt
+        example: status
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: query
+        in: query
+        required: false
+        description: Filter application job logs by a query.
+        schema:
+          $ref: '#/components/schemas/advancedApplicationJobLogQuery'
+      responses:
+        '200':
+          description: Collection of application job logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationJobLogs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - applicationJobLogs.get
+  /applications/{applicationId}/jobLogs/{jobId}:
+    get:
+      operationId: applicationJobLog.get
+      summary: Returns the job log for the given ID
+      tags:
+      - Application Job Logs
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: jobId
+        in: path
+        required: true
+        description: ID associated with the job execution
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a98
+      responses:
+        '200':
+          description: An application job log
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationJobLog'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application job log was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - applicationJobLog.get
+components:
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    advancedApplicationJobLogQuery:
+      title: Advanced Application Job Log Query
+      description: Schema for advanced application job logs queries
+      type: object
+      properties:
+        $and:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedApplicationJobLogQuery'
+          maxItems: 100
+        $or:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedApplicationJobLogQuery'
+          maxItems: 100
+        $nor:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedApplicationJobLogQuery'
+          maxItems: 100
+        id:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        runQueuedAt:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        runStartedAt:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        runCompletedAt:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        status:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        name:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        resourceId:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        resourceType:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+    applicationJobLog:
+      title: Application Job Log
+      description: Schema for a single Application Job Log
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        jobId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        jobExecutionId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        name:
+          type: string
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        runQueuedAt:
+          type: string
+          format: date-time
+        runStartedAt:
+          type: string
+          format: date-time
+        runCompletedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+          - queued
+          - inProgress
+          - completed
+          - errored
+          - failed
+        requestedById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        requestedByType:
+          type: string
+          enum:
+          - user
+          - apiToken
+          - flow
+          - device
+          - system
+        ownerType:
+          type: string
+          enum:
+          - application
+          - user
+          - organization
+        ownerId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        resourceType:
+          type: string
+          enum:
+          - application
+          - dashboard
+          - datatable
+          - event
+          - device
+          - notebook
+          - deviceRecipe
+        resourceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        progress:
+          type: object
+          properties:
+            completed:
+              type: number
+            total:
+              type: number
+            status:
+              type: string
+        error:
+          type: object
+          properties:
+            name:
+              type: string
+            message:
+              type: string
+        input:
+          type: object
+          properties:
+            callbackUrl:
+              type: string
+              format: uri
+              maxLength: 1024
+            emails:
+              type: array
+              items:
+                type: string
+                format: email
+                maxLength: 1024
+            start:
+              type: number
+            end:
+              type: number
+            gatewayId:
+              type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            parentId:
+              type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            query:
+              type: string
+            ownerId:
+              type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            ownerType:
+              type: string
+              enum:
+              - user
+              - organization
+            fileUrl:
+              type: string
+              format: uri
+              maxLength: 1024
+            templateContext:
+              type: string
+        output:
+          type: object
+          properties:
+            downloadUrls:
+              type: array
+              items:
+                type: string
+                format: uri
+                maxLength: 1024
+            devicesDirectory:
+              type: string
+            eventsDirectory:
+              type: string
+            dataTablesDirectory:
+              type: string
+            created:
+              type: number
+            failed:
+              type: number
+            removed:
+              type: number
+            restored:
+              type: number
+            repoUrl:
+              type: string
+            commit:
+              type: string
+            noChanges:
+              type: boolean
+            applicationId:
+              type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            validationErrors:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  name:
+                    type: string
+                  id:
+                    type: string
+                  message:
+                    type: string
+            skippedDeviceNotFound:
+              type: number
+            skippedDateTooOld:
+              type: number
+            skippedDateInFuture:
+              type: number
+            skippedInvalidDate:
+              type: number
+            skippedNoValidAttributes:
+              type: number
+            written:
+              type: number
+            eeaBundleVersion:
+              type: string
+    applicationJobLogs:
+      title: Application Job Logs
+      description: Schema for a collection of Application Job Logs
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/applicationJobLog'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        query:
+          type: object
+        perPage:
+          type: integer
+        page:
+          type: integer
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

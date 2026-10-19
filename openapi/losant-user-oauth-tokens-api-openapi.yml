@@ -1,0 +1,690 @@
+openapi: 3.2.0
+info:
+  title: Platform User Oauth Tokens API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: User Oauth Tokens
+paths:
+  /me/oauth-tokens:
+    get:
+      operationId: userOauthTokens.get
+      summary: Returns the OAuth tokens for a user
+      tags:
+      - User Oauth Tokens
+      parameters:
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - status
+          - id
+          - creationDate
+          - lastUpdated
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+        example: name
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my*app
+      responses:
+        '200':
+          description: Collection of OAuth tokens
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOauthTokens'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - userOauthTokens.get
+    post:
+      operationId: userOauthTokens.post
+      summary: Create a new OAuth token for a user
+      tags:
+      - User Oauth Tokens
+      parameters: []
+      responses:
+        '201':
+          description: The successfully created OAuth token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOauthToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userOauthTokenPost'
+        description: OAuth token information
+      x-losant-auth-scopes:
+      - userOauthTokens.post
+  /me/oauth-tokens/{oauthTokenId}:
+    get:
+      operationId: userOauthToken.get
+      summary: Retrieves information on an OAuth token
+      tags:
+      - User Oauth Tokens
+      parameters:
+      - name: oauthTokenId
+        in: path
+        required: true
+        description: ID associated with the OAuth token
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: OAuth token information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOauthToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if OAuth token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - userOauthToken.get
+    patch:
+      operationId: userOauthToken.patch
+      summary: Updates information about an OAuth token
+      tags:
+      - User Oauth Tokens
+      parameters:
+      - name: oauthTokenId
+        in: path
+        required: true
+        description: ID associated with the OAuth token
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: Updated OAuth token information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOauthToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if OAuth token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userOauthTokenPatch'
+        description: Object containing new properties of the OAuth token
+      x-losant-auth-scopes:
+      - userOauthToken.patch
+    delete:
+      operationId: userOauthToken.delete
+      summary: Deletes an OAuth Token
+      tags:
+      - User Oauth Tokens
+      parameters:
+      - name: oauthTokenId
+        in: path
+        required: true
+        description: ID associated with the OAuth token
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: If OAuth token was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if OAuth token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - userOauthToken.delete
+components:
+  schemas:
+    userOauthTokens:
+      title: User OAuth Tokens
+      description: Schema for a collection of OAuth Tokens
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/userOauthToken'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    userOauthTokenPost:
+      title: User OAuth Token Post
+      description: Schema for the body of an OAuth Token creation request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        expirationDate:
+          oneOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          description: Session expiration. Omit for the default 1-year session, pass an ISO date for a specific expiration, or pass null for a session that does not expire.
+        oauth:
+          type: object
+          properties:
+            client_id:
+              type: string
+              minLength: 24
+              maxLength: 1024
+              description: The registered OAuth client ID (ObjectId or HTTPS URL for CIMD)
+            redirect_uri:
+              type: string
+              format: uri
+              maxLength: 1024
+            resource:
+              type: array
+              maxItems: 10
+              items:
+                type: string
+                format: uri
+                maxLength: 1024
+              description: Resource indicator(s) per RFC 8707 — absolute URI(s) identifying the audience(s) this token is being requested for
+            code_challenge:
+              type: string
+              minLength: 43
+              maxLength: 128
+              pattern: ^[A-Za-z0-9_-]+$
+              description: PKCE code challenge (RFC 7636 base64url, 43-128 chars)
+            code_challenge_method:
+              type: string
+              enum:
+              - S256
+              description: PKCE code challenge method
+          additionalProperties: false
+          required:
+          - client_id
+          - redirect_uri
+          - code_challenge
+          - code_challenge_method
+        defaultRole:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        orgRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              orgId:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: string
+                  enum:
+                  - sandbox
+              role:
+                type: string
+                enum:
+                - admin
+                - edit
+                - collaborate
+                - view
+                - none
+              applicationRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+              dashboardRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+            required:
+            - orgId
+            - role
+            additionalProperties: false
+          maxItems: 25
+        scope:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            description: OAuth-supported user-context API scope. See the `scopes_supported` field of the OAuth authorization server metadata document at /.well-known/oauth-authorization-server for the authoritative list.
+            enum:
+            - all.Application.read
+            - all.Application.bounded
+            - only.Organization.read
+            - only.Organization.bounded
+            - all.Organization.read
+            - all.Organization.bounded
+            - only.User.read
+          description: API scopes for this OAuth token
+      additionalProperties: false
+      required:
+      - name
+      - oauth
+    userOauthToken:
+      title: User OAuth Token
+      description: Schema for a single OAuth Token
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        oauthTokenId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        expirationDate:
+          type: string
+          format: date-time
+        defaultRole:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        orgRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              orgId:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: string
+                  enum:
+                  - sandbox
+              role:
+                type: string
+                enum:
+                - admin
+                - edit
+                - collaborate
+                - view
+                - none
+              applicationRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+              dashboardRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+            required:
+            - orgId
+            - role
+            additionalProperties: false
+          maxItems: 25
+        scope:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            description: OAuth-supported user-context API scope. See the `scopes_supported` field of the OAuth authorization server metadata document at /.well-known/oauth-authorization-server for the authoritative list.
+            enum:
+            - all.Application.read
+            - all.Application.bounded
+            - only.Organization.read
+            - only.Organization.bounded
+            - all.Organization.read
+            - all.Organization.bounded
+            - only.User.read
+          description: API scopes for this OAuth token
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        oauth:
+          type: object
+          properties:
+            client_id:
+              type: string
+              minLength: 24
+              maxLength: 1024
+              description: The registered OAuth client ID (ObjectId or HTTPS URL for CIMD)
+            client_name:
+              type: string
+              maxLength: 255
+              description: Human-readable name of the OAuth client (from client registration)
+            client_uri:
+              type: string
+              maxLength: 1024
+              description: Informational URL for the OAuth client's homepage (from client registration)
+            logo_uri:
+              type: string
+              maxLength: 32768
+              description: 'Logo URL for the OAuth client (http(s) URL or data: URI, from client registration)'
+            redirect_uri:
+              type: string
+              format: uri
+              maxLength: 1024
+            resource:
+              type: array
+              items:
+                type: string
+                format: uri
+                maxLength: 1024
+              description: Resource indicator(s) per RFC 8707 — audience(s) this token is bound to
+            authorizationStatus:
+              type: string
+              enum:
+              - pending
+              - authorized
+            authorizationCode:
+              type: string
+    userOauthTokenPatch:
+      title: User OAuth Token Patch
+      description: Schema for the body of an OAuth Token modification request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        defaultRole:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        orgRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              orgId:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: string
+                  enum:
+                  - sandbox
+              role:
+                type: string
+                enum:
+                - admin
+                - edit
+                - collaborate
+                - view
+                - none
+              applicationRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+              dashboardRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+            required:
+            - orgId
+            - role
+            additionalProperties: false
+          maxItems: 25
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

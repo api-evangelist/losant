@@ -1,0 +1,554 @@
+openapi: 3.2.0
+info:
+  title: Platform User Oauth Clients API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: User Oauth Clients
+paths:
+  /me/oauth-clients:
+    get:
+      operationId: userOauthClients.get
+      summary: Returns the private OAuth clients for a user
+      tags:
+      - User Oauth Clients
+      parameters:
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - client_name
+          - id
+          - creationDate
+          - lastUpdated
+          default: client_name
+        example: client_name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - client_name
+        example: client_name
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my*app
+      responses:
+        '200':
+          description: Collection of private OAuth clients
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOauthClients'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - userOauthClients.get
+    post:
+      operationId: userOauthClients.post
+      summary: Create a new private OAuth client for a user
+      tags:
+      - User Oauth Clients
+      parameters: []
+      responses:
+        '201':
+          description: The successfully created OAuth client. client_secret is only ever returned on this response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOauthClient'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userOauthClientPost'
+        description: OAuth client information
+      x-losant-auth-scopes:
+      - userOauthClients.post
+  /me/oauth-clients/{clientId}:
+    get:
+      operationId: userOauthClient.get
+      summary: Retrieves information on a private OAuth client
+      tags:
+      - User Oauth Clients
+      parameters:
+      - name: clientId
+        in: path
+        required: true
+        description: ID associated with the OAuth client
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: OAuth client information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOauthClient'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if OAuth client was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - userOauthClient.get
+    patch:
+      operationId: userOauthClient.patch
+      summary: Updates information about a private OAuth client
+      tags:
+      - User Oauth Clients
+      parameters:
+      - name: clientId
+        in: path
+        required: true
+        description: ID associated with the OAuth client
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: Updated OAuth client information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOauthClient'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if OAuth client was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userOauthClientPatch'
+        description: Object containing new properties of the OAuth client
+      x-losant-auth-scopes:
+      - userOauthClient.patch
+    delete:
+      operationId: userOauthClient.delete
+      summary: Deletes a private OAuth client
+      tags:
+      - User Oauth Clients
+      parameters:
+      - name: clientId
+        in: path
+        required: true
+        description: ID associated with the OAuth client
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: If OAuth client was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if OAuth client was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - userOauthClient.delete
+components:
+  schemas:
+    userOauthClientPost:
+      title: User OAuth Client Post
+      description: Schema for the body of a private OAuth client creation request
+      type: object
+      properties:
+        client_name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        client_uri:
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 1024
+          - type: 'null'
+        logo_uri:
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 32768
+            description: URL of the client's logo. May be an http(s) URL or a data:image/* URI.
+          - type: 'null'
+        redirect_uris:
+          type: array
+          minItems: 1
+          maxItems: 25
+          items:
+            type: string
+            format: uri
+            maxLength: 1024
+          description: Array of redirect URIs for use in redirect-based flows
+        token_endpoint_auth_method:
+          type: string
+          description: Authentication method for the token endpoint
+          enum:
+          - client_secret_basic
+          - client_secret_post
+          - none
+        scope:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            description: OAuth-supported user-context API scope. See the `scopes_supported` field of the OAuth authorization server metadata document at /.well-known/oauth-authorization-server for the authoritative list.
+            enum:
+            - all.Application.read
+            - all.Application.bounded
+            - only.Organization.read
+            - only.Organization.bounded
+            - all.Organization.read
+            - all.Organization.bounded
+            - only.User.read
+          description: API scopes this client may request
+        contacts:
+          type: array
+          maxItems: 10
+          items:
+            type: string
+            format: email
+            maxLength: 1024
+          description: Contact email addresses for this client
+        tos_uri:
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 1024
+          - type: 'null'
+        policy_uri:
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 1024
+          - type: 'null'
+      additionalProperties: false
+      required:
+      - client_name
+      - redirect_uris
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    userOauthClients:
+      title: User OAuth Clients
+      description: Schema for a collection of private OAuth clients
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/userOauthClient'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    userOauthClientPatch:
+      title: User OAuth Client Patch
+      description: Schema for the body of a private OAuth client modification request
+      type: object
+      properties:
+        client_name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        client_uri:
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 1024
+          - type: 'null'
+        logo_uri:
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 32768
+            description: URL of the client's logo. May be an http(s) URL or a data:image/* URI.
+          - type: 'null'
+        redirect_uris:
+          type: array
+          minItems: 1
+          maxItems: 25
+          items:
+            type: string
+            format: uri
+            maxLength: 1024
+          description: Array of redirect URIs for use in redirect-based flows
+        token_endpoint_auth_method:
+          type: string
+          description: Authentication method for the token endpoint
+          enum:
+          - client_secret_basic
+          - client_secret_post
+          - none
+        scope:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            description: OAuth-supported user-context API scope. See the `scopes_supported` field of the OAuth authorization server metadata document at /.well-known/oauth-authorization-server for the authoritative list.
+            enum:
+            - all.Application.read
+            - all.Application.bounded
+            - only.Organization.read
+            - only.Organization.bounded
+            - all.Organization.read
+            - all.Organization.bounded
+            - only.User.read
+          description: API scopes this client may request
+        contacts:
+          type: array
+          maxItems: 10
+          items:
+            type: string
+            format: email
+            maxLength: 1024
+          description: Contact email addresses for this client
+        tos_uri:
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 1024
+          - type: 'null'
+        policy_uri:
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 1024
+          - type: 'null'
+      additionalProperties: false
+    userOauthClient:
+      title: User OAuth Client
+      description: Schema for a single private OAuth client
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        client_id:
+          type: string
+          description: Unique client identifier
+        client_secret:
+          type: string
+          description: Client secret. Only ever included in the response to the initial creation request.
+        client_name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        client_uri:
+          type: string
+          format: uri
+          maxLength: 1024
+        logo_uri:
+          type: string
+          format: uri
+          maxLength: 32768
+          description: URL of the client's logo. May be an http(s) URL or a data:image/* URI.
+        redirect_uris:
+          type: array
+          minItems: 1
+          maxItems: 25
+          items:
+            type: string
+            format: uri
+            maxLength: 1024
+          description: Array of redirect URIs for use in redirect-based flows
+        grant_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - authorization_code
+            - refresh_token
+          description: Array of OAuth 2.0 grant types
+        response_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - code
+          description: Array of OAuth 2.0 response types
+        token_endpoint_auth_method:
+          type: string
+          description: Authentication method for the token endpoint
+          enum:
+          - client_secret_basic
+          - client_secret_post
+          - none
+        scope:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            description: OAuth-supported user-context API scope. See the `scopes_supported` field of the OAuth authorization server metadata document at /.well-known/oauth-authorization-server for the authoritative list.
+            enum:
+            - all.Application.read
+            - all.Application.bounded
+            - only.Organization.read
+            - only.Organization.bounded
+            - all.Organization.read
+            - all.Organization.bounded
+            - only.User.read
+          description: API scopes this client may request
+        contacts:
+          type: array
+          maxItems: 10
+          items:
+            type: string
+            format: email
+            maxLength: 1024
+          description: Contact email addresses for this client
+        tos_uri:
+          type: string
+          format: uri
+          maxLength: 1024
+        policy_uri:
+          type: string
+          format: uri
+          maxLength: 1024
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

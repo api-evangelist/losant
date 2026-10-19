@@ -1,0 +1,566 @@
+openapi: 3.2.0
+info:
+  title: Platform Instance Org Invites API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Instance Org Invites
+paths:
+  /instances/{instanceId}/orgs/{orgId}/invites:
+    get:
+      operationId: instanceOrgInvites.get
+      summary: Returns a collection of instance organization invites
+      tags:
+      - Instance Org Invites
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - email
+          - role
+          - inviteDate
+          default: inviteDate
+        example: role
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        example: asc
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - email
+          - role
+        example: email
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my * instance
+      responses:
+        '200':
+          description: A collection of instance organization invitations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgInvites'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrgInvites.get
+    post:
+      operationId: instanceOrgInvites.post
+      summary: Invites a member to an instance organization
+      tags:
+      - Instance Org Invites
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '201':
+          description: The new organization invite
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgInvite'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgInvitePost'
+        description: Object containing new invite info
+      x-losant-auth-scopes:
+      - instanceOrgInvites.post
+  /instances/{instanceId}/orgs/{orgId}/invites/{inviteId}:
+    get:
+      operationId: instanceOrgInvite.get
+      summary: Returns an organization invite
+      tags:
+      - Instance Org Invites
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a95
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: inviteId
+        in: path
+        required: true
+        description: ID associated with the organization invite
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a94
+      responses:
+        '200':
+          description: A single organization invite
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgInvite'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance, organization, or invite was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrgInvite.get
+    delete:
+      operationId: instanceOrgInvite.delete
+      summary: Revokes an instance org invitation
+      tags:
+      - Instance Org Invites
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a95
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: inviteId
+        in: path
+        required: true
+        description: ID associated with the organization invite
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a94
+      responses:
+        '200':
+          description: If an invite was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance, organization or invite was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrgInvite.delete
+    post:
+      operationId: instanceOrgInvite.resendInvite
+      summary: Resend an organization invite with modified role info
+      tags:
+      - Instance Org Invites
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a95
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: inviteId
+        in: path
+        required: true
+        description: ID associated with the organization invite
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a94
+      responses:
+        '201':
+          description: The new org invite
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgInvite'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance, organization, or invite was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgRoleInfo'
+        description: Object containing updated role info
+      x-losant-auth-scopes:
+      - instanceOrgInvite.resendInvite
+components:
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    instanceOrgInvite:
+      title: Instance Organization Invitation
+      description: Schema for a pending invitation to an Organization within an instance
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        role:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        applicationRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        dashboardRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        inviteDate:
+          type: string
+          format: date-time
+        ttl:
+          type: number
+        hasExpired:
+          type: boolean
+        disallowTransfer:
+          type: boolean
+        inviteId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        orgId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    orgInvitePost:
+      title: Organization Invitation Post
+      description: Schema for the body of a request to send an invitation
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        role:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        applicationRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        dashboardRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        disallowTransfer:
+          type: boolean
+      additionalProperties: false
+      required:
+      - email
+      - role
+    instanceOrgInvites:
+      title: Instance Organization Invitations
+      description: Schema for a collection of pending invitations to an Instance Organization
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceOrgInvite'
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        orgId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    orgRoleInfo:
+      title: Organization Role Info
+      description: Schema for an Organization member's role info
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        applicationRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        dashboardRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

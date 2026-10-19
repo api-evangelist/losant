@@ -1,0 +1,1456 @@
+openapi: 3.2.0
+info:
+  title: Platform Experience Users API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Experience Users
+paths:
+  /applications/{applicationId}/experience/users:
+    get:
+      operationId: experienceUsers.get
+      summary: Returns the experience users for an application
+      tags:
+      - Experience Users
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - firstName
+          - lastName
+          - email
+          - id
+          - creationDate
+          - lastLogin
+          - lastUpdated
+          default: email
+        example: email
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - firstName
+          - lastName
+          - email
+        example: email
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my*user
+      - name: experienceGroupId
+        in: query
+        required: false
+        description: Filter users to those only in the specified group, special experienceGroupIds of 'any' which will give users who are in at least one group and 'none' will give you users who are not in any groups.
+        schema:
+          type: string
+        example: 575ec8687ae143cd83dc4a97
+      - name: includeAncestorGroups
+        in: query
+        required: false
+        description: If set will include members from ancestors of the specified experienceGroupId
+        schema:
+          type: string
+        example: 'true'
+      - name: query
+        in: query
+        required: false
+        description: Experience user filter JSON object which overrides all other filter params.
+        schema:
+          $ref: '#/components/schemas/advancedExperienceUserQuery'
+      responses:
+        '200':
+          description: Collection of experience users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceUsers'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - experienceUsers.get
+    post:
+      operationId: experienceUsers.post
+      summary: Create a new experience user for an application
+      tags:
+      - Experience Users
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '201':
+          description: Successfully created experience user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceUserPost'
+        description: New experience user information
+      x-losant-auth-scopes:
+      - experienceUsers.post
+  /applications/{applicationId}/experience/users/{experienceUserId}:
+    get:
+      operationId: experienceUser.get
+      summary: Retrieves information on an experience user
+      tags:
+      - Experience Users
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: experienceUserId
+        in: path
+        required: true
+        description: ID associated with the experience user
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: Experience user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience user was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - experienceUser.get
+    patch:
+      operationId: experienceUser.patch
+      summary: Updates information about an experience user
+      tags:
+      - Experience Users
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: experienceUserId
+        in: path
+        required: true
+        description: ID associated with the experience user
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: Updated experience user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience user was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceUserPatch'
+        description: Object containing new properties of the experience user
+      x-losant-auth-scopes:
+      - experienceUser.patch
+    delete:
+      operationId: experienceUser.delete
+      summary: Deletes an experience user
+      tags:
+      - Experience Users
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: experienceUserId
+        in: path
+        required: true
+        description: ID associated with the experience user
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: If experience user was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience user was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - experienceUser.delete
+components:
+  schemas:
+    experienceUsers:
+      title: Experience Users
+      description: Schema for a collection of Experience Users
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/experienceUser'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        experienceGroupId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: string
+            enum:
+            - none
+            - any
+        includeAncestorGroups:
+          type: string
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    experienceUser:
+      title: Experience User
+      description: Schema for a single Experience User
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        experienceUserId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        passwordLastUpdated:
+          type: string
+          format: date-time
+        lastLogin:
+          type: string
+          format: date-time
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        firstName:
+          type: string
+          maxLength: 1024
+        lastName:
+          type: string
+          maxLength: 1024
+        avatarUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        tokenCutoff:
+          type: string
+          format: date-time
+        userTags:
+          type: object
+          patternProperties:
+            ^[0-9a-zA-Z_-]{1,255}$:
+              type: string
+              minLength: 1
+              maxLength: 255
+          additionalProperties: false
+        experienceGroups:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+              id:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              parentId:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+    advancedExperienceUserQuery:
+      title: Advanced Experience User Query
+      description: Schema for advanced experience user queries
+      type: object
+      properties:
+        $and:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedExperienceUserQuery'
+          maxItems: 100
+        $or:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedExperienceUserQuery'
+          maxItems: 100
+        $nor:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedExperienceUserQuery'
+          maxItems: 100
+        id:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        creationDate:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        lastUpdated:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        firstName:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        lastName:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        email:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        lastLogin:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        passwordLastUpdated:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        userTags:
+          oneOf:
+          - oneOf:
+            - type: 'null'
+            - type: object
+              properties:
+                $tagKey:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+                $tagValue:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+              additionalProperties: false
+              minProperties: 1
+            - type: object
+              patternProperties:
+                ^[0-9a-zA-Z_-]{1,255}:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+              additionalProperties: false
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: 'null'
+                - type: object
+                  properties:
+                    $tagKey:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                    $tagValue:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+                  minProperties: 1
+                - type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+            required:
+            - $eq
+            additionalProperties: false
+          - type: object
+            properties:
+              $ne:
+                oneOf:
+                - type: 'null'
+                - type: object
+                  properties:
+                    $tagKey:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                    $tagValue:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+                  minProperties: 1
+                - type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+            required:
+            - $ne
+            additionalProperties: false
+        experienceGroupId:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+      additionalProperties: false
+    experienceUserPatch:
+      title: Experience User Patch
+      description: Schema for the body of an Experience User modification request
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        firstName:
+          type: string
+          maxLength: 1024
+        lastName:
+          type: string
+          maxLength: 1024
+        password:
+          type: string
+          minLength: 8
+          maxLength: 2048
+        tokenCutoff:
+          type: string
+          format: date-time
+        userTags:
+          type: object
+          patternProperties:
+            ^[0-9a-zA-Z_-]{1,255}$:
+              type: string
+              minLength: 1
+              maxLength: 255
+          additionalProperties: false
+        experienceGroupIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+      additionalProperties: false
+    experienceUserPost:
+      title: Experience User Post
+      description: Schema for the body of an Experience User creation request
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        firstName:
+          type: string
+          maxLength: 1024
+        lastName:
+          type: string
+          maxLength: 1024
+        password:
+          type: string
+          minLength: 8
+          maxLength: 2048
+        tokenCutoff:
+          type: string
+          format: date-time
+        userTags:
+          type: object
+          patternProperties:
+            ^[0-9a-zA-Z_-]{1,255}$:
+              type: string
+              minLength: 1
+              maxLength: 255
+          additionalProperties: false
+        experienceGroupIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+      additionalProperties: false
+      required:
+      - email
+      - password
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

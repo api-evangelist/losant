@@ -1,0 +1,1917 @@
+openapi: 3.2.0
+info:
+  title: Platform Application Keys API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Application Keys
+paths:
+  /applications/{applicationId}/keys:
+    get:
+      operationId: applicationKeys.get
+      summary: Returns the applicationKeys for an application
+      tags:
+      - Application Keys
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - key
+          - status
+          - id
+          - creationDate
+          - lastUpdated
+          - name
+          default: creationDate
+        example: creationDate
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - key
+          - status
+          - name
+        example: key
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: the*key
+      - name: query
+        in: query
+        required: false
+        description: Application key filter JSON object which overrides the filterField and filter parameters.
+        schema:
+          $ref: '#/components/schemas/advancedApplicationKeyQuery'
+      responses:
+        '200':
+          description: Collection of applicationKeys
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationKeys'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - applicationKeys.get
+    post:
+      operationId: applicationKeys.post
+      summary: Create a new applicationKey for an application
+      tags:
+      - Application Keys
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '201':
+          description: Successfully created applicationKey
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationKeyPostResponse'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationKeyPost'
+        description: ApplicationKey information
+      x-losant-auth-scopes:
+      - applicationKeys.post
+  /applications/{applicationId}/keys/{applicationKeyId}:
+    get:
+      operationId: applicationKey.get
+      summary: Retrieves information on an applicationKey
+      tags:
+      - Application Keys
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: applicationKeyId
+        in: path
+        required: true
+        description: ID associated with the applicationKey
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec76c7ae143cd83dc4a96
+      responses:
+        '200':
+          description: applicationKey information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationKey'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if applicationKey was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - applicationKey.get
+    patch:
+      operationId: applicationKey.patch
+      summary: Updates information about an applicationKey
+      tags:
+      - Application Keys
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: applicationKeyId
+        in: path
+        required: true
+        description: ID associated with the applicationKey
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec76c7ae143cd83dc4a96
+      responses:
+        '200':
+          description: Updated applicationKey information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationKey'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if applicationKey was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/applicationKeyPatch'
+        description: Object containing new properties of the applicationKey
+      x-losant-auth-scopes:
+      - applicationKey.patch
+    delete:
+      operationId: applicationKey.delete
+      summary: Deletes an applicationKey
+      tags:
+      - Application Keys
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: applicationKeyId
+        in: path
+        required: true
+        description: ID associated with the applicationKey
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec76c7ae143cd83dc4a96
+      responses:
+        '200':
+          description: If applicationKey was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if applicationKey was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - applicationKey.delete
+components:
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    applicationKey:
+      title: Application Key
+      description: Schema for a single Application Key
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        createdById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        createdByType:
+          type: string
+          enum:
+          - flow
+          - user
+          - apiToken
+        lastUpdatedById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        lastUpdatedByType:
+          type: string
+          enum:
+          - flow
+          - user
+          - apiToken
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        description:
+          type: string
+          maxLength: 32767
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        filterType:
+          oneOf:
+          - type: string
+            enum:
+            - all
+            - whitelist
+            - blacklist
+          - type: string
+            enum:
+            - none
+        pubTopics:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1024
+        subTopics:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1024
+        addressFilterType:
+          type: string
+          enum:
+          - all
+          - whitelist
+          - blacklist
+        addresses:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            maxLength: 48
+        applicationKeyId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        key:
+          type: string
+        deviceIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        deviceTags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            additionalProperties: false
+          maxItems: 100
+    applicationKeyPostResponse:
+      title: Application Key Post Response
+      description: Schema for a response of Application Key creation
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationKeyId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        createdById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        createdByType:
+          type: string
+          enum:
+          - flow
+          - user
+          - apiToken
+        lastUpdated:
+          type: string
+          format: date-time
+        lastUpdatedById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        lastUpdatedByType:
+          type: string
+          enum:
+          - flow
+          - user
+          - apiToken
+        key:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        secret:
+          type: string
+        deviceIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        deviceTags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            additionalProperties: false
+          maxItems: 100
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        filterType:
+          oneOf:
+          - type: string
+            enum:
+            - all
+            - whitelist
+            - blacklist
+          - type: string
+            enum:
+            - none
+        pubTopics:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1024
+        subTopics:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1024
+        addressFilterType:
+          type: string
+          enum:
+          - all
+          - whitelist
+          - blacklist
+        addresses:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            maxLength: 48
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    applicationKeyPost:
+      title: Application Key Post
+      description: Schema for the body of an Application Key creation request
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        description:
+          type: string
+          maxLength: 32767
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        filterType:
+          oneOf:
+          - type: string
+            enum:
+            - all
+            - whitelist
+            - blacklist
+          - type: string
+            enum:
+            - none
+        pubTopics:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1024
+        subTopics:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1024
+        addressFilterType:
+          type: string
+          enum:
+          - all
+          - whitelist
+          - blacklist
+        addresses:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            maxLength: 48
+        deviceIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        deviceTags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            additionalProperties: false
+          maxItems: 100
+      additionalProperties: false
+    advancedApplicationKeyQuery:
+      title: Advanced Application Key Query
+      description: Schema for advanced application key queries
+      type: object
+      properties:
+        $and:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedApplicationKeyQuery'
+          maxItems: 100
+        $or:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedApplicationKeyQuery'
+          maxItems: 100
+        $nor:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedApplicationKeyQuery'
+          maxItems: 100
+        id:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        name:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        creationDate:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        lastUpdated:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        status:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        filterType:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        pubTopics:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        subTopics:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        addressFilterType:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        addresses:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        deviceIds:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        deviceTags:
+          oneOf:
+          - oneOf:
+            - type: 'null'
+            - type: object
+              properties:
+                $tagKey:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+                $tagValue:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+              additionalProperties: false
+              minProperties: 1
+            - type: object
+              patternProperties:
+                ^[0-9a-zA-Z_-]{1,255}:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+              additionalProperties: false
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: 'null'
+                - type: object
+                  properties:
+                    $tagKey:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                    $tagValue:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+                  minProperties: 1
+                - type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+            required:
+            - $eq
+            additionalProperties: false
+          - type: object
+            properties:
+              $ne:
+                oneOf:
+                - type: 'null'
+                - type: object
+                  properties:
+                    $tagKey:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                    $tagValue:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+                  minProperties: 1
+                - type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+            required:
+            - $ne
+            additionalProperties: false
+        key:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        description:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+    applicationKeys:
+      title: Application Keys
+      description: Schema for a collection of Application Keys
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/applicationKey'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    applicationKeyPatch:
+      title: Application Key Patch
+      description: Schema for the body of an Application Key modification request
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        description:
+          type: string
+          maxLength: 32767
+        name:
+          oneOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        filterType:
+          oneOf:
+          - type: string
+            enum:
+            - all
+            - whitelist
+            - blacklist
+          - type: string
+            enum:
+            - none
+        pubTopics:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1024
+        subTopics:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1024
+        addressFilterType:
+          type: string
+          enum:
+          - all
+          - whitelist
+          - blacklist
+        addresses:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            maxLength: 48
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

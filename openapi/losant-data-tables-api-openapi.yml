@@ -1,0 +1,558 @@
+openapi: 3.2.0
+info:
+  title: Platform Data Tables API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Data Tables
+paths:
+  /applications/{applicationId}/data-tables:
+    get:
+      operationId: dataTables.get
+      summary: Returns the data tables for an application
+      tags:
+      - Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+        example: name
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my*table
+      responses:
+        '200':
+          description: Collection of data tables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTables'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - dataTables.get
+    post:
+      operationId: dataTables.post
+      summary: Create a new data table for an application
+      tags:
+      - Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '201':
+          description: Successfully created data table
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTablePost'
+        description: New data table information
+      x-losant-auth-scopes:
+      - dataTables.post
+  /applications/{applicationId}/data-tables/{dataTableId}:
+    get:
+      operationId: dataTable.get
+      summary: Retrieves information on a data table
+      tags:
+      - Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: Data table information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - dataTable.get
+    patch:
+      operationId: dataTable.patch
+      summary: Updates information about a data table
+      tags:
+      - Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: Updated data table information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTablePatch'
+        description: Object containing updated properties of the data table
+      x-losant-auth-scopes:
+      - dataTable.patch
+    delete:
+      operationId: dataTable.delete
+      summary: Deletes a data table
+      tags:
+      - Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: If data table was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - dataTable.delete
+  /applications/{applicationId}/data-tables/{dataTableId}/column:
+    post:
+      operationId: dataTable.addColumn
+      summary: Adds a new column to this data table
+      tags:
+      - Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: Updated data table information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTableColumn'
+        description: Object containing the new column properties
+      x-losant-auth-scopes:
+      - dataTable.addColumn
+    delete:
+      operationId: dataTable.removeColumn
+      summary: Removes a column from this data table
+      tags:
+      - Data Tables
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      - name: columnName
+        in: query
+        required: true
+        description: Name of the column to remove
+        schema:
+          type: string
+          pattern: ^[0-9a-zA-Z_-]{1,255}$
+        example: myColumnName
+      responses:
+        '200':
+          description: Updated data table information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTable'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - dataTable.removeColumn
+components:
+  schemas:
+    dataTableColumn:
+      title: Data Table Column
+      description: Schema for a single Data Table Column
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: ^[0-9a-zA-Z_-]{1,255}$
+        dataType:
+          type: string
+          enum:
+          - string
+          - number
+          - boolean
+        constraint:
+          type: string
+          enum:
+          - unique
+          - required
+          - optional
+        defaultValue:
+          type:
+          - string
+          - number
+          - boolean
+      required:
+      - name
+      - dataType
+      - constraint
+      additionalProperties: false
+    dataTablePatch:
+      title: Data Table Patch
+      description: Schema for the body of a Data Table modification request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+      additionalProperties: false
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    dataTable:
+      title: Data Table
+      description: Schema for a single Data Table
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        dataTableId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataTableColumn'
+          maxItems: 50
+        summary:
+          type: object
+          properties:
+            count:
+              type: number
+            size:
+              type: number
+    dataTablePost:
+      title: Data Table Post
+      description: Schema for the body of a Data Table creation request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataTableColumn'
+          maxItems: 50
+      required:
+      - name
+      additionalProperties: false
+    dataTables:
+      title: Data Tables
+      description: Schema for a collection of Data Tables
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataTable'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

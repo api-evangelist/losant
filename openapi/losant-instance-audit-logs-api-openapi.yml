@@ -1,0 +1,356 @@
+openapi: 3.2.0
+info:
+  title: Platform Instance Audit Logs API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Instance Audit Logs
+paths:
+  /instance/{instanceId}/audit-logs:
+    get:
+      operationId: instanceAuditLogs.get
+      summary: Returns the audit logs for the instance
+      tags:
+      - Instance Audit Logs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a96
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - creationDate
+          - responseStatus
+          - actorName
+          default: creationDate
+        example: creationDate
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: start
+        in: query
+        required: false
+        description: Start of time range for audit log query
+        schema:
+          type: string
+        example: 1465790400000
+      - name: end
+        in: query
+        required: false
+        description: End of time range for audit log query
+        schema:
+          type: string
+        example: 1465790400000
+      - name: auditLogFilter
+        in: query
+        required: false
+        description: Filters for the audit log query
+        schema:
+          $ref: '#/components/schemas/instanceAuditLogFilter'
+      responses:
+        '200':
+          description: Collection of instance audit logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceAuditLogs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceAuditLogs.get
+  /instance/{instanceId}/audit-logs/{instanceAuditLogId}:
+    get:
+      operationId: instanceAuditLog.get
+      summary: Retrieves information on an instance audit log
+      tags:
+      - Instance Audit Logs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a96
+      - name: instanceAuditLogId
+        in: path
+        required: true
+        description: ID associated with the instance audit log
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 57955788124b37010084c053
+      responses:
+        '200':
+          description: Instance audit log information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceAuditLog'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance audit log was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceAuditLog.get
+components:
+  schemas:
+    instanceAuditLog:
+      title: Instance Audit Log
+      description: Schema for a single Instance Audit Log entry
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        instanceAuditLogId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        primaryTargetId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        primaryTargetType:
+          type: string
+          enum:
+          - Organization
+          - ApiToken
+          - User
+          - InstanceCustomNode
+          - NotificationRule
+        primaryTargetName:
+          type: string
+          maxLength: 1024
+        secondaryTargetId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        secondaryTargetType:
+          type: string
+          enum:
+          - OrgInvite
+          - ApiToken
+        secondaryTargetName:
+          type: string
+          maxLength: 1024
+        actorId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        actorType:
+          type: string
+          enum:
+          - User
+          - ApiToken
+        actorName:
+          type: string
+          maxLength: 1024
+        requestResource:
+          type: string
+          maxLength: 1024
+        requestAction:
+          type: string
+          maxLength: 1024
+        requestQueryParams:
+          type: object
+        requestBody: {}
+        requestPathParams:
+          type: object
+        responseBody: {}
+        responseStatus:
+          type: integer
+          minimum: 100
+          maximum: 599
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    instanceAuditLogs:
+      title: Instance Audit Logs
+      description: Schema for a collection of Instance Audit Logs
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceAuditLog'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    instanceAuditLogFilter:
+      title: Instance Audit Log Filter
+      description: Schema for the filter of an instance audit log query
+      type: object
+      properties:
+        primaryTarget:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              type:
+                type: string
+                enum:
+                - Organization
+                - ApiToken
+                - User
+                - InstanceCustomNode
+                - NotificationRule
+              name:
+                type: string
+                maxLength: 1024
+            additionalProperties: false
+        secondaryTarget:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              type:
+                type: string
+                enum:
+                - OrgInvite
+                - ApiToken
+              name:
+                type: string
+                maxLength: 1024
+            additionalProperties: false
+        actor:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              type:
+                type: string
+                enum:
+                - User
+                - ApiToken
+              name:
+                type: string
+                maxLength: 1024
+            additionalProperties: false
+        request:
+          type: array
+          items:
+            type: object
+            properties:
+              resource:
+                type: string
+                maxLength: 1024
+              action:
+                type: string
+                maxLength: 1024
+            additionalProperties: false
+        responseCode:
+          type: array
+          items:
+            type: integer
+            minimum: 100
+            maximum: 599
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

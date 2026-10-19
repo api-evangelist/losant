@@ -1,0 +1,1204 @@
+openapi: 3.2.0
+info:
+  title: Platform Application Api Tokens API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Application Api Tokens
+paths:
+  /applications/{applicationId}/tokens:
+    get:
+      operationId: applicationApiTokens.get
+      summary: Returns the API tokens for an application
+      tags:
+      - Application Api Tokens
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - status
+          - id
+          - creationDate
+          - lastUpdated
+          - expirationDate
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+          - status
+        example: key
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my*token
+      responses:
+        '200':
+          description: Collection of API tokens
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiTokens'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - applicationApiTokens.get
+    post:
+      operationId: applicationApiTokens.post
+      summary: Create a new API token for an application
+      tags:
+      - Application Api Tokens
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '201':
+          description: The successfully created API token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/apiTokenPost'
+        description: API token information
+      x-losant-auth-scopes:
+      - applicationApiTokens.post
+  /applications/{applicationId}/tokens/{apiTokenId}:
+    get:
+      operationId: applicationApiToken.get
+      summary: Retrieves information on an API token
+      tags:
+      - Application Api Tokens
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: apiTokenId
+        in: path
+        required: true
+        description: ID associated with the API token
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: API token information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if API token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - applicationApiToken.get
+    patch:
+      operationId: applicationApiToken.patch
+      summary: Updates information about an API token
+      tags:
+      - Application Api Tokens
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: apiTokenId
+        in: path
+        required: true
+        description: ID associated with the API token
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: Updated API token information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiToken'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if API token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/apiTokenPatch'
+        description: Object containing new properties of the API token
+      x-losant-auth-scopes:
+      - applicationApiToken.patch
+    delete:
+      operationId: applicationApiToken.delete
+      summary: Deletes an API Token
+      tags:
+      - Application Api Tokens
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: apiTokenId
+        in: path
+        required: true
+        description: ID associated with the API token
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: If API token was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if API token was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - applicationApiToken.delete
+components:
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    apiToken:
+      title: API Token
+      description: Schema for a single API Token
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        apiTokenId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        ownerId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        ownerType:
+          type: string
+          enum:
+          - application
+          - user
+          - instance
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creatorId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creatorType:
+          type: string
+          enum:
+          - apiToken
+          - user
+          - flow
+        creatorName:
+          type: string
+          maxLength: 1024
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        expirationDate:
+          type: string
+          format: date-time
+        defaultRole:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        orgRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              orgId:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: string
+                  enum:
+                  - sandbox
+              role:
+                type: string
+                enum:
+                - admin
+                - edit
+                - collaborate
+                - view
+                - none
+              applicationRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+              dashboardRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+            required:
+            - orgId
+            - role
+            additionalProperties: false
+          maxItems: 25
+        scope:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1024
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        token:
+          type: string
+          minLength: 1
+    apiTokens:
+      title: API Tokens
+      description: Schema for a collection of API Tokens
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/apiToken'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        ownerId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        ownerType:
+          type: string
+          enum:
+          - application
+          - user
+          - instance
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    apiTokenPost:
+      title: API Token Post
+      description: Schema for the body of an API Token creation request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        expirationDate:
+          type: string
+          format: date-time
+        defaultRole:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        orgRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              orgId:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: string
+                  enum:
+                  - sandbox
+              role:
+                type: string
+                enum:
+                - admin
+                - edit
+                - collaborate
+                - view
+                - none
+              applicationRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+              dashboardRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+            required:
+            - orgId
+            - role
+            additionalProperties: false
+          maxItems: 25
+        scope:
+          type: array
+          uniqueItems: true
+          items:
+            oneOf:
+            - oneOf:
+              - type: string
+                enum:
+                - all.Application
+                - all.Application.bounded
+                - all.Application.read
+                - all.Application.cli
+                - all.Device
+                - all.Device.read
+                - application.*
+                - applicationApiToken.*
+                - applicationApiTokens.*
+                - applicationCertificate.*
+                - applicationCertificates.*
+                - applicationCertificateAuthority.*
+                - applicationCertificateAuthorities.*
+                - applicationDashboards.*
+                - applicationDashboard.*
+                - applicationJobLogs.*
+                - applicationJobLog.*
+                - applicationKey.*
+                - applicationKeys.*
+                - credential.*
+                - credentials.*
+                - data.*
+                - dataTable.*
+                - dataTables.*
+                - dataTableRow.*
+                - dataTableRows.*
+                - device.*
+                - deviceRecipe.*
+                - deviceRecipes.*
+                - devices.*
+                - deviceAttribute.*
+                - deviceAttributes.*
+                - edgeDeployment.*
+                - edgeDeployments.*
+                - embeddedDeployment.*
+                - embeddedDeployments.*
+                - event.*
+                - events.*
+                - experience.*
+                - experienceDomain.*
+                - experienceDomains.*
+                - experienceEndpoint.*
+                - experienceEndpoints.*
+                - experienceGroup.*
+                - experienceGroups.*
+                - experienceSlug.*
+                - experienceSlugs.*
+                - experienceUser.*
+                - experienceUsers.*
+                - experienceVersion.*
+                - experienceVersions.*
+                - experienceView.*
+                - experienceViews.*
+                - integration.*
+                - integrations.*
+                - file.*
+                - files.*
+                - flow.*
+                - flows.*
+                - flowVersion.*
+                - flowVersions.*
+                - notebook.*
+                - notebooks.*
+                - privateFile.*
+                - privateFiles.*
+                - resourceJobs.*
+                - resourceJob.*
+                - webhook.*
+                - webhooks.*
+                - application.applyTemplate
+                - application.archiveData
+                - application.backfillArchiveData
+                - application.clone
+                - application.export
+                - application.import
+                - application.fullEventsArchive
+                - application.fullDataTablesArchive
+                - application.debug
+                - application.delete
+                - application.get
+                - application.mqttPublishMessage
+                - application.mqttSubscriptionStream
+                - application.patch
+                - application.payloadCounts
+                - application.payloadCountsBreakdown
+                - application.deviceCounts
+                - application.notebookMinuteCounts
+                - application.search
+                - application.importLogs
+                - applicationApiToken.delete
+                - applicationApiToken.get
+                - applicationApiToken.patch
+                - applicationApiTokens.get
+                - applicationApiTokens.post
+                - applicationCertificate.delete
+                - applicationCertificate.get
+                - applicationCertificate.patch
+                - applicationCertificates.get
+                - applicationCertificates.post
+                - applicationCertificateAuthority.delete
+                - applicationCertificateAuthority.get
+                - applicationCertificateAuthority.patch
+                - applicationCertificateAuthorities.get
+                - applicationCertificateAuthorities.post
+                - applicationDashboard.get
+                - applicationDashboard.patch
+                - applicationDashboard.sendReport
+                - applicationDashboard.delete
+                - applicationDashboards.get
+                - applicationDashboards.post
+                - applicationJobLogs.get
+                - applicationJobLog.get
+                - applicationKey.delete
+                - applicationKey.get
+                - applicationKey.patch
+                - applicationKeys.get
+                - applicationKeys.post
+                - credential.get
+                - credential.linkedResources
+                - credential.patch
+                - credential.delete
+                - credentials.get
+                - credentials.post
+                - data.export
+                - data.lastValueQuery
+                - data.timeSeriesQuery
+                - dataTable.addColumn
+                - dataTable.delete
+                - dataTable.get
+                - dataTable.patch
+                - dataTable.removeColumn
+                - dataTableRow.delete
+                - dataTableRow.get
+                - dataTableRow.patch
+                - dataTableRows.get
+                - dataTableRows.post
+                - dataTableRows.query
+                - dataTableRows.export
+                - dataTableRows.delete
+                - dataTableRows.truncate
+                - dataTables.get
+                - dataTables.post
+                - device.agentLogs
+                - device.commandStream
+                - device.debug
+                - device.delete
+                - device.export
+                - device.get
+                - device.getCommand
+                - device.getCompositeState
+                - device.getLogEntries
+                - device.getState
+                - device.patch
+                - device.payloadCounts
+                - device.payloadCountsBreakdown
+                - device.removeData
+                - device.sendCommand
+                - device.sendState
+                - device.setConnectionStatus
+                - device.stateStream
+                - deviceRecipe.bulkCreate
+                - deviceRecipe.delete
+                - deviceRecipe.get
+                - deviceRecipe.patch
+                - deviceRecipes.get
+                - deviceRecipes.post
+                - devices.attributeNames
+                - devices.patch
+                - devices.delete
+                - devices.restore
+                - devices.removeData
+                - devices.deviceNames
+                - devices.export
+                - devices.get
+                - devices.getCompositeState
+                - devices.historicalImport
+                - devices.payloadCounts
+                - devices.post
+                - devices.sendCommand
+                - devices.tagKeys
+                - devices.tagValues
+                - deviceAttribute.get
+                - deviceAttribute.patch
+                - deviceAttribute.delete
+                - deviceAttributes.get
+                - deviceAttributes.post
+                - edgeDeployment.get
+                - edgeDeployments.get
+                - edgeDeployments.release
+                - edgeDeployments.remove
+                - edgeDeployments.replace
+                - embeddedDeployment.get
+                - embeddedDeployments.get
+                - embeddedDeployments.release
+                - embeddedDeployments.remove
+                - embeddedDeployments.replace
+                - embeddedDeployments.export
+                - event.delete
+                - event.get
+                - event.patch
+                - events.delete
+                - events.detailedSummary
+                - events.get
+                - events.mostRecentBySeverity
+                - events.patch
+                - events.post
+                - events.export
+                - experience.delete
+                - experience.bootstrap
+                - experienceDomain.delete
+                - experienceDomain.get
+                - experienceDomain.patch
+                - experienceDomains.get
+                - experienceDomains.post
+                - experienceEndpoint.delete
+                - experienceEndpoint.get
+                - experienceEndpoint.linkedResources
+                - experienceEndpoint.patch
+                - experienceEndpoints.get
+                - experienceEndpoints.post
+                - experienceEndpoints.stats
+                - experienceGroup.delete
+                - experienceGroup.get
+                - experienceGroup.patch
+                - experienceGroups.detailedSummary
+                - experienceGroups.get
+                - experienceGroups.post
+                - experienceSlug.delete
+                - experienceSlug.get
+                - experienceSlug.patch
+                - experienceSlugs.get
+                - experienceSlugs.post
+                - experienceUser.delete
+                - experienceUser.get
+                - experienceUser.patch
+                - experienceUsers.detailedSummary
+                - experienceUsers.get
+                - experienceUsers.post
+                - experienceVersion.delete
+                - experienceVersion.get
+                - experienceVersion.patch
+                - experienceVersions.get
+                - experienceVersions.post
+                - experienceView.debug
+                - experienceView.delete
+                - experienceView.get
+                - experienceView.linkedResources
+                - experienceView.patch
+                - experienceViews.debug
+                - experienceViews.detailedSummary
+                - experienceViews.get
+                - experienceViews.post
+                - file.get
+                - file.patch
+                - file.move
+                - file.delete
+                - file.upload
+                - files.get
+                - files.post
+                - flow.clearStorageEntries
+                - flow.debug
+                - flow.delete
+                - flow.errors
+                - flow.get
+                - flow.getStorageEntries
+                - flow.log
+                - flow.patch
+                - flow.pressVirtualButton
+                - flow.setStorageEntry
+                - flow.getStorageEntriesMetadata
+                - flow.stats
+                - flow.suggestFunction
+                - flows.get
+                - flows.getByVersion
+                - flows.import
+                - flows.palette
+                - flows.post
+                - flowVersion.delete
+                - flowVersion.debug
+                - flowVersion.errors
+                - flowVersion.get
+                - flowVersion.log
+                - flowVersion.patch
+                - flowVersion.stats
+                - flowVersions.delete
+                - flowVersions.get
+                - flowVersions.post
+                - integration.delete
+                - integration.get
+                - integration.patch
+                - integrations.get
+                - integrations.post
+                - notebook.delete
+                - notebook.execute
+                - notebook.get
+                - notebook.logs
+                - notebook.notebookMinuteCounts
+                - notebook.patch
+                - notebook.requestInputDataExport
+                - notebook.upload
+                - notebooks.get
+                - notebooks.post
+                - privateFile.get
+                - privateFile.patch
+                - privateFile.move
+                - privateFile.delete
+                - privateFile.upload
+                - privateFiles.get
+                - privateFiles.post
+                - resourceJob.get
+                - resourceJob.logs
+                - resourceJob.patch
+                - resourceJob.delete
+                - resourceJob.execute
+                - resourceJob.cancelExecution
+                - resourceJobs.get
+                - resourceJobs.post
+                - webhook.delete
+                - webhook.get
+                - webhook.patch
+                - webhooks.get
+                - webhooks.post
+              - type: string
+                enum:
+                - all.Organization
+                - all.Organization.bounded
+                - all.Organization.read
+                - only.Organization
+                - only.Organization.bounded
+                - only.Organization.read
+                - applications.*
+                - auditLog.*
+                - auditLogs.*
+                - dashboard.*
+                - dashboards.*
+                - org.*
+                - applications.get
+                - applications.post
+                - applications.import
+                - applications.detailedSummary
+                - applications.periodSummaries
+                - auditLog.get
+                - auditLogs.get
+                - dashboard.patch
+                - dashboard.delete
+                - dashboard.sendReport
+                - dashboard.suggestCode
+                - dashboards.get
+                - dashboards.post
+                - org.get
+                - org.patch
+                - org.delete
+                - org.pendingInvites
+                - org.inviteMember
+                - org.revokeInvite
+                - org.modifyMember
+                - org.removeMember
+                - org.payloadCounts
+                - org.payloadCountsBreakdown
+                - org.deviceCounts
+                - org.notebookMinuteCounts
+                - org.invoices
+                - org.currentCard
+                - org.transferResources
+            - type: string
+              enum:
+              - all.Instance
+              - all.Instance.bounded
+              - all.Instance.read
+              - instance.*
+              - instance.get
+              - instance.patch
+              - instance.historicalSummaries
+              - instance.generateReport
+              - instance.payloadCounts
+              - instance.payloadCountsBreakdown
+              - instance.deviceCounts
+              - instance.notebookMinuteCounts
+              - instance.entitlements
+              - instanceOrg.*
+              - instanceOrg.get
+              - instanceOrg.patch
+              - instanceOrg.delete
+              - instanceOrg.payloadCounts
+              - instanceOrg.payloadCountsBreakdown
+              - instanceOrg.deviceCounts
+              - instanceOrg.notebookMinuteCounts
+              - instanceOrg.entitlement
+              - instanceOrg.entitlementSync
+              - instanceOrg.convertToEnterprise
+              - instanceOrgs.*
+              - instanceOrgs.get
+              - instanceOrgs.post
+              - instanceMember.*
+              - instanceMember.get
+              - instanceMember.patch
+              - instanceMember.delete
+              - instanceMembers.*
+              - instanceMembers.get
+              - instanceMembers.post
+              - instanceOrgMember.*
+              - instanceOrgMember.get
+              - instanceOrgMember.patch
+              - instanceOrgMember.delete
+              - instanceOrgMembers.*
+              - instanceOrgMembers.get
+              - instanceOrgMembers.post
+              - instanceOrgInvite.*
+              - instanceOrgInvite.get
+              - instanceOrgInvite.delete
+              - instanceOrgInvite.resendInvite
+              - instanceOrgInvites.*
+              - instanceOrgInvites.get
+              - instanceOrgInvites.post
+              - instanceApiTokens.*
+              - instanceApiTokens.get
+              - instanceApiTokens.post
+              - instanceApiToken.*
+              - instanceApiToken.get
+              - instanceApiToken.patch
+              - instanceApiToken.delete
+              - instanceCustomNodes.*
+              - instanceCustomNodes.get
+              - instanceCustomNodes.post
+              - instanceCustomNode.*
+              - instanceCustomNode.get
+              - instanceCustomNode.patch
+              - instanceCustomNode.delete
+              - instanceCustomNode.errors
+              - instanceCustomNode.stats
+              - instanceNotificationRules.*
+              - instanceNotificationRules.get
+              - instanceNotificationRules.post
+              - instanceNotificationRule.*
+              - instanceNotificationRule.get
+              - instanceNotificationRule.patch
+              - instanceNotificationRule.delete
+              - instanceNotificationRule.evaluate
+              - instanceNotificationRule.logs
+              - instanceSandbox.*
+              - instanceSandbox.get
+              - instanceSandbox.delete
+              - instanceSandbox.undelete
+              - instanceSandbox.payloadCounts
+              - instanceSandbox.payloadCountsBreakdown
+              - instanceSandbox.deviceCounts
+              - instanceSandbox.notebookMinuteCounts
+              - instanceSandboxes.*
+              - instanceSandboxes.get
+              - instanceAuditLog.*
+              - instanceAuditLog.get
+              - instanceAuditLogs.*
+              - instanceAuditLogs.get
+            - type: string
+              enum:
+              - all.User
+              - all.User.bounded
+              - all.User.read
+              - all.User.cli
+              - only.User
+              - only.User.bounded
+              - only.User.read
+              - userApiToken.*
+              - userApiToken.get
+              - userApiToken.patch
+              - userApiToken.delete
+              - userApiTokens.*
+              - userApiTokens.get
+              - userApiTokens.post
+              - userOauthToken.*
+              - userOauthToken.get
+              - userOauthToken.patch
+              - userOauthToken.delete
+              - userOauthTokens.*
+              - userOauthTokens.get
+              - userOauthTokens.post
+              - userOauthClient.*
+              - userOauthClient.get
+              - userOauthClient.patch
+              - userOauthClient.delete
+              - userOauthClients.*
+              - userOauthClients.get
+              - userOauthClients.post
+              - applicationTemplate.*
+              - applicationTemplate.get
+              - applicationTemplates.*
+              - applicationTemplates.get
+              - applicationTemplates.getCategories
+              - applicationTemplates.getUniqueKeywords
+              - instances.*
+              - instances.get
+              - me.*
+              - me.get
+              - me.patch
+              - me.delete
+              - me.verifyEmail
+              - me.changePassword
+              - me.generateTwoFactorAuth
+              - me.enableTwoFactorAuth
+              - me.disableTwoFactorAuth
+              - me.disconnectGithub
+              - me.connectGithub
+              - me.addRecentItem
+              - me.fetchRecentItems
+              - me.payloadCounts
+              - me.payloadCountsBreakdown
+              - me.deviceCounts
+              - me.notebookMinuteCounts
+              - me.transferResources
+              - me.invite
+              - me.invites
+              - me.respondToInvite
+              - me.refreshToken
+              - me.entitlements
+              - orgs.*
+              - orgs.get
+              - orgs.post
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+      additionalProperties: false
+      required:
+      - name
+    apiTokenPatch:
+      title: API Token Patch
+      description: Schema for the body of an API Token modification request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        defaultRole:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        orgRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              orgId:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: string
+                  enum:
+                  - sandbox
+              role:
+                type: string
+                enum:
+                - admin
+                - edit
+                - collaborate
+                - view
+                - none
+              applicationRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+              dashboardRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+            required:
+            - orgId
+            - role
+            additionalProperties: false
+          maxItems: 25
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

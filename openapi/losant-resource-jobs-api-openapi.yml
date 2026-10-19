@@ -1,0 +1,887 @@
+openapi: 3.2.0
+info:
+  title: Platform Resource Jobs API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Resource Jobs
+paths:
+  /applications/{applicationId}/resource-jobs:
+    get:
+      operationId: resourceJobs.get
+      summary: Returns the resource jobs for an application
+      tags:
+      - Resource Jobs
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          - lastExecutionRequested
+          - resourceType
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+          - resourceType
+        example: device
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my*job
+      responses:
+        '200':
+          description: Collection of resource jobs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resourceJobs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - resourceJobs.get
+    post:
+      operationId: resourceJobs.post
+      summary: Create a new resource job for an application
+      tags:
+      - Resource Jobs
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '201':
+          description: Successfully created resource job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resourceJob'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resourceJobPost'
+        description: New resource job information
+      x-losant-auth-scopes:
+      - resourceJobs.post
+  /applications/{applicationId}/resource-jobs/{resourceJobId}:
+    get:
+      operationId: resourceJob.get
+      summary: Returns a resource job
+      tags:
+      - Resource Jobs
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: resourceJobId
+        in: path
+        required: true
+        description: ID associated with the resource job
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: A single resource job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resourceJob'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - resourceJob.get
+    patch:
+      operationId: resourceJob.patch
+      summary: Update a resource job
+      tags:
+      - Resource Jobs
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: resourceJobId
+        in: path
+        required: true
+        description: ID associated with the resource job
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Successfully updated resource job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resourceJob'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if resource job was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resourceJobPatch'
+        description: The new resource job configuration
+      x-losant-auth-scopes:
+      - resourceJob.patch
+    delete:
+      operationId: resourceJob.delete
+      summary: Deletes a resource job
+      tags:
+      - Resource Jobs
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: resourceJobId
+        in: path
+        required: true
+        description: ID associated with the resource job
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: includeWorkflows
+        in: query
+        required: false
+        description: If the workflows that trigger from this resource job should also be deleted.
+        schema:
+          type: string
+        example: true
+      responses:
+        '200':
+          description: If resource job was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if resource job was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - resourceJob.delete
+  /applications/{applicationId}/resource-jobs/{resourceJobId}/cancelExecution:
+    post:
+      operationId: resourceJob.cancelExecution
+      summary: Marks a specific resource job execution for cancellation
+      tags:
+      - Resource Jobs
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: resourceJobId
+        in: path
+        required: true
+        description: ID associated with the resource job
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: executionId
+        in: query
+        required: true
+        description: The ID of the execution to cancel
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 632e18632f59592e773a4153
+      responses:
+        '200':
+          description: If the execution was successfully marked for cancellation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if execution was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - resourceJob.cancelExecution
+  /applications/{applicationId}/resource-jobs/{resourceJobId}/execute:
+    post:
+      operationId: resourceJob.execute
+      summary: Queues the execution of a resource job
+      tags:
+      - Resource Jobs
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: resourceJobId
+        in: path
+        required: true
+        description: ID associated with the resource job
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: If the job was successfully queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successWithExecutionId'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if resource job was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resourceJobExecutionOptions'
+        description: The options for the execution
+      x-losant-auth-scopes:
+      - resourceJob.execute
+  /applications/{applicationId}/resource-jobs/{resourceJobId}/logs:
+    get:
+      operationId: resourceJob.logs
+      summary: Retrieves information on resource job executions
+      tags:
+      - Resource Jobs
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: resourceJobId
+        in: path
+        required: true
+        description: ID associated with the resource job
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: limit
+        in: query
+        required: false
+        description: Max log entries to return (ordered by time descending)
+        schema:
+          type: string
+          default: 1
+        example: 10
+      - name: since
+        in: query
+        required: false
+        description: Look for log entries since this time (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Resource job execution information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resourceJobExecutionLogs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if resource job was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - resourceJob.logs
+components:
+  schemas:
+    resourceJobExecutionLogs:
+      title: Resource Job Execution Logs
+      description: Schema for a set of Resource Job execution logs
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          applicationId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          resourceJobExecutionId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          resourceJobId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          accumulator:
+            type: string
+            maxLength: 256
+          status:
+            type: string
+            enum:
+            - inProgress
+            - completed
+            - erroring
+            - errored
+            - canceling
+            - canceled
+          queryJson:
+            type: string
+            maxLength: 8192
+          dataTableId:
+            oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: string
+              minLength: 4
+              maxLength: 255
+              pattern: .*\{\{.+\}\}.*
+          resourceType:
+            type: string
+            enum:
+            - dataTableRow
+            - device
+            - experienceGroup
+            - experienceUser
+          sourceType:
+            type: string
+            enum:
+            - flow
+            - user
+            - device
+            - apiToken
+            - notebook
+          sourceId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          cancelSourceType:
+            type: string
+            enum:
+            - flow
+            - user
+            - device
+            - apiToken
+            - notebook
+          cancelSourceId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          runStartedAt:
+            type: string
+            format: date-time
+          runCompletedAt:
+            type: string
+            format: date-time
+          executionReportUrl:
+            type: string
+          templateContext:
+            type: string
+            maxLength: 32767
+          iterationDelay:
+            type: integer
+            minimum: 0
+            maximum: 60000
+          iterationTimeout:
+            type: integer
+            minimum: 60000
+            maximum: 900000
+          maxIterationConcurrency:
+            type: integer
+            enum:
+            - 1
+            - 10
+          executionSummary:
+            type: object
+            properties:
+              succeeded:
+                type: number
+              failed:
+                type: number
+              timedOut:
+                type: number
+              inProgress:
+                type: number
+              remaining:
+                type: number
+          retryOnTimeout:
+            type: boolean
+          retryOnFailure:
+            type: boolean
+          maxIterationRetries:
+            type: integer
+            minimum: 1
+            maximum: 5
+          retryDelay:
+            type: integer
+            minimum: 0
+            maximum: 30000
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    resourceJobPatch:
+      title: Resource Job Patch
+      description: Schema for a resource job update
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        dataTableId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: string
+            minLength: 4
+            maxLength: 255
+            pattern: .*\{\{.+\}\}.*
+        queryJson:
+          type: string
+          maxLength: 8192
+        maxIterationConcurrency:
+          type: integer
+          enum:
+          - 1
+          - 10
+        iterationDelay:
+          type: integer
+          minimum: 0
+          maximum: 60000
+        iterationTimeout:
+          type: integer
+          minimum: 60000
+          maximum: 900000
+        defaultContext:
+          type: string
+          maxLength: 32767
+        retryOnTimeout:
+          type: boolean
+        retryOnFailure:
+          type: boolean
+        maxIterationRetries:
+          type: integer
+          minimum: 1
+          maximum: 5
+        retryDelay:
+          type: integer
+          minimum: 0
+          maximum: 30000
+      additionalProperties: false
+    successWithExecutionId:
+      title: Success With Execution ID
+      description: Schema for reporting a successful operation with a corresponding execution ID
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+        executionId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    resourceJobExecutionOptions:
+      title: Resource Job Execution Options
+      description: Schema for a resource job execution configuration
+      type: object
+      properties:
+        templateContext:
+          type: string
+          maxLength: 32767
+        queryJson:
+          type: string
+          maxLength: 8192
+        dataTableId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: string
+            minLength: 4
+            maxLength: 255
+            pattern: .*\{\{.+\}\}.*
+      additionalProperties: false
+    resourceJobs:
+      title: Resource Jobs
+      description: Schema for a collection of Resource Jobs
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/resourceJob'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    resourceJob:
+      title: Resource Job
+      description: Schema for a single resource job
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        resourceJobId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        dataTableId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: string
+            minLength: 4
+            maxLength: 255
+            pattern: .*\{\{.+\}\}.*
+        queryJson:
+          type: string
+          maxLength: 8192
+        resourceType:
+          type: string
+          enum:
+          - dataTableRow
+          - device
+          - experienceGroup
+          - experienceUser
+        maxIterationConcurrency:
+          type: integer
+          enum:
+          - 1
+          - 10
+        iterationDelay:
+          type: integer
+          minimum: 0
+          maximum: 60000
+        iterationTimeout:
+          type: integer
+          minimum: 60000
+          maximum: 900000
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        createdById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        createdByType:
+          type: string
+          enum:
+          - flow
+          - user
+          - apiToken
+        lastUpdatedById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        lastUpdatedByType:
+          type: string
+          enum:
+          - flow
+          - user
+          - apiToken
+        lastExecutionRequested:
+          type: string
+          format: date-time
+        defaultContext:
+          type: string
+          maxLength: 32767
+        retryOnTimeout:
+          type: boolean
+        retryOnFailure:
+          type: boolean
+        maxIterationRetries:
+          type: integer
+          minimum: 1
+          maximum: 5
+        retryDelay:
+          type: integer
+          minimum: 0
+          maximum: 30000
+      additionalProperties: false
+    resourceJobPost:
+      title: Resource Job Post
+      description: Schema for a resource job creation
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        dataTableId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: string
+            minLength: 4
+            maxLength: 255
+            pattern: .*\{\{.+\}\}.*
+        queryJson:
+          type: string
+          maxLength: 8192
+        resourceType:
+          type: string
+          enum:
+          - dataTableRow
+          - device
+          - experienceGroup
+          - experienceUser
+        maxIterationConcurrency:
+          type: integer
+          enum:
+          - 1
+          - 10
+        iterationDelay:
+          type: integer
+          minimum: 0
+          maximum: 60000
+        iterationTimeout:
+          type: integer
+          minimum: 60000
+          maximum: 900000
+        defaultContext:
+          type: string
+          maxLength: 32767
+        retryOnTimeout:
+          type: boolean
+        retryOnFailure:
+          type: boolean
+        maxIterationRetries:
+          type: integer
+          minimum: 1
+          maximum: 5
+        retryDelay:
+          type: integer
+          minimum: 0
+          maximum: 30000
+      additionalProperties: false
+      required:
+      - name
+      - resourceType
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

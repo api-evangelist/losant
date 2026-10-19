@@ -1,0 +1,875 @@
+openapi: 3.2.0
+info:
+  title: Platform Data Table Rows API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Data Table Rows
+paths:
+  /applications/{applicationId}/data-tables/{dataTableId}/rows:
+    get:
+      operationId: dataTableRows.get
+      summary: Returns the rows for a data table
+      tags:
+      - Data Table Rows
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      - name: sortColumn
+        in: query
+        required: false
+        description: Column to sort the rows by
+        schema:
+          type: string
+        example: myColumnName
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the rows by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: limit
+        in: query
+        required: false
+        description: How many rows to return
+        schema:
+          type: string
+          default: 1000
+        example: 0
+      - name: offset
+        in: query
+        required: false
+        description: How many rows to skip
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: includeFields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include in resulting rows. When not provided, returns all fields.
+        schema:
+          type: string
+        example: id,createdAt
+      responses:
+        '200':
+          description: Collection of data table rows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRows'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - dataTableRows.get
+    post:
+      operationId: dataTableRows.post
+      summary: Creates new row(s) in a data table
+      tags:
+      - Data Table Rows
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '201':
+          description: Successfully created data table row, or bulk creation information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRowPostResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTableRowPost'
+        description: The row(s) to create
+      x-losant-auth-scopes:
+      - dataTableRows.post
+  /applications/{applicationId}/data-tables/{dataTableId}/rows/delete:
+    post:
+      operationId: dataTableRows.delete
+      summary: Delete rows from a data table
+      tags:
+      - Data Table Rows
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      - name: limit
+        in: query
+        required: false
+        description: Limit number of rows to delete from data table
+        schema:
+          type: string
+          default: '1000'
+        example: '10'
+      responses:
+        '200':
+          description: If request successfully deletes a set of Data Table rows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRowsDelete'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/advancedQuery'
+        description: Query to apply to filter the data table
+      x-losant-auth-scopes:
+      - dataTableRows.delete
+  /applications/{applicationId}/data-tables/{dataTableId}/rows/export:
+    post:
+      operationId: dataTableRows.export
+      summary: Request an export of the data table's data
+      tags:
+      - Data Table Rows
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '202':
+          description: If request was successfully queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTableRowsExport'
+        description: Object containing export specifications
+      x-losant-auth-scopes:
+      - dataTableRows.export
+  /applications/{applicationId}/data-tables/{dataTableId}/rows/query:
+    post:
+      operationId: dataTableRows.query
+      summary: Queries for rows from a data table
+      tags:
+      - Data Table Rows
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      - name: sortColumn
+        in: query
+        required: false
+        description: Column to sort the rows by
+        schema:
+          type: string
+        example: myColumnName
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the rows by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: limit
+        in: query
+        required: false
+        description: How many rows to return
+        schema:
+          type: string
+          default: 1000
+        example: 0
+      - name: offset
+        in: query
+        required: false
+        description: How many rows to skip
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: includeFields
+        in: query
+        required: false
+        description: Comma-separated list of fields to include in resulting rows. When not provided, returns all fields.
+        schema:
+          type: string
+        example: id,createdAt
+      responses:
+        '200':
+          description: Collection of data table rows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRows'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/advancedQuery'
+        description: Query to apply to filter the data table
+      x-losant-auth-scopes:
+      - dataTableRows.query
+  /applications/{applicationId}/data-tables/{dataTableId}/rows/truncate:
+    post:
+      operationId: dataTableRows.truncate
+      summary: Delete all data in the data table
+      tags:
+      - Data Table Rows
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: If request successfully deleted **all** rows in the data table, this will **not** send workflow data table deletion triggers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - dataTableRows.truncate
+  /applications/{applicationId}/data-tables/{dataTableId}/rows/{rowId}:
+    get:
+      operationId: dataTableRow.get
+      summary: Retrieves the data table row
+      tags:
+      - Data Table Rows
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      - name: rowId
+        in: path
+        required: true
+        description: ID associated with the data table row
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 596f832b128eda5cfe765443
+      responses:
+        '200':
+          description: Data table row information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRow'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table row was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - dataTableRow.get
+    patch:
+      operationId: dataTableRow.patch
+      summary: Updates the data table row
+      tags:
+      - Data Table Rows
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      - name: rowId
+        in: path
+        required: true
+        description: ID associated with the data table row
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 596f832b128eda5cfe765443
+      responses:
+        '200':
+          description: Updated data table row information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataTableRow'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table row was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataTableRowPatch'
+        description: Object containing updated properties for the data table row
+      x-losant-auth-scopes:
+      - dataTableRow.patch
+    delete:
+      operationId: dataTableRow.delete
+      summary: Deletes a data table row
+      tags:
+      - Data Table Rows
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: dataTableId
+        in: path
+        required: true
+        description: ID associated with the data table
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      - name: rowId
+        in: path
+        required: true
+        description: ID associated with the data table row
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 596f832b128eda5cfe765443
+      responses:
+        '200':
+          description: If data table row was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if data table row was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - dataTableRow.delete
+components:
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    dataTableRow:
+      title: Data Table Row
+      description: Schema for a single Data Table Row
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      patternProperties:
+        ^[0-9a-zA-Z_-]{1,255}$:
+          type:
+          - string
+          - number
+          - boolean
+          - 'null'
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 24
+        success:
+          type: boolean
+          enum:
+          - true
+    dataTableRowPostResult:
+      title: Data Table Row Post Result
+      description: Schema for the result of a data table row creation request
+      oneOf:
+      - title: Data Table Row
+        description: Schema for a single Data Table Row
+        type: object
+        properties:
+          id:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          createdAt:
+            type: string
+            format: date-time
+          updatedAt:
+            type: string
+            format: date-time
+        patternProperties:
+          ^[0-9a-zA-Z_-]{1,255}$:
+            type:
+            - string
+            - number
+            - boolean
+            - 'null'
+      - type: object
+        properties:
+          createdAt:
+            type: string
+            format: date-time
+          count:
+            type: number
+          rowIds:
+            type: array
+            items:
+              type: string
+              pattern: ^[A-Fa-f\d]{24}$
+        additionalProperties: false
+    dataTableRowPatch:
+      title: Data Table Row Patch
+      description: Schema for the body of request to update a data table row
+      type: object
+      patternProperties:
+        ^[0-9a-zA-Z_-]{1,255}$:
+          type:
+          - string
+          - number
+          - boolean
+          - 'null'
+      additionalProperties: false
+      maxProperties: 50
+    dataTableRows:
+      title: Data Table Rows
+      description: Schema for a collection of Data Table Rows
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataTableRow'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        sortColumn:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        dataTableId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        query:
+          type: object
+    dataTableRowPost:
+      title: Data Table Row Post
+      description: Schema for the body of request to create one or more data table rows
+      oneOf:
+      - type: object
+        patternProperties:
+          ^[0-9a-zA-Z_-]{1,255}$:
+            type:
+            - string
+            - number
+            - boolean
+            - 'null'
+        additionalProperties: false
+        maxProperties: 50
+      - type: array
+        items:
+          type: object
+          patternProperties:
+            ^[0-9a-zA-Z_-]{1,255}$:
+              type:
+              - string
+              - number
+              - boolean
+              - 'null'
+          additionalProperties: false
+          maxProperties: 50
+        maxItems: 25000
+    advancedQuery:
+      title: Advanced Query
+      description: Schema for advanced filters and queries
+      type: object
+      properties:
+        $and:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedQuery'
+          maxItems: 100
+        $or:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedQuery'
+          maxItems: 100
+        $nor:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedQuery'
+          maxItems: 100
+      patternProperties:
+        ^[0-9a-zA-Z_-]{1,255}$:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+      additionalProperties: false
+    dataTableRowsDelete:
+      title: Data Table Rows Delete
+      description: Schema for response to data table rows removal
+      type: object
+      properties:
+        removed:
+          type: number
+    dataTableRowsExport:
+      title: Data Table Rows Export
+      description: Schema for the body of a data table export
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        query:
+          $ref: '#/components/schemas/advancedQuery'
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        queryOptions:
+          type: object
+          properties:
+            sortDirection:
+              type: string
+              enum:
+              - asc
+              - desc
+              - ASC
+              - DESC
+              - ''
+            limit:
+              type: number
+            sortColumn:
+              type: string
+            offset:
+              type: number
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

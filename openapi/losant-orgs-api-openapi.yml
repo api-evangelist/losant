@@ -1,0 +1,1789 @@
+openapi: 3.2.0
+info:
+  title: Platform Orgs API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Orgs
+paths:
+  /orgs:
+    get:
+      operationId: orgs.get
+      summary: Returns the organizations associated with the current user
+      tags:
+      - Orgs
+      parameters:
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+        example: name
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my*org
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from org summaries
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in org summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Collection of organizations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - orgs.get
+    post:
+      operationId: orgs.post
+      summary: Create a new organization
+      tags:
+      - Orgs
+      parameters:
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from org summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in org summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '201':
+          description: Successfully created organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/org'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgPost'
+        description: New organization information
+      x-losant-auth-scopes:
+      - orgs.post
+  /orgs/{orgId}:
+    get:
+      operationId: org.get
+      summary: Retrieves information on an organization
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from org summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in org summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Organization information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/org'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - org.get
+    patch:
+      operationId: org.patch
+      summary: Updates information about an organization
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from org summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in org summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Updated organization information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/org'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgPatch'
+        description: Object containing new organization properties
+      x-losant-auth-scopes:
+      - org.patch
+    delete:
+      operationId: org.delete
+      summary: Deletes an organization
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      responses:
+        '200':
+          description: If organization was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - org.delete
+  /orgs/{orgId}/deviceCounts:
+    get:
+      operationId: org.deviceCounts
+      summary: Returns device counts by day for the time range specified for this organization
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: start
+        in: query
+        required: false
+        description: Start of range for device count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for device count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Device counts by day
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - org.deviceCounts
+  /orgs/{orgId}/invites:
+    get:
+      operationId: org.pendingInvites
+      summary: Gets the current pending invites
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      responses:
+        '200':
+          description: Invitation information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInvites'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - org.pendingInvites
+    post:
+      operationId: org.inviteMember
+      summary: Invites a person to an organization
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      responses:
+        '200':
+          description: Invitation information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInvites'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgInvitePost'
+        description: Object containing new invite info
+      x-losant-auth-scopes:
+      - org.inviteMember
+    delete:
+      operationId: org.revokeInvite
+      summary: Revokes an existing invite
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: inviteId
+        in: query
+        required: true
+        description: Id of invite to revoke
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed71e7ae143cd83dc4aaa
+      responses:
+        '200':
+          description: Invitation information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInvites'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - org.revokeInvite
+  /orgs/{orgId}/member:
+    patch:
+      operationId: org.modifyMember
+      summary: Modifies a current org member's role
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from org summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in org summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Updated organization information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/org'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgMemberPatch'
+        description: Object containing new member pair
+      x-losant-auth-scopes:
+      - org.modifyMember
+    delete:
+      operationId: org.removeMember
+      summary: Removes a member from the org
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: userId
+        in: query
+        required: true
+        description: Id of user to remove
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed70c7ae143cd83dc4aa9
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from org summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in org summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Updated organization information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/org'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - org.removeMember
+  /orgs/{orgId}/notebookMinuteCounts:
+    get:
+      operationId: org.notebookMinuteCounts
+      summary: Returns notebook execution usage by day for the time range specified for this…
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: start
+        in: query
+        required: false
+        description: Start of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Notebook usage information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebookMinuteCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - org.notebookMinuteCounts
+  /orgs/{orgId}/payloadCounts:
+    get:
+      operationId: org.payloadCounts
+      summary: Returns payload counts for the time range specified for all applications this…
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting stats should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      responses:
+        '200':
+          description: Payload counts, by type and source
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadStats'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - org.payloadCounts
+  /orgs/{orgId}/payloadCountsBreakdown:
+    get:
+      operationId: org.payloadCountsBreakdown
+      summary: Returns payload counts per resolution in the time range specified for all…
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: resolution
+        in: query
+        required: false
+        description: Resolution in milliseconds
+        schema:
+          type: string
+          enum:
+          - '86400000'
+          - '3600000'
+          default: 86400000
+        example: 86400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting stats should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      - name: includeNonBillable
+        in: query
+        required: false
+        description: If non-billable payloads should be included in the result
+        schema:
+          type: string
+          default: false
+        example: true
+      responses:
+        '200':
+          description: Sum of payload counts by date
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadCountsBreakdown'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - org.payloadCountsBreakdown
+  /orgs/{orgId}/transferResources:
+    patch:
+      operationId: org.transferResources
+      summary: Moves resources to a new owner
+      tags:
+      - Orgs
+      parameters:
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      responses:
+        '200':
+          description: If resource transfer was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resourceTransfer'
+        description: Object containing properties of the transfer
+      x-losant-auth-scopes:
+      - org.transferResources
+components:
+  schemas:
+    deviceCounts:
+      title: Device Counts
+      description: Schema for the result of a device counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              created:
+                type: integer
+              deleted:
+                type: integer
+              total:
+                type: integer
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    orgPost:
+      title: Organization Post
+      description: Schema for the body of an Organization creation request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        planId:
+          type: string
+          maxLength: 1024
+        billingEmail:
+          type: string
+          format: email
+          maxLength: 1024
+        cardToken:
+          type: string
+          maxLength: 1024
+        iconColor:
+          type: string
+          maxLength: 64
+        mfaMode:
+          type: string
+          enum:
+          - notRequired
+          - adminRequired
+          - required
+        entitlementId:
+          type: string
+          maxLength: 1024
+      additionalProperties: false
+      required:
+      - name
+    payloadCountsBreakdown:
+      title: Payload Counts Breakdown
+      description: Schema for the result of a payload counts breakdown request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              value:
+                type: integer
+    orgInvites:
+      title: Organization Invitations
+      description: Schema for an array of pending invitations to an Organization
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          email:
+            type: string
+            format: email
+            maxLength: 1024
+          role:
+            type: string
+            enum:
+            - admin
+            - edit
+            - collaborate
+            - view
+            - none
+          applicationRoles:
+            type: array
+            items:
+              type: object
+              properties:
+                resourceId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                role:
+                  type: string
+                  enum:
+                  - collaborate
+                  - view
+                  - none
+              required:
+              - resourceId
+              - role
+              additionalProperties: false
+            maxItems: 100
+          dashboardRoles:
+            type: array
+            items:
+              type: object
+              properties:
+                resourceId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                role:
+                  type: string
+                  enum:
+                  - collaborate
+                  - view
+                  - none
+              required:
+              - resourceId
+              - role
+              additionalProperties: false
+            maxItems: 100
+          inviteDate:
+            type: string
+            format: date-time
+          ttl:
+            type: number
+          hasExpired:
+            type: boolean
+          disallowTransfer:
+            type: boolean
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    orgs:
+      title: Organizations
+      description: Schema for a collection of Organizations
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/org'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    org:
+      title: Organization
+      description: Schema for a single Organization
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        orgId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        _currentRole:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        members:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              firstName:
+                type: string
+                minLength: 1
+                maxLength: 1024
+              lastName:
+                type: string
+                maxLength: 1024
+              email:
+                type: string
+                format: email
+                maxLength: 1024
+              avatarUrl:
+                type: string
+                format: uri
+                maxLength: 1024
+              role:
+                type: string
+                enum:
+                - admin
+                - edit
+                - collaborate
+                - view
+                - none
+              applicationRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+              dashboardRoles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    role:
+                      type: string
+                      enum:
+                      - collaborate
+                      - view
+                      - none
+                  required:
+                  - resourceId
+                  - role
+                  additionalProperties: false
+                maxItems: 100
+              twoFactorAuthEnabled:
+                type: boolean
+              ssoLinked:
+                type: boolean
+        limits:
+          type: object
+          properties:
+            apitoken:
+              type: integer
+              minimum: 0
+            application:
+              type: integer
+              minimum: 0
+            applicationcertificate:
+              type: integer
+              minimum: 0
+            applicationcertificateauthority:
+              type: integer
+              minimum: 0
+            applicationkey:
+              type: integer
+              minimum: 0
+            credential:
+              type: integer
+              minimum: 0
+            dashboard:
+              type: integer
+              minimum: 0
+            datatable:
+              type: integer
+              minimum: 0
+            device:
+              type: integer
+              minimum: 0
+            devicerecipe:
+              type: integer
+              minimum: 0
+            experiencedomain:
+              type: integer
+              minimum: 0
+            experienceendpoint:
+              type: integer
+              minimum: 0
+            experiencegroup:
+              type: integer
+              minimum: 0
+            experienceslug:
+              type: integer
+              minimum: 0
+            experienceuser:
+              type: integer
+              minimum: 0
+            experienceversion:
+              type: integer
+              minimum: 0
+            experienceview:
+              type: integer
+              minimum: 0
+            file:
+              type: integer
+              minimum: 0
+            flow:
+              type: integer
+              minimum: 0
+            integration:
+              type: integer
+              minimum: 0
+            notebook:
+              type: integer
+              minimum: 0
+            privatefile:
+              type: integer
+              minimum: 0
+            resourcejob:
+              type: integer
+              minimum: 0
+            webhook:
+              type: integer
+              minimum: 0
+            dataTTL:
+              type: integer
+              minimum: 86400
+            member:
+              type: integer
+              minimum: 0
+            payload:
+              type: integer
+              minimum: 0
+            storage:
+              type: integer
+              minimum: 0
+            notebookMinutesPerRun:
+              type: integer
+              minimum: 0
+            notebookMinutesPerMonth:
+              type: integer
+              minimum: 0
+            notebookInParallel:
+              type: integer
+              minimum: 0
+            experienceFlowSlots:
+              type: integer
+              minimum: 0
+            applicationFlowSlots:
+              type: integer
+              minimum: 0
+            systemInterval:
+              type: integer
+              minimum: 5
+              maximum: 3600
+            deviceHard:
+              type: integer
+              minimum: 0
+            applicationkeyHard:
+              type: integer
+              minimum: 0
+            applicationcertificateHard:
+              type: integer
+              minimum: 0
+          additionalProperties: false
+        summary:
+          type: object
+          properties:
+            apiTokenCount:
+              type: integer
+            appCount:
+              type: integer
+            certificateCount:
+              type: integer
+            certificateAuthorityCount:
+              type: integer
+            credentialCount:
+              type: integer
+            dashCount:
+              type: integer
+            dataTableCount:
+              type: integer
+            deviceCount:
+              type: integer
+            deviceRecipeCount:
+              type: integer
+            eventCount:
+              type: integer
+            experienceDomainCount:
+              type: integer
+            experienceEndpointCount:
+              type: integer
+            experienceGroupCount:
+              type: integer
+            experienceSlugCount:
+              type: integer
+            experienceUserCount:
+              type: integer
+            experienceVersionCount:
+              type: integer
+            experienceViewCount:
+              type: integer
+            fileCount:
+              type: integer
+            flowCount:
+              type: integer
+            integrationCount:
+              type: integer
+            keyCount:
+              type: integer
+            notebookCount:
+              type: integer
+            privateFileCount:
+              type: integer
+            resourceJobCount:
+              type: integer
+            webhookCount:
+              type: integer
+            memberCount:
+              type: integer
+            pendingInviteCount:
+              type: integer
+            payloadCount:
+              title: Payload Stats
+              description: Schema for the result of a payload stats request
+              type: object
+              properties:
+                appFile:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                dataTable:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceCreate:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceCommand:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceConnect:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceDisconnect:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceState:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                endpoint:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                event:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                flowError:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                inboundEmail:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                integration:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                mqttIn:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                mqttOut:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                notebook:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                resourceJob:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                timer:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                virtualButton:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                webhook:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+            storageStats:
+              type: object
+              properties:
+                count:
+                  type: integer
+                size:
+                  type: integer
+            notebookStats:
+              type: object
+              properties:
+                awaitingCompletion:
+                  type: integer
+                minutesThisPeriod:
+                  type: number
+                runsThisPeriod:
+                  type: integer
+        entitlementOrgId:
+          type: string
+          maxLength: 1024
+        planId:
+          type: string
+          maxLength: 1024
+        billingEmail:
+          type: string
+          format: email
+          maxLength: 1024
+        subscriptionStatus:
+          type: string
+          enum:
+          - trialing
+          - active
+          - past_due
+          - canceled
+          - unpaid
+        currentPeriodStart:
+          type: string
+          format: date-time
+        currentPeriodEnd:
+          type: string
+          format: date-time
+        isEnterprise:
+          type: boolean
+        iconColor:
+          type: string
+          maxLength: 64
+        whitelistedEmailDomains:
+          type: array
+          items:
+            type: string
+            maxLength: 45
+            minLength: 3
+        auditLogEnabled:
+          type: boolean
+        disabledAt:
+          oneOf:
+          - type: boolean
+            enum:
+            - false
+          - type: string
+            format: date-time
+        isReadOnly:
+          type: boolean
+        mfaMode:
+          type: string
+          enum:
+          - notRequired
+          - adminRequired
+          - required
+        banner:
+          type: object
+          properties:
+            message:
+              type: string
+              maxLength: 2048
+            level:
+              type: string
+              enum:
+              - info
+              - warning
+              - critical
+          additionalProperties: false
+    orgMemberPatch:
+      title: Organization Member Patch
+      description: Schema for the body of a request to modify an Organization member
+      type: object
+      properties:
+        userId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        role:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        applicationRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        dashboardRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+      additionalProperties: false
+      required:
+      - userId
+    orgInvitePost:
+      title: Organization Invitation Post
+      description: Schema for the body of a request to send an invitation
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        role:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        applicationRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        dashboardRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        disallowTransfer:
+          type: boolean
+      additionalProperties: false
+      required:
+      - email
+      - role
+    orgPatch:
+      title: Organization Patch
+      description: Schema for the body of an Organization modification request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        planId:
+          type: string
+          maxLength: 1024
+        billingEmail:
+          type: string
+          format: email
+          maxLength: 1024
+        cardToken:
+          type: string
+          maxLength: 1024
+        iconColor:
+          type: string
+          maxLength: 64
+        mfaMode:
+          type: string
+          enum:
+          - notRequired
+          - adminRequired
+          - required
+      additionalProperties: false
+    resourceTransfer:
+      title: Resource Transfer
+      description: Schema for the body of a resource transfer request
+      type: object
+      properties:
+        destinationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        destinationType:
+          type: string
+          enum:
+          - user
+          - organization
+        applicationIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        dashboardIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        strict:
+          type: boolean
+      additionalProperties: false
+      required:
+      - destinationId
+      - destinationType
+    payloadStats:
+      title: Payload Stats
+      description: Schema for the result of a payload stats request
+      type: object
+      properties:
+        appFile:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        dataTable:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCreate:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCommand:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceConnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceDisconnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceState:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        endpoint:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        event:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        flowError:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        inboundEmail:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        integration:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttIn:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttOut:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        notebook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        resourceJob:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        timer:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        virtualButton:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        webhook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              minutes:
+                type: number
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

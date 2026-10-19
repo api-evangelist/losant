@@ -1,0 +1,3458 @@
+openapi: 3.2.0
+info:
+  title: Platform Instance Custom Nodes API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Instance Custom Nodes
+paths:
+  /instances/{instanceId}/nodes:
+    get:
+      operationId: instanceCustomNodes.get
+      summary: Returns the Custom Nodes for an instance
+      tags:
+      - Instance Custom Nodes
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a96
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+        example: key
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my*node
+      responses:
+        '200':
+          description: Collection of Custom Nodes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceCustomNodes'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceCustomNodes.get
+    post:
+      operationId: instanceCustomNodes.post
+      summary: Create a new Custom Node for an instance
+      tags:
+      - Instance Custom Nodes
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a96
+      responses:
+        '201':
+          description: The successfully created Custom Node
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceCustomNode'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceCustomNodePost'
+        description: Custom Node information
+      x-losant-auth-scopes:
+      - instanceCustomNodes.post
+  /instances/{instanceId}/nodes/{instanceCustomNodeId}:
+    get:
+      operationId: instanceCustomNode.get
+      summary: Retrieves information on a Custom Node
+      tags:
+      - Instance Custom Nodes
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a96
+      - name: instanceCustomNodeId
+        in: path
+        required: true
+        description: ID associated with the Custom Node
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: Custom Node information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceCustomNode'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if Custom Node was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceCustomNode.get
+    patch:
+      operationId: instanceCustomNode.patch
+      summary: Updates information about a Custom Node
+      tags:
+      - Instance Custom Nodes
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a96
+      - name: instanceCustomNodeId
+        in: path
+        required: true
+        description: ID associated with the Custom Node
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: Updated Custom Node information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceCustomNode'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if Custom Node was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceCustomNodePatch'
+        description: Object containing new properties of the Custom Node
+      x-losant-auth-scopes:
+      - instanceCustomNode.patch
+    delete:
+      operationId: instanceCustomNode.delete
+      summary: Deletes a Custom Node
+      tags:
+      - Instance Custom Nodes
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a96
+      - name: instanceCustomNodeId
+        in: path
+        required: true
+        description: ID associated with the Custom Node
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      responses:
+        '200':
+          description: If Custom Node was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if Custom Node was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceCustomNode.delete
+  /instances/{instanceId}/nodes/{instanceCustomNodeId}/errors:
+    get:
+      operationId: instanceCustomNode.errors
+      summary: Get information about errors that occurred during runs of this Custom Node
+      tags:
+      - Instance Custom Nodes
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a96
+      - name: instanceCustomNodeId
+        in: path
+        required: true
+        description: ID associated with the Custom Node
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      - name: duration
+        in: query
+        required: false
+        description: Duration of time range in milliseconds
+        schema:
+          type: string
+          default: 86400000
+        example: 86400000
+      - name: end
+        in: query
+        required: false
+        description: End of time range in milliseconds since epoch
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of errors to return
+        schema:
+          type: string
+          default: 25
+        example: 25
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        example: desc
+      responses:
+        '200':
+          description: Custom Node error information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowErrors'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if Custom Node was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceCustomNode.errors
+  /instances/{instanceId}/nodes/{instanceCustomNodeId}/stats:
+    get:
+      operationId: instanceCustomNode.stats
+      summary: Get statistics about runs for this Custom Node
+      tags:
+      - Instance Custom Nodes
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a96
+      - name: instanceCustomNodeId
+        in: path
+        required: true
+        description: ID associated with the Custom Node
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec7417ae143cd83dc4a95
+      - name: duration
+        in: query
+        required: false
+        description: Duration of time range in milliseconds
+        schema:
+          type: string
+          default: 86400000
+        example: 86400000
+      - name: end
+        in: query
+        required: false
+        description: End of time range in milliseconds since epoch
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: resolution
+        in: query
+        required: false
+        description: Resolution in milliseconds
+        schema:
+          type: string
+          default: 3600000
+        example: 3600000
+      responses:
+        '200':
+          description: Statistics for Custom Node runs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flowStats'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if Custom Node was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceCustomNode.stats
+components:
+  schemas:
+    instanceCustomNodePost:
+      title: Instance Custom Node Post
+      description: Schema for the body of an Instance Custom Node creation request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        shortDescription:
+          type: string
+          maxLength: 1024
+        iconData:
+          $ref: '#/components/schemas/flowPost/properties/iconData'
+        docsUrl:
+          type: string
+          maxLength: 1024
+        category:
+          $ref: '#/components/schemas/flowPost/properties/category'
+        minimumAgentVersion:
+          type: string
+          pattern: ^(0|([1-9]\d*))\.(0|([1-9]\d*))\.(0|([1-9]\d*))$
+        triggers:
+          type: array
+          items:
+            type: object
+            discriminator:
+              propertyName: type
+            oneOf:
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - customNodeStart
+                  - deviceCreate
+                  - deviceCommand
+                  - deviceIdConnect
+                  - deviceTagConnect
+                  - deviceIdDisconnect
+                  - deviceTagDisconnect
+                  - inboundEmail
+                  - notebook
+                  - onBoot
+                  - onConnect
+                  - onDisconnect
+                  - resourceJobComplete
+                  - resourceJobIteration
+                  - resourceJobIterationTimeout
+                  - udp
+                  - webhook
+                config:
+                  type: object
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - customNodeStart
+                      - deviceCreate
+                      - deviceCommand
+                      - deviceIdsTagsConnect
+                      - deviceIdsTagsDisconnect
+                      - eeaInit
+                      - flowError
+                      - inboundEmail
+                      - notebook
+                      - onBoot
+                      - onConnect
+                      - onDisconnect
+                      - resourceJobComplete
+                      - resourceJobIteration
+                      - resourceJobIterationTimeout
+                      - udp
+                      - webhook
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    triggerId:
+                      type: string
+                      maxLength: 48
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - virtualButton
+                config:
+                  type: object
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - virtualButton
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    groupId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                    payload:
+                      type: string
+                      maxLength: 262144
+                    deviceId:
+                      oneOf:
+                      - type: string
+                        pattern: ^[A-Fa-f\d]{24}$
+                      - type: string
+                        enum:
+                        - ''
+                      - type: 'null'
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+        nodes:
+          $ref: '#/components/schemas/flow/properties/nodes'
+        customNodeConfig:
+          $ref: '#/components/schemas/flow/properties/customNodeConfig'
+        customNodeSupports:
+          type: array
+          maxItems: 1
+          items:
+            type: string
+            enum:
+            - cloud
+            - edge
+      additionalProperties:
+        oneOf:
+        - type: array
+          maxItems: 0
+        - type: string
+          maxLength: 1024
+        - type: boolean
+      maxProperties: 25
+      required:
+      - name
+      - triggers
+      - nodes
+    instanceCustomNodePatch:
+      title: Instance Custom Node Patch
+      description: Schema for the body of an Instance Custom Node modification request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        shortDescription:
+          type: string
+          maxLength: 1024
+        iconData:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/iconData'
+        docsUrl:
+          type: string
+          maxLength: 1024
+        category:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/category'
+        minimumAgentVersion:
+          type: string
+          pattern: ^(0|([1-9]\d*))\.(0|([1-9]\d*))\.(0|([1-9]\d*))$
+        triggers:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/triggers'
+        nodes:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/nodes'
+        customNodeConfig:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/customNodeConfig'
+        customNodeSupports:
+          $ref: '#/components/schemas/instanceCustomNodePost/properties/customNodeSupports'
+      additionalProperties:
+        oneOf:
+        - type: array
+          maxItems: 0
+        - type: string
+          maxLength: 1024
+        - type: boolean
+      maxProperties: 25
+    flow:
+      title: Workflow
+      description: Schema for a single Workflow
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        flowId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        createdById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        createdByType:
+          type: string
+          enum:
+          - flow
+          - user
+          - apiToken
+        lastUpdatedById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        lastUpdatedByType:
+          type: string
+          enum:
+          - flow
+          - user
+          - apiToken
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        shortDescription:
+          type: string
+          maxLength: 1024
+        iconData:
+          type: string
+          maxLength: 32767
+          pattern: ^data:image/(jpg|jpeg|png|svg\+xml);base64,[0-9a-zA-Z+/=]*$
+        docsUrl:
+          type: string
+          maxLength: 1024
+        category:
+          type: string
+          enum:
+          - data
+          - experience
+          - logic
+          - output
+          - debug
+        enabled:
+          type: boolean
+        defaultVersionId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        minimumAgentVersion:
+          type: string
+          pattern: ^(0|([1-9]\d*))\.(0|([1-9]\d*))\.(0|([1-9]\d*))$
+        flowClass:
+          type: string
+          enum:
+          - cloud
+          - edge
+          - embedded
+          - experience
+          - customNode
+        triggers:
+          type: array
+          items:
+            type: object
+            discriminator:
+              propertyName: type
+            oneOf:
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - appFile
+                config:
+                  type: object
+                  properties:
+                    delete:
+                      type: boolean
+                    create:
+                      type: boolean
+                    update:
+                      type: boolean
+                    public:
+                      type: boolean
+                    private:
+                      type: boolean
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - appFile
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - customNodeStart
+                  - deviceCreate
+                  - deviceCommand
+                  - deviceIdConnect
+                  - deviceTagConnect
+                  - deviceIdDisconnect
+                  - deviceTagDisconnect
+                  - inboundEmail
+                  - notebook
+                  - onBoot
+                  - onConnect
+                  - onDisconnect
+                  - resourceJobComplete
+                  - resourceJobIteration
+                  - resourceJobIterationTimeout
+                  - udp
+                  - webhook
+                config:
+                  type: object
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - customNodeStart
+                      - deviceCreate
+                      - deviceCommand
+                      - deviceIdsTagsConnect
+                      - deviceIdsTagsDisconnect
+                      - eeaInit
+                      - flowError
+                      - inboundEmail
+                      - notebook
+                      - onBoot
+                      - onConnect
+                      - onDisconnect
+                      - resourceJobComplete
+                      - resourceJobIteration
+                      - resourceJobIterationTimeout
+                      - udp
+                      - webhook
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    triggerId:
+                      type: string
+                      maxLength: 48
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - beckhoff
+                config:
+                  type: object
+                  properties:
+                    localAmsNetId:
+                      type: string
+                      maxLength: 1024
+                    localAdsPort:
+                      type: string
+                      maxLength: 1024
+                    targetAmsNetId:
+                      type: string
+                      maxLength: 1024
+                    targetAdsPort:
+                      type: string
+                      maxLength: 1024
+                    routerHost:
+                      type: string
+                      maxLength: 1024
+                    routerTcpPort:
+                      type: string
+                      maxLength: 1024
+                    cycleTimeMs:
+                      type: integer
+                      minimum: 10
+                      maximum: 3600000
+                    subscriptions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            maxLength: 1024
+                      maxItems: 100
+                    configName:
+                      type: string
+                      maxLength: 1024
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - beckhoff
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - dataTable
+                config:
+                  type: object
+                  properties:
+                    bulkInsert:
+                      type: boolean
+                    delete:
+                      type: boolean
+                    insert:
+                      type: boolean
+                    update:
+                      type: boolean
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - dataTable
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - integration
+                config:
+                  type: object
+                  properties:
+                    connect:
+                      type: boolean
+                    message:
+                      type: boolean
+                    disconnect:
+                      type: boolean
+                    failure:
+                      type: boolean
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - azureEventHub
+                      - googlePubSub
+                      - mqtt
+                      - particle
+                      - sqs
+                      - websocket
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    triggerId:
+                      type: string
+                      maxLength: 48
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - deviceId
+                  - deviceTag
+                config:
+                  type: object
+                  properties:
+                    attributeBlacklist:
+                      type: array
+                      maxItems: 100
+                      items:
+                        type: string
+                        pattern: ^[0-9a-zA-Z_-]{1,255}$
+                    attributeWhitelist:
+                      type: array
+                      maxItems: 100
+                      items:
+                        type: string
+                        pattern: ^[0-9a-zA-Z_-]{1,255}$
+                    maxAge:
+                      type: number
+                    triggerOn:
+                      type: string
+                      enum:
+                      - batch
+                      - individual
+                      - both
+                    batchBehavior:
+                      type: string
+                      enum:
+                      - once
+                      - each
+                    allowInvalid:
+                      type: boolean
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - deviceIdsTags
+                      - device
+                      - deviceTag
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                    timeUnit:
+                      type: string
+                      maxLength: 48
+                    maxAgeToggle:
+                      type: boolean
+                    allowedAttributeType:
+                      type: string
+                      enum:
+                      - attributeWhitelist
+                      - any
+                      - attributeBlacklist
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - deviceIdInactivity
+                  - deviceTagInactivity
+                config:
+                  type: object
+                  properties:
+                    seconds:
+                      type: number
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - deviceIdsTagsInactivity
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - direct
+                config:
+                  type: object
+                  properties: {}
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - direct
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - endpoint
+                config:
+                  type: object
+                  properties:
+                    experienceVersion:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - endpoint
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - event
+                config:
+                  type: object
+                  properties:
+                    subject:
+                      type: string
+                      maxLength: 255
+                    new:
+                      type: boolean
+                    acknowledged:
+                      type: boolean
+                    resolved:
+                      type: boolean
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - event
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - fileTail
+                config:
+                  type: object
+                  properties:
+                    path:
+                      type: string
+                      maxLength: 1024
+                    encoding:
+                      type: string
+                      maxLength: 48
+                    byteLength:
+                      type: string
+                      maxLength: 48
+                    delimiter:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - fileTail
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - fileWatch
+                config:
+                  type: object
+                  properties:
+                    path:
+                      type: string
+                      maxLength: 1024
+                    fileAdded:
+                      type: boolean
+                    fileChanged:
+                      type: boolean
+                    fileRemoved:
+                      type: boolean
+                    directoryAdded:
+                      type: boolean
+                    directoryRemoved:
+                      type: boolean
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - fileWatch
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - flowError
+                config:
+                  type: object
+                  properties:
+                    scope:
+                      type: string
+                      enum:
+                      - local
+                      - global
+                      - experience
+                      - cloud
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - flowError
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - mqttTopic
+                config:
+                  type: object
+                  properties:
+                    integrationId:
+                      type: string
+                      enum:
+                      - losant
+                      - local
+                      - external
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - mqtt
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    triggerId:
+                      type: string
+                      maxLength: 48
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - onSync
+                config:
+                  type: object
+                  properties:
+                    syncTypes:
+                      type: array
+                      maxItems: 3
+                      minItems: 1
+                      items:
+                        type: string
+                        enum:
+                        - application
+                        - device
+                        - peripheral
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - onSync
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - opcua
+                config:
+                  type: object
+                  properties:
+                    uri:
+                      type: string
+                      format: uri
+                      maxLength: 1024
+                    securityPolicy:
+                      type: string
+                      maxLength: 255
+                    securityMode:
+                      type: string
+                      maxLength: 255
+                    username:
+                      type: string
+                      maxLength: 1024
+                    password:
+                      type: string
+                      maxLength: 1024
+                    cert:
+                      type: string
+                      maxLength: 32767
+                    privateKey:
+                      type: string
+                      maxLength: 32767
+                    nameSpace:
+                      type: string
+                      maxLength: 255
+                    identifier:
+                      type: string
+                      maxLength: 255
+                    samplingInterval:
+                      type: string
+                      maxLength: 255
+                    eventFilter:
+                      type: array
+                      maxItems: 100
+                      items:
+                        type: string
+                        maxLength: 255
+                    configName:
+                      type: string
+                      maxLength: 1024
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - opcua
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - redis
+                config:
+                  type: object
+                  properties:
+                    host:
+                      type: string
+                      maxLength: 1024
+                    port:
+                      type: string
+                      maxLength: 16
+                    password:
+                      type: string
+                      maxLength: 1024
+                    topic:
+                      type: string
+                      maxLength: 1024
+                    fileAdded:
+                      type: boolean
+                    fileChanged:
+                      type: boolean
+                    fileRemoved:
+                      type: boolean
+                    directoryAdded:
+                      type: boolean
+                    directoryRemoved:
+                      type: boolean
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - redisTrigger
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - request
+                config:
+                  type: object
+                  properties:
+                    method:
+                      type: string
+                      enum:
+                      - '*'
+                      - delete
+                      - get
+                      - options
+                      - patch
+                      - post
+                      - put
+                    route:
+                      type: string
+                      maxLength: 1024
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - request
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    triggerId:
+                      type: string
+                      maxLength: 48
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - serial
+                config:
+                  type: object
+                  properties:
+                    path:
+                      type: string
+                      maxLength: 1024
+                    baudRate:
+                      type: number
+                    dataBits:
+                      type: number
+                    stopBits:
+                      type: number
+                    parity:
+                      type: string
+                      maxLength: 8
+                    rtscts:
+                      type: boolean
+                    encoding:
+                      type: string
+                      maxLength: 48
+                    writeOnOpen:
+                      type: string
+                      maxLength: 1024
+                    writeOnOpenEncoding:
+                      type: string
+                      maxLength: 48
+                    byteLength:
+                      type: string
+                      maxLength: 48
+                    delimiter:
+                      type: string
+                      maxLength: 48
+                    delimiterEncoding:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - serial
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                    parseBy:
+                      type: string
+                      enum:
+                      - byteLength
+                      - delimiter
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - snmpTrap
+                config:
+                  type: object
+                  properties:
+                    udpPort:
+                      type: string
+                      maxLength: 5
+                    snmpTrapConfig:
+                      type: object
+                      properties:
+                        community:
+                          type: string
+                          maxLength: 1024
+                        user:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              maxLength: 1024
+                            securityLevel:
+                              type: string
+                              enum:
+                              - none
+                              - auth
+                              - authAndEncrypt
+                            authMethod:
+                              type: string
+                              enum:
+                              - sha
+                              - md5
+                            authKey:
+                              type: string
+                              maxLength: 1024
+                            encryptionMethod:
+                              type: string
+                              enum:
+                              - aes
+                              - des
+                            encryptionKey:
+                              type: string
+                              maxLength: 1024
+                          required:
+                          - name
+                          - securityLevel
+                          additionalProperties: false
+                      additionalProperties: false
+                  required:
+                  - udpPort
+                  - snmpTrapConfig
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - snmpTrap
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - timer
+                config:
+                  type: object
+                  properties:
+                    seconds:
+                      type: number
+                    cron:
+                      type: string
+                      maxLength: 255
+                    tz:
+                      type: string
+                      maxLength: 255
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - timer
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                    timerTypeSelect:
+                      type: string
+                      enum:
+                      - cronWeekly
+                      - seconds
+                      - cron
+                    timeAt:
+                      type: string
+                      maxLength: 255
+                    timezone:
+                      type: string
+                      maxLength: 255
+                    weekdays:
+                      type: array
+                      maxItems: 7
+                      items:
+                        type: number
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+            - type: object
+              properties:
+                key:
+                  type: string
+                  maxLength: 1024
+                type:
+                  type: string
+                  enum:
+                  - virtualButton
+                config:
+                  type: object
+                  additionalProperties: false
+                meta:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      enum:
+                      - trigger
+                    name:
+                      type: string
+                      enum:
+                      - virtualButton
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    x:
+                      type: number
+                    y:
+                      type: number
+                    uiId:
+                      type: string
+                      maxLength: 48
+                    groupId:
+                      type: string
+                      maxLength: 48
+                    description:
+                      type: string
+                      maxLength: 32767
+                    icon:
+                      type: string
+                      maxLength: 1024
+                    color:
+                      type: string
+                      maxLength: 1024
+                    inputCount:
+                      type: number
+                    outputCount:
+                      type: number
+                    id:
+                      type: string
+                      maxLength: 48
+                    payload:
+                      type: string
+                      maxLength: 262144
+                    deviceId:
+                      oneOf:
+                      - type: string
+                        pattern: ^[A-Fa-f\d]{24}$
+                      - type: string
+                        enum:
+                        - ''
+                      - type: 'null'
+                  additionalProperties: false
+                  required:
+                  - category
+                  - name
+                outputIds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      maxLength: 48
+                      minLength: 1
+                    maxItems: 100
+                  maxItems: 100
+              required:
+              - type
+              - meta
+              additionalProperties: false
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                maxLength: 1024
+              type:
+                type: string
+                minLength: 1
+                maxLength: 1024
+              config:
+                type: object
+              meta:
+                type: object
+                properties:
+                  category:
+                    type: string
+                    minLength: 1
+                    maxLength: 1024
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 1024
+                  label:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                  description:
+                    type: string
+                    maxLength: 32767
+                  x:
+                    type: number
+                  y:
+                    type: number
+                  groupId:
+                    type: string
+                    maxLength: 1024
+                required:
+                - name
+              outputIds:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: string
+                    maxLength: 48
+                    minLength: 1
+                  maxItems: 100
+                maxItems: 100
+            additionalProperties: false
+            required:
+            - type
+            - meta
+        customNodeConfig:
+          type: object
+          properties:
+            outputCount:
+              type: number
+              enum:
+              - 1
+              - 2
+            resultMode:
+              type: string
+              enum:
+              - optional
+              - required
+              - none
+            resultDescription:
+              type: string
+              maxLength: 32767
+            fields:
+              type: array
+              maxItems: 100
+              items:
+                type: object
+                discriminator:
+                  propertyName: type
+                oneOf:
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - checkbox
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    id:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    description:
+                      type: string
+                      maxLength: 32767
+                    defaultValue:
+                      type: boolean
+                  additionalProperties: false
+                  required:
+                  - type
+                  - label
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - select
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    id:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    description:
+                      type: string
+                      maxLength: 32767
+                    defaultValue:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    options:
+                      type: array
+                      minItems: 1
+                      maxItems: 100
+                      items:
+                        type: object
+                        properties:
+                          label:
+                            type: string
+                            maxLength: 1024
+                          value:
+                            type: string
+                            minLength: 1
+                            maxLength: 1024
+                        additionalProperties: false
+                        required:
+                        - value
+                  additionalProperties: false
+                  required:
+                  - type
+                  - label
+                  - defaultValue
+                  - options
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - stringTemplate
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    id:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    description:
+                      type: string
+                      maxLength: 32767
+                    defaultValue:
+                      type: string
+                      maxLength: 1024
+                    required:
+                      type: boolean
+                    validRegExp:
+                      type: string
+                      maxLength: 1024
+                  additionalProperties: false
+                  required:
+                  - type
+                  - label
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - numberTemplate
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    id:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    description:
+                      type: string
+                      maxLength: 32767
+                    defaultValue:
+                      type: number
+                    required:
+                      type: boolean
+                    validMin:
+                      type: number
+                    validMax:
+                      type: number
+                  additionalProperties: false
+                  required:
+                  - type
+                  - label
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - jsonTemplate
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    id:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    description:
+                      type: string
+                      maxLength: 32767
+                    defaultValue:
+                      type: string
+                      maxLength: 32767
+                    required:
+                      type: boolean
+                  additionalProperties: false
+                  required:
+                  - type
+                  - label
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - payloadPath
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    id:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    description:
+                      type: string
+                      maxLength: 32767
+                    required:
+                      type: boolean
+                  additionalProperties: false
+                  required:
+                  - type
+                  - label
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - section
+                    label:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    id:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    description:
+                      type: string
+                      maxLength: 32767
+                  additionalProperties: false
+                  required:
+                  - type
+                  - label
+          additionalProperties: false
+          required:
+          - outputCount
+          - resultMode
+          - fields
+        customNodeSupports:
+          type: array
+          maxItems: 1
+          items:
+            type: string
+            enum:
+            - cloud
+            - edge
+        customNodeUseCount:
+          type: number
+        globals:
+          type: array
+          maxItems: 100
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              json:
+                type: string
+                minLength: 1
+                maxLength: 32767
+            additionalProperties: false
+            required:
+            - key
+            - json
+        deletedInDevelop:
+          type: boolean
+        stats:
+          type: object
+          properties:
+            runCount:
+              type: number
+            errorCount:
+              type: number
+            byVersion:
+              type: object
+              patternProperties:
+                .*:
+                  type: object
+                  properties:
+                    runCount:
+                      type: number
+                    errorCount:
+                      type: number
+        _customNodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/flow'
+        _customNodeVersions:
+          type: array
+          items:
+            $ref: '#/components/schemas/flowVersion'
+    instanceCustomNodes:
+      title: Instance Custom Nodes
+      description: Schema for a collection of Custom Nodes within an instance
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceCustomNode'
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    flowPost:
+      title: Workflow Post
+      description: Schema for the body of a Workflow creation request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        shortDescription:
+          type: string
+          maxLength: 1024
+        iconData:
+          oneOf:
+          - type: string
+            maxLength: 32767
+            pattern: ^data:image/(jpg|jpeg|png|svg\+xml);base64,[0-9a-zA-Z+/=]*$
+          - type: 'null'
+        docsUrl:
+          type: string
+          maxLength: 1024
+        category:
+          type: string
+          enum:
+          - data
+          - experience
+          - logic
+          - output
+          - debug
+          - ''
+        enabled:
+          type: boolean
+        triggers:
+          $ref: '#/components/schemas/flow/properties/triggers'
+        nodes:
+          $ref: '#/components/schemas/flow/properties/nodes'
+        globals:
+          type: array
+          maxItems: 100
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              json:
+                type: string
+                minLength: 1
+                maxLength: 32767
+            additionalProperties: false
+            required:
+            - key
+            - json
+        flowClass:
+          type: string
+          enum:
+          - cloud
+          - edge
+          - embedded
+          - experience
+          - customNode
+        minimumAgentVersion:
+          type: string
+          pattern: ^(0|([1-9]\d*))\.(0|([1-9]\d*))\.(0|([1-9]\d*))$
+        customNodeConfig:
+          $ref: '#/components/schemas/flow/properties/customNodeConfig'
+        customNodeSupports:
+          type: array
+          maxItems: 1
+          items:
+            type: string
+            enum:
+            - cloud
+            - edge
+      additionalProperties: false
+      required:
+      - name
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    flowStats:
+      title: Workflow Statistics
+      description: Statistics about the runs for a given workflow
+      type: object
+      properties:
+        flowVersion:
+          type: string
+          minLength: 1
+          maxLength: 255
+        flowVersionId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        deviceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        resolution:
+          type: number
+        metrics:
+          type: array
+          items:
+            type: object
+            properties:
+              time:
+                type: string
+                format: date-time
+              pathsFailed:
+                type: number
+              pathsCompleted:
+                type: number
+              runCount:
+                type: number
+              wallTime:
+                type: number
+    instanceCustomNode:
+      title: Instance Custom Node
+      description: Schema for a single Instance Custom Node
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        instanceCustomNodeId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        createdById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        createdByType:
+          type: string
+          enum:
+          - apiToken
+          - user
+        lastUpdated:
+          type: string
+          format: date-time
+        lastUpdatedById:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        lastUpdatedByType:
+          type: string
+          enum:
+          - apiToken
+          - user
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        shortDescription:
+          type: string
+          maxLength: 1024
+        iconData:
+          type: string
+          maxLength: 32767
+          pattern: ^data:image/(jpg|jpeg|png|svg\+xml);base64,[0-9a-zA-Z+/=]*$
+        docsUrl:
+          type: string
+          maxLength: 1024
+        category:
+          $ref: '#/components/schemas/flow/properties/category'
+        minimumAgentVersion:
+          type: string
+          pattern: ^(0|([1-9]\d*))\.(0|([1-9]\d*))\.(0|([1-9]\d*))$
+        triggers:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                maxLength: 1024
+              type:
+                type: string
+                enum:
+                - customNodeStart
+              config:
+                type: object
+                additionalProperties: false
+              meta:
+                type: object
+                properties:
+                  category:
+                    type: string
+                    enum:
+                    - trigger
+                  name:
+                    type: string
+                    enum:
+                    - customNodeStart
+                  label:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                  x:
+                    type: number
+                  y:
+                    type: number
+                  uiId:
+                    type: string
+                    maxLength: 48
+                  description:
+                    type: string
+                    maxLength: 32767
+                additionalProperties: false
+              outputIds:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: string
+                    maxLength: 48
+                    minLength: 1
+                  maxItems: 100
+                maxItems: 100
+            required:
+            - type
+            additionalProperties: false
+          maxItems: 1
+        nodes:
+          $ref: '#/components/schemas/flow/properties/nodes'
+        customNodeConfig:
+          $ref: '#/components/schemas/flow/properties/customNodeConfig'
+        customNodeSupports:
+          type: array
+          maxItems: 1
+          items:
+            type: string
+            enum:
+            - cloud
+            - edge
+        sourceApplicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        sourceFlowId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        sourceFlowVersion:
+          type: string
+          minLength: 1
+          maxLength: 255
+        stats:
+          type: object
+          properties:
+            errorCount:
+              type: integer
+            runCount:
+              type: integer
+          additionalProperties: false
+        usage:
+          type: object
+          properties:
+            sandbox:
+              type: object
+              properties:
+                appCount:
+                  type: integer
+                flowCount:
+                  type: integer
+              additionalProperties: false
+          patternProperties:
+            ^[A-Fa-f\d]{24}$:
+              type: object
+              properties:
+                appCount:
+                  type: integer
+                flowCount:
+                  type: integer
+                orgName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                orgIconColor:
+                  type: string
+                  maxLength: 64
+              additionalProperties: false
+          additionalProperties: false
+    flowErrors:
+      title: Workflow Errors
+      description: Workflow run error information
+      type: object
+      properties:
+        flowVersion:
+          type: string
+          minLength: 1
+          maxLength: 255
+        flowVersionId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        deviceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        limit:
+          type: number
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              time:
+                type: string
+                format: date-time
+              deviceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              deviceName:
+                type: string
+                minLength: 1
+                maxLength: 255
+              flowVersion:
+                type: string
+                minLength: 1
+                maxLength: 255
+              flowVersionId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              nodeId:
+                type: string
+              nodeLabel:
+                type: string
+              error:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  message:
+                    type: string
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

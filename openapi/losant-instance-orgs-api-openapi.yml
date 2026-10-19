@@ -1,0 +1,2699 @@
+openapi: 3.2.0
+info:
+  title: Platform Instance Orgs API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Instance Orgs
+paths:
+  /instances/{instanceId}/orgs:
+    get:
+      operationId: instanceOrgs.get
+      summary: Returns the organizations associated with the current instance
+      tags:
+      - Instance Orgs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+        example: name
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my*org
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in org summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: query
+        in: query
+        required: false
+        description: Organization filter JSON object which overrides all other filter params.
+        schema:
+          $ref: '#/components/schemas/advancedInstanceOrgQuery'
+      responses:
+        '200':
+          description: A collection of organizations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrgs.get
+    post:
+      operationId: instanceOrgs.post
+      summary: Create a new organization
+      tags:
+      - Instance Orgs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in org summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '201':
+          description: The newly created organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrg'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceOrgPost'
+        description: Object containing configurations for the new organization
+      x-losant-auth-scopes:
+      - instanceOrgs.post
+  /instances/{instanceId}/orgs/{orgId}:
+    get:
+      operationId: instanceOrg.get
+      summary: Retrieves information on an organization
+      tags:
+      - Instance Orgs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in org summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: A single organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrg'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrg.get
+    patch:
+      operationId: instanceOrg.patch
+      summary: Updates information about an organization
+      tags:
+      - Instance Orgs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in org summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Updated organization information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrg'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceOrgPatch'
+        description: Object containing new organization properties
+      x-losant-auth-scopes:
+      - instanceOrg.patch
+    delete:
+      operationId: instanceOrg.delete
+      summary: Deletes an organization
+      tags:
+      - Instance Orgs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      responses:
+        '200':
+          description: If organization was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrg.delete
+  /instances/{instanceId}/orgs/{orgId}/deviceCounts:
+    get:
+      operationId: instanceOrg.deviceCounts
+      summary: Returns device counts by day for the time range specified for this organization
+      tags:
+      - Instance Orgs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: start
+        in: query
+        required: false
+        description: Start of range for device count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for device count query (ms since epoch)
+        schema:
+          type: string
+          default: 0
+        example: 1465790400000
+      responses:
+        '200':
+          description: Device counts by day
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrg.deviceCounts
+  /instances/{instanceId}/orgs/{orgId}/notebookMinuteCounts:
+    get:
+      operationId: instanceOrg.notebookMinuteCounts
+      summary: Returns notebook execution usage by day for the time range specified for this…
+      tags:
+      - Instance Orgs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: start
+        in: query
+        required: false
+        description: Start of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Notebook usage information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebookMinuteCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrg.notebookMinuteCounts
+  /instances/{instanceId}/orgs/{orgId}/payloadCounts:
+    get:
+      operationId: instanceOrg.payloadCounts
+      summary: Returns payload counts for the time range specified for all applications this…
+      tags:
+      - Instance Orgs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting stats should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      responses:
+        '200':
+          description: Payload counts, by type and source
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadStats'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrg.payloadCounts
+  /instances/{instanceId}/orgs/{orgId}/payloadCountsBreakdown:
+    get:
+      operationId: instanceOrg.payloadCountsBreakdown
+      summary: Returns payload counts per resolution in the time range specified for all…
+      tags:
+      - Instance Orgs
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed6e87ae143cd83dc4aa8
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: resolution
+        in: query
+        required: false
+        description: Resolution in milliseconds
+        schema:
+          type: string
+          enum:
+          - '86400000'
+          - '3600000'
+          default: 86400000
+        example: 86400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting stats should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      - name: includeNonBillable
+        in: query
+        required: false
+        description: If non-billable payloads should be included in the result
+        schema:
+          type: string
+          default: false
+        example: true
+      responses:
+        '200':
+          description: Payload counts, by type and source
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadCountsBreakdown'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance or organization was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrg.payloadCountsBreakdown
+components:
+  schemas:
+    deviceCounts:
+      title: Device Counts
+      description: Schema for the result of a device counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              created:
+                type: integer
+              deleted:
+                type: integer
+              total:
+                type: integer
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    payloadCountsBreakdown:
+      title: Payload Counts Breakdown
+      description: Schema for the result of a payload counts breakdown request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              value:
+                type: integer
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    instanceOrgMemberPost:
+      title: Instance Org Member Post
+      description: Schema for an Instance Organization member creation request
+      oneOf:
+      - type: object
+        properties:
+          userId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          role:
+            type: string
+            enum:
+            - admin
+            - edit
+            - collaborate
+            - view
+            - none
+          applicationRoles:
+            type: array
+            items:
+              type: object
+              properties:
+                resourceId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                role:
+                  type: string
+                  enum:
+                  - collaborate
+                  - view
+                  - none
+              required:
+              - resourceId
+              - role
+              additionalProperties: false
+            maxItems: 100
+          dashboardRoles:
+            type: array
+            items:
+              type: object
+              properties:
+                resourceId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                role:
+                  type: string
+                  enum:
+                  - collaborate
+                  - view
+                  - none
+              required:
+              - resourceId
+              - role
+              additionalProperties: false
+            maxItems: 100
+        additionalProperties: false
+        required:
+        - userId
+        - role
+      - type: object
+        properties:
+          email:
+            type: string
+            format: email
+            maxLength: 1024
+          role:
+            type: string
+            enum:
+            - admin
+            - edit
+            - collaborate
+            - view
+            - none
+          applicationRoles:
+            type: array
+            items:
+              type: object
+              properties:
+                resourceId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                role:
+                  type: string
+                  enum:
+                  - collaborate
+                  - view
+                  - none
+              required:
+              - resourceId
+              - role
+              additionalProperties: false
+            maxItems: 100
+          dashboardRoles:
+            type: array
+            items:
+              type: object
+              properties:
+                resourceId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                role:
+                  type: string
+                  enum:
+                  - collaborate
+                  - view
+                  - none
+              required:
+              - resourceId
+              - role
+              additionalProperties: false
+            maxItems: 100
+          disallowTransfer:
+            type: boolean
+        additionalProperties: false
+        required:
+        - email
+        - role
+    instanceOrgPatch:
+      title: Instance Owned Organization Patch
+      description: Schema for the body of an Organization modification request within an instance
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        iconColor:
+          type: string
+          maxLength: 64
+        limits:
+          type: object
+          properties:
+            apitoken:
+              type: integer
+              minimum: 0
+            application:
+              type: integer
+              minimum: 0
+            applicationcertificate:
+              type: integer
+              minimum: 0
+            applicationcertificateauthority:
+              type: integer
+              minimum: 0
+            applicationkey:
+              type: integer
+              minimum: 0
+            credential:
+              type: integer
+              minimum: 0
+            dashboard:
+              type: integer
+              minimum: 0
+            datatable:
+              type: integer
+              minimum: 0
+            device:
+              type: integer
+              minimum: 0
+            devicerecipe:
+              type: integer
+              minimum: 0
+            experiencedomain:
+              type: integer
+              minimum: 0
+            experienceendpoint:
+              type: integer
+              minimum: 0
+            experiencegroup:
+              type: integer
+              minimum: 0
+            experienceslug:
+              type: integer
+              minimum: 0
+            experienceuser:
+              type: integer
+              minimum: 0
+            experienceversion:
+              type: integer
+              minimum: 0
+            experienceview:
+              type: integer
+              minimum: 0
+            file:
+              type: integer
+              minimum: 0
+            flow:
+              type: integer
+              minimum: 0
+            integration:
+              type: integer
+              minimum: 0
+            notebook:
+              type: integer
+              minimum: 0
+            privatefile:
+              type: integer
+              minimum: 0
+            resourcejob:
+              type: integer
+              minimum: 0
+            webhook:
+              type: integer
+              minimum: 0
+            dataTTL:
+              type: integer
+              minimum: 86400
+            member:
+              type: integer
+              minimum: 0
+            payload:
+              type: integer
+              minimum: 0
+            storage:
+              type: integer
+              minimum: 0
+            notebookMinutesPerRun:
+              type: integer
+              minimum: 0
+            notebookMinutesPerMonth:
+              type: integer
+              minimum: 0
+            notebookInParallel:
+              type: integer
+              minimum: 0
+            experienceFlowSlots:
+              type: integer
+              minimum: 0
+            applicationFlowSlots:
+              type: integer
+              minimum: 0
+            systemInterval:
+              type: integer
+              minimum: 5
+              maximum: 3600
+          additionalProperties: false
+        whitelistedEmailDomains:
+          type: array
+          items:
+            type: string
+            maxLength: 45
+            minLength: 3
+        auditLogEnabled:
+          type: boolean
+        disabledAt:
+          oneOf:
+          - type: string
+            format: date-time
+          - type: boolean
+        isReadOnly:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            required:
+            - key
+            - value
+            additionalProperties: false
+          maxItems: 100
+        referralId:
+          type: string
+          maxLength: 1024
+        mfaMode:
+          type: string
+          enum:
+          - notRequired
+          - adminRequired
+          - required
+        banner:
+          type: object
+          properties:
+            message:
+              type: string
+              maxLength: 2048
+            level:
+              type: string
+              enum:
+              - info
+              - warning
+              - critical
+          additionalProperties: false
+      additionalProperties: false
+    instanceOrgs:
+      title: Instance Organizations
+      description: Schema for a collection of Organizations within an instance
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceOrg'
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    advancedInstanceOrgQuery:
+      title: Advanced Instance Organization Query
+      description: Schema for advanced instance organization queries
+      type: object
+      properties:
+        $and:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedInstanceOrgQuery'
+          maxItems: 100
+        $or:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedInstanceOrgQuery'
+          maxItems: 100
+        $nor:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedInstanceOrgQuery'
+          maxItems: 100
+        id:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        creationDate:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        lastUpdated:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        name:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        mfaMode:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        isReadOnly:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        auditLogEnabled:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        disabledAt:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        referralId:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        tags:
+          oneOf:
+          - oneOf:
+            - type: 'null'
+            - type: object
+              properties:
+                $tagKey:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+                $tagValue:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+              additionalProperties: false
+              minProperties: 1
+            - type: object
+              patternProperties:
+                ^[0-9a-zA-Z_-]{1,255}:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+              additionalProperties: false
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: 'null'
+                - type: object
+                  properties:
+                    $tagKey:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                    $tagValue:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+                  minProperties: 1
+                - type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+            required:
+            - $eq
+            additionalProperties: false
+          - type: object
+            properties:
+              $ne:
+                oneOf:
+                - type: 'null'
+                - type: object
+                  properties:
+                    $tagKey:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                    $tagValue:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+                  minProperties: 1
+                - type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+            required:
+            - $ne
+            additionalProperties: false
+        memberId:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+      additionalProperties: false
+    instanceOrgPost:
+      title: Instance Owned Organization Post
+      description: Schema for the body of an Organization creation request within an instance
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        iconColor:
+          type: string
+          maxLength: 64
+        limits:
+          type: object
+          properties:
+            apitoken:
+              type: integer
+              minimum: 0
+            application:
+              type: integer
+              minimum: 0
+            applicationcertificate:
+              type: integer
+              minimum: 0
+            applicationcertificateauthority:
+              type: integer
+              minimum: 0
+            applicationkey:
+              type: integer
+              minimum: 0
+            credential:
+              type: integer
+              minimum: 0
+            dashboard:
+              type: integer
+              minimum: 0
+            datatable:
+              type: integer
+              minimum: 0
+            device:
+              type: integer
+              minimum: 0
+            devicerecipe:
+              type: integer
+              minimum: 0
+            experiencedomain:
+              type: integer
+              minimum: 0
+            experienceendpoint:
+              type: integer
+              minimum: 0
+            experiencegroup:
+              type: integer
+              minimum: 0
+            experienceslug:
+              type: integer
+              minimum: 0
+            experienceuser:
+              type: integer
+              minimum: 0
+            experienceversion:
+              type: integer
+              minimum: 0
+            experienceview:
+              type: integer
+              minimum: 0
+            file:
+              type: integer
+              minimum: 0
+            flow:
+              type: integer
+              minimum: 0
+            integration:
+              type: integer
+              minimum: 0
+            notebook:
+              type: integer
+              minimum: 0
+            privatefile:
+              type: integer
+              minimum: 0
+            resourcejob:
+              type: integer
+              minimum: 0
+            webhook:
+              type: integer
+              minimum: 0
+            dataTTL:
+              type: integer
+              minimum: 86400
+            member:
+              type: integer
+              minimum: 0
+            payload:
+              type: integer
+              minimum: 0
+            storage:
+              type: integer
+              minimum: 0
+            notebookMinutesPerRun:
+              type: integer
+              minimum: 0
+            notebookMinutesPerMonth:
+              type: integer
+              minimum: 0
+            notebookInParallel:
+              type: integer
+              minimum: 0
+            experienceFlowSlots:
+              type: integer
+              minimum: 0
+            applicationFlowSlots:
+              type: integer
+              minimum: 0
+            systemInterval:
+              type: integer
+              minimum: 5
+              maximum: 3600
+          additionalProperties: false
+        members:
+          type: array
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/instanceOrgMemberPost'
+        whitelistedEmailDomains:
+          type: array
+          items:
+            type: string
+            maxLength: 45
+            minLength: 3
+        auditLogEnabled:
+          type: boolean
+        disabledAt:
+          oneOf:
+          - type: string
+            format: date-time
+          - type: boolean
+        isReadOnly:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            required:
+            - key
+            - value
+            additionalProperties: false
+          maxItems: 100
+        referralId:
+          type: string
+          maxLength: 1024
+        mfaMode:
+          type: string
+          enum:
+          - notRequired
+          - adminRequired
+          - required
+        banner:
+          type: object
+          properties:
+            message:
+              type: string
+              maxLength: 2048
+            level:
+              type: string
+              enum:
+              - info
+              - warning
+              - critical
+          additionalProperties: false
+      additionalProperties: false
+      required:
+      - name
+    instanceOrg:
+      title: Instance Organization
+      description: Schema for an Organization owned by an instance
+      type: object
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        orgId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        description:
+          type: string
+          maxLength: 32767
+        iconColor:
+          type: string
+          maxLength: 64
+        limits:
+          type: object
+          properties:
+            apitoken:
+              type: integer
+              minimum: 0
+            application:
+              type: integer
+              minimum: 0
+            applicationcertificate:
+              type: integer
+              minimum: 0
+            applicationcertificateauthority:
+              type: integer
+              minimum: 0
+            applicationkey:
+              type: integer
+              minimum: 0
+            credential:
+              type: integer
+              minimum: 0
+            dashboard:
+              type: integer
+              minimum: 0
+            datatable:
+              type: integer
+              minimum: 0
+            device:
+              type: integer
+              minimum: 0
+            devicerecipe:
+              type: integer
+              minimum: 0
+            experiencedomain:
+              type: integer
+              minimum: 0
+            experienceendpoint:
+              type: integer
+              minimum: 0
+            experiencegroup:
+              type: integer
+              minimum: 0
+            experienceslug:
+              type: integer
+              minimum: 0
+            experienceuser:
+              type: integer
+              minimum: 0
+            experienceversion:
+              type: integer
+              minimum: 0
+            experienceview:
+              type: integer
+              minimum: 0
+            file:
+              type: integer
+              minimum: 0
+            flow:
+              type: integer
+              minimum: 0
+            integration:
+              type: integer
+              minimum: 0
+            notebook:
+              type: integer
+              minimum: 0
+            privatefile:
+              type: integer
+              minimum: 0
+            resourcejob:
+              type: integer
+              minimum: 0
+            webhook:
+              type: integer
+              minimum: 0
+            dataTTL:
+              type: integer
+              minimum: 86400
+            member:
+              type: integer
+              minimum: 0
+            payload:
+              type: integer
+              minimum: 0
+            storage:
+              type: integer
+              minimum: 0
+            notebookMinutesPerRun:
+              type: integer
+              minimum: 0
+            notebookMinutesPerMonth:
+              type: integer
+              minimum: 0
+            notebookInParallel:
+              type: integer
+              minimum: 0
+            experienceFlowSlots:
+              type: integer
+              minimum: 0
+            applicationFlowSlots:
+              type: integer
+              minimum: 0
+            systemInterval:
+              type: integer
+              minimum: 5
+              maximum: 3600
+            deviceHard:
+              type: integer
+              minimum: 0
+            applicationkeyHard:
+              type: integer
+              minimum: 0
+            applicationcertificateHard:
+              type: integer
+              minimum: 0
+          additionalProperties: false
+        summary:
+          type: object
+          properties:
+            apiTokenCount:
+              type: integer
+            appCount:
+              type: integer
+            certificateCount:
+              type: integer
+            certificateAuthorityCount:
+              type: integer
+            credentialCount:
+              type: integer
+            dashCount:
+              type: integer
+            dataTableCount:
+              type: integer
+            deviceCount:
+              type: integer
+            deviceRecipeCount:
+              type: integer
+            eventCount:
+              type: integer
+            experienceDomainCount:
+              type: integer
+            experienceEndpointCount:
+              type: integer
+            experienceGroupCount:
+              type: integer
+            experienceSlugCount:
+              type: integer
+            experienceUserCount:
+              type: integer
+            experienceVersionCount:
+              type: integer
+            experienceViewCount:
+              type: integer
+            fileCount:
+              type: integer
+            flowCount:
+              type: integer
+            integrationCount:
+              type: integer
+            keyCount:
+              type: integer
+            notebookCount:
+              type: integer
+            privateFileCount:
+              type: integer
+            resourceJobCount:
+              type: integer
+            webhookCount:
+              type: integer
+            memberCount:
+              type: integer
+            pendingInviteCount:
+              type: integer
+            payloadCount:
+              title: Payload Stats
+              description: Schema for the result of a payload stats request
+              type: object
+              properties:
+                appFile:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                dataTable:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceCreate:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceCommand:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceConnect:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceDisconnect:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceState:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                endpoint:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                event:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                flowError:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                inboundEmail:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                integration:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                mqttIn:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                mqttOut:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                notebook:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                resourceJob:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                timer:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                virtualButton:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                webhook:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+            storageStats:
+              type: object
+              properties:
+                count:
+                  type: integer
+                size:
+                  type: integer
+            notebookStats:
+              type: object
+              properties:
+                awaitingCompletion:
+                  type: integer
+                minutesThisPeriod:
+                  type: number
+                runsThisPeriod:
+                  type: integer
+            deviceDataSize:
+              type: number
+        whitelistedEmailDomains:
+          type: array
+          items:
+            type: string
+            maxLength: 45
+            minLength: 3
+        auditLogEnabled:
+          type: boolean
+        disabledAt:
+          oneOf:
+          - type: boolean
+            enum:
+            - false
+          - type: string
+            format: date-time
+        isReadOnly:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            required:
+            - key
+            - value
+            additionalProperties: false
+          maxItems: 100
+        referralId:
+          type: string
+          maxLength: 1024
+        mfaMode:
+          type: string
+          enum:
+          - notRequired
+          - adminRequired
+          - required
+        banner:
+          type: object
+          properties:
+            message:
+              type: string
+              maxLength: 2048
+            level:
+              type: string
+              enum:
+              - info
+              - warning
+              - critical
+          additionalProperties: false
+        planId:
+          type: string
+          maxLength: 1024
+        customerId:
+          type: string
+          maxLength: 1024
+        subscriptionId:
+          type: string
+          maxLength: 1024
+        billingEmail:
+          type: string
+          format: email
+          maxLength: 1024
+        subscriptionStatus:
+          type: string
+          enum:
+          - trialing
+          - active
+          - past_due
+          - canceled
+          - unpaid
+        currentPeriodStart:
+          type: string
+          format: date-time
+        currentPeriodEnd:
+          type: string
+          format: date-time
+      additionalProperties: false
+      required:
+      - name
+    payloadStats:
+      title: Payload Stats
+      description: Schema for the result of a payload stats request
+      type: object
+      properties:
+        appFile:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        dataTable:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCreate:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCommand:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceConnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceDisconnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceState:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        endpoint:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        event:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        flowError:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        inboundEmail:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        integration:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttIn:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttOut:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        notebook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        resourceJob:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        timer:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        virtualButton:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        webhook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              minutes:
+                type: number
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

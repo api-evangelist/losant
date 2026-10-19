@@ -1,0 +1,11 @@
+{
+ "url": "https://api.losant.com/",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 1140496,
+ "sha256": "fe2f9d491b4ad7eaebd02da06cfba41f7f9c75df7c13db2e0d51d75b662ba4df",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Losant's own Bravado action schema (380 actions); openapi/losant-platform-api-openapi.yml is converted from it by bravado-to-openapi.py (roadmap#799)"
+}

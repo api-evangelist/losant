@@ -1,250 +1,34 @@
 openapi: 3.2.0
 info:
-  title: Losant Notebooks API
-  version: 1.29.4
-  description: Trigger and manage Jupyter-style Losant Notebook executions for batch analytics, ML, and reporting against historical IoT data. Derived from the Losant Platform API (Bravado/Swagger 2) at https://api.losant.com/.
-  contact:
-    name: Losant Support
-    url: https://www.losant.com/contact
-    email: hello@losant.com
-  license:
-    name: Proprietary
-    url: https://www.losant.com/legal
-  x-source: https://api.losant.com/
-  x-publisher: Losant IoT, Inc.
+  title: Platform Notebooks API
+  version: 1.31.0
+  description: User API for accessing platform data
 servers:
 - url: https://api.losant.com
-  description: Losant Platform API (US multi-tenant cloud)
 security:
-- BearerAuth: []
+- bearerAuth: []
 tags:
 - name: Notebooks
-  description: Notebooks resources on the Losant Platform.
 paths:
-  /applications/{applicationId}/notebooks/{notebookId}:
-    get:
-      summary: Returns Notebook Execution Usage by Day for the Time Range Specified for This…
-      tags:
-      - Notebooks
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notebookId
-        in: path
-        description: ID associated with the notebook
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: start
-        in: query
-        description: Start of range for notebook execution query (ms since epoch)
-        required: false
-        example: 0
-        schema:
-          type: string
-      - name: end
-        in: query
-        description: End of range for notebook execution query (ms since epoch)
-        required: false
-        example: 1465790400000
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Notebook usage information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/notebookMinuteCounts'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if notebook was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-      operationId: getApplicationsByApplicationIdNotebooksByNotebookId
-      x-operation-id-source: derived
-    patch:
-      summary: Updates Information About a Notebook
-      tags:
-      - Notebooks
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notebookId
-        in: path
-        description: ID associated with the notebook
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: Object containing new properties of the notebook
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/notebookPatch'
-      responses:
-        '200':
-          description: Updated notebook information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/notebook'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if notebook was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-      operationId: patchApplicationsByApplicationIdNotebooksByNotebookId
-      x-operation-id-source: derived
-    delete:
-      summary: Deletes a Notebook
-      tags:
-      - Notebooks
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notebookId
-        in: path
-        description: ID associated with the notebook
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If notebook was successfully deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if notebook was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-      operationId: deleteApplicationsByApplicationIdNotebooksByNotebookId
-      x-operation-id-source: derived
-    post:
-      summary: Marks a Specific Notebook Execution for Cancellation
-      tags:
-      - Notebooks
-      parameters:
-      - name: applicationId
-        in: path
-        description: ID associated with the application
-        required: true
-        example: 575ec8687ae143cd83dc4a97
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: notebookId
-        in: path
-        description: ID associated with the notebook
-        required: true
-        example: 575ed78e7ae143cd83dc4aab
-        schema:
-          type: string
-          pattern: ^[A-Fa-f\d]{24}$
-      - name: executionId
-        in: query
-        description: The ID of the execution to cancel
-        required: true
-        example: 632e18632f59592e773a4153
-        schema:
-          pattern: ^[A-Fa-f\d]{24}$
-      responses:
-        '200':
-          description: If the execution was successfully marked for cancellation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/success'
-        '400':
-          description: Error if malformed request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-        '404':
-          description: Error if execution was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-      operationId: postApplicationsByApplicationIdNotebooksByNotebookId
-      x-operation-id-source: derived
   /applications/{applicationId}/notebooks:
     get:
-      summary: Returns the Notebooks for an Application
+      operationId: notebooks.get
+      summary: Returns the notebooks for an application
       tags:
       - Notebooks
       parameters:
       - name: applicationId
         in: path
-        description: ID associated with the application
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        description: ID associated with the application
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
       - name: sortField
         in: query
-        description: Field to sort the results by
         required: false
-        example: name
+        description: Field to sort the results by
         schema:
           type: string
           enum:
@@ -254,49 +38,50 @@ paths:
           - lastUpdated
           - lastExecutionRequested
           default: name
+        example: name
       - name: sortDirection
         in: query
-        description: Direction to sort the results by
         required: false
-        example: asc
+        description: Direction to sort the results by
         schema:
           type: string
           enum:
           - asc
           - desc
           default: asc
+        example: asc
       - name: page
         in: query
-        description: Which page of results to return
         required: false
-        example: 0
+        description: Which page of results to return
         schema:
           type: string
           default: 0
+        example: 0
       - name: perPage
         in: query
-        description: How many items to return per page
         required: false
-        example: 10
+        description: How many items to return per page
         schema:
           type: string
           default: 100
+        example: 10
       - name: filterField
         in: query
-        description: Field to filter the results by. Blank or not provided means no filtering.
         required: false
-        example: name
+        description: Field to filter the results by. Blank or not provided means no filtering.
         schema:
           type: string
           enum:
           - name
+        example: name
       - name: filter
         in: query
-        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
         required: false
-        example: my*notebook
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
         schema:
           type: string
+        example: my*notebook
       responses:
         '200':
           description: Collection of notebooks
@@ -316,30 +101,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-      operationId: getApplicationsByApplicationIdNotebooks
-      x-operation-id-source: derived
+      x-losant-auth-scopes:
+      - notebooks.get
     post:
-      summary: Create a New Notebook for an Application
+      operationId: notebooks.post
+      summary: Create a new notebook for an application
       tags:
       - Notebooks
       parameters:
       - name: applicationId
         in: path
-        description: ID associated with the application
         required: true
-        example: 575ec8687ae143cd83dc4a97
+        description: ID associated with the application
         schema:
           type: string
           pattern: ^[A-Fa-f\d]{24}$
-      requestBody:
-        description: New notebook information
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/notebookPost'
+        example: 575ec8687ae143cd83dc4a97
       responses:
         '201':
           description: Successfully created notebook
@@ -359,12 +136,632 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
-      security:
-      - BearerAuth: []
-      operationId: postApplicationsByApplicationIdNotebooks
-      x-operation-id-source: derived
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/notebookPost'
+        description: New notebook information
+      x-losant-auth-scopes:
+      - notebooks.post
+  /applications/{applicationId}/notebooks/{notebookId}:
+    get:
+      operationId: notebook.get
+      summary: Retrieves information on a notebook
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: notebookId
+        in: path
+        required: true
+        description: ID associated with the notebook
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: notebook information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebook'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - notebook.get
+    patch:
+      operationId: notebook.patch
+      summary: Updates information about a notebook
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: notebookId
+        in: path
+        required: true
+        description: ID associated with the notebook
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: Updated notebook information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebook'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/notebookPatch'
+        description: Object containing new properties of the notebook
+      x-losant-auth-scopes:
+      - notebook.patch
+    delete:
+      operationId: notebook.delete
+      summary: Deletes a notebook
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: notebookId
+        in: path
+        required: true
+        description: ID associated with the notebook
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: If notebook was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - notebook.delete
+  /applications/{applicationId}/notebooks/{notebookId}/cancelExecution:
+    post:
+      operationId: notebook.cancelExecution
+      summary: Marks a specific notebook execution for cancellation
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: notebookId
+        in: path
+        required: true
+        description: ID associated with the notebook
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      - name: executionId
+        in: query
+        required: true
+        description: The ID of the execution to cancel
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 632e18632f59592e773a4153
+      responses:
+        '200':
+          description: If the execution was successfully marked for cancellation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if execution was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - notebook.execute
+  /applications/{applicationId}/notebooks/{notebookId}/execute:
+    post:
+      operationId: notebook.execute
+      summary: Triggers the execution of a notebook
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: notebookId
+        in: path
+        required: true
+        description: ID associated with the notebook
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: If execution request was accepted and successfully queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successWithExecutionId'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/notebookExecutionOptions'
+        description: The options for the execution
+      x-losant-auth-scopes:
+      - notebook.execute
+  /applications/{applicationId}/notebooks/{notebookId}/logs:
+    get:
+      operationId: notebook.logs
+      summary: Retrieves information on notebook executions
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: notebookId
+        in: path
+        required: true
+        description: ID associated with the notebook
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      - name: limit
+        in: query
+        required: false
+        description: Max log entries to return (ordered by time descending)
+        schema:
+          type: string
+          default: 1
+        example: 10
+      - name: since
+        in: query
+        required: false
+        description: Look for log entries since this time (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: notebook execution information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebookExecutionLogs'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - notebook.logs
+  /applications/{applicationId}/notebooks/{notebookId}/notebookMinuteCounts:
+    get:
+      operationId: notebook.notebookMinuteCounts
+      summary: Returns notebook execution usage by day for the time range specified for this…
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: notebookId
+        in: path
+        required: true
+        description: ID associated with the notebook
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      - name: start
+        in: query
+        required: false
+        description: Start of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Notebook usage information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebookMinuteCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - notebook.notebookMinuteCounts
+  /applications/{applicationId}/notebooks/{notebookId}/requestInputDataExport:
+    post:
+      operationId: notebook.requestInputDataExport
+      summary: Requests a combined zip file of the potential input data for a notebook…
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: notebookId
+        in: path
+        required: true
+        description: ID associated with the notebook
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '202':
+          description: If export request was accepted and successfully queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/notebookDataExportOptions'
+        description: The options for the export
+      x-losant-auth-scopes:
+      - notebook.requestInputDataExport
+  /applications/{applicationId}/notebooks/{notebookId}/upload:
+    post:
+      operationId: notebook.upload
+      summary: Uploads the jupyter notebook file
+      tags:
+      - Notebooks
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: notebookId
+        in: path
+        required: true
+        description: ID associated with the notebook
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: Updated notebook information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebook'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if notebook was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - notebook.upload
 components:
   schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    notebookExecutionOptions:
+      title: Notebook Execution Options
+      description: Schema for the options for a Notebook execution request
+      type: object
+      properties:
+        relativeTo:
+          oneOf:
+          - type: string
+          - type: number
+          - type: object
+            properties:
+              $date:
+                type: string
+            additionalProperties: false
+            required:
+            - $date
+        templateContext:
+          type: string
+          maxLength: 32767
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+      additionalProperties: false
+    notebookExecutionLogs:
+      title: Notebook Execution Logs
+      description: Schema for a set of Notebook execution logs
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          notebookExecutionId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          notebookId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          imageVersion:
+            type: string
+            enum:
+            - v1
+            - v2
+            - v3
+            - v4
+          applicationId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          email:
+            type: string
+            format: email
+            maxLength: 1024
+          status:
+            type: string
+            enum:
+            - queued
+            - inProgress
+            - completed
+            - errored
+            - timeout
+            - canceling
+            - canceled
+          executionRelativeTo:
+            type: string
+            format: date-time
+          maxAllowedRunMinutes:
+            type: number
+          sourceType:
+            type: string
+            enum:
+            - flow
+            - user
+            - device
+            - apiToken
+            - notebook
+          sourceId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          callbackUrl:
+            type: string
+            format: uri
+            maxLength: 1024
+          runQueuedAt:
+            type: string
+            format: date-time
+          runStartedAt:
+            type: string
+            format: date-time
+          inputsCompletedAt:
+            type: string
+            format: date-time
+          notebookCompletedAt:
+            type: string
+            format: date-time
+          outputsCompletedAt:
+            type: string
+            format: date-time
+          templateContext:
+            type: string
+            maxLength: 32767
+          inputInfo:
+            type: object
+            patternProperties:
+              .*:
+                type: object
+                properties:
+                  size:
+                    type: number
+                  url:
+                    type: string
+          outputInfo:
+            type: object
+            patternProperties:
+              .*:
+                type: object
+                properties:
+                  size:
+                    type: number
+                  url:
+                    type: string
+                  contentType:
+                    type: string
+                  outputType:
+                    type: string
+                    enum:
+                    - dataTable
+                    - file
+                    - executionResult
+                    - directory
+                    - temporaryUrl
+          executionErrors:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                message:
+                  type: string
     success:
       title: Success
       description: Schema for reporting a successful operation
@@ -374,35 +771,53 @@ components:
           type: boolean
           enum:
           - true
-    notebook:
-      title: Notebook
-      description: Schema for a single Notebook
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
       type: object
       properties:
-        id:
-          $ref: '#/components/schemas/common/objectId'
-        notebookId:
-          $ref: '#/components/schemas/common/objectId'
-        applicationId:
-          $ref: '#/components/schemas/common/objectId'
-        creationDate:
-          $ref: '#/components/schemas/common/date'
-        lastUpdated:
-          $ref: '#/components/schemas/common/date'
-        name:
-          $ref: '#/components/schemas/common/reqMedStr'
-        description:
-          $ref: '#/components/schemas/common/description'
-        jupyterFileName:
-          $ref: '#/components/schemas/common/reqMedStr'
-        jupyterFileUrl:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
           type: string
-        imageVersion:
-          $ref: '#/components/schemas/common/notebookImageVersion'
+          maxLength: 24
+        success:
+          type: boolean
+          enum:
+          - true
+    successWithExecutionId:
+      title: Success With Execution ID
+      description: Schema for reporting a successful operation with a corresponding execution ID
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+        executionId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    notebookPatch:
+      title: Notebook Patch
+      description: Schema for the body of a Notebook modification request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 32767
         inputs:
           type: array
+          maxItems: 100
           items:
-            maxItems: 100
+            type: object
+            discriminator:
+              propertyName: inputType
             oneOf:
             - type: object
               properties:
@@ -411,18 +826,52 @@ components:
                   enum:
                   - deviceData
                 fileName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 deviceTags:
-                  $ref: '#/components/schemas/common/templateTags'
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        oneOf:
+                        - type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        - type: string
+                          minLength: 4
+                          maxLength: 255
+                          pattern: .*\{\{.+\}\}.*
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
                 deviceIds:
-                  $ref: '#/components/schemas/common/templatesOrObjectIds'
+                  type: array
+                  maxItems: 100
+                  items:
+                    oneOf:
+                    - type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    - type: string
+                      minLength: 4
+                      maxLength: 255
+                      pattern: .*\{\{.+\}\}.*
                 queryJson:
-                  $ref: '#/components/schemas/common/queryJson'
+                  type: string
+                  maxLength: 8192
                 attributes:
                   type: array
                   maxItems: 100
                   items:
-                    $ref: '#/components/schemas/common/key'
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
                 start:
                   type: number
                 end:
@@ -440,13 +889,46 @@ components:
                   enum:
                   - deviceConnectionHistory
                 fileName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 deviceTags:
-                  $ref: '#/components/schemas/common/templateTags'
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        oneOf:
+                        - type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        - type: string
+                          minLength: 4
+                          maxLength: 255
+                          pattern: .*\{\{.+\}\}.*
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
                 deviceIds:
-                  $ref: '#/components/schemas/common/templatesOrObjectIds'
+                  type: array
+                  maxItems: 100
+                  items:
+                    oneOf:
+                    - type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    - type: string
+                      minLength: 4
+                      maxLength: 255
+                      pattern: .*\{\{.+\}\}.*
                 queryJson:
-                  $ref: '#/components/schemas/common/queryJson'
+                  type: string
+                  maxLength: 8192
                 start:
                   type: number
                 end:
@@ -464,13 +946,46 @@ components:
                   enum:
                   - deviceMetadata
                 fileName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 deviceTags:
-                  $ref: '#/components/schemas/common/templateTags'
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        oneOf:
+                        - type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        - type: string
+                          minLength: 4
+                          maxLength: 255
+                          pattern: .*\{\{.+\}\}.*
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
                 deviceIds:
-                  $ref: '#/components/schemas/common/templatesOrObjectIds'
+                  type: array
+                  maxItems: 100
+                  items:
+                    oneOf:
+                    - type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    - type: string
+                      minLength: 4
+                      maxLength: 255
+                      pattern: .*\{\{.+\}\}.*
                 queryJson:
-                  $ref: '#/components/schemas/common/queryJson'
+                  type: string
+                  maxLength: 8192
                 format:
                   type: string
                   enum:
@@ -488,11 +1003,24 @@ components:
                   enum:
                   - dataTable
                 fileName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 dataTableId:
-                  $ref: '#/components/schemas/common/templateOrObjectId'
+                  oneOf:
+                  - type: string
+                    pattern: ^[A-Fa-f\d]{24}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 queryJson:
-                  $ref: '#/components/schemas/common/queryJson'
+                  type: string
+                  maxLength: 8192
               required:
               - inputType
               - fileName
@@ -505,9 +1033,16 @@ components:
                   enum:
                   - eventData
                 fileName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 queryJson:
-                  $ref: '#/components/schemas/common/queryJson'
+                  type: string
+                  maxLength: 8192
                 format:
                   type: string
                   enum:
@@ -525,7 +1060,13 @@ components:
                   enum:
                   - externalUrl
                 fileName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 sourceUrl:
                   type: string
                   minLength: 1
@@ -542,7 +1083,13 @@ components:
                   enum:
                   - applicationFile
                 fileName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 filePath:
                   type: string
                   minLength: 1
@@ -556,8 +1103,11 @@ components:
               additionalProperties: false
         outputs:
           type: array
+          maxItems: 100
           items:
-            maxItems: 100
+            type: object
+            discriminator:
+              propertyName: outputType
             oneOf:
             - type: object
               properties:
@@ -566,9 +1116,21 @@ components:
                   enum:
                   - dataTable
                 fileName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 dataTableId:
-                  $ref: '#/components/schemas/common/templateOrObjectId'
+                  oneOf:
+                  - type: string
+                    pattern: ^[A-Fa-f\d]{24}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 createMissingColumns:
                   type: boolean
                 truncateExistingTable:
@@ -585,7 +1147,13 @@ components:
                   enum:
                   - file
                 fileName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 destinationDirectoryTemplate:
                   type: string
                   minLength: 1
@@ -608,7 +1176,13 @@ components:
                   enum:
                   - directory
                 directoryName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
                 destinationDirectoryTemplate:
                   type: string
                   minLength: 1
@@ -655,65 +1229,25 @@ components:
                   enum:
                   - temporaryUrl
                 fileName:
-                  $ref: '#/components/schemas/common/templateOrSafeFileName'
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
               required:
               - fileName
               - outputType
               additionalProperties: false
-        stats:
-          type: object
-          properties:
-            minutesThisPeriod:
-              type: number
-            runsThisPeriod:
-              type: number
-            errorsThisPeriod:
-              type: number
-          additionalProperties: false
-    notebookPost:
-      title: Notebook Post
-      description: Schema for the body of an Notebook creation request
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/common/reqMedStr'
-        description:
-          $ref: '#/components/schemas/common/description'
         imageVersion:
-          $ref: '#/components/schemas/common/notebookImageVersion'
-        inputs:
-          $ref: '#/components/schemas/notebook/properties/inputs'
-        outputs:
-          $ref: '#/components/schemas/notebook/properties/outputs'
+          type: string
+          enum:
+          - v1
+          - v2
+          - v3
+          - v4
       additionalProperties: false
-      required:
-      - name
-    notebookMinuteCounts:
-      title: Notebook Minute Counts
-      description: Schema for the result of a notebook minute counts request
-      type: object
-      properties:
-        start:
-          $ref: '#/components/schemas/common/date'
-        end:
-          $ref: '#/components/schemas/common/date'
-        counts:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                $ref: '#/components/schemas/common/date'
-              minutes:
-                type: integer
-              completed:
-                type: integer
-              canceled:
-                type: integer
-              errored:
-                type: integer
-              timeout:
-                type: integer
     notebooks:
       title: Notebooks
       description: Schema for a collection of Notebooks
@@ -738,37 +1272,1011 @@ components:
         sortField:
           type: string
         sortDirection:
-          $ref: '#/components/schemas/common/sortDirection'
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
         applicationId:
-          $ref: '#/components/schemas/common/objectId'
-    notebookPatch:
-      title: Notebook Patch
-      description: Schema for the body of a Notebook modification request
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    notebook:
+      title: Notebook
+      description: Schema for a single Notebook
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        notebookId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        lastExecutionRequested:
+          type: string
+          format: date-time
+        name:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 32767
+        jupyterFileName:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        jupyterFileUrl:
+          type: string
+        imageVersion:
+          type: string
+          enum:
+          - v1
+          - v2
+          - v3
+          - v4
+        inputs:
+          type: array
+          maxItems: 100
+          items:
+            type: object
+            discriminator:
+              propertyName: inputType
+            oneOf:
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - deviceData
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                deviceTags:
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        oneOf:
+                        - type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        - type: string
+                          minLength: 4
+                          maxLength: 255
+                          pattern: .*\{\{.+\}\}.*
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
+                deviceIds:
+                  type: array
+                  maxItems: 100
+                  items:
+                    oneOf:
+                    - type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    - type: string
+                      minLength: 4
+                      maxLength: 255
+                      pattern: .*\{\{.+\}\}.*
+                queryJson:
+                  type: string
+                  maxLength: 8192
+                attributes:
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                start:
+                  type: number
+                end:
+                  type: number
+              required:
+              - inputType
+              - fileName
+              - start
+              - end
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - deviceConnectionHistory
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                deviceTags:
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        oneOf:
+                        - type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        - type: string
+                          minLength: 4
+                          maxLength: 255
+                          pattern: .*\{\{.+\}\}.*
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
+                deviceIds:
+                  type: array
+                  maxItems: 100
+                  items:
+                    oneOf:
+                    - type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    - type: string
+                      minLength: 4
+                      maxLength: 255
+                      pattern: .*\{\{.+\}\}.*
+                queryJson:
+                  type: string
+                  maxLength: 8192
+                start:
+                  type: number
+                end:
+                  type: number
+              required:
+              - inputType
+              - fileName
+              - start
+              - end
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - deviceMetadata
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                deviceTags:
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        oneOf:
+                        - type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        - type: string
+                          minLength: 4
+                          maxLength: 255
+                          pattern: .*\{\{.+\}\}.*
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
+                deviceIds:
+                  type: array
+                  maxItems: 100
+                  items:
+                    oneOf:
+                    - type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    - type: string
+                      minLength: 4
+                      maxLength: 255
+                      pattern: .*\{\{.+\}\}.*
+                queryJson:
+                  type: string
+                  maxLength: 8192
+                format:
+                  type: string
+                  enum:
+                  - csv
+                  - json
+                  default: csv
+              required:
+              - inputType
+              - fileName
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - dataTable
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                dataTableId:
+                  oneOf:
+                  - type: string
+                    pattern: ^[A-Fa-f\d]{24}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                queryJson:
+                  type: string
+                  maxLength: 8192
+              required:
+              - inputType
+              - fileName
+              - dataTableId
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - eventData
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                queryJson:
+                  type: string
+                  maxLength: 8192
+                format:
+                  type: string
+                  enum:
+                  - csv
+                  - json
+                  default: csv
+              required:
+              - inputType
+              - fileName
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - externalUrl
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                sourceUrl:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+              required:
+              - inputType
+              - fileName
+              - sourceUrl
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - applicationFile
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                filePath:
+                  type: string
+                  minLength: 1
+                  maxLength: 2048
+                private:
+                  type: boolean
+              required:
+              - inputType
+              - fileName
+              - filePath
+              additionalProperties: false
+        outputs:
+          type: array
+          maxItems: 100
+          items:
+            type: object
+            discriminator:
+              propertyName: outputType
+            oneOf:
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - dataTable
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                dataTableId:
+                  oneOf:
+                  - type: string
+                    pattern: ^[A-Fa-f\d]{24}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                createMissingColumns:
+                  type: boolean
+                truncateExistingTable:
+                  type: boolean
+              required:
+              - fileName
+              - outputType
+              - dataTableId
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - file
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                destinationDirectoryTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationFileNameTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationPrivate:
+                  type: boolean
+              required:
+              - fileName
+              - outputType
+              - destinationFileNameTemplate
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - directory
+                directoryName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                destinationDirectoryTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationPrivate:
+                  type: boolean
+              required:
+              - directoryName
+              - outputType
+              - destinationDirectoryTemplate
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - executionResult
+                fileName:
+                  type: string
+                  enum:
+                  - result.html
+                  - result.pdf
+                  - result.ipynb
+                  - result.error.log
+                  - result.log
+                destinationDirectoryTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationFileNameTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationPrivate:
+                  type: boolean
+              required:
+              - fileName
+              - outputType
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - temporaryUrl
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+              required:
+              - fileName
+              - outputType
+              additionalProperties: false
+        stats:
+          type: object
+          properties:
+            minutesThisPeriod:
+              type: number
+            runsThisPeriod:
+              type: number
+            errorsThisPeriod:
+              type: number
+          additionalProperties: false
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              minutes:
+                type: number
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+    notebookDataExportOptions:
+      title: Notebook Data Export Options
+      description: Schema for the options for a Notebook data export request
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        relativeTo:
+          oneOf:
+          - type: string
+          - type: number
+          - type: object
+            properties:
+              $date:
+                type: string
+            additionalProperties: false
+            required:
+            - $date
+        templateContext:
+          type: string
+          maxLength: 32767
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+      additionalProperties: false
+    notebookPost:
+      title: Notebook Post
+      description: Schema for the body of a Notebook creation request
       type: object
       properties:
         name:
-          $ref: '#/components/schemas/common/reqMedStr'
+          type: string
+          minLength: 1
+          maxLength: 1024
         description:
-          $ref: '#/components/schemas/common/description'
-        inputs:
-          $ref: '#/components/schemas/notebook/properties/inputs'
-        outputs:
-          $ref: '#/components/schemas/notebook/properties/outputs'
+          type: string
+          maxLength: 32767
         imageVersion:
-          $ref: '#/components/schemas/common/notebookImageVersion'
+          type: string
+          enum:
+          - v1
+          - v2
+          - v3
+          - v4
+        inputs:
+          type: array
+          maxItems: 100
+          items:
+            type: object
+            discriminator:
+              propertyName: inputType
+            oneOf:
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - deviceData
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                deviceTags:
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        oneOf:
+                        - type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        - type: string
+                          minLength: 4
+                          maxLength: 255
+                          pattern: .*\{\{.+\}\}.*
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
+                deviceIds:
+                  type: array
+                  maxItems: 100
+                  items:
+                    oneOf:
+                    - type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    - type: string
+                      minLength: 4
+                      maxLength: 255
+                      pattern: .*\{\{.+\}\}.*
+                queryJson:
+                  type: string
+                  maxLength: 8192
+                attributes:
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                start:
+                  type: number
+                end:
+                  type: number
+              required:
+              - inputType
+              - fileName
+              - start
+              - end
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - deviceConnectionHistory
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                deviceTags:
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        oneOf:
+                        - type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        - type: string
+                          minLength: 4
+                          maxLength: 255
+                          pattern: .*\{\{.+\}\}.*
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
+                deviceIds:
+                  type: array
+                  maxItems: 100
+                  items:
+                    oneOf:
+                    - type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    - type: string
+                      minLength: 4
+                      maxLength: 255
+                      pattern: .*\{\{.+\}\}.*
+                queryJson:
+                  type: string
+                  maxLength: 8192
+                start:
+                  type: number
+                end:
+                  type: number
+              required:
+              - inputType
+              - fileName
+              - start
+              - end
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - deviceMetadata
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                deviceTags:
+                  type: array
+                  maxItems: 100
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        oneOf:
+                        - type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        - type: string
+                          minLength: 4
+                          maxLength: 255
+                          pattern: .*\{\{.+\}\}.*
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
+                deviceIds:
+                  type: array
+                  maxItems: 100
+                  items:
+                    oneOf:
+                    - type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    - type: string
+                      minLength: 4
+                      maxLength: 255
+                      pattern: .*\{\{.+\}\}.*
+                queryJson:
+                  type: string
+                  maxLength: 8192
+                format:
+                  type: string
+                  enum:
+                  - csv
+                  - json
+                  default: csv
+              required:
+              - inputType
+              - fileName
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - dataTable
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                dataTableId:
+                  oneOf:
+                  - type: string
+                    pattern: ^[A-Fa-f\d]{24}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                queryJson:
+                  type: string
+                  maxLength: 8192
+              required:
+              - inputType
+              - fileName
+              - dataTableId
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - eventData
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                queryJson:
+                  type: string
+                  maxLength: 8192
+                format:
+                  type: string
+                  enum:
+                  - csv
+                  - json
+                  default: csv
+              required:
+              - inputType
+              - fileName
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - externalUrl
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                sourceUrl:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+              required:
+              - inputType
+              - fileName
+              - sourceUrl
+              additionalProperties: false
+            - type: object
+              properties:
+                inputType:
+                  type: string
+                  enum:
+                  - applicationFile
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                filePath:
+                  type: string
+                  minLength: 1
+                  maxLength: 2048
+                private:
+                  type: boolean
+              required:
+              - inputType
+              - fileName
+              - filePath
+              additionalProperties: false
+        outputs:
+          type: array
+          maxItems: 100
+          items:
+            type: object
+            discriminator:
+              propertyName: outputType
+            oneOf:
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - dataTable
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                dataTableId:
+                  oneOf:
+                  - type: string
+                    pattern: ^[A-Fa-f\d]{24}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                createMissingColumns:
+                  type: boolean
+                truncateExistingTable:
+                  type: boolean
+              required:
+              - fileName
+              - outputType
+              - dataTableId
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - file
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                destinationDirectoryTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationFileNameTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationPrivate:
+                  type: boolean
+              required:
+              - fileName
+              - outputType
+              - destinationFileNameTemplate
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - directory
+                directoryName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+                destinationDirectoryTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationPrivate:
+                  type: boolean
+              required:
+              - directoryName
+              - outputType
+              - destinationDirectoryTemplate
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - executionResult
+                fileName:
+                  type: string
+                  enum:
+                  - result.html
+                  - result.pdf
+                  - result.ipynb
+                  - result.error.log
+                  - result.log
+                destinationDirectoryTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationFileNameTemplate:
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                destinationPrivate:
+                  type: boolean
+              required:
+              - fileName
+              - outputType
+              additionalProperties: false
+            - type: object
+              properties:
+                outputType:
+                  type: string
+                  enum:
+                  - temporaryUrl
+                fileName:
+                  oneOf:
+                  - type: string
+                    pattern: ^(?!\.{1,2}$)[0-9a-zA-Z_.-]{1,255}$
+                  - type: string
+                    minLength: 4
+                    maxLength: 255
+                    pattern: .*\{\{.+\}\}.*
+              required:
+              - fileName
+              - outputType
+              additionalProperties: false
       additionalProperties: false
-    error:
-      title: Error
-      description: Schema for errors returned by the API
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
+      required:
+      - name
   securitySchemes:
-    BearerAuth:
+    bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT
-      description: Losant uses JSON Web Tokens (JWTs) for authentication. Obtain a token via POST /auth/user, POST /auth/device, POST /applications/{applicationId}/tokens, or POST /me/tokens and pass it in the Authorization header as `Bearer <token>`.
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

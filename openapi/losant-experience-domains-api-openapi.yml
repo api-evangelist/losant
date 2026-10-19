@@ -1,0 +1,394 @@
+openapi: 3.2.0
+info:
+  title: Platform Experience Domains API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Experience Domains
+paths:
+  /applications/{applicationId}/experience/domains:
+    get:
+      operationId: experienceDomains.get
+      summary: Returns the experience domains for an application
+      tags:
+      - Experience Domains
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Collection of experience domains
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceDomains'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - experienceDomains.get
+    post:
+      operationId: experienceDomains.post
+      summary: Create a new experience domain for an application
+      tags:
+      - Experience Domains
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '201':
+          description: Successfully created experience domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceDomain'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceDomainPost'
+        description: New experience domain information
+      x-losant-auth-scopes:
+      - experienceDomains.post
+  /applications/{applicationId}/experience/domains/{experienceDomainId}:
+    get:
+      operationId: experienceDomain.get
+      summary: Retrieves information on an experience domain
+      tags:
+      - Experience Domains
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: experienceDomainId
+        in: path
+        required: true
+        description: ID associated with the experience domain
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: Experience domain information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceDomain'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience domain was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - experienceDomain.get
+    patch:
+      operationId: experienceDomain.patch
+      summary: Updates information about an experience domain
+      tags:
+      - Experience Domains
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: experienceDomainId
+        in: path
+        required: true
+        description: ID associated with the experience domain
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: Updated experience domain information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceDomain'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience domain was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceDomainPatch'
+        description: Object containing new properties of the experience domain
+      x-losant-auth-scopes:
+      - experienceDomain.patch
+    delete:
+      operationId: experienceDomain.delete
+      summary: Deletes an experience domain
+      tags:
+      - Experience Domains
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: experienceDomainId
+        in: path
+        required: true
+        description: ID associated with the experience domain
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ed78e7ae143cd83dc4aab
+      responses:
+        '200':
+          description: If experience domain was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if experience domain was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - experienceDomain.delete
+components:
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    experienceDomainPatch:
+      title: Experience Domain Patch
+      description: Schema for the body of an Experience Domain modification request
+      type: object
+      properties:
+        sslKey:
+          oneOf:
+          - type: string
+            maxLength: 32767
+            minLength: 50
+          - type: 'null'
+        sslCert:
+          oneOf:
+          - type: string
+            maxLength: 32767
+            minLength: 50
+          - type: 'null'
+        sslBundle:
+          oneOf:
+          - type: string
+            maxLength: 32767
+            minLength: 50
+          - type: 'null'
+        version:
+          oneOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        domainName:
+          type: string
+          maxLength: 45
+          minLength: 3
+      additionalProperties: false
+    experienceDomainPost:
+      title: Experience Domain Post
+      description: Schema for the body of an Experience Domain creation request
+      type: object
+      properties:
+        sslKey:
+          type: string
+          maxLength: 32767
+          minLength: 50
+        sslCert:
+          type: string
+          maxLength: 32767
+          minLength: 50
+        sslBundle:
+          type: string
+          maxLength: 32767
+          minLength: 50
+        domainName:
+          type: string
+          maxLength: 45
+          minLength: 3
+        version:
+          oneOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      additionalProperties: false
+      required:
+      - domainName
+    experienceDomains:
+      title: Experience Domains
+      description: Schema for a collection of Experience Domains
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/experienceDomain'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    experienceDomain:
+      title: Experience Domain
+      description: Schema for a single Experience Domain
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        experienceDomainId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        sslCert:
+          type: string
+          maxLength: 32767
+          minLength: 50
+        sslBundle:
+          type: string
+          maxLength: 32767
+          minLength: 50
+        domainName:
+          type: string
+          maxLength: 45
+          minLength: 3
+        version:
+          type: string
+          minLength: 1
+          maxLength: 255
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

@@ -1,0 +1,216 @@
+openapi: 3.2.0
+info:
+  title: Platform Experiences API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Experiences
+paths:
+  /applications/{applicationId}/experience:
+    delete:
+      operationId: experience.delete
+      summary: Deletes multiple parts of an experience including users, groups, slugs…
+      tags:
+      - Experiences
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: keepUsers
+        in: query
+        required: false
+        description: If this is set, Experience Users will not be removed.
+        schema:
+          type: string
+        example: 'true'
+      - name: keepGroups
+        in: query
+        required: false
+        description: If this is set, Experience Groups will not be removed.
+        schema:
+          type: string
+        example: 'true'
+      - name: keepSlugs
+        in: query
+        required: false
+        description: If this is set, Experience Slugs will not be removed.
+        schema:
+          type: string
+        example: 'true'
+      - name: keepDomains
+        in: query
+        required: false
+        description: If this is set, Experience Domains will not be removed.
+        schema:
+          type: string
+        example: 'true'
+      - name: removeVersions
+        in: query
+        required: false
+        description: If this is set, all Experience Versions and their contents will be removed (except for develop).
+        schema:
+          type: string
+        example: 'true'
+      - name: keepViews
+        in: query
+        required: false
+        description: If this is set, Experience Views (in the develop version) will not be removed.
+        schema:
+          type: string
+        example: 'true'
+      - name: keepEndpoints
+        in: query
+        required: false
+        description: If this is set, Experience Endpoints (in the develop version) will not be removed.
+        schema:
+          type: string
+        example: 'true'
+      - name: removeWorkflows
+        in: query
+        required: false
+        description: If this is set, all Experience Workflows (in the develop version) will be removed.
+        schema:
+          type: string
+        example: 'true'
+      responses:
+        '200':
+          description: If deletion was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - experience.delete
+  /applications/{applicationId}/experience/bootstrap:
+    patch:
+      operationId: experience.bootstrap
+      summary: Bootstraps the experience for this application with standard endpoints and views
+      tags:
+      - Experiences
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: If bootstrap was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/experienceBootstrapResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/experienceBootstrapOptions'
+        description: Bootstrap options
+      x-losant-auth-scopes:
+      - experience.bootstrap
+components:
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    experienceBootstrapOptions:
+      title: Experience Bootstrap Options
+      description: The body of an experience bootstrap request
+      type: object
+      properties:
+        replaceExisting:
+          type: boolean
+          default: false
+        createUsers:
+          type: boolean
+          default: true
+        createGroups:
+          type: boolean
+          default: true
+        slug:
+          type: string
+          minLength: 3
+          maxLength: 63
+          pattern: ^[0-9a-z-]*$
+      additionalProperties: false
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    experienceBootstrapResult:
+      title: Experience Bootstrap Result
+      description: The result of an experience bootstrap request
+      type: object
+      properties:
+        resourceSuffix:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

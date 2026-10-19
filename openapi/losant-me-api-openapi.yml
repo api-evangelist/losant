@@ -1,0 +1,2774 @@
+openapi: 3.2.0
+info:
+  title: Platform Me API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Me
+paths:
+  /me:
+    get:
+      operationId: me.get
+      summary: Retrieves information on the current user
+      tags:
+      - Me
+      parameters:
+      - name: includeRecent
+        in: query
+        required: false
+        description: Should the user include recent app/dashboard info
+        schema:
+          type: string
+        example: true
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from user summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in user summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Current user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/me'
+      x-losant-auth-scopes:
+      - me.get
+    patch:
+      operationId: me.patch
+      summary: Updates information about the current user
+      tags:
+      - Me
+      parameters:
+      - name: includeRecent
+        in: query
+        required: false
+        description: Should the user include recent app/dashboard info
+        schema:
+          type: string
+        example: true
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from user summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in user summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Updated user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/me'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/mePatch'
+        description: Object containing new user properties
+      x-losant-auth-scopes:
+      - me.patch
+  /me/changePassword:
+    patch:
+      operationId: me.changePassword
+      summary: Changes the current user's password and optionally logs out all other sessions
+      tags:
+      - Me
+      parameters: []
+      responses:
+        '200':
+          description: A new, valid, auth token (potentially all previous tokens are now invalid)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/authedUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/changePassword'
+        description: Object containing the password change info
+      x-losant-auth-scopes:
+      - me.changePassword
+  /me/delete:
+    post:
+      operationId: me.delete
+      summary: Deletes the current user
+      tags:
+      - Me
+      parameters: []
+      responses:
+        '200':
+          description: If the user was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userCredentials'
+        description: User authentication credentials
+      x-losant-auth-scopes:
+      - me.delete
+  /me/deviceCounts:
+    get:
+      operationId: me.deviceCounts
+      summary: Returns device counts by day for the time range specified for all applications…
+      tags:
+      - Me
+      parameters:
+      - name: start
+        in: query
+        required: false
+        description: Start of range for device count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for device count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Device counts by day
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.deviceCounts
+  /me/disableTwoFactorAuth:
+    patch:
+      operationId: me.disableTwoFactorAuth
+      summary: Disables multi-factor authentication for the current user
+      tags:
+      - Me
+      parameters:
+      - name: includeRecent
+        in: query
+        required: false
+        description: Should the user include recent app/dashboard info
+        schema:
+          type: string
+        example: true
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from user summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in user summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Updated user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/me'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/multiFactorAuthDisable'
+        description: Object containing multi-factor authentication properties
+      x-losant-auth-scopes:
+      - me.disableTwoFactorAuth
+  /me/disconnectGithub:
+    patch:
+      operationId: me.disconnectGithub
+      summary: Disconnects the user from GitHub
+      tags:
+      - Me
+      parameters:
+      - name: includeRecent
+        in: query
+        required: false
+        description: Should the user include recent app/dashboard info
+        schema:
+          type: string
+        example: true
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from user summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in user summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Updated user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/me'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.disconnectGithub
+  /me/enableTwoFactorAuth:
+    patch:
+      operationId: me.enableTwoFactorAuth
+      summary: Enables multi-factor authentication for the current user
+      tags:
+      - Me
+      parameters:
+      - name: includeRecent
+        in: query
+        required: false
+        description: Should the user include recent app/dashboard info
+        schema:
+          type: string
+        example: true
+      - name: summaryExclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to exclude from user summary
+        schema:
+          type: string
+        example: payloadCount
+      - name: summaryInclude
+        in: query
+        required: false
+        description: Comma-separated list of summary fields to include in user summary
+        schema:
+          type: string
+        example: payloadCount
+      responses:
+        '200':
+          description: Updated user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/me'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/multiFactorAuthEnable'
+        description: Object containing multi-factor authentication properties
+      x-losant-auth-scopes:
+      - me.enableTwoFactorAuth
+  /me/generateTwoFactorAuth:
+    patch:
+      operationId: me.generateTwoFactorAuth
+      summary: Returns the multi-factor authentication key for the current user
+      tags:
+      - Me
+      parameters: []
+      responses:
+        '200':
+          description: Multi-factor authentication info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/multiFactorAuthInfo'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.generateTwoFactorAuth
+  /me/invites:
+    get:
+      operationId: me.invites
+      summary: Retrieves pending organization invitations for a user
+      tags:
+      - Me
+      parameters: []
+      responses:
+        '200':
+          description: Information about invitations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInvitesUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.invites
+  /me/invites/{inviteId}:
+    get:
+      operationId: me.invite
+      summary: Retrieves information for an invitation to an organization
+      tags:
+      - Me
+      parameters:
+      - name: inviteId
+        in: path
+        required: true
+        description: ID associated with the invitation
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Information about invitation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInviteUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if invite not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.invite
+    post:
+      operationId: me.respondToInvite
+      summary: Accepts or rejects an invitation to an organization
+      tags:
+      - Me
+      parameters:
+      - name: inviteId
+        in: path
+        required: true
+        description: ID associated with the invitation
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Acceptance or rejection of invitation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInviteResultUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if invitation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '410':
+          description: Error if invitation has expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgInviteActionUser'
+        description: Response to invitation
+      x-losant-auth-scopes:
+      - me.respondToInvite
+  /me/notebookMinuteCounts:
+    get:
+      operationId: me.notebookMinuteCounts
+      summary: Returns notebook execution usage by day for the time range specified for all…
+      tags:
+      - Me
+      parameters:
+      - name: start
+        in: query
+        required: false
+        description: Start of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for notebook execution query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      responses:
+        '200':
+          description: Notebook usage information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notebookMinuteCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.notebookMinuteCounts
+  /me/payloadCounts:
+    get:
+      operationId: me.payloadCounts
+      summary: Returns payload counts for the time range specified for all applications the…
+      tags:
+      - Me
+      parameters:
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting stats should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      responses:
+        '200':
+          description: Payload counts, by type and source
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadStats'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.payloadCounts
+  /me/payloadCountsBreakdown:
+    get:
+      operationId: me.payloadCountsBreakdown
+      summary: Returns payload counts per resolution in the time range specified for all…
+      tags:
+      - Me
+      parameters:
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: resolution
+        in: query
+        required: false
+        description: Resolution in milliseconds
+        schema:
+          type: string
+          enum:
+          - '86400000'
+          - '3600000'
+          default: 86400000
+        example: 86400000
+      - name: asBytes
+        in: query
+        required: false
+        description: If the resulting stats should be returned as bytes
+        schema:
+          type: string
+          default: false
+        example: true
+      - name: includeNonBillable
+        in: query
+        required: false
+        description: If non-billable payloads should be included in the result
+        schema:
+          type: string
+          default: false
+        example: true
+      responses:
+        '200':
+          description: Sum of payload counts by date
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadCountsBreakdown'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.payloadCountsBreakdown
+  /me/recentItems:
+    post:
+      operationId: me.addRecentItem
+      summary: Adds an item to a recent item list
+      tags:
+      - Me
+      parameters: []
+      responses:
+        '200':
+          description: Updated recent item list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/recentItemList'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/recentItem'
+        description: Object containing recent item info
+      x-losant-auth-scopes:
+      - me.addRecentItem
+    get:
+      operationId: me.fetchRecentItems
+      summary: Gets a recent item list
+      tags:
+      - Me
+      parameters:
+      - name: parentId
+        in: query
+        required: false
+        description: Parent id of the recent list
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: itemType
+        in: query
+        required: true
+        description: Item type to get the recent list of
+        schema:
+          enum:
+          - application
+          - device
+          - flow
+          - dashboard
+          - organization
+        example: application
+      responses:
+        '200':
+          description: Recent item list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/recentItemList'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.fetchRecentItems
+  /me/refreshToken:
+    get:
+      operationId: me.refreshToken
+      summary: Returns a new auth token based on the current auth token
+      tags:
+      - Me
+      parameters: []
+      responses:
+        '200':
+          description: Successful token regeneration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/authedUser'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '401':
+          description: Unauthorized error if authentication fails
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.refreshToken
+  /me/transferResources:
+    patch:
+      operationId: me.transferResources
+      summary: Moves resources to a new owner
+      tags:
+      - Me
+      parameters: []
+      responses:
+        '200':
+          description: If resource transfer was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resourceTransfer'
+        description: Object containing properties of the transfer
+      x-losant-auth-scopes:
+      - me.transferResources
+  /me/verify-email:
+    post:
+      operationId: me.verifyEmail
+      summary: Sends an email verification to the user
+      tags:
+      - Me
+      parameters: []
+      responses:
+        '200':
+          description: If email verification was successfully sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - me.verifyEmail
+components:
+  schemas:
+    mePatch:
+      title: Me Patch
+      description: Schema for the body of request to modify the current user
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        lastName:
+          type: string
+          maxLength: 1024
+        companyName:
+          type: string
+          maxLength: 1024
+        title:
+          type: string
+          maxLength: 1024
+        phoneNumber:
+          type: string
+          maxLength: 1024
+        location:
+          type: string
+          maxLength: 1024
+        url:
+          type: string
+          maxLength: 1024
+        state:
+          type: string
+          maxLength: 1024
+        country:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        password:
+          type: string
+          minLength: 12
+          maxLength: 2048
+          pattern: ^(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.*[0-9])(?=.*[a-z]).{12,}$
+        tokenCutoff:
+          type: string
+          format: date-time
+        currentCredentials:
+          type: object
+          properties:
+            twoFactorCode:
+              type: string
+              maxLength: 2048
+            password:
+              type: string
+              minLength: 8
+              maxLength: 2048
+          required:
+          - password
+          additionalProperties: false
+      additionalProperties: false
+    userCredentials:
+      title: User Credentials
+      description: Schema for the body of a User authentication request
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        password:
+          type: string
+          minLength: 8
+          maxLength: 2048
+        twoFactorCode:
+          type: string
+          maxLength: 2048
+        requestedScopes:
+          type: array
+          uniqueItems: true
+          items:
+            oneOf:
+            - oneOf:
+              - type: string
+                enum:
+                - all.Application
+                - all.Application.bounded
+                - all.Application.read
+                - all.Application.cli
+                - all.Device
+                - all.Device.read
+                - application.*
+                - applicationApiToken.*
+                - applicationApiTokens.*
+                - applicationCertificate.*
+                - applicationCertificates.*
+                - applicationCertificateAuthority.*
+                - applicationCertificateAuthorities.*
+                - applicationDashboards.*
+                - applicationDashboard.*
+                - applicationJobLogs.*
+                - applicationJobLog.*
+                - applicationKey.*
+                - applicationKeys.*
+                - credential.*
+                - credentials.*
+                - data.*
+                - dataTable.*
+                - dataTables.*
+                - dataTableRow.*
+                - dataTableRows.*
+                - device.*
+                - deviceRecipe.*
+                - deviceRecipes.*
+                - devices.*
+                - deviceAttribute.*
+                - deviceAttributes.*
+                - edgeDeployment.*
+                - edgeDeployments.*
+                - embeddedDeployment.*
+                - embeddedDeployments.*
+                - event.*
+                - events.*
+                - experience.*
+                - experienceDomain.*
+                - experienceDomains.*
+                - experienceEndpoint.*
+                - experienceEndpoints.*
+                - experienceGroup.*
+                - experienceGroups.*
+                - experienceSlug.*
+                - experienceSlugs.*
+                - experienceUser.*
+                - experienceUsers.*
+                - experienceVersion.*
+                - experienceVersions.*
+                - experienceView.*
+                - experienceViews.*
+                - integration.*
+                - integrations.*
+                - file.*
+                - files.*
+                - flow.*
+                - flows.*
+                - flowVersion.*
+                - flowVersions.*
+                - notebook.*
+                - notebooks.*
+                - privateFile.*
+                - privateFiles.*
+                - resourceJobs.*
+                - resourceJob.*
+                - webhook.*
+                - webhooks.*
+                - application.applyTemplate
+                - application.archiveData
+                - application.backfillArchiveData
+                - application.clone
+                - application.export
+                - application.import
+                - application.fullEventsArchive
+                - application.fullDataTablesArchive
+                - application.debug
+                - application.delete
+                - application.get
+                - application.mqttPublishMessage
+                - application.mqttSubscriptionStream
+                - application.patch
+                - application.payloadCounts
+                - application.payloadCountsBreakdown
+                - application.deviceCounts
+                - application.notebookMinuteCounts
+                - application.search
+                - application.importLogs
+                - applicationApiToken.delete
+                - applicationApiToken.get
+                - applicationApiToken.patch
+                - applicationApiTokens.get
+                - applicationApiTokens.post
+                - applicationCertificate.delete
+                - applicationCertificate.get
+                - applicationCertificate.patch
+                - applicationCertificates.get
+                - applicationCertificates.post
+                - applicationCertificateAuthority.delete
+                - applicationCertificateAuthority.get
+                - applicationCertificateAuthority.patch
+                - applicationCertificateAuthorities.get
+                - applicationCertificateAuthorities.post
+                - applicationDashboard.get
+                - applicationDashboard.patch
+                - applicationDashboard.sendReport
+                - applicationDashboard.delete
+                - applicationDashboards.get
+                - applicationDashboards.post
+                - applicationJobLogs.get
+                - applicationJobLog.get
+                - applicationKey.delete
+                - applicationKey.get
+                - applicationKey.patch
+                - applicationKeys.get
+                - applicationKeys.post
+                - credential.get
+                - credential.linkedResources
+                - credential.patch
+                - credential.delete
+                - credentials.get
+                - credentials.post
+                - data.export
+                - data.lastValueQuery
+                - data.timeSeriesQuery
+                - dataTable.addColumn
+                - dataTable.delete
+                - dataTable.get
+                - dataTable.patch
+                - dataTable.removeColumn
+                - dataTableRow.delete
+                - dataTableRow.get
+                - dataTableRow.patch
+                - dataTableRows.get
+                - dataTableRows.post
+                - dataTableRows.query
+                - dataTableRows.export
+                - dataTableRows.delete
+                - dataTableRows.truncate
+                - dataTables.get
+                - dataTables.post
+                - device.agentLogs
+                - device.commandStream
+                - device.debug
+                - device.delete
+                - device.export
+                - device.get
+                - device.getCommand
+                - device.getCompositeState
+                - device.getLogEntries
+                - device.getState
+                - device.patch
+                - device.payloadCounts
+                - device.payloadCountsBreakdown
+                - device.removeData
+                - device.sendCommand
+                - device.sendState
+                - device.setConnectionStatus
+                - device.stateStream
+                - deviceRecipe.bulkCreate
+                - deviceRecipe.delete
+                - deviceRecipe.get
+                - deviceRecipe.patch
+                - deviceRecipes.get
+                - deviceRecipes.post
+                - devices.attributeNames
+                - devices.patch
+                - devices.delete
+                - devices.restore
+                - devices.removeData
+                - devices.deviceNames
+                - devices.export
+                - devices.get
+                - devices.getCompositeState
+                - devices.historicalImport
+                - devices.payloadCounts
+                - devices.post
+                - devices.sendCommand
+                - devices.tagKeys
+                - devices.tagValues
+                - deviceAttribute.get
+                - deviceAttribute.patch
+                - deviceAttribute.delete
+                - deviceAttributes.get
+                - deviceAttributes.post
+                - edgeDeployment.get
+                - edgeDeployments.get
+                - edgeDeployments.release
+                - edgeDeployments.remove
+                - edgeDeployments.replace
+                - embeddedDeployment.get
+                - embeddedDeployments.get
+                - embeddedDeployments.release
+                - embeddedDeployments.remove
+                - embeddedDeployments.replace
+                - embeddedDeployments.export
+                - event.delete
+                - event.get
+                - event.patch
+                - events.delete
+                - events.detailedSummary
+                - events.get
+                - events.mostRecentBySeverity
+                - events.patch
+                - events.post
+                - events.export
+                - experience.delete
+                - experience.bootstrap
+                - experienceDomain.delete
+                - experienceDomain.get
+                - experienceDomain.patch
+                - experienceDomains.get
+                - experienceDomains.post
+                - experienceEndpoint.delete
+                - experienceEndpoint.get
+                - experienceEndpoint.linkedResources
+                - experienceEndpoint.patch
+                - experienceEndpoints.get
+                - experienceEndpoints.post
+                - experienceEndpoints.stats
+                - experienceGroup.delete
+                - experienceGroup.get
+                - experienceGroup.patch
+                - experienceGroups.detailedSummary
+                - experienceGroups.get
+                - experienceGroups.post
+                - experienceSlug.delete
+                - experienceSlug.get
+                - experienceSlug.patch
+                - experienceSlugs.get
+                - experienceSlugs.post
+                - experienceUser.delete
+                - experienceUser.get
+                - experienceUser.patch
+                - experienceUsers.detailedSummary
+                - experienceUsers.get
+                - experienceUsers.post
+                - experienceVersion.delete
+                - experienceVersion.get
+                - experienceVersion.patch
+                - experienceVersions.get
+                - experienceVersions.post
+                - experienceView.debug
+                - experienceView.delete
+                - experienceView.get
+                - experienceView.linkedResources
+                - experienceView.patch
+                - experienceViews.debug
+                - experienceViews.detailedSummary
+                - experienceViews.get
+                - experienceViews.post
+                - file.get
+                - file.patch
+                - file.move
+                - file.delete
+                - file.upload
+                - files.get
+                - files.post
+                - flow.clearStorageEntries
+                - flow.debug
+                - flow.delete
+                - flow.errors
+                - flow.get
+                - flow.getStorageEntries
+                - flow.log
+                - flow.patch
+                - flow.pressVirtualButton
+                - flow.setStorageEntry
+                - flow.getStorageEntriesMetadata
+                - flow.stats
+                - flow.suggestFunction
+                - flows.get
+                - flows.getByVersion
+                - flows.import
+                - flows.palette
+                - flows.post
+                - flowVersion.delete
+                - flowVersion.debug
+                - flowVersion.errors
+                - flowVersion.get
+                - flowVersion.log
+                - flowVersion.patch
+                - flowVersion.stats
+                - flowVersions.delete
+                - flowVersions.get
+                - flowVersions.post
+                - integration.delete
+                - integration.get
+                - integration.patch
+                - integrations.get
+                - integrations.post
+                - notebook.delete
+                - notebook.execute
+                - notebook.get
+                - notebook.logs
+                - notebook.notebookMinuteCounts
+                - notebook.patch
+                - notebook.requestInputDataExport
+                - notebook.upload
+                - notebooks.get
+                - notebooks.post
+                - privateFile.get
+                - privateFile.patch
+                - privateFile.move
+                - privateFile.delete
+                - privateFile.upload
+                - privateFiles.get
+                - privateFiles.post
+                - resourceJob.get
+                - resourceJob.logs
+                - resourceJob.patch
+                - resourceJob.delete
+                - resourceJob.execute
+                - resourceJob.cancelExecution
+                - resourceJobs.get
+                - resourceJobs.post
+                - webhook.delete
+                - webhook.get
+                - webhook.patch
+                - webhooks.get
+                - webhooks.post
+              - type: string
+                enum:
+                - all.Organization
+                - all.Organization.bounded
+                - all.Organization.read
+                - only.Organization
+                - only.Organization.bounded
+                - only.Organization.read
+                - applications.*
+                - auditLog.*
+                - auditLogs.*
+                - dashboard.*
+                - dashboards.*
+                - org.*
+                - applications.get
+                - applications.post
+                - applications.import
+                - applications.detailedSummary
+                - applications.periodSummaries
+                - auditLog.get
+                - auditLogs.get
+                - dashboard.patch
+                - dashboard.delete
+                - dashboard.sendReport
+                - dashboard.suggestCode
+                - dashboards.get
+                - dashboards.post
+                - org.get
+                - org.patch
+                - org.delete
+                - org.pendingInvites
+                - org.inviteMember
+                - org.revokeInvite
+                - org.modifyMember
+                - org.removeMember
+                - org.payloadCounts
+                - org.payloadCountsBreakdown
+                - org.deviceCounts
+                - org.notebookMinuteCounts
+                - org.invoices
+                - org.currentCard
+                - org.transferResources
+            - type: string
+              enum:
+              - all.Instance
+              - all.Instance.bounded
+              - all.Instance.read
+              - instance.*
+              - instance.get
+              - instance.patch
+              - instance.historicalSummaries
+              - instance.generateReport
+              - instance.payloadCounts
+              - instance.payloadCountsBreakdown
+              - instance.deviceCounts
+              - instance.notebookMinuteCounts
+              - instance.entitlements
+              - instanceOrg.*
+              - instanceOrg.get
+              - instanceOrg.patch
+              - instanceOrg.delete
+              - instanceOrg.payloadCounts
+              - instanceOrg.payloadCountsBreakdown
+              - instanceOrg.deviceCounts
+              - instanceOrg.notebookMinuteCounts
+              - instanceOrg.entitlement
+              - instanceOrg.entitlementSync
+              - instanceOrg.convertToEnterprise
+              - instanceOrgs.*
+              - instanceOrgs.get
+              - instanceOrgs.post
+              - instanceMember.*
+              - instanceMember.get
+              - instanceMember.patch
+              - instanceMember.delete
+              - instanceMembers.*
+              - instanceMembers.get
+              - instanceMembers.post
+              - instanceOrgMember.*
+              - instanceOrgMember.get
+              - instanceOrgMember.patch
+              - instanceOrgMember.delete
+              - instanceOrgMembers.*
+              - instanceOrgMembers.get
+              - instanceOrgMembers.post
+              - instanceOrgInvite.*
+              - instanceOrgInvite.get
+              - instanceOrgInvite.delete
+              - instanceOrgInvite.resendInvite
+              - instanceOrgInvites.*
+              - instanceOrgInvites.get
+              - instanceOrgInvites.post
+              - instanceApiTokens.*
+              - instanceApiTokens.get
+              - instanceApiTokens.post
+              - instanceApiToken.*
+              - instanceApiToken.get
+              - instanceApiToken.patch
+              - instanceApiToken.delete
+              - instanceCustomNodes.*
+              - instanceCustomNodes.get
+              - instanceCustomNodes.post
+              - instanceCustomNode.*
+              - instanceCustomNode.get
+              - instanceCustomNode.patch
+              - instanceCustomNode.delete
+              - instanceCustomNode.errors
+              - instanceCustomNode.stats
+              - instanceNotificationRules.*
+              - instanceNotificationRules.get
+              - instanceNotificationRules.post
+              - instanceNotificationRule.*
+              - instanceNotificationRule.get
+              - instanceNotificationRule.patch
+              - instanceNotificationRule.delete
+              - instanceNotificationRule.evaluate
+              - instanceNotificationRule.logs
+              - instanceSandbox.*
+              - instanceSandbox.get
+              - instanceSandbox.delete
+              - instanceSandbox.undelete
+              - instanceSandbox.payloadCounts
+              - instanceSandbox.payloadCountsBreakdown
+              - instanceSandbox.deviceCounts
+              - instanceSandbox.notebookMinuteCounts
+              - instanceSandboxes.*
+              - instanceSandboxes.get
+              - instanceAuditLog.*
+              - instanceAuditLog.get
+              - instanceAuditLogs.*
+              - instanceAuditLogs.get
+            - type: string
+              enum:
+              - all.User
+              - all.User.bounded
+              - all.User.read
+              - all.User.cli
+              - only.User
+              - only.User.bounded
+              - only.User.read
+              - userApiToken.*
+              - userApiToken.get
+              - userApiToken.patch
+              - userApiToken.delete
+              - userApiTokens.*
+              - userApiTokens.get
+              - userApiTokens.post
+              - userOauthToken.*
+              - userOauthToken.get
+              - userOauthToken.patch
+              - userOauthToken.delete
+              - userOauthTokens.*
+              - userOauthTokens.get
+              - userOauthTokens.post
+              - userOauthClient.*
+              - userOauthClient.get
+              - userOauthClient.patch
+              - userOauthClient.delete
+              - userOauthClients.*
+              - userOauthClients.get
+              - userOauthClients.post
+              - applicationTemplate.*
+              - applicationTemplate.get
+              - applicationTemplates.*
+              - applicationTemplates.get
+              - applicationTemplates.getCategories
+              - applicationTemplates.getUniqueKeywords
+              - instances.*
+              - instances.get
+              - me.*
+              - me.get
+              - me.patch
+              - me.delete
+              - me.verifyEmail
+              - me.changePassword
+              - me.generateTwoFactorAuth
+              - me.enableTwoFactorAuth
+              - me.disableTwoFactorAuth
+              - me.disconnectGithub
+              - me.connectGithub
+              - me.addRecentItem
+              - me.fetchRecentItems
+              - me.payloadCounts
+              - me.payloadCountsBreakdown
+              - me.deviceCounts
+              - me.notebookMinuteCounts
+              - me.transferResources
+              - me.invite
+              - me.invites
+              - me.respondToInvite
+              - me.refreshToken
+              - me.entitlements
+              - orgs.*
+              - orgs.get
+              - orgs.post
+        tokenTTL:
+          type: integer
+          minimum: 0
+      required:
+      - email
+      - password
+      additionalProperties: false
+    multiFactorAuthInfo:
+      title: Multi-Factor Authentication Info
+      description: Schema for information about multi-factor authentication
+      type: object
+      properties:
+        key:
+          type: string
+          maxLength: 1024
+        keyUri:
+          type: string
+          maxLength: 1024
+      additionalProperties: false
+    recentItem:
+      title: Recent Item
+      description: Schema for the body of a request to add a recent item
+      type: object
+      properties:
+        itemType:
+          type: string
+          enum:
+          - application
+          - device
+          - flow
+          - dashboard
+          - organization
+        parentId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        itemId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      required:
+      - itemType
+      - itemId
+    payloadCountsBreakdown:
+      title: Payload Counts Breakdown
+      description: Schema for the result of a payload counts breakdown request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              value:
+                type: integer
+    multiFactorAuthEnable:
+      title: Enable Multi-Factor Authentication
+      description: Schema for the body of a request to enable multi-factor authentication
+      type: object
+      properties:
+        twoFactorAuthKey:
+          type: string
+          minLength: 52
+          maxLength: 52
+        password:
+          type: string
+          minLength: 8
+          maxLength: 2048
+        twoFactorCode:
+          type: string
+          maxLength: 2048
+      required:
+      - password
+      - twoFactorCode
+      additionalProperties: false
+    orgInvitesUser:
+      title: User Organization Invitations
+      description: Schema for an array of pending organization invitations for a user
+      type: array
+      items:
+        $ref: '#/components/schemas/orgInviteUser'
+    orgInviteUser:
+      title: Organization Invitation Information For User
+      description: Schema for information about an invitation
+      type: object
+      properties:
+        orgName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        role:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        requiresMFA:
+          type: boolean
+        inviteDate:
+          type: string
+          format: date-time
+        ttl:
+          type: number
+        expired:
+          type: boolean
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        invitedBy:
+          type: object
+          properties:
+            fullName:
+              type: string
+            email:
+              type: string
+              format: email
+              maxLength: 1024
+    orgInviteActionUser:
+      title: Organization Invitation Action For User
+      description: Schema for the body of a request to accept or reject an invitation
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - accept
+          - dismiss
+          - reject
+      additionalProperties: false
+      required:
+      - action
+    recentItemList:
+      title: Recent Item List
+      description: Schema for an array of recent items
+      type: object
+      oneOf:
+      - properties:
+          itemType:
+            type: string
+            enum:
+            - device
+          parentId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                deviceClass:
+                  type: string
+                  enum:
+                  - standalone
+                  - gateway
+                  - peripheral
+                  - floating
+                  - edgeCompute
+                  - system
+                  - embedded
+      - properties:
+          itemType:
+            type: string
+            enum:
+            - flow
+          parentId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                flowClass:
+                  type: string
+                  enum:
+                  - cloud
+                  - edge
+                  - embedded
+                  - experience
+                  - customNode
+      - properties:
+          itemType:
+            type: string
+            enum:
+            - application
+          parentId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                ownerId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                ownerType:
+                  type: string
+                  enum:
+                  - user
+                  - organization
+                ownerName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                iconColor:
+                  type: string
+                  maxLength: 64
+      - properties:
+          itemType:
+            type: string
+            enum:
+            - dashboard
+          parentId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                ownerId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                ownerType:
+                  type: string
+                  enum:
+                  - user
+                  - organization
+                ownerName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                iconColor:
+                  type: string
+                  maxLength: 64
+                applicationId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                applicationName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+      - properties:
+          itemType:
+            type: string
+            enum:
+            - organization
+          parentId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                iconColor:
+                  type: string
+                  maxLength: 64
+    orgInviteResultUser:
+      title: Organization Invitation Result For User
+      description: Schema for the result of accepting/rejecting an invitation
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+          - accepted
+          - rejected
+          - dismissed
+        orgId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    multiFactorAuthDisable:
+      title: Disable Multi-Factor Authentication
+      description: Schema for the body of a request to disable multi-factor authentication
+      type: object
+      properties:
+        twoFactorCode:
+          type: string
+          maxLength: 2048
+        password:
+          type: string
+          minLength: 8
+          maxLength: 2048
+      required:
+      - password
+      - twoFactorCode
+      additionalProperties: false
+    changePassword:
+      title: Change Password
+      description: Schema for the body of a request to change the current user's password
+      type: object
+      properties:
+        twoFactorCode:
+          type: string
+          maxLength: 2048
+        password:
+          type: string
+          minLength: 8
+          maxLength: 2048
+        newPassword:
+          type: string
+          minLength: 12
+          maxLength: 2048
+          pattern: ^(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.*[0-9])(?=.*[a-z]).{12,}$
+        invalidateExistingTokens:
+          type: boolean
+        tokenTTL:
+          type: integer
+          minimum: 0
+      required:
+      - password
+      - newPassword
+      additionalProperties: false
+    authedUser:
+      title: Authenticated User
+      description: Schema for the successful response when authenticating a User
+      type: object
+      properties:
+        userId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        token:
+          type: string
+          minLength: 1
+        needsToVerifyEmail:
+          type: boolean
+        orgId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+      required:
+      - userId
+      - token
+    payloadStats:
+      title: Payload Stats
+      description: Schema for the result of a payload stats request
+      type: object
+      properties:
+        appFile:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        dataTable:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCreate:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceCommand:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceConnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceDisconnect:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        deviceState:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        endpoint:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        event:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        flowError:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        inboundEmail:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        integration:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttIn:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        mqttOut:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        notebook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        resourceJob:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        timer:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        virtualButton:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+        webhook:
+          type: object
+          patternProperties:
+            .*:
+              type: number
+    deviceCounts:
+      title: Device Counts
+      description: Schema for the result of a device counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              created:
+                type: integer
+              deleted:
+                type: integer
+              total:
+                type: integer
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    me:
+      title: Me
+      description: Schema for information about the currently authenticated user
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        userId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        passwordLastUpdated:
+          type: string
+          format: date-time
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        requestedEmail:
+          type: string
+          format: email
+          maxLength: 1024
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        lastName:
+          type: string
+          maxLength: 1024
+        companyName:
+          type: string
+          maxLength: 1024
+        title:
+          type: string
+          maxLength: 1024
+        phoneNumber:
+          type: string
+          maxLength: 1024
+        location:
+          type: string
+          maxLength: 1024
+        url:
+          type: string
+          maxLength: 1024
+        state:
+          type: string
+          maxLength: 1024
+        country:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        tokenCutoff:
+          type: string
+          format: date-time
+        emailVerified:
+          type: boolean
+        needsToVerifyEmail:
+          type: boolean
+        twoFactorAuthEnabled:
+          type: boolean
+        fullName:
+          type: string
+        githubName:
+          type: string
+        avatarUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        limits:
+          type: object
+          properties:
+            apitoken:
+              type: integer
+            application:
+              type: integer
+            applicationcertificate:
+              type: integer
+            applicationcertificateauthority:
+              type: integer
+            applicationkey:
+              type: integer
+            credential:
+              type: integer
+            dashboard:
+              type: integer
+            datatable:
+              type: integer
+            device:
+              type: integer
+            devicerecipe:
+              type: integer
+            experiencedomain:
+              type: integer
+            experienceendpoint:
+              type: integer
+            experiencegroup:
+              type: integer
+            experienceslug:
+              type: integer
+            experienceuser:
+              type: integer
+            experienceversion:
+              type: integer
+            experienceview:
+              type: integer
+            file:
+              type: integer
+            flow:
+              type: integer
+            integration:
+              type: integer
+            notebook:
+              type: integer
+            oauthclient:
+              type: integer
+            privatefile:
+              type: integer
+            resourcejob:
+              type: integer
+            webhook:
+              type: integer
+            dataTTL:
+              type: integer
+            payload:
+              type: integer
+            storage:
+              type: integer
+            notebookMinutesPerRun:
+              type: integer
+            notebookMinutesPerMonth:
+              type: integer
+            notebookInParallel:
+              type: integer
+            experienceFlowSlots:
+              type: integer
+            applicationFlowSlots:
+              type: integer
+            systemInterval:
+              type: integer
+          additionalProperties: false
+        recentDashboards:
+          title: Recent Item List
+          description: Schema for an array of recent items
+          type: object
+          oneOf:
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - device
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    deviceClass:
+                      type: string
+                      enum:
+                      - standalone
+                      - gateway
+                      - peripheral
+                      - floating
+                      - edgeCompute
+                      - system
+                      - embedded
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - flow
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    flowClass:
+                      type: string
+                      enum:
+                      - cloud
+                      - edge
+                      - embedded
+                      - experience
+                      - customNode
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - application
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    ownerId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    ownerType:
+                      type: string
+                      enum:
+                      - user
+                      - organization
+                    ownerName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    iconColor:
+                      type: string
+                      maxLength: 64
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - dashboard
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    ownerId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    ownerType:
+                      type: string
+                      enum:
+                      - user
+                      - organization
+                    ownerName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    iconColor:
+                      type: string
+                      maxLength: 64
+                    applicationId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    applicationName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - organization
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    iconColor:
+                      type: string
+                      maxLength: 64
+        recentApplications:
+          title: Recent Item List
+          description: Schema for an array of recent items
+          type: object
+          oneOf:
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - device
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    deviceClass:
+                      type: string
+                      enum:
+                      - standalone
+                      - gateway
+                      - peripheral
+                      - floating
+                      - edgeCompute
+                      - system
+                      - embedded
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - flow
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    flowClass:
+                      type: string
+                      enum:
+                      - cloud
+                      - edge
+                      - embedded
+                      - experience
+                      - customNode
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - application
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    ownerId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    ownerType:
+                      type: string
+                      enum:
+                      - user
+                      - organization
+                    ownerName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    iconColor:
+                      type: string
+                      maxLength: 64
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - dashboard
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    ownerId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    ownerType:
+                      type: string
+                      enum:
+                      - user
+                      - organization
+                    ownerName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    iconColor:
+                      type: string
+                      maxLength: 64
+                    applicationId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    applicationName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - organization
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    iconColor:
+                      type: string
+                      maxLength: 64
+        recentOrganizations:
+          title: Recent Item List
+          description: Schema for an array of recent items
+          type: object
+          oneOf:
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - device
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    deviceClass:
+                      type: string
+                      enum:
+                      - standalone
+                      - gateway
+                      - peripheral
+                      - floating
+                      - edgeCompute
+                      - system
+                      - embedded
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - flow
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    flowClass:
+                      type: string
+                      enum:
+                      - cloud
+                      - edge
+                      - embedded
+                      - experience
+                      - customNode
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - application
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    ownerId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    ownerType:
+                      type: string
+                      enum:
+                      - user
+                      - organization
+                    ownerName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    iconColor:
+                      type: string
+                      maxLength: 64
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - dashboard
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    ownerId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    ownerType:
+                      type: string
+                      enum:
+                      - user
+                      - organization
+                    ownerName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    iconColor:
+                      type: string
+                      maxLength: 64
+                    applicationId:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    applicationName:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+          - properties:
+              itemType:
+                type: string
+                enum:
+                - organization
+              parentId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      pattern: ^[A-Fa-f\d]{24}$
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                    iconColor:
+                      type: string
+                      maxLength: 64
+        summary:
+          type: object
+          properties:
+            apiTokenCount:
+              type: integer
+            appCount:
+              type: integer
+            certificateCount:
+              type: integer
+            certificateAuthorityCount:
+              type: integer
+            credentialCount:
+              type: integer
+            dashCount:
+              type: integer
+            dataTableCount:
+              type: integer
+            deviceCount:
+              type: integer
+            deviceRecipeCount:
+              type: integer
+            eventCount:
+              type: integer
+            experienceDomainCount:
+              type: integer
+            experienceEndpointCount:
+              type: integer
+            experienceGroupCount:
+              type: integer
+            experienceSlugCount:
+              type: integer
+            experienceUserCount:
+              type: integer
+            experienceVersionCount:
+              type: integer
+            experienceViewCount:
+              type: integer
+            fileCount:
+              type: integer
+            flowCount:
+              type: integer
+            integrationCount:
+              type: integer
+            keyCount:
+              type: integer
+            notebookCount:
+              type: integer
+            oauthClientCount:
+              type: integer
+            resourceJobCount:
+              type: integer
+            privateFileCount:
+              type: integer
+            webhookCount:
+              type: integer
+            orgCount:
+              type: integer
+            instanceCount:
+              type: integer
+            payloadCount:
+              title: Payload Stats
+              description: Schema for the result of a payload stats request
+              type: object
+              properties:
+                appFile:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                dataTable:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceCreate:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceCommand:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceConnect:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceDisconnect:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                deviceState:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                endpoint:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                event:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                flowError:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                inboundEmail:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                integration:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                mqttIn:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                mqttOut:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                notebook:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                resourceJob:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                timer:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                virtualButton:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+                webhook:
+                  type: object
+                  patternProperties:
+                    .*:
+                      type: number
+            storageStats:
+              type: object
+              properties:
+                count:
+                  type: integer
+                size:
+                  type: integer
+            notebookStats:
+              type: object
+              properties:
+                awaitingCompletion:
+                  type: integer
+                minutesThisPeriod:
+                  type: number
+                runsThisPeriod:
+                  type: integer
+        currentPeriodStart:
+          type: string
+          format: date-time
+        currentPeriodEnd:
+          type: string
+          format: date-time
+        ssoLinked:
+          type: boolean
+    resourceTransfer:
+      title: Resource Transfer
+      description: Schema for the body of a resource transfer request
+      type: object
+      properties:
+        destinationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        destinationType:
+          type: string
+          enum:
+          - user
+          - organization
+        applicationIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        dashboardIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        strict:
+          type: boolean
+      additionalProperties: false
+      required:
+      - destinationId
+      - destinationType
+    notebookMinuteCounts:
+      title: Notebook Minute Counts
+      description: Schema for the result of a notebook minute counts request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              minutes:
+                type: number
+              completed:
+                type: integer
+              canceled:
+                type: integer
+              errored:
+                type: integer
+              timeout:
+                type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

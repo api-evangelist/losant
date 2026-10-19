@@ -1,0 +1,183 @@
+openapi: 3.2.0
+info:
+  title: Platform Org Invites API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Org Invites
+paths:
+  /invites:
+    get:
+      operationId: orgInvites.get
+      summary: orgInvites get
+      tags:
+      - Org Invites
+      parameters:
+      - name: token
+        in: query
+        required: true
+        description: The token associated with the invite
+        schema:
+          type: string
+        example: aTokenString
+      - name: email
+        in: query
+        required: true
+        description: The email associated with the invite
+        schema:
+          type: string
+        example: example@example.com
+      responses:
+        '200':
+          description: Information about invite
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInviteInfo'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if invite not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '410':
+          description: Error if invite has expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      description: Gets information about an invite
+    post:
+      operationId: orgInvites.post
+      summary: orgInvites post
+      tags:
+      - Org Invites
+      parameters: []
+      responses:
+        '200':
+          description: Acceptance/Rejection of invite
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orgInviteResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if invite not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '410':
+          description: Error if invite has expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      description: Accepts/Rejects an invite
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orgInviteAction'
+        description: Invite info and acceptance
+components:
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    orgInviteAction:
+      title: Organization Invitation Action
+      description: Schema for the body of a request to accept or reject an invitation
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        token:
+          type: string
+          minLength: 1
+        accept:
+          type: boolean
+      additionalProperties: false
+      required:
+      - email
+      - token
+      - accept
+    orgInviteInfo:
+      title: Organization Invitation Information
+      description: Schema for information about an invitation
+      type: object
+      properties:
+        orgName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        role:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        inviteDate:
+          type: string
+          format: date-time
+        ttl:
+          type: number
+        disallowTransfer:
+          type: boolean
+    orgInviteResult:
+      title: Organization Invitation Result
+      description: Schema for the result of accepting/rejecting an invitation
+      type: object
+      properties:
+        accepted:
+          type: boolean
+        orgId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

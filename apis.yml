@@ -87,318 +87,434 @@ kind: contract
 access: 3rd-Party
 x-type: company
 apis:
-- aid: losant:losant-authentication-and-account-api
-  name: Losant Authentication and Account API
-  description: Authentication and Account resources on the Losant Platform.
-  humanURL: https://docs.losant.com/rest-api/auth/
-  baseURL: https://api.losant.com
+- aid: losant:losant-application-api-tokens-api
+  name: Losant Application Api Tokens API
+  description: The Application Api Tokens API from Losant — 2 operation(s) for application api tokens.
   tags:
-  - Authentication and Account
+  - Application Api Tokens
   properties:
   - type: OpenAPI
-    url: openapi/losant-authentication-and-account-api-openapi.yml
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/auth/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/me/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/org/
-  - type: Documentation
-    url: https://docs.losant.com/data-tables/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table-rows/
-  - type: JSONSchema
-    url: json-schema/losant-data-table-schema.json
-  - type: JSONStructure
-    url: json-structure/losant-data-structure.json
-  - type: Documentation
-    url: https://docs.losant.com/workflows/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flows/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow-version/
-  - type: Documentation
-    url: https://docs.losant.com/edge-compute/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/edge-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/embedded-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/notebooks/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/notebook/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-org/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-custom-node/
-- aid: losant:losant-data-and-data-tables-api
-  name: Losant Data and Data Tables API
-  description: Data and Data Tables resources on the Losant Platform.
-  humanURL: https://docs.losant.com/rest-api/auth/
-  baseURL: https://api.losant.com
+    url: openapi/losant-application-api-tokens-api-openapi.yml
+- aid: losant:losant-application-certificate-authorities-api
+  name: Losant Application Certificate Authorities API
+  description: >-
+    The Application Certificate Authorities API from Losant — 2 operation(s) for application certificate
+    authorities.
   tags:
-  - Data and Data Tables
+  - Application Certificate Authorities
   properties:
   - type: OpenAPI
-    url: openapi/losant-data-and-data-tables-api-openapi.yml
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/auth/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/me/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/org/
-  - type: Documentation
-    url: https://docs.losant.com/data-tables/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table-rows/
-  - type: JSONSchema
-    url: json-schema/losant-data-table-schema.json
-  - type: JSONStructure
-    url: json-structure/losant-data-structure.json
-  - type: Documentation
-    url: https://docs.losant.com/workflows/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flows/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow-version/
-  - type: Documentation
-    url: https://docs.losant.com/edge-compute/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/edge-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/embedded-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/notebooks/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/notebook/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-org/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-custom-node/
-- aid: losant:losant-edge-and-embedded-compute-api
-  name: Losant Edge and Embedded Compute API
-  description: Edge and Embedded Compute resources on the Losant Platform.
-  humanURL: https://docs.losant.com/rest-api/auth/
-  baseURL: https://api.losant.com
+    url: openapi/losant-application-certificate-authorities-api-openapi.yml
+- aid: losant:losant-application-certificates-api
+  name: Losant Application Certificates API
+  description: >-
+    The Application Certificates API from Losant — 2 operation(s) for application certificates.
   tags:
-  - Edge and Embedded Compute
+  - Application Certificates
   properties:
   - type: OpenAPI
-    url: openapi/losant-edge-and-embedded-compute-api-openapi.yml
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/auth/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/me/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/org/
-  - type: Documentation
-    url: https://docs.losant.com/data-tables/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table-rows/
-  - type: JSONSchema
-    url: json-schema/losant-data-table-schema.json
-  - type: JSONStructure
-    url: json-structure/losant-data-structure.json
-  - type: Documentation
-    url: https://docs.losant.com/workflows/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flows/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow-version/
-  - type: Documentation
-    url: https://docs.losant.com/edge-compute/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/edge-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/embedded-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/notebooks/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/notebook/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-org/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-custom-node/
-- aid: losant:losant-enterprise-instance-api
-  name: Losant Enterprise Instance API
-  description: Enterprise Instance resources on the Losant Platform.
-  humanURL: https://docs.losant.com/rest-api/auth/
-  baseURL: https://api.losant.com
+    url: openapi/losant-application-certificates-api-openapi.yml
+- aid: losant:losant-application-dashboards-api
+  name: Losant Application Dashboards API
+  description: The Application Dashboards API from Losant — 2 operation(s) for application dashboards.
   tags:
-  - Enterprise Instance
+  - Application Dashboards
   properties:
   - type: OpenAPI
-    url: openapi/losant-enterprise-instance-api-openapi.yml
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/auth/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/me/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/org/
-  - type: Documentation
-    url: https://docs.losant.com/data-tables/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table-rows/
-  - type: JSONSchema
-    url: json-schema/losant-data-table-schema.json
-  - type: JSONStructure
-    url: json-structure/losant-data-structure.json
-  - type: Documentation
-    url: https://docs.losant.com/workflows/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flows/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow-version/
-  - type: Documentation
-    url: https://docs.losant.com/edge-compute/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/edge-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/embedded-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/notebooks/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/notebook/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-org/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-custom-node/
+    url: openapi/losant-application-dashboards-api-openapi.yml
+- aid: losant:losant-application-job-logs-api
+  name: Losant Application Job Logs API
+  description: The Application Job Logs API from Losant — 2 operation(s) for application job logs.
+  tags:
+  - Application Job Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-application-job-logs-api-openapi.yml
+- aid: losant:losant-application-keys-api
+  name: Losant Application Keys API
+  description: The Application Keys API from Losant — 2 operation(s) for application keys.
+  tags:
+  - Application Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-application-keys-api-openapi.yml
+- aid: losant:losant-application-templates-api
+  name: Losant Application Templates API
+  description: The Application Templates API from Losant — 4 operation(s) for application templates.
+  tags:
+  - Application Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-application-templates-api-openapi.yml
+- aid: losant:losant-applications-api
+  name: Losant Applications API
+  description: The Applications API from Losant — 22 operation(s) for applications.
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-applications-api-openapi.yml
+- aid: losant:losant-audit-logs-api
+  name: Losant Audit Logs API
+  description: The Audit Logs API from Losant — 2 operation(s) for audit logs.
+  tags:
+  - Audit Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-audit-logs-api-openapi.yml
+- aid: losant:losant-auth-api
+  name: Losant Auth API
+  description: The Auth API from Losant — 5 operation(s) for auth.
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-auth-api-openapi.yml
+- aid: losant:losant-credentials-api
+  name: Losant Credentials API
+  description: The Credentials API from Losant — 3 operation(s) for credentials.
+  tags:
+  - Credentials
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-credentials-api-openapi.yml
+- aid: losant:losant-dashboards-api
+  name: Losant Dashboards API
+  description: The Dashboards API from Losant — 3 operation(s) for dashboards.
+  tags:
+  - Dashboards
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-dashboards-api-openapi.yml
+- aid: losant:losant-data-api
+  name: Losant Data API
+  description: The Data API from Losant — 3 operation(s) for data.
+  tags:
+  - Data
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-data-api-openapi.yml
+- aid: losant:losant-data-table-rows-api
+  name: Losant Data Table Rows API
+  description: The Data Table Rows API from Losant — 6 operation(s) for data table rows.
+  tags:
+  - Data Table Rows
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-data-table-rows-api-openapi.yml
+- aid: losant:losant-data-tables-api
+  name: Losant Data Tables API
+  description: The Data Tables API from Losant — 3 operation(s) for data tables.
+  tags:
+  - Data Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-data-tables-api-openapi.yml
+- aid: losant:losant-device-attributes-api
+  name: Losant Device Attributes API
+  description: The Device Attributes API from Losant — 2 operation(s) for device attributes.
+  tags:
+  - Device Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-device-attributes-api-openapi.yml
+- aid: losant:losant-device-recipes-api
+  name: Losant Device Recipes API
+  description: The Device Recipes API from Losant — 3 operation(s) for device recipes.
+  tags:
+  - Device Recipes
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-device-recipes-api-openapi.yml
+- aid: losant:losant-devices-api
+  name: Losant Devices API
+  description: The Devices API from Losant — 24 operation(s) for devices.
+  tags:
+  - Devices
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-devices-api-openapi.yml
+- aid: losant:losant-edge-deployments-api
+  name: Losant Edge Deployments API
+  description: The Edge Deployments API from Losant — 5 operation(s) for edge deployments.
+  tags:
+  - Edge Deployments
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-edge-deployments-api-openapi.yml
+- aid: losant:losant-embedded-deployments-api
+  name: Losant Embedded Deployments API
+  description: The Embedded Deployments API from Losant — 6 operation(s) for embedded deployments.
+  tags:
+  - Embedded Deployments
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-embedded-deployments-api-openapi.yml
+- aid: losant:losant-events-api
+  name: Losant Events API
+  description: The Events API from Losant — 5 operation(s) for events.
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-events-api-openapi.yml
+- aid: losant:losant-experience-domains-api
+  name: Losant Experience Domains API
+  description: The Experience Domains API from Losant — 2 operation(s) for experience domains.
+  tags:
+  - Experience Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-experience-domains-api-openapi.yml
+- aid: losant:losant-experience-endpoints-api
+  name: Losant Experience Endpoints API
+  description: The Experience Endpoints API from Losant — 4 operation(s) for experience endpoints.
+  tags:
+  - Experience Endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-experience-endpoints-api-openapi.yml
+- aid: losant:losant-experience-groups-api
+  name: Losant Experience Groups API
+  description: The Experience Groups API from Losant — 2 operation(s) for experience groups.
+  tags:
+  - Experience Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-experience-groups-api-openapi.yml
+- aid: losant:losant-experience-slugs-api
+  name: Losant Experience Slugs API
+  description: The Experience Slugs API from Losant — 2 operation(s) for experience slugs.
+  tags:
+  - Experience Slugs
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-experience-slugs-api-openapi.yml
+- aid: losant:losant-experience-users-api
+  name: Losant Experience Users API
+  description: The Experience Users API from Losant — 2 operation(s) for experience users.
+  tags:
+  - Experience Users
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-experience-users-api-openapi.yml
+- aid: losant:losant-experience-versions-api
+  name: Losant Experience Versions API
+  description: The Experience Versions API from Losant — 2 operation(s) for experience versions.
+  tags:
+  - Experience Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-experience-versions-api-openapi.yml
+- aid: losant:losant-experience-views-api
+  name: Losant Experience Views API
+  description: The Experience Views API from Losant — 3 operation(s) for experience views.
+  tags:
+  - Experience Views
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-experience-views-api-openapi.yml
+- aid: losant:losant-experiences-api
+  name: Losant Experiences API
+  description: The Experiences API from Losant — 2 operation(s) for experiences.
+  tags:
+  - Experiences
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-experiences-api-openapi.yml
+- aid: losant:losant-files-api
+  name: Losant Files API
+  description: The Files API from Losant — 4 operation(s) for files.
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-files-api-openapi.yml
+- aid: losant:losant-flow-versions-api
+  name: Losant Flow Versions API
+  description: The Flow Versions API from Losant — 6 operation(s) for flow versions.
+  tags:
+  - Flow Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-flow-versions-api-openapi.yml
+- aid: losant:losant-flows-api
+  name: Losant Flows API
+  description: The Flows API from Losant — 11 operation(s) for flows.
+  tags:
+  - Flows
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-flows-api-openapi.yml
+- aid: losant:losant-instance-api-tokens-api
+  name: Losant Instance Api Tokens API
+  description: The Instance Api Tokens API from Losant — 2 operation(s) for instance api tokens.
+  tags:
+  - Instance Api Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-instance-api-tokens-api-openapi.yml
+- aid: losant:losant-instance-audit-logs-api
+  name: Losant Instance Audit Logs API
+  description: The Instance Audit Logs API from Losant — 2 operation(s) for instance audit logs.
+  tags:
+  - Instance Audit Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-instance-audit-logs-api-openapi.yml
+- aid: losant:losant-instance-custom-nodes-api
+  name: Losant Instance Custom Nodes API
+  description: The Instance Custom Nodes API from Losant — 4 operation(s) for instance custom nodes.
+  tags:
+  - Instance Custom Nodes
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-instance-custom-nodes-api-openapi.yml
+- aid: losant:losant-instance-members-api
+  name: Losant Instance Members API
+  description: The Instance Members API from Losant — 2 operation(s) for instance members.
+  tags:
+  - Instance Members
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-instance-members-api-openapi.yml
+- aid: losant:losant-instance-notification-rules-api
+  name: Losant Instance Notification Rules API
+  description: >-
+    The Instance Notification Rules API from Losant — 4 operation(s) for instance notification rules.
+  tags:
+  - Instance Notification Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-instance-notification-rules-api-openapi.yml
+- aid: losant:losant-instance-org-invites-api
+  name: Losant Instance Org Invites API
+  description: The Instance Org Invites API from Losant — 2 operation(s) for instance org invites.
+  tags:
+  - Instance Org Invites
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-instance-org-invites-api-openapi.yml
+- aid: losant:losant-instance-org-members-api
+  name: Losant Instance Org Members API
+  description: The Instance Org Members API from Losant — 2 operation(s) for instance org members.
+  tags:
+  - Instance Org Members
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-instance-org-members-api-openapi.yml
+- aid: losant:losant-instance-orgs-api
+  name: Losant Instance Orgs API
+  description: The Instance Orgs API from Losant — 6 operation(s) for instance orgs.
+  tags:
+  - Instance Orgs
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-instance-orgs-api-openapi.yml
+- aid: losant:losant-instance-sandboxes-api
+  name: Losant Instance Sandboxes API
+  description: The Instance Sandboxes API from Losant — 7 operation(s) for instance sandboxes.
+  tags:
+  - Instance Sandboxes
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-instance-sandboxes-api-openapi.yml
+- aid: losant:losant-instances-api
+  name: Losant Instances API
+  description: The Instances API from Losant — 8 operation(s) for instances.
+  tags:
+  - Instances
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-instances-api-openapi.yml
+- aid: losant:losant-integrations-api
+  name: Losant Integrations API
+  description: The Integrations API from Losant — 2 operation(s) for integrations.
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-integrations-api-openapi.yml
+- aid: losant:losant-me-api
+  name: Losant Me API
+  description: The Me API from Losant — 17 operation(s) for me.
+  tags:
+  - Me
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-me-api-openapi.yml
 - aid: losant:losant-notebooks-api
   name: Losant Notebooks API
-  description: Notebooks resources on the Losant Platform.
-  humanURL: https://docs.losant.com/rest-api/auth/
-  baseURL: https://api.losant.com
+  description: The Notebooks API from Losant — 8 operation(s) for notebooks.
   tags:
   - Notebooks
   properties:
   - type: OpenAPI
     url: openapi/losant-notebooks-api-openapi.yml
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/auth/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/me/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/org/
-  - type: Documentation
-    url: https://docs.losant.com/data-tables/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table-rows/
-  - type: JSONSchema
-    url: json-schema/losant-data-table-schema.json
-  - type: JSONStructure
-    url: json-structure/losant-data-structure.json
-  - type: Documentation
-    url: https://docs.losant.com/workflows/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flows/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow-version/
-  - type: Documentation
-    url: https://docs.losant.com/edge-compute/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/edge-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/embedded-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/notebooks/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/notebook/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-org/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-custom-node/
-- aid: losant:losant-workflow-engine-api
-  name: Losant Workflow Engine API
-  description: Workflow Engine resources on the Losant Platform.
-  humanURL: https://docs.losant.com/rest-api/auth/
-  baseURL: https://api.losant.com
+- aid: losant:losant-org-invites-api
+  name: Losant Org Invites API
+  description: The Org Invites API from Losant — 1 operation(s) for org invites.
   tags:
-  - Workflow Engine
+  - Org Invites
   properties:
   - type: OpenAPI
-    url: openapi/losant-workflow-engine-api-openapi.yml
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/auth/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/me/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/org/
-  - type: Documentation
-    url: https://docs.losant.com/data-tables/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/data-table-rows/
-  - type: JSONSchema
-    url: json-schema/losant-data-table-schema.json
-  - type: JSONStructure
-    url: json-structure/losant-data-structure.json
-  - type: Documentation
-    url: https://docs.losant.com/workflows/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flows/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/flow-version/
-  - type: Documentation
-    url: https://docs.losant.com/edge-compute/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/edge-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/embedded-deployment/
-  - type: Documentation
-    url: https://docs.losant.com/notebooks/overview/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/notebook/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-org/
-  - type: Documentation
-    url: https://docs.losant.com/rest-api/instance-custom-node/
+    url: openapi/losant-org-invites-api-openapi.yml
+- aid: losant:losant-orgs-api
+  name: Losant Orgs API
+  description: The Orgs API from Losant — 9 operation(s) for orgs.
+  tags:
+  - Orgs
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-orgs-api-openapi.yml
+- aid: losant:losant-private-files-api
+  name: Losant Private Files API
+  description: The Private Files API from Losant — 4 operation(s) for private files.
+  tags:
+  - Private Files
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-private-files-api-openapi.yml
+- aid: losant:losant-resource-jobs-api
+  name: Losant Resource Jobs API
+  description: The Resource Jobs API from Losant — 5 operation(s) for resource jobs.
+  tags:
+  - Resource Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-resource-jobs-api-openapi.yml
+- aid: losant:losant-user-api-tokens-api
+  name: Losant User Api Tokens API
+  description: The User Api Tokens API from Losant — 2 operation(s) for user api tokens.
+  tags:
+  - User Api Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-user-api-tokens-api-openapi.yml
+- aid: losant:losant-user-oauth-clients-api
+  name: Losant User Oauth Clients API
+  description: The User Oauth Clients API from Losant — 2 operation(s) for user oauth clients.
+  tags:
+  - User Oauth Clients
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-user-oauth-clients-api-openapi.yml
+- aid: losant:losant-user-oauth-tokens-api
+  name: Losant User Oauth Tokens API
+  description: The User Oauth Tokens API from Losant — 2 operation(s) for user oauth tokens.
+  tags:
+  - User Oauth Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-user-oauth-tokens-api-openapi.yml
+- aid: losant:losant-webhooks-api
+  name: Losant Webhooks API
+  description: The Webhooks API from Losant — 2 operation(s) for webhooks.
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/losant-webhooks-api-openapi.yml
 common:
   - type: CapabilityMap
     url: capabilities/losant-capability-edges.yml

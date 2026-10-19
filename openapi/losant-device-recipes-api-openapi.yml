@@ -1,0 +1,1129 @@
+openapi: 3.2.0
+info:
+  title: Platform Device Recipes API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Device Recipes
+paths:
+  /applications/{applicationId}/device-recipes:
+    get:
+      operationId: deviceRecipes.get
+      summary: Returns the device recipes for an application
+      tags:
+      - Device Recipes
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+        example: name
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my * recipe
+      - name: tagsAsObject
+        in: query
+        required: false
+        description: Return tags as an object map instead of an array
+        schema:
+          type: string
+        example: false
+      - name: attributesAsObject
+        in: query
+        required: false
+        description: Return attributes as an object map instead of an array
+        schema:
+          type: string
+        example: true
+      responses:
+        '200':
+          description: Collection of device recipes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceRecipes'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - deviceRecipes.get
+    post:
+      operationId: deviceRecipes.post
+      summary: Create a new device recipe for an application
+      tags:
+      - Device Recipes
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: tagsAsObject
+        in: query
+        required: false
+        description: Return tags as an object map instead of an array
+        schema:
+          type: string
+        example: false
+      - name: attributesAsObject
+        in: query
+        required: false
+        description: Return attributes as an object map instead of an array
+        schema:
+          type: string
+        example: true
+      responses:
+        '201':
+          description: Successfully created device recipe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceRecipe'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deviceRecipePost'
+        description: New device recipe information
+      x-losant-auth-scopes:
+      - deviceRecipes.post
+  /applications/{applicationId}/device-recipes/{deviceRecipeId}:
+    get:
+      operationId: deviceRecipe.get
+      summary: Retrieves information on a device recipe
+      tags:
+      - Device Recipes
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceRecipeId
+        in: path
+        required: true
+        description: ID associated with the device recipe
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecec57ae143cd83dc4a9f
+      - name: tagsAsObject
+        in: query
+        required: false
+        description: Return tags as an object map instead of an array
+        schema:
+          type: string
+        example: true
+      - name: attributesAsObject
+        in: query
+        required: false
+        description: Return attributes as an object map instead of an array
+        schema:
+          type: string
+        example: true
+      responses:
+        '200':
+          description: Device recipe information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceRecipe'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device recipe was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - deviceRecipe.get
+    patch:
+      operationId: deviceRecipe.patch
+      summary: Updates information about a device recipe
+      tags:
+      - Device Recipes
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceRecipeId
+        in: path
+        required: true
+        description: ID associated with the device recipe
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecec57ae143cd83dc4a9f
+      - name: tagsAsObject
+        in: query
+        required: false
+        description: Return tags as an object map instead of an array
+        schema:
+          type: string
+        example: false
+      - name: attributesAsObject
+        in: query
+        required: false
+        description: Return attributes as an object map instead of an array
+        schema:
+          type: string
+        example: false
+      responses:
+        '200':
+          description: Updated device recipe information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceRecipe'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device recipe was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deviceRecipePatch'
+        description: Object containing new properties of the device recipe
+      x-losant-auth-scopes:
+      - deviceRecipe.patch
+    delete:
+      operationId: deviceRecipe.delete
+      summary: Deletes a device recipe
+      tags:
+      - Device Recipes
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceRecipeId
+        in: path
+        required: true
+        description: ID associated with the device recipe
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecec57ae143cd83dc4a9f
+      responses:
+        '200':
+          description: If device recipe was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device recipe was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - deviceRecipe.delete
+  /applications/{applicationId}/device-recipes/{deviceRecipeId}/bulkCreate:
+    post:
+      operationId: deviceRecipe.bulkCreate
+      summary: Bulk creates devices using this recipe from a CSV
+      tags:
+      - Device Recipes
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceRecipeId
+        in: path
+        required: true
+        description: ID associated with the device recipe
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecec57ae143cd83dc4a9f
+      responses:
+        '201':
+          description: If devices were successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceRecipeBulkCreate'
+        '202':
+          description: If devices were enqueued to be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device recipe was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deviceRecipeBulkCreatePost'
+        description: Object containing bulk creation info
+      x-losant-auth-scopes:
+      - deviceRecipe.bulkCreate
+components:
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 24
+        success:
+          type: boolean
+          enum:
+          - true
+    deviceRecipes:
+      title: Device Recipes
+      description: Schema for a collection of Device Recipes
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/deviceRecipe'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+    deviceRecipePost:
+      title: Device Recipe Post
+      description: Schema for the body of a Device Recipe creation request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        deviceName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        deviceDescription:
+          type: string
+          maxLength: 32767
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            required:
+            - key
+            - value
+            additionalProperties: false
+          maxItems: 100
+        attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              dataType:
+                type: string
+                enum:
+                - string
+                - number
+                - gps
+                - boolean
+                - blob
+              contentType:
+                type: string
+                maxLength: 64
+              description:
+                type: string
+                maxLength: 32767
+              attributeTags:
+                type: object
+                patternProperties:
+                  ^[0-9a-zA-Z_-]{1,255}$:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                additionalProperties: false
+              system:
+                type: object
+                properties:
+                  aggregation:
+                    type: string
+                    enum:
+                    - FIRST
+                    - LAST
+                    - COUNT
+                    - MAX
+                    - MIN
+                    - MEDIAN
+                    - MEAN
+                    - SUM
+                    - STD_DEV
+                  aggregationOptions:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                    maxItems: 0
+                  childAttributes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        mode:
+                          type: string
+                          enum:
+                          - all
+                          - whitelist
+                          - blacklist
+                        deviceIds:
+                          type: array
+                          items:
+                            type: string
+                            pattern: ^[A-Fa-f\d]{24}$
+                          maxItems: 1000
+                        deviceTags:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                                pattern: ^[0-9a-zA-Z_-]{1,255}$
+                              value:
+                                type: string
+                                minLength: 1
+                                maxLength: 255
+                            additionalProperties: false
+                          maxItems: 100
+                      required:
+                      - name
+                      - mode
+                      additionalProperties: false
+                    maxItems: 256
+                additionalProperties: false
+            required:
+            - name
+            - dataType
+            additionalProperties: false
+          maxItems: 256
+        deviceClass:
+          type: string
+          enum:
+          - standalone
+          - gateway
+          - peripheral
+          - floating
+          - edgeCompute
+          - system
+          - embedded
+        gatewayId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        parentId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: 'null'
+        systemInterval:
+          type: integer
+          minimum: 5
+          maximum: 3600
+        keepDuplicates:
+          type: boolean
+      additionalProperties: false
+      required:
+      - name
+    deviceRecipePatch:
+      title: Device Recipe Patch
+      description: Schema for the body of a Device Recipe modification request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        deviceName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        deviceDescription:
+          type: string
+          maxLength: 32767
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            required:
+            - key
+            - value
+            additionalProperties: false
+          maxItems: 100
+        attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              dataType:
+                type: string
+                enum:
+                - string
+                - number
+                - gps
+                - boolean
+                - blob
+              contentType:
+                type: string
+                maxLength: 64
+              description:
+                type: string
+                maxLength: 32767
+              attributeTags:
+                type: object
+                patternProperties:
+                  ^[0-9a-zA-Z_-]{1,255}$:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                additionalProperties: false
+              system:
+                type: object
+                properties:
+                  aggregation:
+                    type: string
+                    enum:
+                    - FIRST
+                    - LAST
+                    - COUNT
+                    - MAX
+                    - MIN
+                    - MEDIAN
+                    - MEAN
+                    - SUM
+                    - STD_DEV
+                  aggregationOptions:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                    maxItems: 0
+                  childAttributes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        mode:
+                          type: string
+                          enum:
+                          - all
+                          - whitelist
+                          - blacklist
+                        deviceIds:
+                          type: array
+                          items:
+                            type: string
+                            pattern: ^[A-Fa-f\d]{24}$
+                          maxItems: 1000
+                        deviceTags:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                                pattern: ^[0-9a-zA-Z_-]{1,255}$
+                              value:
+                                type: string
+                                minLength: 1
+                                maxLength: 255
+                            additionalProperties: false
+                          maxItems: 100
+                      required:
+                      - name
+                      - mode
+                      additionalProperties: false
+                    maxItems: 256
+                additionalProperties: false
+            required:
+            - name
+            - dataType
+            additionalProperties: false
+          maxItems: 256
+        deviceClass:
+          type: string
+          enum:
+          - standalone
+          - gateway
+          - peripheral
+          - floating
+          - edgeCompute
+          - system
+          - embedded
+        gatewayId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: 'null'
+        parentId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: 'null'
+        systemInterval:
+          type: integer
+          minimum: 5
+          maximum: 3600
+        keepDuplicates:
+          type: boolean
+      additionalProperties: false
+    deviceRecipeBulkCreate:
+      title: Device Recipe Bulk Create
+      description: Schema for the result of a bulk Device creation request
+      type: object
+      properties:
+        created:
+          type: number
+        failed:
+          type: number
+        csvResult:
+          type: string
+    deviceRecipeBulkCreatePost:
+      title: Device Recipe Bulk Create Post
+      description: Schema for the body of a bulk Device creation request
+      type: object
+      properties:
+        csv:
+          type: string
+        count:
+          type: integer
+        nameColumn:
+          type: string
+          maxLength: 255
+        descriptionColumn:
+          type: string
+          maxLength: 255
+        gatewayIdColumn:
+          type: string
+          maxLength: 255
+        parentIdColumn:
+          type: string
+          maxLength: 255
+        makeUniqueKeySecret:
+          type: boolean
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        gatewayId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        parentId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: 'null'
+      additionalProperties: false
+    deviceRecipe:
+      title: Device Recipe
+      description: Schema for a single Device Recipe
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        deviceRecipeId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        deviceName:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        deviceDescription:
+          type: string
+          maxLength: 32767
+        tags:
+          oneOf:
+          - type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                value:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+              required:
+              - key
+              - value
+              additionalProperties: false
+            maxItems: 100
+          - type: object
+            patternProperties:
+              ^[0-9a-zA-Z_-]{1,255}$:
+                type: array
+                items:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+            additionalProperties: false
+        attributes:
+          oneOf:
+          - type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                dataType:
+                  type: string
+                  enum:
+                  - string
+                  - number
+                  - gps
+                  - boolean
+                  - blob
+                contentType:
+                  type: string
+                  maxLength: 64
+                description:
+                  type: string
+                  maxLength: 32767
+                attributeTags:
+                  type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}$:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                  additionalProperties: false
+                system:
+                  type: object
+                  properties:
+                    aggregation:
+                      type: string
+                      enum:
+                      - FIRST
+                      - LAST
+                      - COUNT
+                      - MAX
+                      - MIN
+                      - MEDIAN
+                      - MEAN
+                      - SUM
+                      - STD_DEV
+                    aggregationOptions:
+                      type: array
+                      items:
+                        type: object
+                        additionalProperties: false
+                      maxItems: 0
+                    childAttributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            pattern: ^[0-9a-zA-Z_-]{1,255}$
+                          mode:
+                            type: string
+                            enum:
+                            - all
+                            - whitelist
+                            - blacklist
+                          deviceIds:
+                            type: array
+                            items:
+                              type: string
+                              pattern: ^[A-Fa-f\d]{24}$
+                            maxItems: 1000
+                          deviceTags:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                key:
+                                  type: string
+                                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                                value:
+                                  type: string
+                                  minLength: 1
+                                  maxLength: 255
+                              additionalProperties: false
+                            maxItems: 100
+                        required:
+                        - name
+                        - mode
+                        additionalProperties: false
+                      maxItems: 256
+                  additionalProperties: false
+              required:
+              - name
+              - dataType
+              additionalProperties: false
+            maxItems: 256
+          - type: object
+            patternProperties:
+              ^[0-9a-zA-Z_-]{1,255}$:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                  dataType:
+                    type: string
+                    enum:
+                    - string
+                    - number
+                    - gps
+                    - boolean
+                    - blob
+                  contentType:
+                    type: string
+                    maxLength: 64
+                  description:
+                    type: string
+                    maxLength: 32767
+                  attributeTags:
+                    type: object
+                    patternProperties:
+                      ^[0-9a-zA-Z_-]{1,255}$:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
+                  system:
+                    type: object
+                    properties:
+                      aggregation:
+                        type: string
+                        enum:
+                        - FIRST
+                        - LAST
+                        - COUNT
+                        - MAX
+                        - MIN
+                        - MEDIAN
+                        - MEAN
+                        - SUM
+                        - STD_DEV
+                      aggregationOptions:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                        maxItems: 0
+                      childAttributes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              pattern: ^[0-9a-zA-Z_-]{1,255}$
+                            mode:
+                              type: string
+                              enum:
+                              - all
+                              - whitelist
+                              - blacklist
+                            deviceIds:
+                              type: array
+                              items:
+                                type: string
+                                pattern: ^[A-Fa-f\d]{24}$
+                              maxItems: 1000
+                            deviceTags:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                                  value:
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 255
+                                additionalProperties: false
+                              maxItems: 100
+                          required:
+                          - name
+                          - mode
+                          additionalProperties: false
+                        maxItems: 256
+                    additionalProperties: false
+                required:
+                - name
+                - dataType
+                additionalProperties: false
+            additionalProperties: false
+        deviceClass:
+          type: string
+          enum:
+          - standalone
+          - gateway
+          - peripheral
+          - floating
+          - edgeCompute
+          - system
+          - embedded
+        gatewayId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        parentId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: 'null'
+        systemInterval:
+          type: integer
+          minimum: 5
+          maximum: 3600
+        keepDuplicates:
+          type: boolean
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

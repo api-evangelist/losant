@@ -1,0 +1,638 @@
+openapi: 3.2.0
+info:
+  title: Platform Instance Org Members API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Instance Org Members
+paths:
+  /instances/{instanceId}/orgs/{orgId}/members:
+    get:
+      operationId: instanceOrgMembers.get
+      summary: Returns a collection of instance organization members
+      tags:
+      - Instance Org Members
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - email
+          - role
+          default: email
+        example: role
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - email
+          - role
+        example: email
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my * instance
+      responses:
+        '200':
+          description: A collection of instance organization members
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgMembers'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrgMembers.get
+    post:
+      operationId: instanceOrgMembers.post
+      summary: Creates a new organization member
+      tags:
+      - Instance Org Members
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '201':
+          description: The newly added instance org member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgMember'
+        '202':
+          description: An invite was sent to the new member's email address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgInviteSent'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceOrgMemberPost'
+        description: Object containing new member info
+      x-losant-auth-scopes:
+      - instanceOrgMembers.post
+  /instances/{instanceId}/orgs/{orgId}/members/{userId}:
+    get:
+      operationId: instanceOrgMember.get
+      summary: Returns an organization member
+      tags:
+      - Instance Org Members
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a95
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: userId
+        in: path
+        required: true
+        description: ID associated with the organization member
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a94
+      responses:
+        '200':
+          description: A single organization member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgMember'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if instance, organization, or member was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrgMember.get
+    patch:
+      operationId: instanceOrgMember.patch
+      summary: Modifies the role of an organization member
+      tags:
+      - Instance Org Members
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a95
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: userId
+        in: path
+        required: true
+        description: ID associated with the organization member
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a94
+      responses:
+        '200':
+          description: The modified organization member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instanceOrgMember'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization or member was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instanceOrgMemberPatch'
+        description: Object containing new member info
+      x-losant-auth-scopes:
+      - instanceOrgMember.patch
+    delete:
+      operationId: instanceOrgMember.delete
+      summary: Deletes an organization member
+      tags:
+      - Instance Org Members
+      parameters:
+      - name: instanceId
+        in: path
+        required: true
+        description: ID associated with the instance
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a95
+      - name: orgId
+        in: path
+        required: true
+        description: ID associated with the organization
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: userId
+        in: path
+        required: true
+        description: ID associated with the organization member
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a94
+      responses:
+        '200':
+          description: If member was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if organization or member was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - instanceOrgMember.delete
+components:
+  schemas:
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    instanceOrgMemberPost:
+      title: Instance Org Member Post
+      description: Schema for an Instance Organization member creation request
+      oneOf:
+      - type: object
+        properties:
+          userId:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          role:
+            type: string
+            enum:
+            - admin
+            - edit
+            - collaborate
+            - view
+            - none
+          applicationRoles:
+            type: array
+            items:
+              type: object
+              properties:
+                resourceId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                role:
+                  type: string
+                  enum:
+                  - collaborate
+                  - view
+                  - none
+              required:
+              - resourceId
+              - role
+              additionalProperties: false
+            maxItems: 100
+          dashboardRoles:
+            type: array
+            items:
+              type: object
+              properties:
+                resourceId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                role:
+                  type: string
+                  enum:
+                  - collaborate
+                  - view
+                  - none
+              required:
+              - resourceId
+              - role
+              additionalProperties: false
+            maxItems: 100
+        additionalProperties: false
+        required:
+        - userId
+        - role
+      - type: object
+        properties:
+          email:
+            type: string
+            format: email
+            maxLength: 1024
+          role:
+            type: string
+            enum:
+            - admin
+            - edit
+            - collaborate
+            - view
+            - none
+          applicationRoles:
+            type: array
+            items:
+              type: object
+              properties:
+                resourceId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                role:
+                  type: string
+                  enum:
+                  - collaborate
+                  - view
+                  - none
+              required:
+              - resourceId
+              - role
+              additionalProperties: false
+            maxItems: 100
+          dashboardRoles:
+            type: array
+            items:
+              type: object
+              properties:
+                resourceId:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                role:
+                  type: string
+                  enum:
+                  - collaborate
+                  - view
+                  - none
+              required:
+              - resourceId
+              - role
+              additionalProperties: false
+            maxItems: 100
+          disallowTransfer:
+            type: boolean
+        additionalProperties: false
+        required:
+        - email
+        - role
+    instanceOrgInviteSent:
+      title: Instance Organization Invite Sent
+      description: Schema returned when adding a new instance organization member resulted in an invite being sent
+      type: object
+      properties:
+        inviteSent:
+          type: boolean
+          enum:
+          - true
+    instanceOrgMembers:
+      title: Instance Organization Members
+      description: Schema for a collection of Organization members within an instance
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/instanceOrgMember'
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        orgId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        count:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+    instanceOrgMember:
+      title: Instance Org Member
+      description: Schema for an Instance Organization member
+      type: object
+      properties:
+        instanceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        orgId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        userId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        lastName:
+          type: string
+          maxLength: 1024
+        role:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        applicationRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        dashboardRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        avatarUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        twoFactorAuthEnabled:
+          type: boolean
+        ssoLinked:
+          type: boolean
+      additionalProperties: false
+    instanceOrgMemberPatch:
+      title: Instance Org Member Patch
+      description: Schema for an Instance Organization member modification request
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+          - admin
+          - edit
+          - collaborate
+          - view
+          - none
+        applicationRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+        dashboardRoles:
+          type: array
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              role:
+                type: string
+                enum:
+                - collaborate
+                - view
+                - none
+            required:
+            - resourceId
+            - role
+            additionalProperties: false
+          maxItems: 100
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'

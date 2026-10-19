@@ -1,0 +1,5323 @@
+openapi: 3.2.0
+info:
+  title: Platform Devices API
+  version: 1.31.0
+  description: User API for accessing platform data
+servers:
+- url: https://api.losant.com
+security:
+- bearerAuth: []
+tags:
+- name: Devices
+paths:
+  /applications/{applicationId}/devices:
+    get:
+      operationId: devices.get
+      summary: Returns the devices for an application
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          - connectionStatus
+          - deletedAt
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: filterField
+        in: query
+        required: false
+        description: Field to filter the results by. Blank or not provided means no filtering.
+        schema:
+          type: string
+          enum:
+          - name
+        example: name
+      - name: filter
+        in: query
+        required: false
+        description: Filter to apply against the filtered field. Supports globbing. Blank or not provided means no filtering.
+        schema:
+          type: string
+        example: my * device
+      - name: deviceClass
+        in: query
+        required: false
+        description: Filter the devices by the given device class or classes
+        schema:
+          $ref: '#/components/schemas/deviceClassFilter'
+      - name: tagFilter
+        in: query
+        required: false
+        description: Array of tag pairs to filter by
+        schema:
+          $ref: '#/components/schemas/deviceTagFilter'
+      - name: excludeConnectionInfo
+        in: query
+        required: false
+        description: If set, do not return connection info
+        schema:
+          type: string
+        example: true
+      - name: parentId
+        in: query
+        required: false
+        description: Filter devices as children of a given system id
+        schema:
+          type: string
+        example: 575ecf887ae143cd83dc4aa2
+      - name: query
+        in: query
+        required: false
+        description: Device filter JSON object which overrides the filterField, filter, deviceClass, tagFilter, and parentId parameters.
+        schema:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+      - name: tagsAsObject
+        in: query
+        required: false
+        description: Return tags as an object map instead of an array
+        schema:
+          type: string
+        example: true
+      - name: attributesAsObject
+        in: query
+        required: false
+        description: Return attributes as an object map instead of an array
+        schema:
+          type: string
+        example: false
+      - name: queryDeleted
+        in: query
+        required: false
+        description: If true, endpoint will return recently deleted devices instead
+        schema:
+          type: string
+        example: false
+      responses:
+        '200':
+          description: Collection of devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/devices'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - devices.get
+    post:
+      operationId: devices.post
+      summary: Create a new device for an application
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: tagsAsObject
+        in: query
+        required: false
+        description: Return tags as an object map instead of an array
+        schema:
+          type: string
+        example: true
+      - name: attributesAsObject
+        in: query
+        required: false
+        description: Return attributes as an object map instead of an array
+        schema:
+          type: string
+        example: false
+      responses:
+        '201':
+          description: Successfully created device
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/device'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devicePost'
+        description: New device information
+      x-losant-auth-scopes:
+      - devices.post
+    patch:
+      operationId: devices.patch
+      summary: Update the fields of one or more devices
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Object including an update log link and the number of devices updated, failed, and skipped
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/devicesUpdated'
+        '202':
+          description: Successfully queued bulk update job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devicesPatch'
+        description: Object containing device query or IDs and update operations
+      x-losant-auth-scopes:
+      - devices.patch
+  /applications/{applicationId}/devices/attributeNames:
+    get:
+      operationId: devices.attributeNames
+      summary: Gets the attribute names that match the given query. Maximum 1K returned
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: query
+        in: query
+        required: false
+        description: Device filter JSON object
+        schema:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+      - name: dataType
+        in: query
+        required: false
+        description: Filter the devices by the given attribute data type or types
+        schema:
+          $ref: '#/components/schemas/deviceAttributeDataTypeFilter'
+      - name: startsWith
+        in: query
+        required: false
+        description: Filter attributes down to those that have names starting with the given string. Case insensitive.
+        schema:
+          type: string
+        example: temper
+      responses:
+        '200':
+          description: The matching attribute names
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/attributeNamesResponse'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - devices.attributeNames
+  /applications/{applicationId}/devices/command:
+    post:
+      operationId: devices.sendCommand
+      summary: Send a command to multiple devices
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: If command was successfully sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '202':
+          description: If command was queued to be sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/multiDeviceCommand'
+        description: Command to send to the device
+      x-losant-auth-scopes:
+      - devices.sendCommand
+  /applications/{applicationId}/devices/compositeState:
+    get:
+      operationId: devices.getCompositeState
+      summary: Retrieve the composite last complete state of the matching devices
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: start
+        in: query
+        required: false
+        description: Start of time range to look at to build composite state
+        schema:
+          type: string
+          default: 1
+        example: 1465790400000
+      - name: end
+        in: query
+        required: false
+        description: End of time range to look at to build composite state
+        schema:
+          type: string
+          default: 0
+        example: 1465790400000
+      - name: attributes
+        in: query
+        required: false
+        description: Comma-separated list of attributes to include. When not provided, returns all attributes.
+        schema:
+          type: string
+        example: myAttr1,myAttr2
+      - name: sortField
+        in: query
+        required: false
+        description: Field to sort the results by
+        schema:
+          type: string
+          enum:
+          - name
+          - id
+          - creationDate
+          - lastUpdated
+          - connectionStatus
+          default: name
+        example: name
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the results by
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        example: asc
+      - name: page
+        in: query
+        required: false
+        description: Which page of results to return
+        schema:
+          type: string
+          default: 0
+        example: 0
+      - name: perPage
+        in: query
+        required: false
+        description: How many items to return per page
+        schema:
+          type: string
+          default: 100
+        example: 10
+      - name: query
+        in: query
+        required: false
+        description: Device advanced query JSON object
+        schema:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+      responses:
+        '200':
+          description: Collection of composite last state of the devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/compositeDevicesState'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - devices.getCompositeState
+  /applications/{applicationId}/devices/delete:
+    post:
+      operationId: devices.delete
+      summary: Delete devices
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Object indicating number of devices deleted or failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bulkDeleteResponse'
+        '202':
+          description: If a job was enqueued for the devices to be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devicesDeleteOrRestorePost'
+        description: Object containing device deletion options
+      x-losant-auth-scopes:
+      - devices.delete
+  /applications/{applicationId}/devices/deviceNames:
+    get:
+      operationId: devices.deviceNames
+      summary: Gets the device names that match the given query. Maximum 1K returned
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: query
+        in: query
+        required: false
+        description: Device filter JSON object
+        schema:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+      - name: startsWith
+        in: query
+        required: false
+        description: Filter devices down to those that have names starting with the given string. Case insensitive.
+        schema:
+          type: string
+        example: temper
+      responses:
+        '200':
+          description: The matching device names
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceNamesResponse'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - devices.deviceNames
+  /applications/{applicationId}/devices/export:
+    post:
+      operationId: devices.export
+      summary: Creates an export of all device metadata
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: email
+        in: query
+        required: false
+        description: Email address to send export to. Defaults to current user's email.
+        schema:
+          type: string
+        example: email@example.com
+      - name: callbackUrl
+        in: query
+        required: false
+        description: Callback URL to call with export result
+        schema:
+          type: string
+        example: https://example.com/cburl
+      responses:
+        '202':
+          description: If generation of export was successfully started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devicesExportPost'
+        description: Object containing device query and optionally email or callback
+      x-losant-auth-scopes:
+      - devices.export
+  /applications/{applicationId}/devices/payloadCounts:
+    post:
+      operationId: devices.payloadCounts
+      summary: Creates an export of payload count information for the matching devices
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '202':
+          description: If generation of export was successfully started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devicesExportPayloadCountPost'
+        description: Object containing export configuration
+      x-losant-auth-scopes:
+      - devices.payloadCounts
+  /applications/{applicationId}/devices/removeData:
+    post:
+      operationId: devices.removeData
+      summary: Removes all device data for the specified time range. Defaults to all data
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '202':
+          description: If a job was enqueued for device data to be removed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devicesRemoveDataPost'
+        description: Object defining the device data to delete and devices to delete from
+      x-losant-auth-scopes:
+      - devices.removeData
+  /applications/{applicationId}/devices/restore:
+    post:
+      operationId: devices.restore
+      summary: Restore deleted devices
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      responses:
+        '200':
+          description: Object indicating number of devices restored or failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bulkRestoreResponse'
+        '202':
+          description: If a job was enqueued for the devices to be restored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devicesDeleteOrRestorePost'
+        description: Object containing device restoration options
+      x-losant-auth-scopes:
+      - devices.restore
+  /applications/{applicationId}/devices/tagKeys:
+    get:
+      operationId: devices.tagKeys
+      summary: Gets the unique tag keys for devices that match the given query.
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: query
+        in: query
+        required: false
+        description: Device filter JSON object
+        schema:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+      - name: startsWith
+        in: query
+        required: false
+        description: Filter keys down to those that start with the given string. Case insensitive.
+        schema:
+          type: string
+        example: temper
+      responses:
+        '200':
+          description: The matching tag keys
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tagKeysResponse'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - devices.tagKeys
+  /applications/{applicationId}/devices/tagValues:
+    get:
+      operationId: devices.tagValues
+      summary: Gets the unique tag values for the given key for devices that match the given…
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: query
+        in: query
+        required: false
+        description: Device filter JSON object
+        schema:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+      - name: key
+        in: query
+        required: true
+        description: The tag key to get the values for
+        schema:
+          type: string
+        example: myKey
+      - name: startsWith
+        in: query
+        required: false
+        description: Filter values down to those that start with the given string. Case insensitive.
+        schema:
+          type: string
+        example: temper
+      responses:
+        '200':
+          description: The matching tag values
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tagValuesResponse'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if application was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - devices.tagValues
+  /applications/{applicationId}/devices/{deviceId}:
+    get:
+      operationId: device.get
+      summary: Retrieves information on a device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: excludeConnectionInfo
+        in: query
+        required: false
+        description: If set, do not return connection info
+        schema:
+          type: string
+        example: true
+      - name: tagsAsObject
+        in: query
+        required: false
+        description: Return tags as an object map instead of an array
+        schema:
+          type: string
+        example: true
+      - name: attributesAsObject
+        in: query
+        required: false
+        description: Return attributes as an object map instead of an array
+        schema:
+          type: string
+        example: false
+      responses:
+        '200':
+          description: Device information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/device'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.get
+    patch:
+      operationId: device.patch
+      summary: Updates information about a device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: tagsAsObject
+        in: query
+        required: false
+        description: Return tags as an object map instead of an array
+        schema:
+          type: string
+        example: true
+      - name: attributesAsObject
+        in: query
+        required: false
+        description: Return attributes as an object map instead of an array
+        schema:
+          type: string
+        example: false
+      responses:
+        '200':
+          description: Updated device information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/device'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/devicePatch'
+        description: Object containing new properties of the device
+      x-losant-auth-scopes:
+      - device.patch
+    delete:
+      operationId: device.delete
+      summary: Deletes a device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      responses:
+        '200':
+          description: If device was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.delete
+  /applications/{applicationId}/devices/{deviceId}/command:
+    get:
+      operationId: device.getCommand
+      summary: Retrieve the last known command(s) sent to the device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of command entries to return
+        schema:
+          type: string
+          default: 1
+        example: 10
+      - name: since
+        in: query
+        required: false
+        description: (deprecated) Look for command entries since this time (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the command entries (by time)
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        example: desc
+      - name: duration
+        in: query
+        required: false
+        description: Duration of time range to query in milliseconds
+        schema:
+          type: string
+        example: 86400000
+      - name: start
+        in: query
+        required: false
+        description: Start of time range to query in milliseconds since epoch
+        schema:
+          type: string
+        example: 1465790400000
+      - name: end
+        in: query
+        required: false
+        description: End of time range to query in milliseconds since epoch
+        schema:
+          type: string
+        example: 0
+      responses:
+        '200':
+          description: Recent device commands
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceCommands'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.getCommand
+    post:
+      operationId: device.sendCommand
+      summary: Send a command to a device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      responses:
+        '200':
+          description: If command was successfully sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deviceCommand'
+        description: Command to send to the device
+      x-losant-auth-scopes:
+      - device.sendCommand
+  /applications/{applicationId}/devices/{deviceId}/commandStream:
+    get:
+      operationId: device.commandStream
+      summary: Attach to a real time stream of command messages to this device using Server…
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: keepAliveInterval
+        in: query
+        required: false
+        description: Number of seconds between keepalive messages
+        schema:
+          type: string
+          default: 2
+        example: 2
+      responses:
+        '200':
+          description: SSE stream of new command messages for this device
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.commandStream
+  /applications/{applicationId}/devices/{deviceId}/compositeState:
+    get:
+      operationId: device.getCompositeState
+      summary: Retrieve the composite last complete state of the device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: start
+        in: query
+        required: false
+        description: Start of time range to look at to build composite state
+        schema:
+          type: string
+          default: 1
+        example: 1465790400000
+      - name: end
+        in: query
+        required: false
+        description: End of time range to look at to build composite state
+        schema:
+          type: string
+          default: 0
+        example: 1465790400000
+      - name: attributes
+        in: query
+        required: false
+        description: Comma-separated list of attributes to include. When not provided, returns all attributes.
+        schema:
+          type: string
+        example: myAttr1,myAttr2
+      responses:
+        '200':
+          description: Composite last state of the device
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/compositeDeviceState'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.getCompositeState
+  /applications/{applicationId}/devices/{deviceId}/data:
+    delete:
+      operationId: device.removeData
+      summary: Removes all device data for the specified time range. Defaults to all data
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: start
+        in: query
+        required: false
+        description: Start time of export (ms since epoch - 0 means now, negative is relative to now)
+        schema:
+          type: string
+          default: 1
+        example: 1465790400000
+      - name: end
+        in: query
+        required: false
+        description: End time of export (ms since epoch - 0 means now, negative is relative to now)
+        schema:
+          type: string
+          default: 0
+        example: 1465790400000
+      responses:
+        '202':
+          description: If data removal was successfully started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.removeData
+  /applications/{applicationId}/devices/{deviceId}/export:
+    post:
+      operationId: device.export
+      summary: Creates a device data export. Defaults to all data
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: start
+        in: query
+        required: false
+        description: Start time of export (ms since epoch - 0 means now, negative is relative to now)
+        schema:
+          type: string
+          default: 1
+        example: 1465790400000
+      - name: end
+        in: query
+        required: false
+        description: End time of export (ms since epoch - 0 means now, negative is relative to now)
+        schema:
+          type: string
+          default: 0
+        example: 1465790400000
+      - name: email
+        in: query
+        required: false
+        description: Email address to send export to. Defaults to current user's email.
+        schema:
+          type: string
+        example: email@example.com
+      - name: callbackUrl
+        in: query
+        required: false
+        description: Callback URL to call with export result
+        schema:
+          type: string
+        example: https://example.com/cburl
+      - name: includeBlobData
+        in: query
+        required: false
+        description: If set will export any blob attributes in base64 form, otherwise they will be downloadable links which will expire.
+        schema:
+          type: string
+        example: 'true'
+      responses:
+        '202':
+          description: If generation of export was successfully started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobEnqueuedResult'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deviceDataExport'
+        description: The export parameters. When provided overrides any options provided as a query param.
+      x-losant-auth-scopes:
+      - device.export
+  /applications/{applicationId}/devices/{deviceId}/logs:
+    get:
+      operationId: device.getLogEntries
+      summary: Retrieve the recent log entries about the device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of log entries to return
+        schema:
+          type: string
+          default: 1
+        example: 10
+      - name: since
+        in: query
+        required: false
+        description: (deprecated) Look for log entries since this time (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the log entries (by time)
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        example: desc
+      - name: duration
+        in: query
+        required: false
+        description: Duration of time range to query in milliseconds
+        schema:
+          type: string
+        example: 86400000
+      - name: start
+        in: query
+        required: false
+        description: Start of time range to query in milliseconds since epoch
+        schema:
+          type: string
+        example: 1465790400000
+      - name: end
+        in: query
+        required: false
+        description: End of time range to query in milliseconds since epoch
+        schema:
+          type: string
+        example: 0
+      responses:
+        '200':
+          description: Recent log entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceLog'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.getLogEntries
+  /applications/{applicationId}/devices/{deviceId}/payloadCounts:
+    get:
+      operationId: device.payloadCounts
+      summary: Returns payload counts for the time range specified for this device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+          default: -2592000000
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+          default: 0
+        example: 1465790400000
+      responses:
+        '200':
+          description: Payload counts, by type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/devicePayloadCounts'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.payloadCounts
+  /applications/{applicationId}/devices/{deviceId}/payloadCountsBreakdown:
+    get:
+      operationId: device.payloadCountsBreakdown
+      summary: Returns payload counts per resolution in the time range specified for this…
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: start
+        in: query
+        required: false
+        description: Start of range for payload count query (ms since epoch)
+        schema:
+          type: string
+          default: -2592000000
+        example: 0
+      - name: end
+        in: query
+        required: false
+        description: End of range for payload count query (ms since epoch)
+        schema:
+          type: string
+          default: 0
+        example: 1465790400000
+      - name: resolution
+        in: query
+        required: false
+        description: Resolution in milliseconds
+        schema:
+          type: string
+          enum:
+          - '86400000'
+          - '3600000'
+          default: 86400000
+        example: 86400000
+      responses:
+        '200':
+          description: Sum of payload counts by date
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payloadCountsBreakdown'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.payloadCountsBreakdown
+  /applications/{applicationId}/devices/{deviceId}/setConnectionStatus:
+    post:
+      operationId: device.setConnectionStatus
+      summary: Set the current connection status of the device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      responses:
+        '200':
+          description: If connection status was successfully applied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deviceConnectionStatus'
+        description: The current connection status of the device
+      x-losant-auth-scopes:
+      - device.setConnectionStatus
+  /applications/{applicationId}/devices/{deviceId}/state:
+    get:
+      operationId: device.getState
+      summary: Retrieve the last known state(s) of the device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of state entries to return
+        schema:
+          type: string
+          default: 1
+        example: 10
+      - name: since
+        in: query
+        required: false
+        description: (deprecated) Look for state entries since this time (ms since epoch)
+        schema:
+          type: string
+        example: 1465790400000
+      - name: sortDirection
+        in: query
+        required: false
+        description: Direction to sort the state entries (by time)
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        example: desc
+      - name: duration
+        in: query
+        required: false
+        description: Duration of time range to query in milliseconds
+        schema:
+          type: string
+        example: 86400000
+      - name: start
+        in: query
+        required: false
+        description: Start of time range to query in milliseconds since epoch
+        schema:
+          type: string
+        example: 1465790400000
+      - name: end
+        in: query
+        required: false
+        description: End of time range to query in milliseconds since epoch
+        schema:
+          type: string
+        example: 0
+      responses:
+        '200':
+          description: Recent device states
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deviceStates'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.getState
+    post:
+      operationId: device.sendState
+      summary: Send the current state of the device
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      responses:
+        '200':
+          description: If state was successfully received
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deviceStateOrStates'
+        description: A single device state object, or an array of device state objects
+      x-losant-auth-scopes:
+      - device.sendState
+  /applications/{applicationId}/devices/{deviceId}/stateStream:
+    get:
+      operationId: device.stateStream
+      summary: Attach to a real time stream of state messages from this device using Server…
+      tags:
+      - Devices
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        description: ID associated with the application
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ec8687ae143cd83dc4a97
+      - name: deviceId
+        in: path
+        required: true
+        description: ID associated with the device
+        schema:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        example: 575ecf887ae143cd83dc4aa2
+      - name: keepAliveInterval
+        in: query
+        required: false
+        description: Number of seconds between keepalive messages
+        schema:
+          type: string
+          default: 2
+        example: 2
+      responses:
+        '200':
+          description: SSE stream of new state messages for this device
+        '400':
+          description: Error if malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Error if device was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      x-losant-auth-scopes:
+      - device.stateStream
+components:
+  schemas:
+    devicePayloadCounts:
+      title: Device Payload Counts
+      description: Schema for the result of a device payload count request
+      type: object
+      properties:
+        deviceCommand:
+          type: number
+        deviceConnect:
+          type: number
+        deviceDisconnect:
+          type: number
+        deviceState:
+          type: number
+        mqttIn:
+          type: number
+        mqttOut:
+          type: number
+    devicesExportPost:
+      title: Devices Metadata Export Post
+      description: Schema for the body of a device metadata export request
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        query:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+        format:
+          type: string
+          enum:
+          - csv
+          - json
+          default: csv
+      additionalProperties: false
+    devicesDeleteOrRestorePost:
+      title: Devices Delete Or Restore Post
+      description: Schema for the body of a bulk device deletion or restoration request
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        query:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        forceJob:
+          type: boolean
+          default: false
+      additionalProperties: false
+      required:
+      - query
+    bulkDeleteResponse:
+      title: Bulk Deletion Response
+      description: Schema for the response to a bulk deletion
+      type: object
+      properties:
+        removed:
+          type: number
+        failed:
+          type: number
+    multiDeviceCommand:
+      title: Multi Device Command
+      description: Schema for the body of a request to send a command to multiple Devices
+      type: object
+      properties:
+        time:
+          oneOf:
+          - type: string
+          - type: number
+          - type: object
+            properties:
+              $date:
+                type: string
+            additionalProperties: false
+            required:
+            - $date
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        payload: {}
+        deviceTags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            additionalProperties: false
+          maxItems: 100
+        deviceIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        deviceQuery:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+      required:
+      - name
+      additionalProperties: false
+    advancedDeviceQuery:
+      title: Advanced Device Query
+      description: Schema for advanced device queries
+      type: object
+      properties:
+        $and:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedDeviceQuery'
+          maxItems: 100
+        $or:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedDeviceQuery'
+          maxItems: 100
+        $nor:
+          type: array
+          items:
+            $ref: '#/components/schemas/advancedDeviceQuery'
+          maxItems: 100
+        id:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        creationDate:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        lastUpdated:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        deletedAt:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        name:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        deviceClass:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        gatewayId:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        parentId:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        ancestorId:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        attributeName:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        experienceUserId:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        experienceGroupId:
+          oneOf:
+          - oneOf:
+            - type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            - type: 'null'
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $ne:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lt:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $gte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $lte:
+                oneOf:
+                - type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+                - type: 'null'
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+            additionalProperties: false
+            minProperties: 1
+            maxProperties: 1
+        tags:
+          oneOf:
+          - oneOf:
+            - type: 'null'
+            - type: object
+              properties:
+                $tagKey:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+                $tagValue:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+              additionalProperties: false
+              minProperties: 1
+            - type: object
+              patternProperties:
+                ^[0-9a-zA-Z_-]{1,255}:
+                  oneOf:
+                  - type: string
+                    maxLength: 255
+                  - type: 'null'
+                  - type: object
+                    properties:
+                      $in:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $in
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      $nin:
+                        type: array
+                        maxItems: 100
+                        items:
+                          type: string
+                          maxLength: 255
+                    required:
+                    - $nin
+                    additionalProperties: false
+              additionalProperties: false
+          - type: object
+            properties:
+              $eq:
+                oneOf:
+                - type: 'null'
+                - type: object
+                  properties:
+                    $tagKey:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                    $tagValue:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+                  minProperties: 1
+                - type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+            required:
+            - $eq
+            additionalProperties: false
+          - type: object
+            properties:
+              $ne:
+                oneOf:
+                - type: 'null'
+                - type: object
+                  properties:
+                    $tagKey:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                    $tagValue:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+                  minProperties: 1
+                - type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}:
+                      oneOf:
+                      - type: string
+                        maxLength: 255
+                      - type: 'null'
+                      - type: object
+                        properties:
+                          $in:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $in
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          $nin:
+                            type: array
+                            maxItems: 100
+                            items:
+                              type: string
+                              maxLength: 255
+                        required:
+                        - $nin
+                        additionalProperties: false
+                  additionalProperties: false
+            required:
+            - $ne
+            additionalProperties: false
+        disconnectedAt:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        connectedAt:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+        connectionStatus:
+          oneOf:
+          - type:
+            - string
+            - number
+            - boolean
+            - 'null'
+          - type: object
+            properties:
+              $eq:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $ne:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lt:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $gte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $lte:
+                type:
+                - string
+                - number
+                - boolean
+                - 'null'
+              $startsWith:
+                type: string
+                minLength: 1
+              $endsWith:
+                type: string
+                minLength: 1
+              $contains:
+                type: string
+                minLength: 1
+              $ci:
+                type: boolean
+              $in:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+              $nin:
+                type: array
+                maxItems: 100
+                items:
+                  type:
+                  - string
+                  - number
+                  - boolean
+            additionalProperties: false
+      additionalProperties: false
+    deviceNamesResponse:
+      title: Device Names Response
+      description: Schema for a list of device names
+      type: object
+      properties:
+        deviceSummary:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              deviceClass:
+                type: string
+                enum:
+                - standalone
+                - gateway
+                - peripheral
+                - floating
+                - edgeCompute
+                - system
+                - embedded
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+          maxItems: 1000
+    payloadCountsBreakdown:
+      title: Payload Counts Breakdown
+      description: Schema for the result of a payload counts breakdown request
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        counts:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date-time
+              value:
+                type: integer
+    deviceState:
+      title: Device State
+      description: Schema for a single Device state
+      type: object
+      properties:
+        time:
+          oneOf:
+          - type: string
+          - type: number
+          - type: object
+            properties:
+              $date:
+                type: string
+            additionalProperties: false
+            required:
+            - $date
+        meta: {}
+        data:
+          type: object
+          patternProperties:
+            ^[0-9a-zA-Z_-]{1,255}$:
+              type:
+              - number
+              - string
+              - boolean
+          additionalProperties: false
+        flowVersion:
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+      - data
+      additionalProperties: false
+    jobEnqueuedResult:
+      title: Job Enqueued API Result
+      description: Schema for the result of a job being queued
+      type: object
+      properties:
+        jobQueued:
+          type: boolean
+          enum:
+          - true
+        jobId:
+          type: string
+          maxLength: 24
+        success:
+          type: boolean
+          enum:
+          - true
+    bulkRestoreResponse:
+      title: Bulk Restoration Response
+      description: Schema for the response to a bulk restore request
+      type: object
+      properties:
+        restored:
+          type: number
+        failed:
+          type: number
+    deviceStates:
+      title: Device States
+      description: Schema for an array of Device states
+      type: array
+      items:
+        $ref: '#/components/schemas/deviceState'
+    deviceConnectionStatus:
+      title: Device Connection Status
+      description: Schema for the body of a request to set a device's connection status
+      type: object
+      discriminator:
+        propertyName: status
+      oneOf:
+      - title: Device Connected
+        description: Schema for marking a device as connected
+        type: object
+        properties:
+          status:
+            type: string
+            enum:
+            - connected
+          connectedAt:
+            oneOf:
+            - type: string
+            - type: number
+            - type: object
+              properties:
+                $date:
+                  type: string
+              additionalProperties: false
+              required:
+              - $date
+          ipAddress:
+            type: string
+            minLength: 2
+            maxLength: 39
+        required:
+        - status
+        additionalProperties: false
+      - title: Device Disconnected
+        description: Schema for marking a device as disconnected
+        type: object
+        properties:
+          status:
+            type: string
+            enum:
+            - disconnected
+          connectedAt:
+            oneOf:
+            - type: string
+            - type: number
+            - type: object
+              properties:
+                $date:
+                  type: string
+              additionalProperties: false
+              required:
+              - $date
+          disconnectedAt:
+            oneOf:
+            - type: string
+            - type: number
+            - type: object
+              properties:
+                $date:
+                  type: string
+              additionalProperties: false
+              required:
+              - $date
+          disconnectReason:
+            type: string
+            maxLength: 1024
+          messagesFromClient:
+            type: integer
+            minimum: 0
+            maximum: 2147483647
+          messagesToClient:
+            type: integer
+            minimum: 0
+            maximum: 2147483647
+          ipAddress:
+            type: string
+            minLength: 2
+            maxLength: 39
+        required:
+        - status
+        additionalProperties: false
+    devicesExportPayloadCountPost:
+      title: Devices Payload Count Export Post
+      description: Schema for the body of a device payload count export request
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        query:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+        start:
+          type: number
+        end:
+          type: number
+      additionalProperties: false
+    compositeDeviceState:
+      title: Composite Device State
+      description: Schema for a composite Device state
+      type: object
+      patternProperties:
+        ^[0-9a-zA-Z_-]{1,255}$:
+          type: object
+          properties:
+            value:
+              type:
+              - number
+              - string
+              - boolean
+            time:
+              oneOf:
+              - type: string
+              - type: number
+              - type: object
+                properties:
+                  $date:
+                    type: string
+                additionalProperties: false
+                required:
+                - $date
+      additionalProperties: false
+    devicesPatch:
+      title: Devices Patch
+      description: Schema for the body of a Devices modification request
+      type: object
+      properties:
+        updateFields:
+          title: Device Patch
+          description: Schema for the body of a Device modification request
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 255
+            description:
+              type: string
+              maxLength: 32767
+            tags:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                  value:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                required:
+                - key
+                - value
+                additionalProperties: false
+              maxItems: 100
+            attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                  dataType:
+                    type: string
+                    enum:
+                    - string
+                    - number
+                    - gps
+                    - boolean
+                    - blob
+                  contentType:
+                    type: string
+                    maxLength: 64
+                  description:
+                    type: string
+                    maxLength: 32767
+                  attributeTags:
+                    type: object
+                    patternProperties:
+                      ^[0-9a-zA-Z_-]{1,255}$:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
+                  system:
+                    type: object
+                    properties:
+                      aggregation:
+                        type: string
+                        enum:
+                        - FIRST
+                        - LAST
+                        - COUNT
+                        - MAX
+                        - MIN
+                        - MEDIAN
+                        - MEAN
+                        - SUM
+                        - STD_DEV
+                      aggregationOptions:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                        maxItems: 0
+                      childAttributes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              pattern: ^[0-9a-zA-Z_-]{1,255}$
+                            mode:
+                              type: string
+                              enum:
+                              - all
+                              - whitelist
+                              - blacklist
+                            deviceIds:
+                              type: array
+                              items:
+                                type: string
+                                pattern: ^[A-Fa-f\d]{24}$
+                              maxItems: 1000
+                            deviceTags:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                                  value:
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 255
+                                additionalProperties: false
+                              maxItems: 100
+                          required:
+                          - name
+                          - mode
+                          additionalProperties: false
+                        maxItems: 256
+                    additionalProperties: false
+                required:
+                - name
+                - dataType
+                additionalProperties: false
+              maxItems: 256
+            deviceClass:
+              type: string
+              enum:
+              - standalone
+              - gateway
+              - peripheral
+              - floating
+              - edgeCompute
+              - system
+              - embedded
+            gatewayId:
+              type: string
+              pattern: ^[A-Fa-f\d]{24}$
+            parentId:
+              oneOf:
+              - type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              - type: 'null'
+            systemInterval:
+              type: integer
+              minimum: 5
+              maximum: 3600
+            keepDuplicates:
+              type: boolean
+          additionalProperties: false
+        deviceIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        query:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+        updateOperations:
+          type: array
+          maxItems: 25
+          items:
+            oneOf:
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - name
+                value:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+              required:
+              - operation
+              - target
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - deviceClass
+                value:
+                  type: string
+                  enum:
+                  - standalone
+                  - gateway
+                  - peripheral
+                  - floating
+                  - edgeCompute
+                  - system
+                  - embedded
+              required:
+              - operation
+              - target
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - description
+                value:
+                  type: string
+                  maxLength: 32767
+              required:
+              - operation
+              - target
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - gatewayId
+                  - parentId
+                value:
+                  type: string
+                  pattern: ^[A-Fa-f\d]{24}$
+              required:
+              - operation
+              - target
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - systemInterval
+                value:
+                  type: integer
+                  minimum: 5
+                  maximum: 3600
+              required:
+              - operation
+              - target
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - keepDuplicates
+                value:
+                  type: boolean
+              required:
+              - operation
+              - target
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - tag
+                value:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                      pattern: ^[0-9a-zA-Z_-]{1,255}$
+                    value:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                  required:
+                  - key
+                  - value
+                  additionalProperties: false
+              required:
+              - operation
+              - target
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - attributeTag
+                attributeName:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                value:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                      pattern: ^[0-9a-zA-Z_-]{1,255}$
+                    value:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                  required:
+                  - key
+                  - value
+                  additionalProperties: false
+              required:
+              - operation
+              - target
+              - attributeName
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - attributeDescription
+                attributeName:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                value:
+                  type: string
+                  maxLength: 32767
+              required:
+              - operation
+              - target
+              - attributeName
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - attributeContentType
+                attributeName:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                value:
+                  type: string
+                  maxLength: 64
+                  minLength: 1
+              required:
+              - operation
+              - target
+              - attributeName
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - set
+                target:
+                  type: string
+                  enum:
+                  - attributeName
+                attributeName:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                value:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+              required:
+              - operation
+              - target
+              - attributeName
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - remove
+                target:
+                  type: string
+                  enum:
+                  - description
+                  - parentId
+              required:
+              - operation
+              - target
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - remove
+                target:
+                  type: string
+                  enum:
+                  - tag
+                tagKey:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+              required:
+              - operation
+              - target
+              - tagKey
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - remove
+                target:
+                  type: string
+                  enum:
+                  - attribute
+                attributeName:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+              required:
+              - operation
+              - target
+              - attributeName
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - remove
+                target:
+                  type: string
+                  enum:
+                  - attributeTag
+                attributeName:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                tagKey:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+              required:
+              - operation
+              - target
+              - attributeName
+              - tagKey
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - remove
+                target:
+                  type: string
+                  enum:
+                  - attributeDescription
+                attributeName:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+              required:
+              - operation
+              - target
+              - attributeName
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - add
+                target:
+                  type: string
+                  enum:
+                  - attribute
+                value:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      pattern: ^[0-9a-zA-Z_-]{1,255}$
+                    dataType:
+                      type: string
+                      enum:
+                      - string
+                      - number
+                      - gps
+                      - boolean
+                      - blob
+                    contentType:
+                      type: string
+                      maxLength: 64
+                    description:
+                      type: string
+                      maxLength: 32767
+                    attributeTags:
+                      type: object
+                      patternProperties:
+                        ^[0-9a-zA-Z_-]{1,255}$:
+                          type: string
+                          minLength: 1
+                          maxLength: 255
+                      additionalProperties: false
+                    system:
+                      type: object
+                      properties:
+                        aggregation:
+                          type: string
+                          enum:
+                          - FIRST
+                          - LAST
+                          - COUNT
+                          - MAX
+                          - MIN
+                          - MEDIAN
+                          - MEAN
+                          - SUM
+                          - STD_DEV
+                        aggregationOptions:
+                          type: array
+                          items:
+                            type: object
+                            additionalProperties: false
+                          maxItems: 0
+                        childAttributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                pattern: ^[0-9a-zA-Z_-]{1,255}$
+                              mode:
+                                type: string
+                                enum:
+                                - all
+                                - whitelist
+                                - blacklist
+                              deviceIds:
+                                type: array
+                                items:
+                                  type: string
+                                  pattern: ^[A-Fa-f\d]{24}$
+                                maxItems: 1000
+                              deviceTags:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    key:
+                                      type: string
+                                      pattern: ^[0-9a-zA-Z_-]{1,255}$
+                                    value:
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 255
+                                  additionalProperties: false
+                                maxItems: 100
+                            required:
+                            - name
+                            - mode
+                            additionalProperties: false
+                          maxItems: 256
+                      additionalProperties: false
+                  required:
+                  - name
+                  - dataType
+                  additionalProperties: false
+              required:
+              - operation
+              - target
+              - value
+              additionalProperties: false
+            - type: object
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - add
+                target:
+                  type: string
+                  enum:
+                  - attributeSystem
+                value:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      pattern: ^[0-9a-zA-Z_-]{1,255}$
+                    dataType:
+                      type: string
+                      enum:
+                      - string
+                      - number
+                      - gps
+                      - boolean
+                      - blob
+                    contentType:
+                      type: string
+                      maxLength: 64
+                    description:
+                      type: string
+                      maxLength: 32767
+                    attributeTags:
+                      type: object
+                      patternProperties:
+                        ^[0-9a-zA-Z_-]{1,255}$:
+                          type: string
+                          minLength: 1
+                          maxLength: 255
+                      additionalProperties: false
+                    system:
+                      type: object
+                      properties:
+                        aggregation:
+                          type: string
+                          enum:
+                          - FIRST
+                          - LAST
+                          - COUNT
+                          - MAX
+                          - MIN
+                          - MEDIAN
+                          - MEAN
+                          - SUM
+                          - STD_DEV
+                        aggregationOptions:
+                          type: array
+                          items:
+                            type: object
+                            additionalProperties: false
+                          maxItems: 0
+                        childAttributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                pattern: ^[0-9a-zA-Z_-]{1,255}$
+                              mode:
+                                type: string
+                                enum:
+                                - all
+                                - whitelist
+                                - blacklist
+                              deviceIds:
+                                type: array
+                                items:
+                                  type: string
+                                  pattern: ^[A-Fa-f\d]{24}$
+                                maxItems: 1000
+                              deviceTags:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    key:
+                                      type: string
+                                      pattern: ^[0-9a-zA-Z_-]{1,255}$
+                                    value:
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 255
+                                  additionalProperties: false
+                                maxItems: 100
+                            required:
+                            - name
+                            - mode
+                            additionalProperties: false
+                          maxItems: 256
+                      additionalProperties: false
+                  required:
+                  - name
+                  - dataType
+                  additionalProperties: false
+              required:
+              - operation
+              - target
+              - value
+              additionalProperties: false
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+      additionalProperties: false
+      required: []
+    tagKeysResponse:
+      title: Tag Keys Response
+      description: Schema for a list of tag keys
+      type: object
+      properties:
+        tagKeys:
+          type: array
+          items:
+            type: string
+            pattern: ^[0-9a-zA-Z_-]{1,255}$
+          maxItems: 1000
+    deviceCommand:
+      title: Device Command
+      description: Schema for a command for a single Device
+      type: object
+      properties:
+        time:
+          oneOf:
+          - type: string
+          - type: number
+          - type: object
+            properties:
+              $date:
+                type: string
+            additionalProperties: false
+            required:
+            - $date
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        payload: {}
+      required:
+      - name
+      additionalProperties: false
+    success:
+      title: Success
+      description: Schema for reporting a successful operation
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+          - true
+    deviceClassFilter:
+      title: Device Class Filter
+      description: Select one or multiple device classes
+      oneOf:
+      - type: string
+        enum:
+        - standalone
+        - gateway
+        - peripheral
+        - floating
+        - edgeCompute
+        - system
+        - embedded
+      - type: array
+        items:
+          type: string
+          enum:
+          - standalone
+          - gateway
+          - peripheral
+          - floating
+          - edgeCompute
+          - system
+          - embedded
+    deviceStateOrStates:
+      title: Device State or States
+      description: Schema for a single device state or an array of device states
+      oneOf:
+      - title: Device State
+        description: Schema for a single Device state
+        type: object
+        properties:
+          time:
+            oneOf:
+            - type: string
+            - type: number
+            - type: object
+              properties:
+                $date:
+                  type: string
+              additionalProperties: false
+              required:
+              - $date
+          meta: {}
+          data:
+            type: object
+            patternProperties:
+              ^[0-9a-zA-Z_-]{1,255}$:
+                type:
+                - number
+                - string
+                - boolean
+            additionalProperties: false
+          flowVersion:
+            type: string
+            minLength: 1
+            maxLength: 255
+        required:
+        - data
+        additionalProperties: false
+      - title: Device States
+        description: Schema for an array of Device states
+        type: array
+        items:
+          $ref: '#/components/schemas/deviceState'
+    deviceAttributeDataTypeFilter:
+      title: Device Attribute Data Type Filter
+      description: Select one or multiple device attribute data types
+      oneOf:
+      - type: string
+        enum:
+        - string
+        - number
+        - gps
+        - boolean
+        - blob
+      - type: array
+        minItems: 1
+        items:
+          type: string
+          enum:
+          - string
+          - number
+          - gps
+          - boolean
+          - blob
+    devicesRemoveDataPost:
+      title: Devices Remove Data Post
+      description: Schema for the body of a bulk data removal request
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/advancedDeviceQuery'
+        start:
+          type: number
+        end:
+          type: number
+        attributes:
+          oneOf:
+          - type: 'null'
+          - type: array
+            maxItems: 256
+            items:
+              type: string
+              pattern: ^[0-9a-zA-Z_-]{1,255}$
+        keepConnectionHistory:
+          type: boolean
+        keepCommandHistory:
+          type: boolean
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+      additionalProperties: false
+      required:
+      - query
+    device:
+      title: Device
+      description: Schema for a single Device
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        deviceId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        creationDate:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        tags:
+          oneOf:
+          - type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                value:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+              required:
+              - key
+              - value
+              additionalProperties: false
+            maxItems: 100
+          - type: object
+            patternProperties:
+              ^[0-9a-zA-Z_-]{1,255}$:
+                type: array
+                items:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+            additionalProperties: false
+        attributes:
+          oneOf:
+          - type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                dataType:
+                  type: string
+                  enum:
+                  - string
+                  - number
+                  - gps
+                  - boolean
+                  - blob
+                contentType:
+                  type: string
+                  maxLength: 64
+                description:
+                  type: string
+                  maxLength: 32767
+                attributeTags:
+                  type: object
+                  patternProperties:
+                    ^[0-9a-zA-Z_-]{1,255}$:
+                      type: string
+                      minLength: 1
+                      maxLength: 255
+                  additionalProperties: false
+                system:
+                  type: object
+                  properties:
+                    aggregation:
+                      type: string
+                      enum:
+                      - FIRST
+                      - LAST
+                      - COUNT
+                      - MAX
+                      - MIN
+                      - MEDIAN
+                      - MEAN
+                      - SUM
+                      - STD_DEV
+                    aggregationOptions:
+                      type: array
+                      items:
+                        type: object
+                        additionalProperties: false
+                      maxItems: 0
+                    childAttributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            pattern: ^[0-9a-zA-Z_-]{1,255}$
+                          mode:
+                            type: string
+                            enum:
+                            - all
+                            - whitelist
+                            - blacklist
+                          deviceIds:
+                            type: array
+                            items:
+                              type: string
+                              pattern: ^[A-Fa-f\d]{24}$
+                            maxItems: 1000
+                          deviceTags:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                key:
+                                  type: string
+                                  pattern: ^[0-9a-zA-Z_-]{1,255}$
+                                value:
+                                  type: string
+                                  minLength: 1
+                                  maxLength: 255
+                              additionalProperties: false
+                            maxItems: 100
+                        required:
+                        - name
+                        - mode
+                        additionalProperties: false
+                      maxItems: 256
+                  additionalProperties: false
+              required:
+              - name
+              - dataType
+              additionalProperties: false
+            maxItems: 256
+          - type: object
+            patternProperties:
+              ^[0-9a-zA-Z_-]{1,255}$:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                  dataType:
+                    type: string
+                    enum:
+                    - string
+                    - number
+                    - gps
+                    - boolean
+                    - blob
+                  contentType:
+                    type: string
+                    maxLength: 64
+                  description:
+                    type: string
+                    maxLength: 32767
+                  attributeTags:
+                    type: object
+                    patternProperties:
+                      ^[0-9a-zA-Z_-]{1,255}$:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                    additionalProperties: false
+                  system:
+                    type: object
+                    properties:
+                      aggregation:
+                        type: string
+                        enum:
+                        - FIRST
+                        - LAST
+                        - COUNT
+                        - MAX
+                        - MIN
+                        - MEDIAN
+                        - MEAN
+                        - SUM
+                        - STD_DEV
+                      aggregationOptions:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                        maxItems: 0
+                      childAttributes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              pattern: ^[0-9a-zA-Z_-]{1,255}$
+                            mode:
+                              type: string
+                              enum:
+                              - all
+                              - whitelist
+                              - blacklist
+                            deviceIds:
+                              type: array
+                              items:
+                                type: string
+                                pattern: ^[A-Fa-f\d]{24}$
+                              maxItems: 1000
+                            deviceTags:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                    pattern: ^[0-9a-zA-Z_-]{1,255}$
+                                  value:
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 255
+                                additionalProperties: false
+                              maxItems: 100
+                          required:
+                          - name
+                          - mode
+                          additionalProperties: false
+                        maxItems: 256
+                    additionalProperties: false
+                required:
+                - name
+                - dataType
+                additionalProperties: false
+            additionalProperties: false
+        deviceClass:
+          type: string
+          enum:
+          - standalone
+          - gateway
+          - peripheral
+          - floating
+          - edgeCompute
+          - system
+          - embedded
+        gatewayId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        edgeAgentVersion:
+          type: string
+          pattern: ^(0|([1-9]\d*))\.(0|([1-9]\d*))\.(0|([1-9]\d*))$
+        connectionInfo:
+          type: object
+          properties:
+            time:
+              type: string
+              format: date-time
+            connected:
+              enum:
+              - 1
+              - 0
+              - null
+        parentId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: 'null'
+        ancestorIds:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          maxItems: 1000
+        systemInterval:
+          type: integer
+          minimum: 5
+          maximum: 3600
+        keepDuplicates:
+          type: boolean
+    devicePost:
+      title: Device Post
+      description: Schema for the body of a Device creation request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            required:
+            - key
+            - value
+            additionalProperties: false
+          maxItems: 100
+        attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              dataType:
+                type: string
+                enum:
+                - string
+                - number
+                - gps
+                - boolean
+                - blob
+              contentType:
+                type: string
+                maxLength: 64
+              description:
+                type: string
+                maxLength: 32767
+              attributeTags:
+                type: object
+                patternProperties:
+                  ^[0-9a-zA-Z_-]{1,255}$:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                additionalProperties: false
+              system:
+                type: object
+                properties:
+                  aggregation:
+                    type: string
+                    enum:
+                    - FIRST
+                    - LAST
+                    - COUNT
+                    - MAX
+                    - MIN
+                    - MEDIAN
+                    - MEAN
+                    - SUM
+                    - STD_DEV
+                  aggregationOptions:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                    maxItems: 0
+                  childAttributes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        mode:
+                          type: string
+                          enum:
+                          - all
+                          - whitelist
+                          - blacklist
+                        deviceIds:
+                          type: array
+                          items:
+                            type: string
+                            pattern: ^[A-Fa-f\d]{24}$
+                          maxItems: 1000
+                        deviceTags:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                                pattern: ^[0-9a-zA-Z_-]{1,255}$
+                              value:
+                                type: string
+                                minLength: 1
+                                maxLength: 255
+                            additionalProperties: false
+                          maxItems: 100
+                      required:
+                      - name
+                      - mode
+                      additionalProperties: false
+                    maxItems: 256
+                additionalProperties: false
+            required:
+            - name
+            - dataType
+            additionalProperties: false
+          maxItems: 256
+        deviceClass:
+          type: string
+          enum:
+          - standalone
+          - gateway
+          - peripheral
+          - floating
+          - edgeCompute
+          - system
+          - embedded
+        gatewayId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        parentId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: 'null'
+        systemInterval:
+          type: integer
+          minimum: 5
+          maximum: 3600
+        keepDuplicates:
+          type: boolean
+      additionalProperties: false
+      required:
+      - name
+    devices:
+      title: Devices
+      description: Schema for a collection of Devices
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/device'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        filter:
+          type: string
+        filterField:
+          type: string
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        deviceClass:
+          oneOf:
+          - type: string
+            enum:
+            - standalone
+            - gateway
+            - peripheral
+            - floating
+            - edgeCompute
+            - system
+            - embedded
+          - type: array
+            items:
+              type: string
+              enum:
+              - standalone
+              - gateway
+              - peripheral
+              - floating
+              - edgeCompute
+              - system
+              - embedded
+        tagFilter:
+          title: Device Tag Filter
+          description: Array of Tags for filtering devices. Tag keys and tag values are optional.
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            additionalProperties: false
+          maxItems: 100
+        parentId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: 'null'
+        query:
+          type: object
+    deviceCommands:
+      title: Device Commands
+      description: Schema for an array of Device Commands
+      type: array
+      items:
+        $ref: '#/components/schemas/deviceCommand'
+    devicesUpdated:
+      title: Devices Updated
+      description: Schema for response of devices updated if under 100 devices queried
+      type: object
+      properties:
+        updated:
+          type: number
+        failed:
+          type: number
+        skipped:
+          type: number
+        logLink:
+          type: string
+    error:
+      title: Error
+      description: Schema for errors returned by the API
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        validationErrors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              validationMessage:
+                type: string
+    compositeDevicesState:
+      title: Devices Composite State
+      description: Schema for a collection of Composite Device State
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                pattern: ^[A-Fa-f\d]{24}$
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+              compositeState:
+                title: Composite Device State
+                description: Schema for a composite Device state
+                type: object
+                patternProperties:
+                  ^[0-9a-zA-Z_-]{1,255}$:
+                    type: object
+                    properties:
+                      value:
+                        type:
+                        - number
+                        - string
+                        - boolean
+                      time:
+                        oneOf:
+                        - type: string
+                        - type: number
+                        - type: object
+                          properties:
+                            $date:
+                              type: string
+                          additionalProperties: false
+                          required:
+                          - $date
+                additionalProperties: false
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        perPage:
+          type: integer
+        page:
+          type: integer
+        sortField:
+          type: string
+        sortDirection:
+          type: string
+          enum:
+          - asc
+          - desc
+          - ASC
+          - DESC
+          - ''
+        applicationId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        query:
+          type: object
+    tagValuesResponse:
+      title: Tag Values Response
+      description: Schema for a list of tag values for a key
+      type: object
+      properties:
+        tagKey:
+          type: string
+        tagValues:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 255
+          maxItems: 1000
+    deviceDataExport:
+      title: Device Data Export
+      description: Schema for exporting the data for a single device
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 1024
+        callbackUrl:
+          type: string
+          format: uri
+          maxLength: 1024
+        attributes:
+          type: array
+          maxItems: 256
+          items:
+            type: string
+            pattern: ^[0-9a-zA-Z_-]{1,255}$
+        start:
+          type: number
+        end:
+          type: number
+        options:
+          type: object
+          properties:
+            includeDate:
+              type: boolean
+              default: true
+            includeID:
+              type: boolean
+              default: true
+            includeBlobData:
+              type: boolean
+              default: false
+      additionalProperties: false
+    attributeNamesResponse:
+      title: Attribute Names Response
+      description: Schema for a list of attribute names
+      type: object
+      properties:
+        attributeNames:
+          type: array
+          items:
+            type: string
+            pattern: ^[0-9a-zA-Z_-]{1,255}$
+          maxItems: 1000
+    deviceTagFilter:
+      title: Device Tag Filter
+      description: Array of Tags for filtering devices. Tag keys and tag values are optional.
+      type: array
+      items:
+        type: object
+        properties:
+          key:
+            type: string
+            pattern: ^[0-9a-zA-Z_-]{1,255}$
+          value:
+            type: string
+            minLength: 1
+            maxLength: 255
+        additionalProperties: false
+      maxItems: 100
+    devicePatch:
+      title: Device Patch
+      description: Schema for the body of a Device modification request
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 32767
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              value:
+                type: string
+                minLength: 1
+                maxLength: 255
+            required:
+            - key
+            - value
+            additionalProperties: false
+          maxItems: 100
+        attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                pattern: ^[0-9a-zA-Z_-]{1,255}$
+              dataType:
+                type: string
+                enum:
+                - string
+                - number
+                - gps
+                - boolean
+                - blob
+              contentType:
+                type: string
+                maxLength: 64
+              description:
+                type: string
+                maxLength: 32767
+              attributeTags:
+                type: object
+                patternProperties:
+                  ^[0-9a-zA-Z_-]{1,255}$:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                additionalProperties: false
+              system:
+                type: object
+                properties:
+                  aggregation:
+                    type: string
+                    enum:
+                    - FIRST
+                    - LAST
+                    - COUNT
+                    - MAX
+                    - MIN
+                    - MEDIAN
+                    - MEAN
+                    - SUM
+                    - STD_DEV
+                  aggregationOptions:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                    maxItems: 0
+                  childAttributes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          pattern: ^[0-9a-zA-Z_-]{1,255}$
+                        mode:
+                          type: string
+                          enum:
+                          - all
+                          - whitelist
+                          - blacklist
+                        deviceIds:
+                          type: array
+                          items:
+                            type: string
+                            pattern: ^[A-Fa-f\d]{24}$
+                          maxItems: 1000
+                        deviceTags:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                                pattern: ^[0-9a-zA-Z_-]{1,255}$
+                              value:
+                                type: string
+                                minLength: 1
+                                maxLength: 255
+                            additionalProperties: false
+                          maxItems: 100
+                      required:
+                      - name
+                      - mode
+                      additionalProperties: false
+                    maxItems: 256
+                additionalProperties: false
+            required:
+            - name
+            - dataType
+            additionalProperties: false
+          maxItems: 256
+        deviceClass:
+          type: string
+          enum:
+          - standalone
+          - gateway
+          - peripheral
+          - floating
+          - edgeCompute
+          - system
+          - embedded
+        gatewayId:
+          type: string
+          pattern: ^[A-Fa-f\d]{24}$
+        parentId:
+          oneOf:
+          - type: string
+            pattern: ^[A-Fa-f\d]{24}$
+          - type: 'null'
+        systemInterval:
+          type: integer
+          minimum: 5
+          maximum: 3600
+        keepDuplicates:
+          type: boolean
+      additionalProperties: false
+    deviceLog:
+      title: Device Log
+      description: Log of connection information for a Device
+      type: array
+      items:
+        type: object
+        properties:
+          connected:
+            enum:
+            - 1
+            - 0
+          time:
+            type: string
+            format: date-time
+          method:
+            type: string
+          disconnectReason:
+            type: string
+          messagesFromClient:
+            type: number
+          messagesToClient:
+            type: number
+          ipAddress:
+            type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-derived-from:
+  format: bravado 1.0
+  by: all/0-working/bravado-to-openapi.py (roadmap#799)
+  note: 'every action keeps its own path: resource.path + action.path'
