@@ -12,102 +12,15 @@ artifacts:
   authentication/losant-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  capabilities/losant-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/losant-changelog.yml:
     method: searched
     evidence: declared in the artifact
   cli/losant-cli.yml:
     method: searched
     evidence: declared in the artifact
-  collections/losant-application-api.opencollection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-application-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-auth-api.opencollection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-auth-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-authentication-and-account-api.opencollection.json:
-    method: derived
-    evidence: openapi/losant-authentication-and-account-api
-  collections/losant-authentication-and-account-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-authentication-and-account-api
-  collections/losant-data-and-data-tables-api.opencollection.json:
-    method: derived
-    evidence: openapi/losant-data-and-data-tables-api
-  collections/losant-data-and-data-tables-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-data-and-data-tables-api
-  collections/losant-data-api.opencollection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-data-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-device-api.opencollection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-device-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-edge-and-embedded-compute-api.opencollection.json:
-    method: derived
-    evidence: openapi/losant-edge-and-embedded-compute-api
-  collections/losant-edge-and-embedded-compute-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-edge-and-embedded-compute-api
-  collections/losant-edge-api.opencollection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-edge-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-enterprise-instance-api.opencollection.json:
-    method: derived
-    evidence: openapi/losant-enterprise-instance-api
-  collections/losant-enterprise-instance-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-enterprise-instance-api
-  collections/losant-experience-api.opencollection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-experience-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-instance-api.opencollection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-instance-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-notebook-api.opencollection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-notebook-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-notebooks-api.opencollection.json:
-    method: derived
-    evidence: openapi/losant-notebooks-api
-  collections/losant-notebooks-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-notebooks-api
-  collections/losant-workflow-api.opencollection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-workflow-api.postman_collection.json:
-    method: unknown
-    evidence: no authorship recorded
-  collections/losant-workflow-engine-api.opencollection.json:
-    method: derived
-    evidence: openapi/losant-workflow-engine-api
-  collections/losant-workflow-engine-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-workflow-engine-api
   conformance/losant-conformance.yml:
     method: searched
     evidence: declared in the artifact
@@ -157,11 +70,17 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   finops/losant-finops.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: generated
+    evidence: declared in the artifact
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/losant-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
   json-ld/losant-context.jsonld:
     method: unknown
     evidence: no authorship recorded
@@ -201,127 +120,7 @@ artifacts:
   json-structure/losant-flow-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -405,6 +204,21 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/losant-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -417,69 +231,195 @@ artifacts:
   mcp/losant-tool-crosswalk.yml:
     method: derived
     evidence: declared in the artifact
-  openapi/_original/losant-auth-api-openapi.yml:
+  openapi/_original/losant-platform-api-bravado.json:
     method: harvested
-    evidence: fetched from https://api.losant.com/ (recorded in the document)
-  openapi/_original/losant-data-api-openapi.yml:
-    method: harvested
-    evidence: fetched from https://api.losant.com/ (recorded in the document)
-  openapi/_original/losant-edge-api-openapi.yml:
-    method: harvested
-    evidence: fetched from https://api.losant.com/ (recorded in the document)
-  openapi/_original/losant-instance-api-openapi.yml:
-    method: harvested
-    evidence: fetched from https://api.losant.com/ (recorded in the document)
-  openapi/_original/losant-notebook-api-openapi.yml:
-    method: harvested
-    evidence: fetched from https://api.losant.com/ (recorded in the document)
-  openapi/_original/losant-workflow-api-openapi.yml:
-    method: harvested
-    evidence: fetched from https://api.losant.com/ (recorded in the document)
-  openapi/losant-authentication-and-account-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/losant-data-and-data-tables-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/losant-edge-and-embedded-compute-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/losant-enterprise-instance-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    evidence: byte-identical to https://api.losant.com/ (sha256 fe2f9d491b4a, fetched 2026-10-19)
+  openapi/losant-application-api-tokens-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-application-certificate-authorities-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-application-certificates-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-application-dashboards-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-application-job-logs-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-application-keys-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-application-templates-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-applications-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-audit-logs-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-auth-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-credentials-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-dashboards-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-data-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-data-table-rows-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-data-tables-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-device-attributes-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-device-recipes-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-devices-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-edge-deployments-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-embedded-deployments-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-events-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-experience-domains-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-experience-endpoints-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-experience-groups-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-experience-slugs-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-experience-users-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-experience-versions-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-experience-views-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-experiences-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-files-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-flow-versions-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-flows-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-instance-api-tokens-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-instance-audit-logs-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-instance-custom-nodes-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-instance-members-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-instance-notification-rules-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-instance-org-invites-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-instance-org-members-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-instance-orgs-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-instance-sandboxes-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-instances-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-integrations-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-me-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/losant-notebooks-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/losant-workflow-engine-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-org-invites-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-orgs-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-private-files-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-resource-jobs-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-user-api-tokens-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-user-oauth-clients-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-user-oauth-tokens-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/losant-webhooks-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   overlays/losant-application-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/losant-authentication-and-account-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/losant-data-and-data-tables-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/losant-device-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/losant-edge-and-embedded-compute-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/losant-enterprise-instance-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/losant-experience-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/losant-notebooks-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/losant-workflow-engine-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   packages/losant-packages.yml:
     method: searched
     evidence: declared in the artifact
@@ -487,23 +427,23 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   postman/losant-application-api.postman_collection.json:
+    method: derived
+    evidence: openapi/losant-application-api
+  postman/losant-authentication-and-account-api.postman_collection.json:
     method: unknown
     evidence: no authorship recorded
-  postman/losant-authentication-and-account-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-authentication-and-account-api
   postman/losant-data-and-data-tables-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-data-and-data-tables-api
+    method: unknown
+    evidence: no authorship recorded
   postman/losant-device-api.postman_collection.json:
     method: unknown
     evidence: no authorship recorded
   postman/losant-edge-and-embedded-compute-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-edge-and-embedded-compute-api
+    method: unknown
+    evidence: no authorship recorded
   postman/losant-enterprise-instance-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-enterprise-instance-api
+    method: unknown
+    evidence: no authorship recorded
   postman/losant-experience-api.postman_collection.json:
     method: unknown
     evidence: no authorship recorded
@@ -511,8 +451,8 @@ artifacts:
     method: derived
     evidence: openapi/losant-notebooks-api
   postman/losant-workflow-engine-api.postman_collection.json:
-    method: derived
-    evidence: openapi/losant-workflow-engine-api
+    method: unknown
+    evidence: no authorship recorded
   rate-limits/losant-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
