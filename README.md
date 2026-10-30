@@ -1,4 +1,4 @@
-# Losant (losant)
+# Losant
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -72,331 +72,298 @@ notebooks, files, integrations, webhooks, dashboards, organizations, audit logs,
 enterprise instance administration. Devices may also connect via MQTT. Customers include industrial,
 smart-building, agriculture, and connected-product companies; Losant emphasizes white-labeled end-user
 experiences ("Experiences") and edge compute on Linux gateways plus microcontrollers via the Embedded
-Edge Agent (EEA).
-
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/losant/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/losant/refs/heads/main/apis.yml)
-
-## Scope
-
-- **Access:** 3rd-Party
-
-## Tags
-
-- IoT
-- Internet Of Things
-- Devices
-- Edge Compute
-- Embedded
-- MQTT
-- Industrial IoT
-- Telemetry
-- Workflow Automation
-- Visual Workflow Engine
-- Dashboards
-- Time Series
-- Connected Products
-- Enterprise
-
-## APIs
-
-### Losant Authentication And Account API
-
-Authenticate users, devices, and SSO sessions; manage the currently signed-in user, personal access
-tokens, organizations, and organization invites. Returns JWTs used as Bearer tokens for the rest of the
-Losant Platform API.
-
-- **Human URL:** [https://docs.losant.com/rest-api/auth/](https://docs.losant.com/rest-api/auth/)
-- **Base URL:** `https://api.losant.com`
-
-#### Tags
-
-- Authentication
-- Account
-- Users
-- Organizations
-- JWT
-
-#### Properties
-
-- [Documentation](https://docs.losant.com/rest-api/auth/)
-- [Documentation](https://docs.losant.com/rest-api/me/)
-- [Documentation](https://docs.losant.com/rest-api/org/)
-- [OpenAPI](openapi/losant-auth-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/losant-auth-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/losant-auth-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Losant Application API
-
-Manage Losant Applications - the top-level multi-tenant container for IoT solutions - plus all
-application-scoped resources: dashboards, events, webhooks, integrations, files, application keys, API
-tokens, certificate authorities and certificates for X.509-authenticated devices, application templates,
-audit logs, credentials, and long-running resource jobs.
-
-- **Human URL:** [https://docs.losant.com/rest-api/application/](https://docs.losant.com/rest-api/application/)
-- **Base URL:** `https://api.losant.com`
-
-#### Tags
-
-- Applications
-- Dashboards
-- Events
-- Webhooks
-- Integrations
-- Files
-- Audit Logs
-- Credentials
-- Certificates
-- API Tokens
-- Resource Jobs
-
-#### Properties
-
-- [Documentation](https://docs.losant.com/applications/overview/)
-- [Documentation](https://docs.losant.com/rest-api/application/)
-- [Documentation](https://docs.losant.com/rest-api/applications/)
-- [OpenAPI](openapi/losant-application-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/losant-application-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/losant-application-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/losant-application-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/losant-event-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/losant-application-structure.json)
-
-### Losant Device API
-
-Provision and manage IoT devices and device recipes, query device tags and attributes, read connection
-state and logs, and publish state or send commands to devices. Devices may also publish state and
-receive commands via MQTT (`broker.losant.com`).
-
-- **Human URL:** [https://docs.losant.com/rest-api/device/](https://docs.losant.com/rest-api/device/)
-- **Base URL:** `https://api.losant.com`
-
-#### Tags
-
-- Devices
-- Device Recipes
-- Telemetry
-- State
-- Commands
-- IoT
-
-#### Properties
-
-- [Documentation](https://docs.losant.com/devices/overview/)
-- [Documentation](https://docs.losant.com/rest-api/device/)
-- [Documentation](https://docs.losant.com/rest-api/devices/)
-- [Documentation](https://docs.losant.com/mqtt/overview/)
-- [OpenAPI](openapi/losant-device-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/losant-device-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/losant-device-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/losant-device-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/losant-device-structure.json)
-
-### Losant Data And Data Tables API
-
-Aggregate, query, and export time-series device data, and read/write rows in Data Tables - Losant's
-schemaful relational store for context data that lives alongside IoT telemetry.
-
-- **Human URL:** [https://docs.losant.com/rest-api/data/](https://docs.losant.com/rest-api/data/)
-- **Base URL:** `https://api.losant.com`
-
-#### Tags
-
-- Data
-- Data Tables
-- Time Series
-- Telemetry
-- Aggregation
-- Export
-
-#### Properties
-
-- [Documentation](https://docs.losant.com/data-tables/overview/)
-- [Documentation](https://docs.losant.com/rest-api/data/)
-- [Documentation](https://docs.losant.com/rest-api/data-table/)
-- [Documentation](https://docs.losant.com/rest-api/data-table-rows/)
-- [OpenAPI](openapi/losant-data-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/losant-data-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/losant-data-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/losant-data-table-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/losant-data-structure.json)
-
-### Losant Workflow Engine API
-
-Create, version, deploy, debug, and execute flows in the Losant Visual Workflow Engine. Supports
-Application, Experience, Edge, Embedded, and Custom Node workflow types with full version history and
-rollback.
-
-- **Human URL:** [https://docs.losant.com/rest-api/flow/](https://docs.losant.com/rest-api/flow/)
-- **Base URL:** `https://api.losant.com`
-
-#### Tags
-
-- Workflows
-- Visual Workflow Engine
-- Automation
-- Orchestration
-- Versioning
-
-#### Properties
-
-- [Documentation](https://docs.losant.com/workflows/overview/)
-- [Documentation](https://docs.losant.com/rest-api/flow/)
-- [Documentation](https://docs.losant.com/rest-api/flows/)
-- [Documentation](https://docs.losant.com/rest-api/flow-version/)
-- [OpenAPI](openapi/losant-workflow-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/losant-workflow-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/losant-workflow-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Losant Edge And Embedded Compute API
-
-Manage Losant Edge Compute deployments to Linux gateways (Gateway Edge Agent) and Embedded Edge Agent
-(EEA) deployments to microcontrollers. Distribute workflow versions to fleets, track deployment state,
-and roll back releases.
-
-- **Human URL:** [https://docs.losant.com/rest-api/edge-deployment/](https://docs.losant.com/rest-api/edge-deployment/)
-- **Base URL:** `https://api.losant.com`
-
-#### Tags
-
-- Edge Compute
-- Embedded
-- EEA
-- Deployments
-- Gateways
-- Microcontrollers
-
-#### Properties
-
-- [Documentation](https://docs.losant.com/edge-compute/overview/)
-- [Documentation](https://docs.losant.com/rest-api/edge-deployment/)
-- [Documentation](https://docs.losant.com/rest-api/embedded-deployment/)
-- [OpenAPI](openapi/losant-edge-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/losant-edge-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/losant-edge-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Losant Experience API
-
-Build white-labeled end-user web Experiences on top of a Losant Application: experience users, groups,
-HTTP endpoints, server-rendered views, slugs, custom domains, versions, and the Experience publishing
-pipeline.
-
-- **Human URL:** [https://docs.losant.com/rest-api/experience/](https://docs.losant.com/rest-api/experience/)
-- **Base URL:** `https://api.losant.com`
-
-#### Tags
-
-- Experiences
-- End User
-- White Label
-- Web
-- Users
-- Groups
-- Endpoints
-- Views
-
-#### Properties
-
-- [Documentation](https://docs.losant.com/experiences/overview/)
-- [Documentation](https://docs.losant.com/rest-api/experience/)
-- [Documentation](https://docs.losant.com/rest-api/experience-users/)
-- [Documentation](https://docs.losant.com/rest-api/experience-endpoint/)
-- [OpenAPI](openapi/losant-experience-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/losant-experience-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/losant-experience-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Losant Notebooks API
-
-Trigger and manage Losant Notebook executions - Jupyter-style batch workloads that operate on historical
-device data, data table contents, and other application state for analytics, ML, and reporting.
-
-- **Human URL:** [https://docs.losant.com/rest-api/notebook/](https://docs.losant.com/rest-api/notebook/)
-- **Base URL:** `https://api.losant.com`
-
-#### Tags
-
-- Notebooks
-- Jupyter
-- Batch
-- Analytics
-- Reporting
-- Data Science
-
-#### Properties
-
-- [Documentation](https://docs.losant.com/notebooks/overview/)
-- [Documentation](https://docs.losant.com/rest-api/notebook/)
-- [OpenAPI](openapi/losant-notebook-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/losant-notebook-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/losant-notebook-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Losant Enterprise Instance API
-
-Administer dedicated or self-hosted Losant Enterprise Instances: instance members, organizations within
-the instance, organization members and invites, instance-level custom workflow nodes, sandboxes,
-notification rules, instance-level API tokens, and audit logs.
-
-- **Human URL:** [https://docs.losant.com/rest-api/instance/](https://docs.losant.com/rest-api/instance/)
-- **Base URL:** `https://api.losant.com`
-
-#### Tags
-
-- Enterprise
-- Instance
-- Self Hosted
-- Administration
-- Custom Nodes
-- Sandboxes
-- Notification Rules
-
-#### Properties
-
-- [Documentation](https://docs.losant.com/rest-api/instance/)
-- [Documentation](https://docs.losant.com/rest-api/instance-org/)
-- [Documentation](https://docs.losant.com/rest-api/instance-custom-node/)
-- [OpenAPI](openapi/losant-instance-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/losant-instance-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/losant-instance-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Portal](https://www.losant.com/)
+Edge Agent (EEA). Losant also ships a hosted, OAuth 2.0-protected Model Context Protocol (MCP) server at
+https://mcp.losant.com/mcp so AI assistants can query and write application configuration and telemetry.
+Losant was acquired by SUSE, which is folding the platform into an open process automation offering for
+Industrial IoT.
+
+**Areas:** IoT · Devices · Edge Compute · Embedded · MQTT · Industrial IoT · Telemetry · Workflow Automation · Visual Workflow Engine · Dashboards · Time Series · Connected Products
+
+## Losant on APIs.io
+
+Everything profiled for Losant is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/losant/](https://apis.io/providers/losant/)** — or go straight to one of the APIs or properties below.
+
+### APIs (53)
+
+- [Losant Application Api Tokens API](https://apis.io/apis/losant/losant-application-api-tokens-api/) — The Application Api Tokens API from Losant — 2 operation(s) for application api tokens.
+- [Losant Application Certificate Authorities API](https://apis.io/apis/losant/losant-application-certificate-authorities-api/) — The Application Certificate Authorities API from Losant — 2 operation(s) for application certificate authorities.
+- [Losant Application Certificates API](https://apis.io/apis/losant/losant-application-certificates-api/) — The Application Certificates API from Losant — 2 operation(s) for application certificates.
+- [Losant Application Dashboards API](https://apis.io/apis/losant/losant-application-dashboards-api/) — The Application Dashboards API from Losant — 2 operation(s) for application dashboards.
+- [Losant Application Job Logs API](https://apis.io/apis/losant/losant-application-job-logs-api/) — The Application Job Logs API from Losant — 2 operation(s) for application job logs.
+- [Losant Application Keys API](https://apis.io/apis/losant/losant-application-keys-api/) — The Application Keys API from Losant — 2 operation(s) for application keys.
+- [Losant Application Templates API](https://apis.io/apis/losant/losant-application-templates-api/) — The Application Templates API from Losant — 4 operation(s) for application templates.
+- [Losant Applications API](https://apis.io/apis/losant/losant-applications-api/) — The Applications API from Losant — 22 operation(s) for applications.
+- [Losant Audit Logs API](https://apis.io/apis/losant/losant-audit-logs-api/) — The Audit Logs API from Losant — 2 operation(s) for audit logs.
+- [Losant Auth API](https://apis.io/apis/losant/losant-auth-api/) — The Auth API from Losant — 5 operation(s) for auth.
+- [Losant Credentials API](https://apis.io/apis/losant/losant-credentials-api/) — The Credentials API from Losant — 3 operation(s) for credentials.
+- [Losant Dashboards API](https://apis.io/apis/losant/losant-dashboards-api/) — The Dashboards API from Losant — 3 operation(s) for dashboards.
+- [Losant Data API](https://apis.io/apis/losant/losant-data-api/) — The Data API from Losant — 3 operation(s) for data.
+- [Losant Data Table Rows API](https://apis.io/apis/losant/losant-data-table-rows-api/) — The Data Table Rows API from Losant — 6 operation(s) for data table rows.
+- [Losant Data Tables API](https://apis.io/apis/losant/losant-data-tables-api/) — The Data Tables API from Losant — 3 operation(s) for data tables.
+- [Losant Device Attributes API](https://apis.io/apis/losant/losant-device-attributes-api/) — The Device Attributes API from Losant — 2 operation(s) for device attributes.
+- [Losant Device Recipes API](https://apis.io/apis/losant/losant-device-recipes-api/) — The Device Recipes API from Losant — 3 operation(s) for device recipes.
+- [Losant Devices API](https://apis.io/apis/losant/losant-devices-api/) — The Devices API from Losant — 24 operation(s) for devices.
+- [Losant Edge Deployments API](https://apis.io/apis/losant/losant-edge-deployments-api/) — The Edge Deployments API from Losant — 5 operation(s) for edge deployments.
+- [Losant Embedded Deployments API](https://apis.io/apis/losant/losant-embedded-deployments-api/) — The Embedded Deployments API from Losant — 6 operation(s) for embedded deployments.
+- [Losant Events API](https://apis.io/apis/losant/losant-events-api/) — The Events API from Losant — 5 operation(s) for events.
+- [Losant Experience Domains API](https://apis.io/apis/losant/losant-experience-domains-api/) — The Experience Domains API from Losant — 2 operation(s) for experience domains.
+- [Losant Experience Endpoints API](https://apis.io/apis/losant/losant-experience-endpoints-api/) — The Experience Endpoints API from Losant — 4 operation(s) for experience endpoints.
+- [Losant Experience Groups API](https://apis.io/apis/losant/losant-experience-groups-api/) — The Experience Groups API from Losant — 2 operation(s) for experience groups.
+- [Losant Experience Slugs API](https://apis.io/apis/losant/losant-experience-slugs-api/) — The Experience Slugs API from Losant — 2 operation(s) for experience slugs.
+- [Losant Experience Users API](https://apis.io/apis/losant/losant-experience-users-api/) — The Experience Users API from Losant — 2 operation(s) for experience users.
+- [Losant Experience Versions API](https://apis.io/apis/losant/losant-experience-versions-api/) — The Experience Versions API from Losant — 2 operation(s) for experience versions.
+- [Losant Experience Views API](https://apis.io/apis/losant/losant-experience-views-api/) — The Experience Views API from Losant — 3 operation(s) for experience views.
+- [Losant Experiences API](https://apis.io/apis/losant/losant-experiences-api/) — The Experiences API from Losant — 2 operation(s) for experiences.
+- [Losant Files API](https://apis.io/apis/losant/losant-files-api/) — The Files API from Losant — 4 operation(s) for files.
+- [Losant Flow Versions API](https://apis.io/apis/losant/losant-flow-versions-api/) — The Flow Versions API from Losant — 6 operation(s) for flow versions.
+- [Losant Flows API](https://apis.io/apis/losant/losant-flows-api/) — The Flows API from Losant — 11 operation(s) for flows.
+- [Losant Instance Api Tokens API](https://apis.io/apis/losant/losant-instance-api-tokens-api/) — The Instance Api Tokens API from Losant — 2 operation(s) for instance api tokens.
+- [Losant Instance Audit Logs API](https://apis.io/apis/losant/losant-instance-audit-logs-api/) — The Instance Audit Logs API from Losant — 2 operation(s) for instance audit logs.
+- [Losant Instance Custom Nodes API](https://apis.io/apis/losant/losant-instance-custom-nodes-api/) — The Instance Custom Nodes API from Losant — 4 operation(s) for instance custom nodes.
+- [Losant Instance Members API](https://apis.io/apis/losant/losant-instance-members-api/) — The Instance Members API from Losant — 2 operation(s) for instance members.
+- [Losant Instance Notification Rules API](https://apis.io/apis/losant/losant-instance-notification-rules-api/) — The Instance Notification Rules API from Losant — 4 operation(s) for instance notification rules.
+- [Losant Instance Org Invites API](https://apis.io/apis/losant/losant-instance-org-invites-api/) — The Instance Org Invites API from Losant — 2 operation(s) for instance org invites.
+- [Losant Instance Org Members API](https://apis.io/apis/losant/losant-instance-org-members-api/) — The Instance Org Members API from Losant — 2 operation(s) for instance org members.
+- [Losant Instance Orgs API](https://apis.io/apis/losant/losant-instance-orgs-api/) — The Instance Orgs API from Losant — 6 operation(s) for instance orgs.
+- [Losant Instance Sandboxes API](https://apis.io/apis/losant/losant-instance-sandboxes-api/) — The Instance Sandboxes API from Losant — 7 operation(s) for instance sandboxes.
+- [Losant Instances API](https://apis.io/apis/losant/losant-instances-api/) — The Instances API from Losant — 8 operation(s) for instances.
+- [Losant Integrations API](https://apis.io/apis/losant/losant-integrations-api/) — The Integrations API from Losant — 2 operation(s) for integrations.
+- [Losant Me API](https://apis.io/apis/losant/losant-me-api/) — The Me API from Losant — 17 operation(s) for me.
+- [Losant Notebooks API](https://apis.io/apis/losant/losant-notebooks-api/) — The Notebooks API from Losant — 8 operation(s) for notebooks.
+- [Losant Org Invites API](https://apis.io/apis/losant/losant-org-invites-api/) — The Org Invites API from Losant — 1 operation(s) for org invites.
+- [Losant Orgs API](https://apis.io/apis/losant/losant-orgs-api/) — The Orgs API from Losant — 9 operation(s) for orgs.
+- [Losant Private Files API](https://apis.io/apis/losant/losant-private-files-api/) — The Private Files API from Losant — 4 operation(s) for private files.
+- [Losant Resource Jobs API](https://apis.io/apis/losant/losant-resource-jobs-api/) — The Resource Jobs API from Losant — 5 operation(s) for resource jobs.
+- [Losant User Api Tokens API](https://apis.io/apis/losant/losant-user-api-tokens-api/) — The User Api Tokens API from Losant — 2 operation(s) for user api tokens.
+- [Losant User Oauth Clients API](https://apis.io/apis/losant/losant-user-oauth-clients-api/) — The User Oauth Clients API from Losant — 2 operation(s) for user oauth clients.
+- [Losant User Oauth Tokens API](https://apis.io/apis/losant/losant-user-oauth-tokens-api/) — The User Oauth Tokens API from Losant — 2 operation(s) for user oauth tokens.
+- [Losant Webhooks API](https://apis.io/apis/losant/losant-webhooks-api/) — The Webhooks API from Losant — 2 operation(s) for webhooks.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Losant Event Surface](https://apis.io/asyncapis/losant/losant-event-surface/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Losant](https://apis.io/servers/losant/losant/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Losant Agentic Access](https://apis.io/agentic-access/losant/losant-agentic-access/)
+
+#### JSON Schema (8)
+
+The data models the API reads and writes.
+
+- [Losant Application](https://apis.io/schemas/losant/losant-application/)
+- [Losant DataTable](https://apis.io/schemas/losant/losant-data-table/)
+- [Losant Device](https://apis.io/schemas/losant/losant-device/)
+- [Losant EdgeDeployment](https://apis.io/schemas/losant/losant-edge-deployment/)
+- [Losant Event](https://apis.io/schemas/losant/losant-event/)
+- [Losant ExperienceUser](https://apis.io/schemas/losant/losant-experience-user/)
+- [Losant Flow](https://apis.io/schemas/losant/losant-flow/)
+- [Losant Notebook](https://apis.io/schemas/losant/losant-notebook/)
+
+#### JSON Structure (4)
+
+Data models expressed in JSON Structure.
+
+- [Losant Application Structure](https://apis.io/json-structure/losant/losant-application-structure/)
+- [Losant Data Structure](https://apis.io/json-structure/losant/losant-data-structure/)
+- [Losant Device Structure](https://apis.io/json-structure/losant/losant-device-structure/)
+- [Losant Flow Structure](https://apis.io/json-structure/losant/losant-flow-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Losant Context](https://apis.io/jsonld/losant/losant-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Losant IoT Platform Vocabulary](https://apis.io/vocabularies/losant/losant-vocabulary/)
+
+#### Examples (12)
+
+Example requests and responses.
+
+- [Losant Application Api Create Application Example](https://apis.io/examples/losant/losant-application-api-create-application-example/)
+- [Losant Application Api Get Application Example](https://apis.io/examples/losant/losant-application-api-get-application-example/)
+- [Losant Auth Api Authenticate Device Example](https://apis.io/examples/losant/losant-auth-api-authenticate-device-example/)
+- [Losant Auth Api Authenticate User Example](https://apis.io/examples/losant/losant-auth-api-authenticate-user-example/)
+- [Losant Data Api Last Value Query Example](https://apis.io/examples/losant/losant-data-api-last-value-query-example/)
+- [Losant Data Api Time Series Query Example](https://apis.io/examples/losant/losant-data-api-time-series-query-example/)
+- [Losant Device Api Send Command Example](https://apis.io/examples/losant/losant-device-api-send-command-example/)
+- [Losant Device Api Send State Example](https://apis.io/examples/losant/losant-device-api-send-state-example/)
+- [Losant Edge Api Release Edge Deployment Example](https://apis.io/examples/losant/losant-edge-api-release-edge-deployment-example/)
+- [Losant Experience Api Create Experience User Example](https://apis.io/examples/losant/losant-experience-api-create-experience-user-example/)
+- [Losant Notebook Api Execute Notebook Example](https://apis.io/examples/losant/losant-notebook-api-execute-notebook-example/)
+- [Losant Workflow Api Create Flow Example](https://apis.io/examples/losant/losant-workflow-api-create-flow-example/)
+
+#### Collections (24)
+
+Postman and Open Collection request collections.
+
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-application-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-auth-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-authentication-and-account-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-data-and-data-tables-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-data-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-device-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-edge-and-embedded-compute-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-edge-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-enterprise-instance-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-experience-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-instance-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-notebook-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-notebooks-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-workflow-api/)
+- [Moved to /providers/losant/](https://apis.io/collections/losant/open-losant-workflow-engine-api/)
+- [Losant Application API](https://apis.io/collections/losant/postman-losant-application-api/)
+- [Losant Application Authentication and Account API](https://apis.io/collections/losant/postman-losant-authentication-and-account-api/)
+- [Losant Application Data and Data Tables API](https://apis.io/collections/losant/postman-losant-data-and-data-tables-api/)
+- [Losant Application Device API](https://apis.io/collections/losant/postman-losant-device-api/)
+- [Losant Application Edge and Embedded Compute API](https://apis.io/collections/losant/postman-losant-edge-and-embedded-compute-api/)
+- [Losant Application Enterprise Instance API](https://apis.io/collections/losant/postman-losant-enterprise-instance-api/)
+- [Losant Application Experience API](https://apis.io/collections/losant/postman-losant-experience-api/)
+- [Losant Application Notebooks API](https://apis.io/collections/losant/postman-losant-notebooks-api/)
+- [Losant Application Workflow Engine API](https://apis.io/collections/losant/postman-losant-workflow-engine-api/)
+
+#### Overlays (9)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Losant Application Api Overlay](https://apis.io/overlays/losant/losant-application-api-overlay/)
+- [Losant Authentication And Account Api Overlay](https://apis.io/overlays/losant/losant-authentication-and-account-api-overlay/)
+- [Losant Data And Data Tables Api Overlay](https://apis.io/overlays/losant/losant-data-and-data-tables-api-overlay/)
+- [Losant Device Api Overlay](https://apis.io/overlays/losant/losant-device-api-overlay/)
+- [Losant Edge And Embedded Compute Api Overlay](https://apis.io/overlays/losant/losant-edge-and-embedded-compute-api-overlay/)
+- [Losant Enterprise Instance Api Overlay](https://apis.io/overlays/losant/losant-enterprise-instance-api-overlay/)
+- [Losant Experience Api Overlay](https://apis.io/overlays/losant/losant-experience-api-overlay/)
+- [Losant Notebooks Api Overlay](https://apis.io/overlays/losant/losant-notebooks-api-overlay/)
+- [Losant Workflow Engine Api Overlay](https://apis.io/overlays/losant/losant-workflow-engine-api-overlay/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Losant — jsonschema rules](https://apis.io/rules/losant/losant-jsonschema-spectral-rules/)
+- [Losant API Rules](https://apis.io/rules/losant/losant-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Losant Authentication](https://apis.io/security/losant/losant-authentication/)
+- [Losant Domain Security](https://apis.io/security/losant/losant-domain-security/)
+- [Losant Vulnerability Disclosure](https://apis.io/security/losant/losant-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Losant Scopes](https://apis.io/scopes/losant/losant-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Losant Plans Pricing](https://apis.io/plans/losant/losant-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Losant Rate Limits](https://apis.io/rate-limits/losant/losant-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Losant Finops](https://apis.io/finops/losant/losant-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.losant.com/)
 - [Documentation](https://docs.losant.com/)
-- [Getting Started](https://docs.losant.com/getting-started/walkthrough/)
-- [Documentation](https://docs.losant.com/rest-api/overview/)
-- [Documentation](https://docs.losant.com/mqtt/overview/)
-- [Documentation](https://docs.losant.com/cli/overview/)
-- [Education](https://docs.losant.com/university/overview/)
-- [Templates](https://docs.losant.com/template-library/overview/)
-- [Documentation](https://docs.losant.com/workflow-lab/overview/)
-- [Guides](https://docs.losant.com/guides/overview/)
-- [Source Code](https://github.com/Losant)
-- [SDK](https://github.com/Losant/losant-rest-js)
-- [SDK](https://github.com/Losant/losant-rest-python)
-- [SDK](https://github.com/Losant/losant-rest-ruby)
-- [SDK](https://github.com/Losant/losant-mqtt-js)
-- [SDK](https://github.com/Losant/losant-mqtt-python)
-- [SDK](https://github.com/Losant/losant-mqtt-ruby)
-- [SDK](https://github.com/Losant/losant-mqtt-arduino)
-- [SDK](https://github.com/Losant/losant-esp-idf-esp32)
-- [C L I](https://github.com/Losant/losant-cli)
-- [Source Code](https://github.com/Losant/eea-examples)
-- [Source Code](https://github.com/Losant/notebook-examples)
-- [Source Code](https://github.com/Losant/application-templates)
-- [Source Code](https://github.com/Losant/workflow-node-catalog)
-- [Blog](https://www.losant.com/blog)
-- [Status Page](https://status.losant.com/)
+- [Getting started](https://docs.losant.com/getting-started/walkthrough/)
+- [API reference](https://docs.losant.com/rest-api/overview/)
 - [Pricing](https://www.losant.com/pricing)
+- [Sign up](https://accounts.losant.com/create-account)
 - [Support](https://www.losant.com/contact)
-- [LinkedIn](https://www.linkedin.com/company/losant/)
-- [Twitter](https://x.com/losantiot)
-- [Plans](plans/losant-plans-pricing.yml)
-- [Rate Limits](rate-limits/losant-rate-limits.yml)
-- [Fin Ops](finops/losant-finops.yml)
-- [Vocabulary](vocabulary/losant-vocabulary.yml)
-- [Spectral Rules](rules/losant-rules.yml)
-- [JSON-LD](json-ld/losant-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [Blog](https://www.losant.com/blog)
+- [Security](https://github.com/Losant/losant-mcp-server/blob/main/SECURITY.md)
+- [Compliance](https://docs.losant.com/references/security/)
+- [Terms of service](https://www.losant.com/legal/terms-of-service)
+- [Privacy policy](https://www.losant.com/legal/privacy-policy)
+- [GitHub](https://github.com/Losant)
+- [Status](https://status.losant.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
+**Kin Score 70.0** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 51.7 |
+| Contract quality | 30.3 |
+| Contract governance | 45.5 |
+| Operational transparency | 94.7 |
+| Developer ergonomics | 94.2 |
+| Access clarity | 84.2 |
+
+**Agent readiness 62.7** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 45.1** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/losant/](https://apis.io/providers/losant/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Losant: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/losant/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
